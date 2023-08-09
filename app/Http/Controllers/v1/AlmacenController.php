@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Almacen;
+use App\Http\Resources\v1\StoreResource;
 
 class AlmacenController extends Controller
 {
@@ -37,7 +38,8 @@ class AlmacenController extends Controller
      */
     public function show(string $id)
     {
-        //
+        //return Almacen::find($id)->toArrayAssoc();
+        return new StoreResource(Almacen::find($id));
     }
 
     /**
