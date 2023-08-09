@@ -15,14 +15,15 @@ class AlmacenController extends Controller
      */
     public function index()
     {
-        $almacenes = Almacen::all();
+        return StoreResource::collection(Almacen::all());
+        //$almacenes = Almacen::all();
         //return response()->json($almacenes->toArrayAssoc());
 
-        $almacenesArray = $almacenes->map(function ($almacen) {
+        /* $almacenesArray = $almacenes->map(function ($almacen) {
             return $almacen->toArrayAssoc();
         });
 
-        return response()->json($almacenesArray);
+        return response()->json($almacenesArray); */
     }
 
     /**
