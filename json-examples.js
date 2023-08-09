@@ -66,3 +66,35 @@ const showAlmacen = {
     tinas,
 
 }
+
+
+const almacen= [
+    {
+      id: 1,
+      nombre: "Cámara de congelados",
+      temperatura: "-18.50",
+      capacidad: "80000.50",
+      pesoNetoPalets: 0,
+      pesoNetoTotal: 0,
+      palets: [
+        {
+          id: 2,
+          observaciones: "Prueba Palet Almacenado",
+          id_estado: 2,
+          id_almacen: 1,
+          created_at: null,
+          updated_at: null,
+          cajas: []
+        },
+        {
+          id: 3,
+          observaciones: "Prueba Palet Almacenado 2",
+          id_estado: 2,
+          id_almacen: 1,
+          created_at: null,
+          updated_at: null,
+          cajas: []
+        }
+      ]
+    }
+  ]

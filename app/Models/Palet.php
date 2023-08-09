@@ -31,7 +31,7 @@ class Palet extends Model
     {
         $pesoNeto = 0;
         foreach($this->cajas as $caja){
-            $pesoNeto += $caja->PesoNeto;
+            $pesoNeto += $caja->peso_neto;
         }
         return $pesoNeto;
     }
@@ -43,7 +43,10 @@ class Palet extends Model
             'id' => $this->id,
             'observaciones' => $this->observaciones,
             'estado' => $this->estadoPalet->toArrayAssoc(),
-            'idAlmacen' => $this->idAlmacen,
+            'idAlmacen' => $this->id_almacen,
+            'cajas' => $this->cajas->map(function ($caja) {
+                return $caja->toArrayAssoc();
+            }),
         ];
     }
 

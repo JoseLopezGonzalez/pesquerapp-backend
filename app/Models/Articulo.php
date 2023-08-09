@@ -11,6 +11,7 @@ use App\Models\CategoriaArticulo;
 class Articulo extends Model
 {
     use HasFactory;
+    protected $table = 'articulos';
 
     public function articuloMateriaPrima()
     {
@@ -22,7 +23,7 @@ class Articulo extends Model
 
     public function categoria()
     {
-        return $this->belongsTo(CategoriaArticulo::class);
+        return $this->belongsTo(CategoriaArticulo::class , 'id_categoria');
     }
 
     public function toArrayAssoc()

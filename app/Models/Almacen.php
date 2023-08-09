@@ -12,6 +12,7 @@ class Almacen extends Model
     use HasFactory;
 
     protected $fillable = ['nombre', 'id_categoria'];
+    protected $table = 'almacenes';
 
     public function categoria()
     {
@@ -50,7 +51,7 @@ class Almacen extends Model
 
     public function getPesoNetoTotalAttribute() //No se bien si llamarlo simplemente pesoNeto
     {
-        return $this->pesoNetoPalets + $this->pesoNetoTotal + $this->pesoNetoTotal;
+        return $this->pesoNetoPalets + $this->pesoNetoTinas + $this->pesoNetoCajas;
     }
 
     public function toArrayAssoc()
@@ -62,6 +63,9 @@ class Almacen extends Model
             'capacidad' => $this->capacidad,
             'pesoNetoPalets' => $this->pesoNetoPalets,
             'pesoNetoTotal' => $this->pesoNetoTotal,
+            'palets' => $this->palets->map(function ($palet) {
+                return $palet->toArrayAssoc();
+            }),
 
         ];
     }

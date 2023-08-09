@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+use App\Models\Almacen;
 
 class AlmacenController extends Controller
 {
@@ -11,7 +14,14 @@ class AlmacenController extends Controller
      */
     public function index()
     {
-        //
+        $almacenes = Almacen::all();
+        //return response()->json($almacenes->toArrayAssoc());
+
+        $almacenesArray = $almacenes->map(function ($almacen) {
+            return $almacen->toArrayAssoc();
+        });
+
+        return response()->json($almacenesArray);
     }
 
     /**

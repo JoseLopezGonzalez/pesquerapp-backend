@@ -16,7 +16,7 @@ class Especie extends Model
         return [
             'id' => $this->id,
             'nombre' => $this->nombre,
-            'nombreCientifico' => $this->nombreCientifico,
+            'nombreCientifico' => $this->nombre_cientifico,
             'fao' => $this->fao,
             'imagen' => $this->imagen,
         ];

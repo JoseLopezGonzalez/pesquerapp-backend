@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ZonaCaptura extends Model
 {
     use HasFactory;
+    protected $table = 'zonas_captura';
 
     protected $fillable = ['nombre'];
 

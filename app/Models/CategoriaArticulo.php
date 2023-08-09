@@ -10,6 +10,7 @@ class CategoriaArticulo extends Model
     use HasFactory;
     
     protected $fillable = ['nombre'];
+    protected $table = 'categorias_articulos';
 
     public function articulos()
     {

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Caja extends Model
 {
     use HasFactory;
+    protected $table = 'cajas';
 
     protected $fillable = ['id_palet', 'id_articulo', 'lote', 'GS1_128', 'peso_bruto', 'peso_neto'];
 
@@ -25,12 +26,12 @@ class Caja extends Model
     {
         return [
             'id' => $this->id,
-            'idPalet' => $this->nombre,
+            'idPalet' => $this->id_palet,
             'articulo' => $this->articulo->toArrayAssoc(),
             'lote' => $this->lote,
-            'gs1128' => $this->gs1128,
-            'pesoBruto' => $this->pesoBruto,
-            'pesoNeto' => $this->pesoNeto,
+            'gs1128' => $this->GS1_128,
+            'pesoBruto' => $this->peso_bruto,
+            'pesoNeto' => $this->peso_neto,
         ];
     }
 }
