@@ -17,10 +17,10 @@ class SpeciesFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => $this->faker->word,
-            'nombre_cientifico' => $this->faker->word,
+            'name' => $this->faker->word,
+            'scientific_name' => $this->faker->word,
             'fao' => $this->faker->word,
-            'imagen' => $this->faker->imageUrl(),
+            'image' => $this->faker->imageUrl(),
         ];
     }
 }

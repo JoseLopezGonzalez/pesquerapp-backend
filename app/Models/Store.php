@@ -11,62 +11,61 @@ class Store extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre', 'id_categoria'];
+    protected $fillable = ['name', 'category_id'];
     //protected $table = 'stores';
 
     public function categoria()
     {
-        return $this->belongsTo(ArticleCategory::class, 'id_categoria');
+        return $this->belongsTo(ArticleCategory::class, 'category_id');
     }
 
     // Definir relación con Pallet
     public function pallets()
     {
-        return $this->hasMany(Pallet::class, 'id_almacen');
+        return $this->hasMany(Pallet::class, 'store_id');
     }
 
     //Accessor 
-    public function getPesoNetoPaletsAttribute()
+    public function getNetWeightPalletsAttribute()
     {
-        $pesoNetoPalets = 0;
+        $netWeightPallets = 0;
         foreach ($this->pallets as $pallet) {
-            $pesoNetoPalets += $pallet->pesoNeto; //Implementar atributo accesor en pallet pesoNeto
+            $netWeightPallets += $pallet->netWeight; //Implementar atributo accesor en pallet pesoNeto
         }
-        return $pesoNetoPalets;
+        return $netWeightPallets;
     }
 
     //Accessor 
-    public function getPesoNetoCajasAttribute()
+    public function getNetWeightBoxesAttribute()
     {
         //Implementar...
         return 0;
     }
 
     //Accessor 
-    public function getPesoNetoTinasAttribute()
+    public function getNetWeightBigBoxesAttribute()
     {
         //Implementar...
         return 0;
     }
 
-    public function getPesoNetoTotalAttribute() //No se bien si llamarlo simplemente pesoNeto
+    public function getTotalNetWeightAttribute() //No se bien si llamarlo simplemente pesoNeto
     {
-        return $this->pesoNetoPalets + $this->pesoNetoTinas + $this->pesoNetoCajas;
+        return $this->netWeightPallets + $this->netWeightBigBoxes + $this->netWeightBoxes;
     }
 
     public function toArrayAssoc()
     {
         return [
             'id' => $this->id,
-            'nombre' => $this->nombre,
-            'temperatura' => $this->temperatura,
-            'capacidad' => $this->capacidad,
-            'pesoNetoPalets' => $this->pesoNetoPalets,
-            'pesoNetoTotal' => $this->pesoNetoTotal,
+            'name' => $this->name,
+            'temperature' => $this->temperature,
+            'capacity' => $this->capacity,
+            'netWeightPallets' => $this->netWeightPallets,
+            'totalNetWeight' => $this->totalNetWeight,
             'pallets' => $this->pallets->map(function ($pallet) {
                 return $pallet->toArrayAssoc();
             }),
-
         ];
     }
 }

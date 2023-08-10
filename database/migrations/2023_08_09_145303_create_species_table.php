@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('species', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('nombre_cientifico');
+            $table->string('name');
+            $table->string('scientific_name');
             $table->string('fao', 3);
-            $table->string('imagen');
+            $table->string('image');
             $table->timestamps();
         });
     }

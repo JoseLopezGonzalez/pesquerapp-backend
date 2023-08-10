@@ -9,31 +9,31 @@ class Pallet extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['observaciones', 'id_estado', 'id_almacen'];
+    protected $fillable = ['observations', 'state_id', 'store_id'];
 
     public function palletState()
     {
-        return $this->belongsTo(PalletState::class, 'id_estado');
+        return $this->belongsTo(PalletState::class, 'state_id');
     }
 
     public function store()
     {
-        return $this->belongsTo(Store::class, 'id_almacen');
+        return $this->belongsTo(Store::class, 'store_id');
     }
 
     public function boxes()
     {
-        return $this->hasMany(Box::class, 'id_palet');
+        return $this->hasMany(Box::class, 'pallet_id');
     }
 
     //Accessor
-    public function getPesoNetoAttribute()
+    public function getNetWeightAttribute()
     {
-        $pesoNeto = 0;
+        $netWeight = 0;
         foreach($this->boxes as $box){
-            $pesoNeto += $box->peso_neto;
+            $netWeight += $box->net_weight;
         }
-        return $pesoNeto;
+        return $netWeight;
     }
 
     public function toArrayAssoc()
@@ -41,9 +41,9 @@ class Pallet extends Model
 
         return [
             'id' => $this->id,
-            'observaciones' => $this->observaciones,
-            'estado' => $this->palletState->toArrayAssoc(),
-            'idAlmacen' => $this->id_almacen,
+            'observations' => $this->observations,
+            'state' => $this->palletState->toArrayAssoc(),
+            'storeId' => $this->store_id,
             'boxes' => $this->boxes->map(function ($box) {
                 return $box->toArrayAssoc();
             }),

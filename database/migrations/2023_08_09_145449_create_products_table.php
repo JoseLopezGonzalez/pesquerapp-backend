@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_especie');
-            $table->unsignedBigInteger('id_zona_captura');
-            $table->bigInteger('GTIN');
-            $table->bigInteger('GTIN_caja');
-            $table->bigInteger('GTIN_palet');
-            $table->decimal('peso_fijo', 6, 2);
-            $table->foreign('id_especie')->references('id')->on('species');
-            $table->foreign('id_zona_captura')->references('id')->on('capture_zones');
+            $table->unsignedBigInteger('species_id');
+            $table->unsignedBigInteger('capture_zone_id');
+            $table->bigInteger('article_gtin');
+            $table->bigInteger('box_gtin');
+            $table->bigInteger('pallet_gtin');
+            $table->decimal('fixed_weight', 6, 2);
+            $table->foreign('species_id')->references('id')->on('species');
+            $table->foreign('capture_zone_id')->references('id')->on('capture_zones');
             $table->timestamps();
         });
     }

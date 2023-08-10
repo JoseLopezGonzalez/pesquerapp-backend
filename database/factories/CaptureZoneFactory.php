@@ -17,7 +17,7 @@ class CaptureZoneFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => $this->faker->word,
+            'name' => $this->faker->word,
         ];
     }
 }

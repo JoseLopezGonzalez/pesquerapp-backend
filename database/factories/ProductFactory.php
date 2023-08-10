@@ -17,12 +17,12 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_especie' => $this->faker->numberBetween(1, 5),
-            'id_zona_captura' => $this->faker->numberBetween(1, 3),
-            'GTIN' => $this->faker->numberBetween(0, 99999999999999),
-            'GTIN_caja' => $this->faker->numberBetween(0, 99999999999999),
-            'GTIN_palet' => $this->faker->numberBetween(0, 99999999999999),
-            'peso_fijo' => $this->faker->randomFloat(2, 0, 100),
+            'species_id' => $this->faker->numberBetween(1, 5),
+            'capture_zone_id' => $this->faker->numberBetween(1, 3),
+            'article_gtin' => $this->faker->numberBetween(0, 99999999999999),
+            'box_gtin' => $this->faker->numberBetween(0, 99999999999999),
+            'pallet_gtin' => $this->faker->numberBetween(0, 99999999999999),
+            'fixed_weight' => $this->faker->randomFloat(2, 0, 100),
         ];
     }
 }

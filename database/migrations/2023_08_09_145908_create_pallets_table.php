@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('pallets', function (Blueprint $table) {
             $table->id();
-            $table->text('observaciones');
-            $table->unsignedBigInteger('id_estado');
-            $table->unsignedBigInteger('id_almacen')->nullable();
-            $table->foreign('id_estado')->references('id')->on('pallet_states');
-            $table->foreign('id_almacen')->references('id')->on('stores')->onDelete('set null');    
+            $table->text('observations');
+            $table->unsignedBigInteger('state_id');
+            $table->unsignedBigInteger('store_id')->nullable();
+            $table->foreign('state_id')->references('id')->on('pallet_states');
+            $table->foreign('store_id')->references('id')->on('stores')->onDelete('set null');    
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pallet_states', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
+            $table->string('name');
             $table->timestamps();
         });
     }

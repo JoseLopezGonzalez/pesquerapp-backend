@@ -15,7 +15,7 @@ class Article extends Model
 
     public function product()
     {
-        if ($this->categoria->nombre === 'product') { // Cambia el valor 1 por el ID de la categoría correspondiente
+        if ($this->categoria->name === 'product') { // Cambia el valor 1 por el ID de la categoría correspondiente
             return $this->hasOne(Product::class);
         }
         return null; // No hay relación
@@ -23,15 +23,15 @@ class Article extends Model
 
     public function categoria()
     {
-        return $this->belongsTo(ArticleCategory::class , 'id_categoria');
+        return $this->belongsTo(ArticleCategory::class , 'category_id');
     }
 
     public function toArrayAssoc()
     {
         return [
             'id' => $this->id,
-            'nombre' => $this->nombre,
-            'categoria' => $this->categoria->toArrayAssoc(),
+            'name' => $this->name,
+            'category' => $this->categoria->toArrayAssoc(),
         ];
     }
 }

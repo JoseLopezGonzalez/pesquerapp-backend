@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->decimal('temperatura', 4, 2);
-            $table->decimal('capacidad', 9, 2);
+            $table->string('name');
+            $table->decimal('temperature', 4, 2);
+            $table->decimal('capacity', 9, 2);
             $table->timestamps();
         });
     }

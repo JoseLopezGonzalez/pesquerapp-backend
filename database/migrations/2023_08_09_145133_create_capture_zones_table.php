@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('capture_zones', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
+            $table->string('name');
             $table->timestamps();
         });
     }

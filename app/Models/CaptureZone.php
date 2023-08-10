@@ -10,13 +10,13 @@ class CaptureZone extends Model
     use HasFactory;
     protected $table = 'capture_zones';
 
-    protected $fillable = ['nombre'];
+    protected $fillable = ['name'];
 
     public function toArrayAssoc()
     {
         return [
             'id' => $this->id,
-            'nombre' => $this->nombre,
+            'name' => $this->name,
         ];
     }
 }

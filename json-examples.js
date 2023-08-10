@@ -2,7 +2,7 @@
 //Añadir Palet
 const enterPalet = {
     //id
-    observaciones,
+    observations,
     estado,
     idAlmacen,
     cajas: [
@@ -24,7 +24,7 @@ const enterPalet = {
 //Editar Palet
 const editPalet = {
     id,
-    observaciones,
+    observations,
     estado,
     idAlmacen,
     cajas: [
@@ -58,9 +58,9 @@ const showCajas = {
 
 const showAlmacen = {
     id,
-    nombre,
-    temperatura,
-    capacidad,
+    name,
+    temperature,
+    capacity,
     palets,
     cajas,
     tinas,
@@ -71,26 +71,26 @@ const showAlmacen = {
 const almacen= [
     {
       id: 1,
-      nombre: "Cámara de congelados",
-      temperatura: "-18.50",
-      capacidad: "80000.50",
+      name: "Cámara de congelados",
+      temperature: "-18.50",
+      capacity: "80000.50",
       pesoNetoPalets: 0,
       pesoNetoTotal: 0,
       palets: [
         {
           id: 2,
-          observaciones: "Prueba Palet Almacenado",
-          id_estado: 2,
-          id_almacen: 1,
+          observations: "Prueba Palet Almacenado",
+          state_id: 2,
+          store_id: 1,
           created_at: null,
           updated_at: null,
           cajas: []
         },
         {
           id: 3,
-          observaciones: "Prueba Palet Almacenado 2",
-          id_estado: 2,
-          id_almacen: 1,
+          observations: "Prueba Palet Almacenado 2",
+          state_id: 2,
+          store_id: 1,
           created_at: null,
           updated_at: null,
           cajas: []

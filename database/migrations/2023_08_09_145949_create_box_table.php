@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('boxes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_palet')->nullable();
-            $table->unsignedBigInteger('id_articulo');
-            $table->string('lote');
-            $table->string('GS1_128');
-            $table->decimal('peso_bruto', 6, 2);
-            $table->decimal('peso_neto', 6, 2);
-            $table->foreign('id_palet')->references('id')->on('pallets')->onDelete('set null');
-            $table->foreign('id_articulo')->references('id')->on('products');
+            $table->unsignedBigInteger('pallet_id')->nullable();
+            $table->unsignedBigInteger('article_id');
+            $table->string('lot');
+            $table->string('gs1_128');
+            $table->decimal('gross_weight', 6, 2);
+            $table->decimal('net_weight', 6, 2);
+            $table->foreign('pallet_id')->references('id')->on('pallets')->onDelete('set null');
+            $table->foreign('article_id')->references('id')->on('products');
             $table->timestamps();
         });
     }

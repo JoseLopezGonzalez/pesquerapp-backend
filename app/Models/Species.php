@@ -9,16 +9,16 @@ class Species extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['nombre', 'nombre_cientifico', 'fao', 'imagen'];
+    protected $fillable = ['name', 'scientific_name', 'fao', 'image'];
 
     public function toArrayAssoc()
     {
         return [
             'id' => $this->id,
-            'nombre' => $this->nombre,
-            'nombreCientifico' => $this->nombre_cientifico,
+            'name' => $this->name,
+            'scientificName' => $this->scientific_name,
             'fao' => $this->fao,
-            'imagen' => $this->imagen,
+            'image' => $this->image,
         ];
     }
 

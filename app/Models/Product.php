@@ -22,12 +22,12 @@ class Product extends Model
 
     public function species()
     {
-        return $this->belongsTo(Species::class , 'id_especie'); // No se bien porque no indica que el id es el que relaciona las tablas
+        return $this->belongsTo(Species::class , 'species_id'); // No se bien porque no indica que el id es el que relaciona las tablas
     }
 
     public function captureZone()
     {
-        return $this->belongsTo(CaptureZone::class , 'id_zona_captura'); // No se bien porque no indica que el id es el que relaciona las tablas
+        return $this->belongsTo(CaptureZone::class , 'capture_zone_id'); // No se bien porque no indica que el id es el que relaciona las tablas
     }
 
     public function toArrayAssoc()
@@ -35,10 +35,10 @@ class Product extends Model
         return array_merge($this->article->toArrayAssoc() , [
             'species' => $this->species->toArrayAssoc(),
             'captureZone' => $this->captureZone->toArrayAssoc(),
-            'gtin' => $this->GTIN,
-            'gtinCaja' => $this->GTIN_caja,
-            'gtinPalet' => $this->GTIN_palet,
-            'pesoFijo' => $this->peso_fijo,
+            'articleGtin' => $this->article_gtin,
+            'boxGtin' => $this->box_gtin,
+            'palletGtin' => $this->pallet_gtin,
+            'fixedWeight' => $this->fixed_weight,
         ]);
 
     }

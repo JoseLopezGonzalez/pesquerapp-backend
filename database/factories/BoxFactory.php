@@ -17,12 +17,12 @@ class BoxFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_palet' => null,
-            'id_articulo' => $this->faker->numberBetween(1, 59),
-            'lote' => $this->faker->regexify('[A-Za-z0-9]{10}'),
-            'GS1_128' => $this->faker->numerify('########'),
-            'peso_bruto' => $this->faker->randomFloat(2, 5, 50),
-            'peso_neto' => $this->faker->randomFloat(2, 4, 45),
+            'pallet_id' => null,
+            'article_id' => $this->faker->numberBetween(1, 59),
+            'lot' => $this->faker->regexify('[A-Za-z0-9]{10}'),
+            'gs1_128' => $this->faker->numerify('########'),
+            'gross_weight' => $this->faker->randomFloat(2, 5, 50),
+            'net_weight' => $this->faker->randomFloat(2, 4, 45),
         ];
     }
 }

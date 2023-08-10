@@ -9,19 +9,19 @@ class ArticleCategory extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['nombre'];
+    protected $fillable = ['name'];
     protected $table = 'article_categories';
 
     public function articles()
     {
-        return $this->hasMany(Article::class, 'id_categoria');
+        return $this->hasMany(Article::class, 'category_id');
     }
 
     public function toArrayAssoc()
     {
         return [
             'id' => $this->id,
-            'nombre' => $this->nombre,
+            'name' => $this->name,
         ];
     }
 

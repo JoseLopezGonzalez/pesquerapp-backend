@@ -17,9 +17,9 @@ class StoreFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => $this->faker->word,
-            'temperatura' => $this->faker->randomFloat(2, -20, 20),
-            'capacidad' => $this->faker->randomFloat(2, 1000, 100000),
+            'name' => $this->faker->word,
+            'temperature' => $this->faker->randomFloat(2, -20, 20),
+            'capacity' => $this->faker->randomFloat(2, 1000, 100000),
         ];
     }
 }

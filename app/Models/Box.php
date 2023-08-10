@@ -10,28 +10,28 @@ class Box extends Model
     use HasFactory;
     //protected $table = 'boxes';
 
-    protected $fillable = ['id_palet', 'id_articulo', 'lote', 'GS1_128', 'peso_bruto', 'peso_neto'];
+    protected $fillable = ['pallet_id', 'article_id', 'lot', 'gs1_128', 'gross_weight', 'net_weight'];
 
     public function article()
     {
-        return $this->belongsTo(Product::class, 'id_articulo');
+        return $this->belongsTo(Product::class, 'article_id');
     }
 
     public function pallet()
     {
-        return $this->belongsTo(Pallet::class, 'id_palet');
+        return $this->belongsTo(Pallet::class, 'pallet_id');
     }
 
     public function toArrayAssoc()
     {
         return [
             'id' => $this->id,
-            'idPalet' => $this->id_palet,
+            'palletId' => $this->pallet_id,
             'article' => $this->article->toArrayAssoc(),
-            'lote' => $this->lote,
-            'gs1128' => $this->GS1_128,
-            'pesoBruto' => $this->peso_bruto,
-            'pesoNeto' => $this->peso_neto,
+            'lot' => $this->lot,
+            'gs1128' => $this->gs1_128,
+            'grossWeight' => $this->gross_weight,
+            'netWeight' => $this->net_weight,
         ];
     }
 }

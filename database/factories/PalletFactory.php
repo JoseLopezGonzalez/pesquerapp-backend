@@ -17,9 +17,9 @@ class PalletFactory extends Factory
     public function definition(): array
     {
         return [
-            'observaciones' => $this->faker->sentence,
-            'id_estado' => $this->faker->numberBetween(1, 6),
-            'id_almacen' => $this->faker->numberBetween(1, 2),
+            'observations' => $this->faker->sentence,
+            'state_id' => $this->faker->numberBetween(1, 6),
+            'store_id' => $this->faker->numberBetween(1, 2),
         ];
     }
 }

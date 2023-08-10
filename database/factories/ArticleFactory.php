@@ -17,8 +17,8 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => $this->faker->word,
-            'id_categoria' => $this->faker->numberBetween(1, 4),
+            'name' => $this->faker->word,
+            'category_id' => $this->faker->numberBetween(1, 4),
         ];
     }
 }
