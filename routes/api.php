@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\v1\LocatePalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\v1\StoreController;
+use App\Http\Controllers\v1\StoredPalletController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,3 +24,15 @@ use App\Http\Controllers\v1\StoreController;
 
 
 Route::apiResource('v1/stores', StoreController::class)->only(['show' , 'index']);
+
+/* 
+*Rutas:
+GET v1/stores/pallets : pallets almacenados
+GET v1/stores/pallets/{id} : pallet almacenado
+POST v1/stores/pallets : registrar palet y almacenarlo
+*/
+Route::apiResource('v1/stores/pallets', StoredPalletController::class);
+
+
+
+

@@ -23,7 +23,7 @@ class Pallet extends Model
 
     public function boxes()
     {
-        return $this->hasMany(Box::class, 'pallet_id');
+        return $this->hasMany(PalletBox::class, 'pallet_id');
     }
 
     //Accessor

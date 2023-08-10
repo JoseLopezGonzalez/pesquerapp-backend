@@ -71,9 +71,13 @@ class Store extends Model
             'capacity' => $this->capacity,
             'netWeightPallets' => $this->netWeightPallets,
             'totalNetWeight' => $this->totalNetWeight,
-            'pallets' => $this->pallets->map(function ($pallet) {
-                return $pallet->toArrayAssoc();
-            }),
+            'content' => [
+                'pallets' => $this->pallets->map(function ($pallet) {
+                    return $pallet->toArrayAssoc();
+                }),
+                'boxes' => [],
+                'bigBoxes' => [],
+            ],
             'map' => json_decode($this->map, true),
         ];
     }

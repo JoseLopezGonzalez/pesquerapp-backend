@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pallets', function (Blueprint $table) {
             $table->id();
-            $table->text('observations');
+            $table->text('observations')->nullable();
             $table->unsignedBigInteger('state_id');
             //$table->unsignedBigInteger('store_id')->nullable();
             $table->foreign('state_id')->references('id')->on('pallet_states');

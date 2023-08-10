@@ -100,8 +100,7 @@ const almacen = [
 ]
 
 
-const almacenAPI =
-{
+const almacenAPI = {
     id: 1,
     name: "Cámara de congelados",
     temperature: "-18.50",
@@ -118,39 +117,8 @@ const almacenAPI =
             },
             boxes: [
                 {
-                    id: 7,
-                    palletId: 2,
-                    article: {
-                        id: 16,
-                        name: "Pulpo eviscerado congelado en bloque T6",
-                        category: {
-                            id: 1,
-                            name: "product"
-                        },
-                        species: {
-                            id: 1,
-                            name: "Pulpo común",
-                            scientificName: "Octopus Vulgaris",
-                            fao: "OCC",
-                            image: "/app/assets/images/especies/pulpo_comun.jpg"
-                        },
-                        captureZone: {
-                            id: 1,
-                            name: "Zona 27.IX.a - Atlántico, nordestes"
-                        },
-                        articleGtin: "8436613930113",
-                        boxGtin: "98436613930116",
-                        palletGtin: "98436613930123",
-                        fixedWeight: "20.00"
-                    },
-                    lot: "040223OCC0112",
-                    gs1128: "156149819",
-                    grossWeight: "15.00",
-                    netWeight: "3.00"
-                },
-                {
-                    id: 8,
-                    palletId: 2,
+                    id: 6,
+                    palletId: null,
                     article: {
                         id: 16,
                         name: "Pulpo eviscerado congelado en bloque T6",
@@ -879,6 +847,24 @@ const almacenAPI =
         }
     }
 }
+
+const paletAPI = 
+    {
+        observations: "Prueba Palet Almacenado API",
+        boxes: [
+            {
+                article: {
+                    id: 16,
+                },
+                lot: "040223OCC0112",
+                gs1128: "156149819",
+                grossWeight: "15.00",
+                netWeight: "3.00"
+            }
+        ],
+    }
+
+
 
 
 

@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('boxes', function (Blueprint $table) {
+        Schema::create('pallet_boxes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('article_id');
-            $table->string('lot');
-            $table->string('gs1_128');
-            $table->decimal('gross_weight', 6, 2);
-            $table->decimal('net_weight', 6, 2);
-            $table->foreign('article_id')->references('id')->on('products');
+            $table->unsignedBigInteger('pallet_id');
+            $table->unsignedBigInteger('box_id');
+            $table->foreign('box_id')->references('id')->on('boxes')->onDelete('cascade'); 
+            $table->foreign('pallet_id')->references('id')->on('pallets')->onDelete('cascade'); 
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('boxes');
+        Schema::dropIfExists('pallet_boxes');
     }
 };
