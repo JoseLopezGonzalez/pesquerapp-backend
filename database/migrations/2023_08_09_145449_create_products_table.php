@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('articulos_materia_prima', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_especie');
             $table->unsignedBigInteger('id_zona_captura');
@@ -19,8 +19,8 @@ return new class extends Migration
             $table->bigInteger('GTIN_caja');
             $table->bigInteger('GTIN_palet');
             $table->decimal('peso_fijo', 6, 2);
-            $table->foreign('id_especie')->references('id')->on('especies');
-            $table->foreign('id_zona_captura')->references('id')->on('zonas_captura');
+            $table->foreign('id_especie')->references('id')->on('species');
+            $table->foreign('id_zona_captura')->references('id')->on('capture_zones');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('articulos_materia_prima');
+        Schema::dropIfExists('products');
     }
 };

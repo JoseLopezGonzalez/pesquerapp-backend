@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Caja extends Model
+class Box extends Model
 {
     use HasFactory;
-    protected $table = 'cajas';
+    //protected $table = 'boxes';
 
     protected $fillable = ['id_palet', 'id_articulo', 'lote', 'GS1_128', 'peso_bruto', 'peso_neto'];
 
-    public function articulo()
+    public function article()
     {
-        return $this->belongsTo(ArticuloMateriaPrima::class, 'id_articulo');
+        return $this->belongsTo(Product::class, 'id_articulo');
     }
 
-    public function palet()
+    public function pallet()
     {
-        return $this->belongsTo(Palet::class, 'id_palet');
+        return $this->belongsTo(Pallet::class, 'id_palet');
     }
 
     public function toArrayAssoc()
@@ -27,7 +27,7 @@ class Caja extends Model
         return [
             'id' => $this->id,
             'idPalet' => $this->id_palet,
-            'articulo' => $this->articulo->toArrayAssoc(),
+            'article' => $this->article->toArrayAssoc(),
             'lote' => $this->lote,
             'gs1128' => $this->GS1_128,
             'pesoBruto' => $this->peso_bruto,

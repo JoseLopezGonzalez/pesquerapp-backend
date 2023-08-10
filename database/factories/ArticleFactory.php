@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CategoriaArticulo>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Article>
  */
-class CategoriaArticuloFactory extends Factory
+class ArticleFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,6 +18,7 @@ class CategoriaArticuloFactory extends Factory
     {
         return [
             'nombre' => $this->faker->word,
+            'id_categoria' => $this->faker->numberBetween(1, 4),
         ];
     }
 }

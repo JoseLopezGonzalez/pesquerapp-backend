@@ -5,18 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ZonaCaptura extends Model
+class Species extends Model
 {
     use HasFactory;
-    protected $table = 'zonas_captura';
-
-    protected $fillable = ['nombre'];
+    
+    protected $fillable = ['nombre', 'nombre_cientifico', 'fao', 'imagen'];
 
     public function toArrayAssoc()
     {
         return [
             'id' => $this->id,
             'nombre' => $this->nombre,
+            'nombreCientifico' => $this->nombre_cientifico,
+            'fao' => $this->fao,
+            'imagen' => $this->imagen,
         ];
     }
+
+
 }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cajas', function (Blueprint $table) {
+        Schema::create('boxes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_palet')->nullable();
             $table->unsignedBigInteger('id_articulo');
@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('GS1_128');
             $table->decimal('peso_bruto', 6, 2);
             $table->decimal('peso_neto', 6, 2);
-            $table->foreign('id_palet')->references('id')->on('palets')->onDelete('set null');
-            $table->foreign('id_articulo')->references('id')->on('articulos_materia_prima');
+            $table->foreign('id_palet')->references('id')->on('pallets')->onDelete('set null');
+            $table->foreign('id_articulo')->references('id')->on('products');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cajas');
+        Schema::dropIfExists('boxes');
     }
 };

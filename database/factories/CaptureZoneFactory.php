@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Almacen>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CaptureZone>
  */
-class AlmacenFactory extends Factory
+class CaptureZoneFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +18,6 @@ class AlmacenFactory extends Factory
     {
         return [
             'nombre' => $this->faker->word,
-            'temperatura' => $this->faker->randomFloat(2, -20, 20),
-            'capacidad' => $this->faker->randomFloat(2, 1000, 100000),
         ];
     }
 }

@@ -5,25 +5,18 @@ namespace App\Http\Controllers\v1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\Almacen;
+use App\Models\Store;
 use App\Http\Resources\v1\StoreResource;
 
-class AlmacenController extends Controller
+class StoreController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return StoreResource::collection(Almacen::all());
-        //$almacenes = Almacen::all();
-        //return response()->json($almacenes->toArrayAssoc());
+        return StoreResource::collection(Store::all());
 
-        /* $almacenesArray = $almacenes->map(function ($almacen) {
-            return $almacen->toArrayAssoc();
-        });
-
-        return response()->json($almacenesArray); */
     }
 
     /**
@@ -31,7 +24,8 @@ class AlmacenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $store = Store::create($request->all());
+        return response()->json($store, 201);
     }
 
     /**
@@ -39,8 +33,8 @@ class AlmacenController extends Controller
      */
     public function show(string $id)
     {
-        //return Almacen::find($id)->toArrayAssoc();
-        return new StoreResource(Almacen::find($id));
+        //return Store::find($id)->toArrayAssoc();
+        return new StoreResource(Store::find($id));
     }
 
     /**
@@ -48,7 +42,9 @@ class AlmacenController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $store = Store::findOrFail($id);
+        $store->update($request->all());
+        return response()->json($store, 200);
     }
 
     /**
@@ -56,6 +52,7 @@ class AlmacenController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Store::destroy($id);
+        return response()->json(null, 204);
     }
 }

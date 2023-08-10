@@ -5,25 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\ArticuloMateriaPrima;
-use App\Models\CategoriaArticulo;
+use App\Models\Product;
+use App\Models\ArticleCategory;
 
-class Articulo extends Model
+class Article extends Model
 {
     use HasFactory;
-    protected $table = 'articulos';
+    //protected $table = 'articles';
 
-    public function articuloMateriaPrima()
+    public function product()
     {
-        if ($this->categoria->id == 1) { // Cambia el valor 1 por el ID de la categoría correspondiente
-            return $this->hasOne(ArticuloMateriaPrima::class);
+        if ($this->categoria->nombre === 'product') { // Cambia el valor 1 por el ID de la categoría correspondiente
+            return $this->hasOne(Product::class);
         }
         return null; // No hay relación
     }
 
     public function categoria()
     {
-        return $this->belongsTo(CategoriaArticulo::class , 'id_categoria');
+        return $this->belongsTo(ArticleCategory::class , 'id_categoria');
     }
 
     public function toArrayAssoc()

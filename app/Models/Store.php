@@ -5,32 +5,32 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Palet;
+use App\Models\Pallet;
 
-class Almacen extends Model
+class Store extends Model
 {
     use HasFactory;
 
     protected $fillable = ['nombre', 'id_categoria'];
-    protected $table = 'almacenes';
+    //protected $table = 'stores';
 
     public function categoria()
     {
-        return $this->belongsTo(CategoriaArticulo::class, 'id_categoria');
+        return $this->belongsTo(ArticleCategory::class, 'id_categoria');
     }
 
-    // Definir relación con Palet
-    public function palets()
+    // Definir relación con Pallet
+    public function pallets()
     {
-        return $this->hasMany(Palet::class, 'id_almacen');
+        return $this->hasMany(Pallet::class, 'id_almacen');
     }
 
     //Accessor 
     public function getPesoNetoPaletsAttribute()
     {
         $pesoNetoPalets = 0;
-        foreach ($this->palets as $palet) {
-            $pesoNetoPalets += $palet->pesoNeto; //Implementar atributo accesor en palet pesoNeto
+        foreach ($this->pallets as $pallet) {
+            $pesoNetoPalets += $pallet->pesoNeto; //Implementar atributo accesor en pallet pesoNeto
         }
         return $pesoNetoPalets;
     }
@@ -63,8 +63,8 @@ class Almacen extends Model
             'capacidad' => $this->capacidad,
             'pesoNetoPalets' => $this->pesoNetoPalets,
             'pesoNetoTotal' => $this->pesoNetoTotal,
-            'palets' => $this->palets->map(function ($palet) {
-                return $palet->toArrayAssoc();
+            'pallets' => $this->pallets->map(function ($pallet) {
+                return $pallet->toArrayAssoc();
             }),
 
         ];

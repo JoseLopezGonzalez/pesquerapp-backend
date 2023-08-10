@@ -5,33 +5,33 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Palet extends Model
+class Pallet extends Model
 {
     use HasFactory;
 
     protected $fillable = ['observaciones', 'id_estado', 'id_almacen'];
 
-    public function estadoPalet()
+    public function palletState()
     {
-        return $this->belongsTo(EstadoPalet::class, 'id_estado');
+        return $this->belongsTo(PalletState::class, 'id_estado');
     }
 
-    public function almacen()
+    public function store()
     {
-        return $this->belongsTo(Almacen::class, 'id_almacen');
+        return $this->belongsTo(Store::class, 'id_almacen');
     }
 
-    public function cajas()
+    public function boxes()
     {
-        return $this->hasMany(Caja::class, 'id_palet');
+        return $this->hasMany(Box::class, 'id_palet');
     }
 
     //Accessor
     public function getPesoNetoAttribute()
     {
         $pesoNeto = 0;
-        foreach($this->cajas as $caja){
-            $pesoNeto += $caja->peso_neto;
+        foreach($this->boxes as $box){
+            $pesoNeto += $box->peso_neto;
         }
         return $pesoNeto;
     }
@@ -42,10 +42,10 @@ class Palet extends Model
         return [
             'id' => $this->id,
             'observaciones' => $this->observaciones,
-            'estado' => $this->estadoPalet->toArrayAssoc(),
+            'estado' => $this->palletState->toArrayAssoc(),
             'idAlmacen' => $this->id_almacen,
-            'cajas' => $this->cajas->map(function ($caja) {
-                return $caja->toArrayAssoc();
+            'boxes' => $this->boxes->map(function ($box) {
+                return $box->toArrayAssoc();
             }),
         ];
     }

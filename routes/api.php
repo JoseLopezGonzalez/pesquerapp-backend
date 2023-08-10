@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\v1\AlmacenController;
+use App\Http\Controllers\v1\StoreController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,4 +20,4 @@ use App\Http\Controllers\v1\AlmacenController;
 }); */
 
 
-Route::apiResource('v1/stores', AlmacenController::class)->only(['show' , 'index']);
+Route::apiResource('v1/stores', StoreController::class)->only(['show' , 'index']);

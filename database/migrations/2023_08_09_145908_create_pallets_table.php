@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('palets', function (Blueprint $table) {
+        Schema::create('pallets', function (Blueprint $table) {
             $table->id();
             $table->text('observaciones');
             $table->unsignedBigInteger('id_estado');
             $table->unsignedBigInteger('id_almacen')->nullable();
-            $table->foreign('id_estado')->references('id')->on('estados_palets');
-            $table->foreign('id_almacen')->references('id')->on('almacenes')->onDelete('set null');    
+            $table->foreign('id_estado')->references('id')->on('pallet_states');
+            $table->foreign('id_almacen')->references('id')->on('stores')->onDelete('set null');    
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('palets');
+        Schema::dropIfExists('pallets');
     }
 };

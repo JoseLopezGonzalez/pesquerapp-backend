@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\EstadoPalet>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Species>
  */
-class EstadoPaletFactory extends Factory
+class SpeciesFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,6 +18,9 @@ class EstadoPaletFactory extends Factory
     {
         return [
             'nombre' => $this->faker->word,
+            'nombre_cientifico' => $this->faker->word,
+            'fao' => $this->faker->word,
+            'imagen' => $this->faker->imageUrl(),
         ];
     }
 }

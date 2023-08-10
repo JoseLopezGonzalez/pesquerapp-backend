@@ -5,18 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CategoriaArticulo extends Model
+class PalletState extends Model
 {
     use HasFactory;
-    
+    protected $table = 'pallet_states';
+
     protected $fillable = ['nombre'];
-    protected $table = 'categorias_articulos';
-
-    public function articulos()
-    {
-        return $this->hasMany(Articulo::class, 'id_categoria');
-    }
-
+    
     public function toArrayAssoc()
     {
         return [
