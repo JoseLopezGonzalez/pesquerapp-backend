@@ -20,10 +20,18 @@ class Store extends Model
     }
 
     // Definir relación con Pallet
-    public function pallets()
+    /* public function pallets()
     {
         return $this->hasMany(Pallet::class, 'store_id');
+    } */
+
+    // Definir relación con Pallet
+    public function pallets()
+    {
+        //dd($this->hasMany(StoredPallet::class, 'store_id'));
+        return $this->hasMany(StoredPallet::class, 'store_id');
     }
+
 
     //Accessor 
     public function getNetWeightPalletsAttribute()

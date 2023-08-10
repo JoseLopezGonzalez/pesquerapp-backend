@@ -16,10 +16,10 @@ class Pallet extends Model
         return $this->belongsTo(PalletState::class, 'state_id');
     }
 
-    public function store()
+   /* public function store()
     {
         return $this->belongsTo(Store::class, 'store_id');
-    }
+    } */
 
     public function boxes()
     {
@@ -43,7 +43,6 @@ class Pallet extends Model
             'id' => $this->id,
             'observations' => $this->observations,
             'state' => $this->palletState->toArrayAssoc(),
-            'storeId' => $this->store_id,
             'boxes' => $this->boxes->map(function ($box) {
                 return $box->toArrayAssoc();
             }),

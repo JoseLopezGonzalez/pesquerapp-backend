@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->text('observations');
             $table->unsignedBigInteger('state_id');
-            $table->unsignedBigInteger('store_id')->nullable();
+            //$table->unsignedBigInteger('store_id')->nullable();
             $table->foreign('state_id')->references('id')->on('pallet_states');
-            $table->foreign('store_id')->references('id')->on('stores')->onDelete('set null');    
+            //$table->foreign('store_id')->references('id')->on('stores')->onDelete('set null');    
             $table->timestamps();
         });
     }
