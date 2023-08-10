@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->decimal('temperature', 4, 2);
             $table->decimal('capacity', 9, 2);
+            $table->json('map')->nullable();
             $table->timestamps();
         });
     }

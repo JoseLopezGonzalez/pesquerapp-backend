@@ -66,6 +66,7 @@ class Store extends Model
             'pallets' => $this->pallets->map(function ($pallet) {
                 return $pallet->toArrayAssoc();
             }),
+            'map' => json_decode($this->map, true),
         ];
     }
 }

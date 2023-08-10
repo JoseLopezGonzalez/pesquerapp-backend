@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('species_id');
             $table->unsignedBigInteger('capture_zone_id');
-            $table->bigInteger('article_gtin');
-            $table->bigInteger('box_gtin');
-            $table->bigInteger('pallet_gtin');
+            $table->string('article_gtin');
+            $table->string('box_gtin');
+            $table->string('pallet_gtin');
             $table->decimal('fixed_weight', 6, 2);
             $table->foreign('species_id')->references('id')->on('species');
             $table->foreign('capture_zone_id')->references('id')->on('capture_zones');
