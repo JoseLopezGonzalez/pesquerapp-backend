@@ -46,6 +46,7 @@ class Pallet extends Model
             'boxes' => $this->boxes->map(function ($box) {
                 return $box->toArrayAssoc();
             }),
+            'netWeight' => $this->netWeight,
         ];
     }
 
