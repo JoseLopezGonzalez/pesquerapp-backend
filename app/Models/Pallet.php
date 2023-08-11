@@ -30,9 +30,9 @@ class Pallet extends Model
     public function getNetWeightAttribute()
     {
         $netWeight = 0;
-        foreach($this->boxes as $box){
+        $this->boxes->map(function ($box) {
             $netWeight += $box->net_weight;
-        }
+        });
         return $netWeight;
     }
 
