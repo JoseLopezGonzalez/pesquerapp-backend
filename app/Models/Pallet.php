@@ -29,12 +29,17 @@ class Pallet extends Model
     //Accessor
     public function getNetWeightAttribute()
     {
-        $netWeight = 0;
+        /* $netWeight = 0;
         $this->boxes->map(function ($box) {
             global $netWeight;
+            var_dump($box->net_weight);
             $netWeight += $box->net_weight;
         });
-        return $netWeight;
+        return $netWeight; */
+        //dd($this->boxes);
+        return $this->boxes->reduce(function ($carry, $box) {
+            return $carry + $box->net_weight;
+        }, 0);
     }
 
     public function toArrayAssoc()

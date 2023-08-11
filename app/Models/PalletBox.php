@@ -18,4 +18,8 @@ class PalletBox extends Model
     {
         return $this->box->toArrayAssoc();
     }
+
+    public function getNetWeightAttribute(){
+        return $this->box->net_weight;
+    }
 }
