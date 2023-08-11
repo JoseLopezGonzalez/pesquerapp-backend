@@ -31,6 +31,7 @@ class Pallet extends Model
     {
         $netWeight = 0;
         $this->boxes->map(function ($box) {
+            global $netWeight;
             $netWeight += $box->net_weight;
         });
         return $netWeight;
