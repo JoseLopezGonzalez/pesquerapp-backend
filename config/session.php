@@ -155,7 +155,8 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN'),
+    //'domain' => env('SESSION_DOMAIN'),
+    'domain' => '.domain.com', /* Añadido para evitar CORS */
 
     /*
     |--------------------------------------------------------------------------
