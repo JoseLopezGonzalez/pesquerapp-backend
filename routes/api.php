@@ -23,7 +23,7 @@ use App\Http\Controllers\v1\StoredPalletController;
 }); */
 
 
-Route::apiResource('v1/stores', StoreController::class)->only(['show' , 'index']);
+//Route::apiResource('v1/stores', StoreController::class)->only(['show' , 'index']);
 
 /* 
 *Rutas:
@@ -31,8 +31,13 @@ GET v1/stores/pallets : pallets almacenados
 GET v1/stores/pallets/{id} : pallet almacenado
 POST v1/stores/pallets : registrar palet y almacenarlo
 */
-Route::apiResource('v1/stores/pallets', StoredPalletController::class);
+//Route::apiResource('v1/stores/pallets', StoredPalletController::class);
 
+
+Route::middleware(['cors'])->group(function () {
+    Route::apiResource('v1/stores/pallets', StoredPalletController::class);
+    Route::apiResource('v1/stores', StoreController::class)->only(['show' , 'index']);
+});
 
 
 
