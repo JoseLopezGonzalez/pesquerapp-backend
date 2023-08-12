@@ -35,4 +35,17 @@ class ProductResource extends JsonResource
     {
         $response->setData($this->resource->toArray($request));
     }
+
+    /**
+     * Transform the resource into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function toResponse($request)
+    {
+        $data = $this->resource->toArray($request);
+
+        return response()->json($data);
+    }
 }
