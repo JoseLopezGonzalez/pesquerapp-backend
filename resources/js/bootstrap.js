@@ -7,6 +7,10 @@
 import axios from 'axios';
 window.axios = axios;
 
+axios.defaults.withCredentials = true; //Linea creada para evitar CORS
+
+
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
