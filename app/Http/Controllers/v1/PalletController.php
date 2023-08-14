@@ -62,12 +62,16 @@ class PalletController extends Controller
         $updatedPallet->observations = $pallet['observations'];
         $updatedPallet->save();
 
-        //Eliminando Cajas
+        $updatedPallet->boxes()->delete();
+        
+        /* //Eliminando Cajas
         foreach($updatedPallet->boxes() as $box) {
-            $palletBox = PalletBox::find($box->id);
+            //$palletBox = PalletBox::find($box->id);
             $box->delete();
-            $palletBox->delete();
-        }
+            $box->save();
+            //$palletBox->delete();
+
+        } */
 
         //Insertando Cajas
         foreach ($boxes as $box) {
