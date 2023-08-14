@@ -1,6 +1,5 @@
 <?php
 
-dd('Config loaded');
 
 return [
 
