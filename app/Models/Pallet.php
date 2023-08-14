@@ -55,6 +55,7 @@ class Pallet extends Model
             'netWeight' => $this->netWeight,
         ];
     }
+    
 
 
     

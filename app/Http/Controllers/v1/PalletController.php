@@ -62,16 +62,10 @@ class PalletController extends Controller
         $updatedPallet->observations = $pallet['observations'];
         $updatedPallet->save();
 
-        $updatedPallet->boxes()->delete();
-        
-        /* //Eliminando Cajas
-        foreach($updatedPallet->boxes() as $box) {
-            //$palletBox = PalletBox::find($box->id);
-            $box->delete();
-            $box->save();
-            //$palletBox->delete();
-
-        } */
+        //Eliminando Cajas
+        $updatedPallet->boxes->map(function ($box) {
+            $box->box->delete();
+        }); 
 
         //Insertando Cajas
         foreach ($boxes as $box) {
@@ -90,7 +84,9 @@ class PalletController extends Controller
             $newPalletBox->save();
         }
 
-        return response()->json($updatedPallet->toArrayAssoc(), 201);
+        $palletTEST = Pallet::find($updatedPallet->id);
+
+        return response()->json($palletTEST->toArrayAssoc(), 201);
     }
 
     /**
