@@ -24,12 +24,12 @@ use App\Http\Controllers\v1\StoredPalletController;
 }); */
 
 
-Route::middleware(['cors'])->group(function () {
+/* Route::middleware(['cors'])->group(function () {
     Route::apiResource('v1/stores/pallets', StoredPalletController::class);
     Route::apiResource('v1/stores', StoreController::class)->only(['show' , 'index']);
     Route::apiResource('v1/articles/products', ProductController::class)->only(['show' , 'index']);
-});
+}); */
 
-
-
-
+Route::apiResource('v1/stores/pallets', StoredPalletController::class);
+Route::apiResource('v1/stores', StoreController::class)->only(['show', 'index']);
+Route::apiResource('v1/articles/products', ProductController::class)->only(['show', 'index']);
