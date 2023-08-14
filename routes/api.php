@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\v1\LocatePalletController;
+use App\Http\Controllers\v1\PalletController;
 use App\Http\Controllers\v1\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,5 +32,7 @@ use App\Http\Controllers\v1\StoredPalletController;
 }); */
 
 Route::apiResource('v1/stores/pallets', StoredPalletController::class);
+Route::apiResource('v1/pallets', PalletController::class);
 Route::apiResource('v1/stores', StoreController::class)->only(['show', 'index']);
 Route::apiResource('v1/articles/products', ProductController::class)->only(['show', 'index']);
+
