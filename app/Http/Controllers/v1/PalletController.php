@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\PalletResource;
 use App\Models\Box;
 use App\Models\Pallet;
 use App\Models\PalletBox;
@@ -16,7 +17,8 @@ class PalletController extends Controller
      */
     public function index()
     {
-        //
+        /*return response()->json(['message' => 'Hola Mundo'], 200);*/
+        return PalletResource::collection(Pallet::all());
     }
 
     /**
