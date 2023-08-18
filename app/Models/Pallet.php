@@ -44,7 +44,14 @@ class Pallet extends Model
 
     public function getPositionAttribute()
     {
-       StoredPallet::where('pallet_id', $this->id)->first()->position;
+       $pallet = StoredPallet::where('pallet_id', $this->id)->first();
+
+       if($pallet)
+       {
+           return $pallet->position;
+       } else{
+              return null;
+       }
     }
 
     public function toArrayAssoc()
