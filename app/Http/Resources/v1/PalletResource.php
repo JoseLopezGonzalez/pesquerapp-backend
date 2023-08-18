@@ -22,6 +22,7 @@ class PalletResource extends JsonResource
                 return $box->toArrayAssoc();
             }),
             'netWeight' => $this->netWeight,
+            'position' => $this->position,
         ];
     }
 }

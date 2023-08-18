@@ -42,6 +42,11 @@ class Pallet extends Model
         }, 0);
     }
 
+    public function getPositionAttribute()
+    {
+       StoredPallet::where('pallet_id', $this->id)->first()->position;
+    }
+
     public function toArrayAssoc()
     {
 
