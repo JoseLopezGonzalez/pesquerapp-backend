@@ -41,7 +41,6 @@ class PalletController extends Controller
         //Validación Con mensaje JSON
         $validator = Validator::make($request->all(), [
             'observations' => 'nullable|string',
-            'storeId' => 'required|numeric',
             'boxes' => 'required|array',
             'boxes.*.article.id' => 'required|integer',
             'boxes.*.lot' => 'required|string',
