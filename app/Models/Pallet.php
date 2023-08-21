@@ -72,7 +72,7 @@ class Pallet extends Model
     {
         $pallet = StoredPallet::where('pallet_id', $this->id)->first();
 
-        var_dump($pallet);
+        dd($pallet);
         if($pallet)
         {
             return $pallet->store;
