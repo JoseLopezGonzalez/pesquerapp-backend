@@ -67,6 +67,18 @@ class Pallet extends Model
             'netWeight' => $this->netWeight,
         ];
     }
+
+    public function getStoreAttribute()
+    {
+        $pallet = StoredPallet::where('pallet_id', $this->id)->first();
+
+        if($pallet)
+        {
+            return $pallet->store;
+        } else{
+               return null;
+        }
+    }
     
 
 
