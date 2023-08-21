@@ -72,9 +72,11 @@ class Pallet extends Model
     {
         $pallet = StoredPallet::where('pallet_id', $this->id)->first();
 
-        dd($pallet);
+        
+        //dd($pallet);
         if($pallet)
         {
+            //echo $pallet->id;
             return $pallet->store;
         } else{
                return null;

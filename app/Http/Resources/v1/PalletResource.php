@@ -14,7 +14,7 @@ class PalletResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        if ($this->store){
+        if ($this->store !== null){
             $store = [
                 'id' => $this->store->id,
                 'name' => $this->store->name,
