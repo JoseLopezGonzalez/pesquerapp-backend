@@ -26,7 +26,54 @@ class PalletController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'observations' => 'nullable|string',
+            'boxes' => 'required|array',
+            'boxes.*.article.id' => 'required|integer',
+            'boxes.*.lot' => 'required|string',
+            'boxes.*.gs1128' => 'required|string',
+            'boxes.*.grossWeight' => 'required|numeric',
+            'boxes.*.netWeight' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422); // Código de estado 422 - Unprocessable Entity
+        }
+
+
+        $pallet = $request->all();
+        $boxes = $pallet['boxes'];
+
+        //Insertando Palet
+        $newPallet = new Pallet;
+        $newPallet->observations = $pallet['observations'];
+        $newPallet->state_id = 1; // Siempre estado registrado.
+        $newPallet->save();
+
+        //Agregando Palet a almacen
+        $newStoredPallet = new StoredPallet;
+        $newStoredPallet->pallet_id = $newPallet->id;
+        $newStoredPallet->store_id = $storeId;
+        $newStoredPallet->save();
+
+        //Insertando Cajas
+        foreach ($boxes as $box) {
+            $newBox = new Box;
+            $newBox->article_id = $box['article']['id'];
+            $newBox->lot = $box['lot'];
+            $newBox->gs1_128 = $box['gs1128'];
+            $newBox->gross_weight = $box['grossWeight'];
+            $newBox->net_weight = $box['netWeight'];
+            $newBox->save();
+
+            //Agregando Cajas a Palet
+            $newPalletBox = new PalletBox;
+            $newPalletBox->pallet_id = $newPallet->id;
+            $newPalletBox->box_id = $newBox->id;
+            $newPalletBox->save();
+        }
+
+        return response()->json($newStoredPallet->toArrayAssoc(), 201);
     }
 
     /**
@@ -67,7 +114,7 @@ class PalletController extends Controller
         //Eliminando Cajas
         $updatedPallet->boxes->map(function ($box) {
             $box->box->delete();
-        }); 
+        });
 
         //Insertando Cajas
         foreach ($boxes as $box) {
