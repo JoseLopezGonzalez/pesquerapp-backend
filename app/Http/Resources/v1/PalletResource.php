@@ -14,14 +14,14 @@ class PalletResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        if ($this->store !== null){
+        /* if ($this->store !== null){
             $store = [
                 'id' => $this->store->id,
                 'name' => $this->store->name,
             ];
         }else {
             $store = null;
-        }
+        } */
 
         return [
             'id' => $this->id,
@@ -32,7 +32,7 @@ class PalletResource extends JsonResource
             }),
             'netWeight' => $this->netWeight,
             'position' => $this->position,
-            'store' => $store,
+            'store' => $this->store(),
         ];
     }
 }
