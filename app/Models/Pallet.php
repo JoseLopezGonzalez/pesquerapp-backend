@@ -76,7 +76,7 @@ class Pallet extends Model
         //dd($pallet);
         if($pallet)
         {
-            //echo $pallet->id;
+            return 'HOLA';
             return $pallet->store;
         } else{
                return null;
