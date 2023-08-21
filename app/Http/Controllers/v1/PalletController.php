@@ -56,7 +56,7 @@ class PalletController extends Controller
 
         $pallet = $request->all();
         $boxes = $pallet['boxes'];
-        $storeId = $pallet['storeId'];
+        
 
         //Insertando Palet
         $newPallet = new Pallet;
