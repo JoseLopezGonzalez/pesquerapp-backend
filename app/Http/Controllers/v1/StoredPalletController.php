@@ -28,21 +28,8 @@ class StoredPalletController extends Controller
      */
     public function store(Request $request)
     {
-        //Validación Sin mensaje JSON
-        /* $request->validate([
-            'observations' => 'required|string',
-            'boxes' => 'required|array',
-            'boxes.*.article.id' => 'required|integer',
-            'boxes.*.lot' => 'required|string',
-            'boxes.*.gs1128' => 'required|string',
-            'boxes.*.grossWeight' => 'required|numeric',
-            'boxes.*.netWeight' => 'required|numeric',
-        ]); */
-
-        //Validación Con mensaje JSON
         $validator = Validator::make($request->all(), [
             'observations' => 'nullable|string',
-            'storeId' => 'required|numeric',
             'boxes' => 'required|array',
             'boxes.*.article.id' => 'required|integer',
             'boxes.*.lot' => 'required|string',
@@ -58,13 +45,18 @@ class StoredPalletController extends Controller
 
         $pallet = $request->all();
         $boxes = $pallet['boxes'];
-        $storeId = $pallet['storeId'];
 
         //Insertando Palet
         $newPallet = new Pallet;
         $newPallet->observations = $pallet['observations'];
         $newPallet->state_id = 2; // Siempre estado almacenado.
         $newPallet->save();
+
+        //Agregando Palet a almacen
+        $newStoredPallet = new StoredPallet;
+        $newStoredPallet->pallet_id = $newPallet->id;
+        $newStoredPallet->store_id = $storeId;
+        $newStoredPallet->save();
 
         //Insertando Cajas
         foreach ($boxes as $box) {
@@ -81,10 +73,9 @@ class StoredPalletController extends Controller
             $newPalletBox->pallet_id = $newPallet->id;
             $newPalletBox->box_id = $newBox->id;
             $newPalletBox->save();
-
         }
 
-        return response()->json($newPallet->toArrayAssoc(), 201);
+        return response()->json($newStoredPallet->toArrayAssoc(), 201);
     }
 
     /**
