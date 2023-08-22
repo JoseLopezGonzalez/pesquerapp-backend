@@ -102,6 +102,7 @@ class PalletController extends Controller
             'observations' => 'nullable|string',
             'storeId' => 'nullable|integer',
             'boxes' => 'required|array',
+            'boxes.*.id' => 'required|integer',
             'boxes.*.article.id' => 'required|integer',
             'boxes.*.lot' => 'required|string',
             'boxes.*.gs1128' => 'required|string',
@@ -124,6 +125,7 @@ class PalletController extends Controller
 
         //Insertando Palet
         $updatedPallet = Pallet::find($id);
+        //Validar que encuentre algo
         $updatedPallet->observations = $pallet['observations'];
         $updatedPallet->save();
 
@@ -151,10 +153,30 @@ class PalletController extends Controller
 
 
 
-        //Eliminando Cajas
+        //Eliminando Cajas y actualizando
         $updatedPallet->boxes->map(function ($box) {
-            $box->box->delete();
+            global $boxes; //Variable global para acceder a ella dentro de la función
+
+            foreach ( $boxes as $index => $box){
+                if ($box['id'] == $box->box->id) {
+                    $box->box->article_id = $box['article']['id'];
+                    $box->box->lot = $box['lot'];
+                    $box->box->gs1_128 = $box['gs1128'];
+                    $box->box->gross_weight = $box['grossWeight'];
+                    $box->box->net_weight = $box['netWeight'];
+                    $box->box->save();
+
+                    //Eliminando Caja del array para añadir
+                    unset($boxes[$index]);
+                    $boxes = array_values($boxes);
+
+                } else{
+                    $box->box->delete();
+                }
+            }
+            
         });
+
 
         //Insertando Cajas
         foreach ($boxes as $box) {
