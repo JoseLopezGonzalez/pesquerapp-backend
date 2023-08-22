@@ -7,6 +7,7 @@ use App\Http\Resources\v1\PalletResource;
 use App\Models\Box;
 use App\Models\Pallet;
 use App\Models\PalletBox;
+use App\Models\StoredPallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,7 +28,7 @@ class PalletController extends Controller
     public function store(Request $request)
     {
 
-         //Validación Sin mensaje JSON
+        //Validación Sin mensaje JSON
         /* $request->validate([
             'observations' => 'required|string',
             'boxes' => 'required|array',
@@ -56,7 +57,7 @@ class PalletController extends Controller
 
         $pallet = $request->all();
         $boxes = $pallet['boxes'];
-        
+
 
         //Insertando Palet
         $newPallet = new Pallet;
@@ -79,11 +80,9 @@ class PalletController extends Controller
             $newPalletBox->pallet_id = $newPallet->id;
             $newPalletBox->box_id = $newBox->id;
             $newPalletBox->save();
-
         }
 
         return response()->json($newPallet->toArrayAssoc(), 201);
-        
     }
 
     /**
@@ -91,7 +90,7 @@ class PalletController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return new PalletResource(Pallet::findOrFail($id));
     }
 
     /**
@@ -101,6 +100,7 @@ class PalletController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'observations' => 'nullable|string',
+            'storeId' => 'nullable|integer',
             'boxes' => 'required|array',
             'boxes.*.article.id' => 'required|integer',
             'boxes.*.lot' => 'required|string',
@@ -113,13 +113,43 @@ class PalletController extends Controller
             return response()->json(['errors' => $validator->errors()], 422); // Código de estado 422 - Unprocessable Entity
         }
 
+
+
+
         $pallet = $request->all();
         $boxes = $pallet['boxes'];
+        $storeId = $pallet['storeId'];
+
+
 
         //Insertando Palet
         $updatedPallet = Pallet::find($id);
         $updatedPallet->observations = $pallet['observations'];
         $updatedPallet->save();
+
+        $isPalletStored = StoredPallet::where('pallet_id', $updatedPallet->id)->first();
+        if ($isPalletStored) {
+            if ($isPalletStored->store_id != $storeId) {
+                $isPalletStored->delete();
+                if ($storeId) {
+                    //Agregando Palet a almacen
+                    $newStoredPallet = new StoredPallet;
+                    $newStoredPallet->pallet_id = $updatedPallet->id;
+                    $newStoredPallet->store_id = $storeId;
+                    $newStoredPallet->save();
+                }
+            }
+        }else{
+            if ($storeId) {
+                //Agregando Palet a almacen
+                $newStoredPallet = new StoredPallet;
+                $newStoredPallet->pallet_id = $updatedPallet->id;
+                $newStoredPallet->store_id = $storeId;
+                $newStoredPallet->save();
+            }
+        }
+
+
 
         //Eliminando Cajas
         $updatedPallet->boxes->map(function ($box) {
@@ -153,6 +183,12 @@ class PalletController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $pallet = Pallet::find($id);
+        $pallet->boxes->map(function ($box) {
+            $box->box->delete();
+        });
+        $pallet->delete();
+
+        return response()->json(['message' => 'Palet eliminado correctamente'], 200);
     }
 }

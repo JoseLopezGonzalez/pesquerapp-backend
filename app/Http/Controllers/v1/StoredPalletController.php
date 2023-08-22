@@ -124,6 +124,9 @@ class StoredPalletController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $storedPallet = StoredPallet::find($id);
+        $storedPallet->delete();
+
+        return response()->json(null, 204);
     }
 }
