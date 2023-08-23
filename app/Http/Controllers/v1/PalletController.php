@@ -122,7 +122,8 @@ class PalletController extends Controller
         $pallet = $request->all();
         //dd($pallet);
 
-        global $boxes = $pallet['boxes'];
+        global $boxes ;
+        $boxes = $pallet['boxes'];
         $storeId = $pallet['storeId'];
 
 
