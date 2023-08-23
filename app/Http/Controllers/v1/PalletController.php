@@ -120,9 +120,9 @@ class PalletController extends Controller
 
 
         $pallet = $request->all();
-        dd($pallet);
-        
-        $boxes = $pallet['boxes'];
+        //dd($pallet);
+
+        global $boxes = $pallet['boxes'];
         $storeId = $pallet['storeId'];
 
 
@@ -159,7 +159,7 @@ class PalletController extends Controller
 
         //Eliminando Cajas y actualizando
         $updatedPallet->boxes->map(function ($box) {
-            global $boxes; //Variable global para acceder a ella dentro de la función
+            
 
             foreach ( $boxes as $index => $box){
                 if ($box['id'] == $box->box->id) {
