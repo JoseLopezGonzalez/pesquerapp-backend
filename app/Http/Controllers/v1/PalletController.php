@@ -158,8 +158,7 @@ class PalletController extends Controller
 
 
         //Eliminando Cajas y actualizando
-        $updatedPallet->boxes->map(function ($box) {
-            global $boxes; //Variable global para acceder a ella dentro de la función
+        $updatedPallet->boxes->map(function ($box) use (&$boxes) {
 
             foreach ( $boxes as $index => $updatedBox){
                 if ($updatedBox['id'] == $box->box->id) {
@@ -172,14 +171,18 @@ class PalletController extends Controller
 
                     //Eliminando Caja del array para añadir
                     unset($boxes[$index]);
-                    $boxes = array_values($boxes);
+                    
 
                 } else{
                     $box->box->delete();
                 }
             }
+
+            
             
         });
+
+        $boxes = array_values($boxes);
 
 
         //Insertando Cajas
