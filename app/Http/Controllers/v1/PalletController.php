@@ -160,6 +160,8 @@ class PalletController extends Controller
         //Eliminando Cajas y actualizando
         $updatedPallet->boxes->map(function ($box) use (&$boxes) {
 
+            $hasBeenUpdated = false;
+
             foreach ( $boxes as $index => $updatedBox){
                 if ($updatedBox['id'] == $box->box->id) {
                     $box->box->article_id = $updatedBox['article']['id'];
@@ -168,18 +170,16 @@ class PalletController extends Controller
                     $box->box->gross_weight = $updatedBox['grossWeight'];
                     $box->box->net_weight = $updatedBox['netWeight'];
                     $box->box->save();
-
+                    $hasBeenUpdated = true;
                     //Eliminando Caja del array para añadir
                     unset($boxes[$index]);
-                    
-
-                } else{
-                    $box->box->delete();
-                }
+                } 
             }
 
-            
-            
+            if (!$hasBeenUpdated) {
+                $box->box->delete();
+            }
+
         });
 
         $boxes = array_values($boxes);
