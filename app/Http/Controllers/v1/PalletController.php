@@ -114,10 +114,14 @@ class PalletController extends Controller
             return response()->json(['errors' => $validator->errors()], 422); // Código de estado 422 - Unprocessable Entity
         }
 
+        
+
 
 
 
         $pallet = $request->all();
+        dd($pallet);
+        
         $boxes = $pallet['boxes'];
         $storeId = $pallet['storeId'];
 
