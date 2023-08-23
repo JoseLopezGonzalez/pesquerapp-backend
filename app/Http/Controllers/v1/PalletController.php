@@ -122,7 +122,6 @@ class PalletController extends Controller
         $pallet = $request->all();
         //dd($pallet);
 
-        global $boxes ;
         $boxes = $pallet['boxes'];
         $storeId = $pallet['storeId'];
 
@@ -160,15 +159,15 @@ class PalletController extends Controller
 
         //Eliminando Cajas y actualizando
         $updatedPallet->boxes->map(function ($box) {
-            
+            global $boxes; //Variable global para acceder a ella dentro de la función
 
-            foreach ( $boxes as $index => $box){
-                if ($box['id'] == $box->box->id) {
-                    $box->box->article_id = $box['article']['id'];
-                    $box->box->lot = $box['lot'];
-                    $box->box->gs1_128 = $box['gs1128'];
-                    $box->box->gross_weight = $box['grossWeight'];
-                    $box->box->net_weight = $box['netWeight'];
+            foreach ( $boxes as $index => $updatedBox){
+                if ($updatedBox['id'] == $box->box->id) {
+                    $box->box->article_id = $updatedBox['article']['id'];
+                    $box->box->lot = $updatedBox['lot'];
+                    $box->box->gs1_128 = $updatedBox['gs1128'];
+                    $box->box->gross_weight = $updatedBox['grossWeight'];
+                    $box->box->net_weight = $updatedBox['netWeight'];
                     $box->box->save();
 
                     //Eliminando Caja del array para añadir
