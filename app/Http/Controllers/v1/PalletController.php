@@ -99,16 +99,17 @@ class PalletController extends Controller
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
-            'observations' => 'nullable|string',
-            //'storeId' => 'nullable|integer',
-            'state.id' => 'required|integer',
-            'boxes' => 'required|array',
-            'boxes.*.id' => 'nullable|integer',
-            'boxes.*.article.id' => 'required|integer',
-            'boxes.*.lot' => 'required|string',
-            'boxes.*.gs1128' => 'required|string',
-            'boxes.*.grossWeight' => 'required|numeric',
-            'boxes.*.netWeight' => 'required|numeric',
+            'id' => 'required|integer',
+            'observations' => 'sometimes|nullable|string',
+            'storeId' => 'sometimes|nullable|integer',
+            'state.id' => 'sometimes|required|integer',
+            'boxes' => 'sometimes|required|array',
+            'boxes.*.id' => 'required_with:boxes|nullable|integer',
+            'boxes.*.article.id' => 'required_with:boxes|required|integer',
+            'boxes.*.lot' => 'required_with:boxes|required|string',
+            'boxes.*.gs1128' => 'required_with:boxes|required|string',
+            'boxes.*.grossWeight' => 'required_with:boxes|required|numeric',
+            'boxes.*.netWeight' => 'required_with:boxes|required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -116,23 +117,27 @@ class PalletController extends Controller
         }
 
         $pallet = $request->all();
-        //dd($pallet);
 
-        $boxes = $pallet['boxes'];
-        
-        //Insertando Palet
+        //Creating Pallet
         $updatedPallet = Pallet::find($id);
-        //Validar que encuentre algo
-        $updatedPallet->observations = $pallet['observations'];
 
-        //Actualizando Estado
-        if ($updatedPallet->state_id != $pallet['state']['id']) {
-            $updatedPallet->state_id = $pallet['state']['id'];
+        //Updating State
+        if (array_key_exists("state", $pallet)) {
+            if ($updatedPallet->state_id != $pallet['state']['id']) {
+                $updatedPallet->state_id = $pallet['state']['id'];
+            }
+        }
+
+        //Updating Observations
+        if (array_key_exists("observations", $pallet)){
+            if($pallet['observations'] != $updatedPallet->observations){
+                $updatedPallet->observations = $pallet['observations'];
+            }
         }
 
         $updatedPallet->save();
 
-        // If Exist StoreId as a parameter on Request
+        // Updating Store
         if (array_key_exists("storeId", $pallet)) {
             $storeId = $pallet['storeId'];
 
@@ -159,56 +164,60 @@ class PalletController extends Controller
             }
         }
 
+        //Updating Boxes
+        if (array_key_exists("boxes", $pallet)) {
+            $boxes = $pallet['boxes'];
 
+            //Eliminando Cajas y actualizando
+            $updatedPallet->boxes->map(function ($box) use (&$boxes) {
 
+                $hasBeenUpdated = false;
 
-        //Eliminando Cajas y actualizando
-        $updatedPallet->boxes->map(function ($box) use (&$boxes) {
-
-            $hasBeenUpdated = false;
-
-            foreach ($boxes as $index => $updatedBox) {
-                if ($updatedBox['id'] == $box->box->id) {
-                    $box->box->article_id = $updatedBox['article']['id'];
-                    $box->box->lot = $updatedBox['lot'];
-                    $box->box->gs1_128 = $updatedBox['gs1128'];
-                    $box->box->gross_weight = $updatedBox['grossWeight'];
-                    $box->box->net_weight = $updatedBox['netWeight'];
-                    $box->box->save();
-                    $hasBeenUpdated = true;
-                    //Eliminando Caja del array para añadir
-                    unset($boxes[$index]);
+                foreach ($boxes as $index => $updatedBox) {
+                    if ($updatedBox['id'] == $box->box->id) {
+                        $box->box->article_id = $updatedBox['article']['id'];
+                        $box->box->lot = $updatedBox['lot'];
+                        $box->box->gs1_128 = $updatedBox['gs1128'];
+                        $box->box->gross_weight = $updatedBox['grossWeight'];
+                        $box->box->net_weight = $updatedBox['netWeight'];
+                        $box->box->save();
+                        $hasBeenUpdated = true;
+                        //Eliminando Caja del array para añadir
+                        unset($boxes[$index]);
+                    }
                 }
+
+                if (!$hasBeenUpdated) {
+                    $box->box->delete();
+                }
+            });
+
+            $boxes = array_values($boxes);
+
+
+            //Insertando Cajas
+            foreach ($boxes as $box) {
+                $newBox = new Box;
+                $newBox->article_id = $box['article']['id'];
+                $newBox->lot = $box['lot'];
+                $newBox->gs1_128 = $box['gs1128'];
+                $newBox->gross_weight = $box['grossWeight'];
+                $newBox->net_weight = $box['netWeight'];
+                $newBox->save();
+
+                //Agregando Cajas a Palet
+                $newPalletBox = new PalletBox;
+                $newPalletBox->pallet_id = $updatedPallet->id;
+                $newPalletBox->box_id = $newBox->id;
+                $newPalletBox->save();
             }
-
-            if (!$hasBeenUpdated) {
-                $box->box->delete();
-            }
-        });
-
-        $boxes = array_values($boxes);
-
-
-        //Insertando Cajas
-        foreach ($boxes as $box) {
-            $newBox = new Box;
-            $newBox->article_id = $box['article']['id'];
-            $newBox->lot = $box['lot'];
-            $newBox->gs1_128 = $box['gs1128'];
-            $newBox->gross_weight = $box['grossWeight'];
-            $newBox->net_weight = $box['netWeight'];
-            $newBox->save();
-
-            //Agregando Cajas a Palet
-            $newPalletBox = new PalletBox;
-            $newPalletBox->pallet_id = $updatedPallet->id;
-            $newPalletBox->box_id = $newBox->id;
-            $newPalletBox->save();
         }
 
-        $palletTEST = Pallet::find($updatedPallet->id);
+       /*  $palletTEST = Pallet::find($updatedPallet->id); */
 
-        return response()->json($palletTEST->toArrayAssoc(), 201);
+        $updatedPallet->refresh();
+
+        return response()->json($updatedPallet->toArrayAssoc(), 201);
     }
 
     /**
