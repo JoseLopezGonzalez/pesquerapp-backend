@@ -80,8 +80,4 @@ class Pallet extends Model
     }
 
     
-    
-
-
-    
 }

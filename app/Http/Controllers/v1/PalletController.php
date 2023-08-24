@@ -102,14 +102,14 @@ class PalletController extends Controller
             'id' => 'required|integer',
             'observations' => 'sometimes|nullable|string',
             'storeId' => 'sometimes|nullable|integer',
-            'state.id' => 'sometimes|required|integer',
-            'boxes' => 'sometimes|required|array',
+            'state.id' => 'sometimes|integer',
+            'boxes' => 'sometimes|array',
             'boxes.*.id' => 'required_with:boxes|nullable|integer',
-            'boxes.*.article.id' => 'required_with:boxes|required|integer',
-            'boxes.*.lot' => 'required_with:boxes|required|string',
-            'boxes.*.gs1128' => 'required_with:boxes|required|string',
-            'boxes.*.grossWeight' => 'required_with:boxes|required|numeric',
-            'boxes.*.netWeight' => 'required_with:boxes|required|numeric',
+            'boxes.*.article.id' => 'required_with:boxes|integer',
+            'boxes.*.lot' => 'required_with:boxes|string',
+            'boxes.*.gs1128' => 'required_with:boxes|string',
+            'boxes.*.grossWeight' => 'required_with:boxes|numeric',
+            'boxes.*.netWeight' => 'required_with:boxes|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -122,7 +122,7 @@ class PalletController extends Controller
         $updatedPallet = Pallet::find($id);
 
         //Updating State
-        if (array_key_exists("state", $pallet)) {
+        if ($request->has('state')) {
             if ($updatedPallet->state_id != $pallet['state']['id']) {
                 $updatedPallet->state_id = $pallet['state']['id'];
             }
