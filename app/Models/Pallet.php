@@ -78,6 +78,8 @@ class Pallet extends Model
                return null;
         }
     }
+
+    
     
 
 

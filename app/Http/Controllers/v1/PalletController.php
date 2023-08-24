@@ -129,7 +129,7 @@ class PalletController extends Controller
         }
 
         //Updating Observations
-        if (array_key_exists("observations", $pallet)){
+        if ($request->has('observations')){
             if($pallet['observations'] != $updatedPallet->observations){
                 $updatedPallet->observations = $pallet['observations'];
             }
@@ -175,6 +175,7 @@ class PalletController extends Controller
 
                 foreach ($boxes as $index => $updatedBox) {
                     if ($updatedBox['id'] == $box->box->id) {
+                        
                         $box->box->article_id = $updatedBox['article']['id'];
                         $box->box->lot = $updatedBox['lot'];
                         $box->box->gs1_128 = $updatedBox['gs1128'];
