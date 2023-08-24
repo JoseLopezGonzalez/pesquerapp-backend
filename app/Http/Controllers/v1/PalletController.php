@@ -124,6 +124,10 @@ class PalletController extends Controller
         //Updating State
         if ($request->has('state')) {
             if ($updatedPallet->state_id != $pallet['state']['id']) {
+                if($updatedPallet->store != null && $pallet['state']['id'] != 2){
+                    $updatedPallet->unStore();
+                    //return response()->json(['errors' => ['state' => ['El palet se encuentra en un almacen, no se puede cambiar el estado']]], 422);
+                }
                 $updatedPallet->state_id = $pallet['state']['id'];
             }
         }
@@ -213,8 +217,6 @@ class PalletController extends Controller
                 $newPalletBox->save();
             }
         }
-
-       /*  $palletTEST = Pallet::find($updatedPallet->id); */
 
         $updatedPallet->refresh();
 
