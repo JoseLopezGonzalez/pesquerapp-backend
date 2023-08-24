@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Pallet extends Model
 {
     use HasFactory;
@@ -85,6 +86,16 @@ class Pallet extends Model
         {
             $pallet->delete();
         }
+    }
+
+    public function delete()
+    {
+        foreach ($this->boxes as $box) {
+            $box->delete();
+        }
+        
+        parent::delete(); 
+        
     }
 
     
