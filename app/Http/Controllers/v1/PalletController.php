@@ -229,10 +229,7 @@ class PalletController extends Controller
      */
     public function destroy(string $id)
     {
-        $pallet = Pallet::find($id);
-        $pallet->boxes->map(function ($box) {
-            $box->box->delete();
-        });
+        $pallet = Pallet::findOrFail($id);
         $pallet->delete();
 
         return response()->json(['message' => 'Palet eliminado correctamente'], 200);
