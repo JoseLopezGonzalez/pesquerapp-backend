@@ -26,9 +26,9 @@ class PalletBox extends Model
 
     public function delete()
     {
-        echo 'HOLAAAAAAAA';
-        //$this->box->delete();
-        //var_dump($this->box); die();
-       //parent::delete();
+       
+        $this->box->delete();
+        
+       parent::delete();
     }
 }
