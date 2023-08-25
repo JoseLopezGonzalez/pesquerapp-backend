@@ -101,7 +101,7 @@ class PalletController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
             'observations' => 'sometimes|nullable|string',
-            'storeId' => 'sometimes|nullable|integer',
+            'store' => 'sometimes|nullable|integer',
             'state.id' => 'sometimes|integer',
             'boxes' => 'sometimes|array',
             'boxes.*.id' => 'sometimes|nullable|integer',
@@ -143,8 +143,8 @@ class PalletController extends Controller
         $updatedPallet->save();
 
         // Updating Store
-        if (array_key_exists("storeId", $pallet)) {
-            $storeId = $pallet['storeId'];
+        if (array_key_exists("store", $pallet)) {
+            $storeId = $pallet['store'];
 
             $isPalletStored = StoredPallet::where('pallet_id', $updatedPallet->id)->first();
             if ($isPalletStored) {
