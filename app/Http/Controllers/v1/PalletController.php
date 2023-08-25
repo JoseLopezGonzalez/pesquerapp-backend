@@ -104,7 +104,7 @@ class PalletController extends Controller
             'storeId' => 'sometimes|nullable|integer',
             'state.id' => 'sometimes|integer',
             'boxes' => 'sometimes|array',
-            'boxes.*.id' => 'required_with:boxes|nullable|integer',
+            'boxes.*.id' => 'sometimes|nullable|integer',
             'boxes.*.article.id' => 'required_with:boxes|integer',
             'boxes.*.lot' => 'required_with:boxes|string',
             'boxes.*.gs1128' => 'required_with:boxes|string',
