@@ -39,7 +39,7 @@ class Store extends Model
         //$netWeightPallets = 0;
 
         return $this->pallets->reduce(function ($carry, $pallet) {
-            return $carry + $pallet->netWeight;
+            return $carry + $pallet->pallet->netWeight;
         }, 0);
 
        /*  $this->pallets->map(function ($pallet) {
