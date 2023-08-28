@@ -37,9 +37,14 @@ class Store extends Model
     public function getNetWeightPalletsAttribute()
     {
         $netWeightPallets = 0;
-        foreach ($this->pallets as $pallet) {
+        $this->pallets->map(function ($pallet) {
+            global $netWeightPallets;
+            $netWeightPallets += $pallet->netWeight;
+        });
+
+        /* foreach ($this->pallets as $pallet) {
             $netWeightPallets += $pallet->netWeight; //Implementar atributo accesor en pallet pesoNeto
-        }
+        } */
         return $netWeightPallets;
     }
 
