@@ -52,7 +52,7 @@ class Store extends Model
         /* foreach ($this->pallets as $pallet) {
             $netWeightPallets += $pallet->netWeight; //Implementar atributo accesor en pallet pesoNeto
         } */
-        return $netWeightPallets;
+        //return $netWeightPallets;
     }
 
     //Accessor 
