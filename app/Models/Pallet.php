@@ -85,8 +85,6 @@ class Pallet extends Model
         if($pallet)
         {
             $pallet->delete();
-        }else{
-            echo 'hola'; // error
         }
     }
 
