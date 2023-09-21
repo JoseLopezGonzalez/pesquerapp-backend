@@ -77,7 +77,7 @@ class Pallet extends Model
             return $pallet->store_id;
         } else{
             
-               return 9999;
+               return null;
 
         }
     }
