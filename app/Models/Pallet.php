@@ -76,8 +76,8 @@ class Pallet extends Model
         {
             return $pallet->store_id;
         } else{
-            echo 'NO TIENE';
-               return null;
+            
+               return 9999;
 
         }
     }
