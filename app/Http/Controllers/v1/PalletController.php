@@ -129,7 +129,6 @@ class PalletController extends Controller
             //echo '$updatedPallet->state_id = '.$updatedPallet->state_id . '!= $pallet[state][id] = '.$pallet["state"]["id"];
             if ($updatedPallet->state_id != $pallet['state']['id']) {
                 // UnStoring pallet if it is in a store
-                echo 'Store: '.$updatedPallet->store;
                 //echo '$updatedPallet->store ='. $updatedPallet->store. '!= null && $pallet[state][id] ='.$pallet['state']['id'].' != 2';
                 if($updatedPallet->store != null && $pallet['state']['id'] != 2){
                     $updatedPallet->unStore();
