@@ -112,6 +112,9 @@ class PalletController extends Controller
             'boxes.*.netWeight' => 'required_with:boxes|numeric',
         ]);
 
+        //Cuidado con cambiar validación en la opcion de cambiar a enviado un palet
+
+        
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422); // Código de estado 422 - Unprocessable Entity
         }
