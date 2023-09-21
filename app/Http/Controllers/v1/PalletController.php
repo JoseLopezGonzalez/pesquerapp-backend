@@ -126,10 +126,11 @@ class PalletController extends Controller
 
         //Updating State
         if ($request->has('state')) {
-            echo '$updatedPallet->state_id = '.$updatedPallet->state_id . '!= $pallet[state][id] = '.$pallet["state"]["id"];
+            //echo '$updatedPallet->state_id = '.$updatedPallet->state_id . '!= $pallet[state][id] = '.$pallet["state"]["id"];
             if ($updatedPallet->state_id != $pallet['state']['id']) {
                 // UnStoring pallet if it is in a store
-                echo '$updatedPallet->store ='. $updatedPallet->store. '!= null && $pallet[state][id] ='.$pallet['state']['id'].' != 2';
+                echo 'Store: '.$updatedPallet->store;
+                //echo '$updatedPallet->store ='. $updatedPallet->store. '!= null && $pallet[state][id] ='.$pallet['state']['id'].' != 2';
                 if($updatedPallet->store != null && $pallet['state']['id'] != 2){
                     $updatedPallet->unStore();
                     //return response()->json(['errors' => ['state' => ['El palet se encuentra en un almacen, no se puede cambiar el estado']]], 422);
