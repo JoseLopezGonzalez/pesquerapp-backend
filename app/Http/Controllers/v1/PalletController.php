@@ -226,7 +226,11 @@ class PalletController extends Controller
 
         $updatedPallet->refresh();
 
-        return response()->json($updatedPallet->toArrayAssoc(), 201);
+       // return new PalletResource(Pallet::findOrFail($id));
+
+        return response()->json(new PalletResource(Pallet::findOrFail($id)), 201);
+
+        //return response()->json($updatedPallet->toArrayAssoc(), 201);
     }
 
     /**
