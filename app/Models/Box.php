@@ -32,7 +32,7 @@ class Box extends Model
             'gs1128' => $this->gs1_128,
             'grossWeight' => $this->gross_weight,
             'netWeight' => $this->net_weight,
-            'createdAt' => $this->created_at->format('Y-m-d'), //formatear para mostrar solo fecha
+            'createdAt' => $this->created_at, //formatear para mostrar solo fecha
         ];
     }
 }
