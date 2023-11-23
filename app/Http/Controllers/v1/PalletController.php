@@ -16,14 +16,41 @@ class PalletController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+     /*return response()->json(['message' => 'Hola Mundo'], 200);*/
+    /* return PalletResource::collection(Pallet::all()); */
+
+   /*  public function index()
     {
-        /*return response()->json(['message' => 'Hola Mundo'], 200);*/
-
-
-        /* return PalletResource::collection(Pallet::all()); */
-
         return PalletResource::collection(Pallet::paginate(10));
+
+    } */
+
+    public function index(Request $request)
+    {
+        $query = Pallet::query();
+
+        // Filtro por texto (puede ser el nombre del producto, por ejemplo)
+        if ($request->has('text')) {
+            $text = $request->input('text');
+            $query->where('id', 'like', "%{$text}%");
+            /* Implementar para que el texto sirva para buscar coincidencias con el nombre de articulo de alguna de sus cajas */
+        }
+
+        // Filtro por rango de fechas
+        /* if ($request->has('startDate') && $request->has('endDate')) {
+            $startDate = $request->input('startDate');
+            $endDate = $request->input('endDate');
+            $query->whereBetween('fecha_columna', [$startDate, $endDate]);
+        } */
+
+        // Otros filtros...
+        // Por ejemplo, si tienes un filtro por peso, estado, ubicación, etc.,
+        // puedes seguir agregando condiciones de manera similar.
+
+        // Paginación
+        $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
+        return PalletResource::collection($query->paginate($perPage));
     }
 
     /**
