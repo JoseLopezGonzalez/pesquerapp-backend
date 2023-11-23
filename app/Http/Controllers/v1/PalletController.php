@@ -19,7 +19,11 @@ class PalletController extends Controller
     public function index()
     {
         /*return response()->json(['message' => 'Hola Mundo'], 200);*/
-        return PalletResource::collection(Pallet::all());
+
+
+        /* return PalletResource::collection(Pallet::all()); */
+
+        return PalletResource::collection(Pallet::paginate(10));
     }
 
     /**
