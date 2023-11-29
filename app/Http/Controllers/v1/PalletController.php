@@ -37,6 +37,10 @@ class PalletController extends Controller
             /* Implementar para que el texto sirva para buscar coincidencias con el nombre de articulo de alguna de sus cajas */
         }
 
+        if ($request->has('storeds') && $request->input('storeds') == 'true') {
+            $query->where('state_id' , 2);
+        }
+
         // Filtro por rango de fechas
         /* if ($request->has('startDate') && $request->has('endDate')) {
             $startDate = $request->input('startDate');
