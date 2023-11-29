@@ -41,6 +41,10 @@ class PalletController extends Controller
             $query->where('state_id' , 2);
         }
 
+        if ($request->has('shippeds') && $request->input('shippeds') == 'on') {
+            $query->where('state_id' , 3);
+        }
+
         // Filtro por rango de fechas
         /* if ($request->has('startDate') && $request->has('endDate')) {
             $startDate = $request->input('startDate');
