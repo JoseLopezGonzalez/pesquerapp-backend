@@ -82,6 +82,11 @@ class Pallet extends Model
         }
     }
 
+    public function storedPallet()
+    {
+        return $this->hasOne(StoredPallet::class, 'pallet_id');
+    }
+
    
 
     public function unStore(){

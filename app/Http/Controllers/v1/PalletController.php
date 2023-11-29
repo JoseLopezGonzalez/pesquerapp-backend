@@ -30,11 +30,9 @@ class PalletController extends Controller
     {
         $query = Pallet::query();
 
-        // Filtro por texto (puede ser el nombre del producto, por ejemplo)
         if ($request->has('text')) {
             $text = $request->input('text');
             $query->where('id', 'like', "%{$text}%");
-            /* Implementar para que el texto sirva para buscar coincidencias con el nombre de articulo de alguna de sus cajas */
         }
 
         if ($request->has('storeds') && $request->input('storeds') == 'on') {
@@ -45,7 +43,7 @@ class PalletController extends Controller
             $query->where('state_id' , 3);
         }
 
-        /* Filtros para unlocateds y locateds */
+
         if ($request->has('unlocateds') && $request->input('unlocateds') == 'on') {
             $query->whereDoesntHave('storedPallets', function ($subQuery) {
                 $subQuery->whereNull('position');
@@ -58,20 +56,6 @@ class PalletController extends Controller
             });
         }
 
-        
-
-        // Filtro por rango de fechas
-        /* if ($request->has('startDate') && $request->has('endDate')) {
-            $startDate = $request->input('startDate');
-            $endDate = $request->input('endDate');
-            $query->whereBetween('fecha_columna', [$startDate, $endDate]);
-        } */
-
-        // Otros filtros...
-        // Por ejemplo, si tienes un filtro por peso, estado, ubicación, etc.,
-        // puedes seguir agregando condiciones de manera similar.
-
-        // Paginación
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
         return PalletResource::collection($query->paginate($perPage));
     }
