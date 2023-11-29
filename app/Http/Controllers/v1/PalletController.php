@@ -37,7 +37,7 @@ class PalletController extends Controller
             /* Implementar para que el texto sirva para buscar coincidencias con el nombre de articulo de alguna de sus cajas */
         }
 
-        if ($request->has('storeds') && $request->input('storeds') == 'true') {
+        if ($request->has('storeds') && $request->input('storeds') == 'on') {
             $query->where('state_id' , 2);
         }
 
