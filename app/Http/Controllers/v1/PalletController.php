@@ -28,48 +28,72 @@ class PalletController extends Controller
 
     public function index(Request $request)
     {
+
+
+        $pallets = Pallet::all();
+
+        // Filter pallets based on the 'unlocateds' option
+        if ($request->has('unlocateds') && $request->input('unlocateds') == 'on') {
+            $pallets = $pallets->filter(function ($pallet) {
+                return $pallet->position === null;
+            });
+        }
+
+        // Filter pallets based on the 'locateds' option
+        if ($request->has('locateds') && $request->input('locateds') == 'on') {
+            $pallets = $pallets->filter(function ($pallet) {
+                return $pallet->position !== null;
+            });
+        }
+
+        // Filter pallets based on the 'storeds' option
+        if ($request->has('storeds') && $request->input('storeds') == 'on') {
+            $pallets = $pallets->filter(function ($pallet) {
+                return $pallet->state_id === 2;
+            });
+        }
+
+        // Filter pallets based on the 'shippeds' option
+        if ($request->has('shippeds') && $request->input('shippeds') == 'on') {
+            $pallets = $pallets->filter(function ($pallet) {
+                return $pallet->state_id === 3;
+            });
+        }
+
+        // Filter pallets based on the 'text' option
+        if ($request->has('text')) {
+            $text = $request->input('text');
+            $pallets = $pallets->filter(function ($pallet) use ($text) {
+                return strpos($pallet->id, $text) !== false;
+            });
+        }
+
+
+
+        /* Modificar esto para el cambio de $query a Pallet::all() */
+
+        /* 
         $query = Pallet::query();
 
-        // Filtro por texto (puede ser el nombre del producto, por ejemplo)
+        
         if ($request->has('text')) {
             $text = $request->input('text');
             $query->where('id', 'like', "%{$text}%");
-            /* Implementar para que el texto sirva para buscar coincidencias con el nombre de articulo de alguna de sus cajas */
         }
 
         if ($request->has('storeds') && $request->input('storeds') == 'on') {
             $query->where('state_id' , 2);
-        }
-
-        if ($request->has('shippeds') && $request->input('shippeds') == 'on') {
-            $query->where('state_id' , 3);
-        }
-
-        /* Filtros para unlocateds y locateds */
-        if ($request->has('unlocateds') && $request->input('unlocateds') == 'on') {
-            $query->whereNull('position');
-        }
-
-        if ($request->has('locateds') && $request->input('locateds') == 'on') {
-            $query->whereNotNull('position');
-        }
-
-        
-
-        // Filtro por rango de fechas
-        /* if ($request->has('startDate') && $request->has('endDate')) {
-            $startDate = $request->input('startDate');
-            $endDate = $request->input('endDate');
-            $query->whereBetween('fecha_columna', [$startDate, $endDate]);
         } */
 
-        // Otros filtros...
-        // Por ejemplo, si tienes un filtro por peso, estado, ubicación, etc.,
-        // puedes seguir agregando condiciones de manera similar.
+       
+        /* $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
+        return PalletResource::collection($query->paginate($perPage)); */
 
-        // Paginación
+        /* Pagination */
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
-        return PalletResource::collection($query->paginate($perPage));
+        return PalletResource::collection($pallets->paginate($perPage));
+        
+
     }
 
     /**
