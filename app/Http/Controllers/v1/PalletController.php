@@ -100,26 +100,17 @@ class PalletController extends Controller
         if ($request->has('weights')) {
             $weights = $request->input('weights');
             if (array_key_exists('netWeight', $weights)) {
-                $query->whereHas('boxes', function ($subQuery) use ($weights) {
-                    $subQuery->selectRaw('SUM(net_weight) as total_net_weight');
-                    $subQuery->havingRaw('total_net_weight >= ?', [$weights['netWeight']['min']]);
-                    $subQuery->havingRaw('total_net_weight <= ?', [$weights['netWeight']['max']]);
-                });
+                $query->join('boxes', 'pallets.id', '=', 'boxes.pallet_id')
+                    ->select('pallets.*')
+                    ->selectRaw('SUM(boxes.box->\'net_weight\') as total_net_weight')
+                    ->groupBy('pallets.id')
+                    ->havingRaw('total_net_weight >= ?', [$weights['netWeight']['min']])
+                    ->havingRaw('total_net_weight <= ?', [$weights['netWeight']['max']]);
             }
         }
 
         /*  para request:  weights[grossWeight][min]=568*/
-        if ($request->has('weights')) {
-            $weights = $request->input('weights');
-            if (array_key_exists('grossWeight', $weights)) {
-                $query->whereHas('boxes', function ($subQuery) use ($weights) {
-                    $subQuery->whereHas('box', function ($subSubQuery) use ($weights) {
-                        $subSubQuery->where('gross_weight', '>=', $weights['grossWeight']['min']);
-                        $subSubQuery->where('gross_weight', '<=', $weights['grossWeight']['max']);
-                    });
-                });
-            }
-        }
+        
 
 
 
