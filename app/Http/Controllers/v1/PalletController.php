@@ -30,7 +30,11 @@ class PalletController extends Controller
     {
 
 
-        $pallets = Pallet::all();
+/*         $pallets = Pallet::all(); */
+        $query = Pallet::query();
+
+
+
 
         // Filter pallets based on the 'unlocateds' option
         if ($request->has('unlocateds') && $request->input('unlocateds') == 'on') {
@@ -91,8 +95,9 @@ class PalletController extends Controller
 
         /* Pagination */
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
-        return PalletResource::collection($pallets->paginate($perPage));
-        
+        $pallets = $query->paginate($perPage);
+        return PalletResource::collection($pallets);
+
 
     }
 
