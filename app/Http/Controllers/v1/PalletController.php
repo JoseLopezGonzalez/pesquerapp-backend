@@ -80,7 +80,7 @@ class PalletController extends Controller
         /* request: lots=[16514685,65165165,651651] */
         if ($request->has('lots')) {
             $lots = $request->input('lots');
-            $query->whereHas('palletBox', function ($subQuery) use ($lots) {
+            $query->whereHas('boxes', function ($subQuery) use ($lots) {
                 $subQuery->whereHas('box', function ($subSubQuery) use ($lots) {
                     $subSubQuery->whereIn('lot', $lots);
                 });
