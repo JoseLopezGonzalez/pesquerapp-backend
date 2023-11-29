@@ -96,15 +96,14 @@ class PalletController extends Controller
             });
         }
 
-        /*  para request:  weights[netWeight][min]=568*/
+        /*  para request:  weights[netWeight][min]=568 siendo el peso del palet completo (suma de todas las cajas)*/
         if ($request->has('weights')) {
             $weights = $request->input('weights');
             if (array_key_exists('netWeight', $weights)) {
                 $query->whereHas('boxes', function ($subQuery) use ($weights) {
-                    $subQuery->whereHas('box', function ($subSubQuery) use ($weights) {
-                        $subSubQuery->where('net_weight', '>=', $weights['netWeight']['min']);
-                        $subSubQuery->where('net_weight', '<=', $weights['netWeight']['max']);
-                    });
+                    $subQuery->selectRaw('SUM(net_weight) as total_net_weight');
+                    $subQuery->havingRaw('total_net_weight >= ?', [$weights['netWeight']['min']]);
+                    $subQuery->havingRaw('total_net_weight <= ?', [$weights['netWeight']['max']]);
                 });
             }
         }
