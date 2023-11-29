@@ -102,7 +102,7 @@ class PalletController extends Controller
             if (array_key_exists('netWeight', $weights)) {
                 $query->join('boxes', 'pallets.id', '=', 'boxes.pallet_id')
                     ->select('pallets.*')
-                    ->selectRaw('SUM(boxes.box->\'net_weight\') as total_net_weight')
+                    ->selectRaw('SUM(boxes.net_weight) as total_net_weight')
                     ->groupBy('pallets.id')
                     ->havingRaw('total_net_weight >= ?', [$weights['netWeight']['min']])
                     ->havingRaw('total_net_weight <= ?', [$weights['netWeight']['max']]);
