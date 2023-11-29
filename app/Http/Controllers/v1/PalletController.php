@@ -77,6 +77,14 @@ class PalletController extends Controller
             $query->where('observations', 'like', "%{$observations}%");
         }
 
+        /* request: lots=[16514685,65165165,651651] */
+        if ($request->has('lots')) {
+            $lots = $request->input('lots');
+            $query->whereHas('boxes', function ($subQuery) use ($lots) {
+                $subQuery->whereIn('lot', $lots);
+            });
+        }
+
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
         return PalletResource::collection($query->paginate($perPage));
     }
