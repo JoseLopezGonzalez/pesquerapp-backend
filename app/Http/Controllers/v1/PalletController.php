@@ -45,6 +45,17 @@ class PalletController extends Controller
             $query->where('state_id' , 3);
         }
 
+        /* Filtros para unlocateds y locateds */
+        if ($request->has('unlocateds') && $request->input('unlocateds') == 'on') {
+            $query->whereNull('position');
+        }
+
+        if ($request->has('locateds') && $request->input('locateds') == 'on') {
+            $query->whereNotNull('position');
+        }
+
+        
+
         // Filtro por rango de fechas
         /* if ($request->has('startDate') && $request->has('endDate')) {
             $startDate = $request->input('startDate');

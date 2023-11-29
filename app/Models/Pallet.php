@@ -82,6 +82,8 @@ class Pallet extends Model
         }
     }
 
+   
+
     public function unStore(){
         $pallet = StoredPallet::where('pallet_id', $this->id)->first();
         if($pallet)
