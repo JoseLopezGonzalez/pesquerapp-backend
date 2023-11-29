@@ -77,12 +77,21 @@ class PalletController extends Controller
             $query->where('observations', 'like', "%{$observations}%");
         }
 
-        /* request: lots=[16514685,65165165,651651] */
         if ($request->has('lots')) {
             $lots = $request->input('lots');
             $query->whereHas('boxes', function ($subQuery) use ($lots) {
                 $subQuery->whereHas('box', function ($subSubQuery) use ($lots) {
                     $subSubQuery->whereIn('lot', $lots);
+                });
+            });
+        }
+
+        /* En vez de lots , con article */
+        if ($request->has('products')) {
+            $articles = $request->input('products');
+            $query->whereHas('boxes', function ($subQuery) use ($articles) {
+                $subQuery->whereHas('box', function ($subSubQuery) use ($articles) {
+                    $subSubQuery->whereIn('article_id', $articles);
                 });
             });
         }
