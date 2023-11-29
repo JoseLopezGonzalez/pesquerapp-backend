@@ -61,8 +61,15 @@ class PalletController extends Controller
         /* Dates */
 
         if ($request->has('dates') ) {
-            $query->where('created_at', '>=', $request->input('dates')['start']);
-            $query->where('created_at', '<=', $request->input('dates')['end']);
+            $startDate = $request->input('dates')['start'];
+            $endDate = $request->input('dates')['end'];
+        
+            // Asegúrate de ajustar las horas de inicio y fin para cubrir todo el día
+            $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
+            $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
+        
+            $query->where('created_at', '>=', $startDate);
+            $query->where('created_at', '<=', $endDate);
         }
 
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
