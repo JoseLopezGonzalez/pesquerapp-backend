@@ -72,6 +72,11 @@ class PalletController extends Controller
             $query->where('created_at', '<=', $endDate);
         }
 
+        if($request->has('observations')){
+            $observations = $request->input('observations');
+            $query->where('observations', 'like', "%{$observations}%");
+        }
+
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
         return PalletResource::collection($query->paginate($perPage));
     }
