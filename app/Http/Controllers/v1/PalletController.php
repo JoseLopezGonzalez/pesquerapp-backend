@@ -96,18 +96,43 @@ class PalletController extends Controller
             });
         }
 
-        /*  para request:  weights[netWeight][min]=568 siendo el peso del palet completo (suma de todas las cajas)*/
+        /*  para request:  weights[netWeight][min]=... siendo el peso a comparar el peso del palet completo (suma de todas las cajas)*/
         if ($request->has('weights')) {
             $weights = $request->input('weights');
             if (array_key_exists('netWeight', $weights)) {
-                $query->join('pallet_boxes', 'pallets.id', '=', 'pallet_boxes.pallet_id')
-                    ->select('pallets.*')
-                    ->selectRaw('SUM(pallet_boxes.net_weight) as total_net_weight')
-                    ->groupBy('pallets.id')
-                    ->havingRaw('total_net_weight >= ?', [$weights['netWeight']['min']])
-                    ->havingRaw('total_net_weight <= ?', [$weights['netWeight']['max']]);
+                if (array_key_exists('min', $weights['netWeight'])) {
+                    $query->whereHas('boxes', function ($subQuery) use ($weights) {
+                        $subQuery->whereHas('box', function ($subSubQuery) use ($weights) {
+                            $subSubQuery->havingRaw('sum(net_weight) >= ?', [$weights['netWeight']['min']]);
+                        });
+                    });
+                }
+                if (array_key_exists('max', $weights['netWeight'])) {
+                    $query->whereHas('boxes', function ($subQuery) use ($weights) {
+                        $subQuery->whereHas('box', function ($subSubQuery) use ($weights) {
+                            $subSubQuery->havingRaw('sum(net_weight) <= ?', [$weights['netWeight']['max']]);
+                        });
+                    });
+                }
+            }
+            if (array_key_exists('grossWeight', $weights)) {
+                if (array_key_exists('min', $weights['grossWeight'])) {
+                    $query->whereHas('boxes', function ($subQuery) use ($weights) {
+                        $subQuery->whereHas('box', function ($subSubQuery) use ($weights) {
+                            $subSubQuery->havingRaw('sum(gross_weight) >= ?', [$weights['grossWeight']['min']]);
+                        });
+                    });
+                }
+                if (array_key_exists('max', $weights['grossWeight'])) {
+                    $query->whereHas('boxes', function ($subQuery) use ($weights) {
+                        $subQuery->whereHas('box', function ($subSubQuery) use ($weights) {
+                            $subSubQuery->havingRaw('sum(gross_weight) <= ?', [$weights['grossWeight']['max']]);
+                        });
+                    });
+                }
             }
         }
+
 
         /*  para request:  weights[grossWeight][min]=568*/
         
