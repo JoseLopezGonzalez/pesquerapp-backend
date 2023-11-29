@@ -96,6 +96,34 @@ class PalletController extends Controller
             });
         }
 
+        /*  para request:  weights[netWeight][min]=568*/
+        if ($request->has('weights')) {
+            $weights = $request->input('weights');
+            if (array_key_exists('netWeight', $weights)) {
+                $query->whereHas('boxes', function ($subQuery) use ($weights) {
+                    $subQuery->whereHas('box', function ($subSubQuery) use ($weights) {
+                        $subSubQuery->where('net_weight', '>=', $weights['netWeight']['min']);
+                        $subSubQuery->where('net_weight', '<=', $weights['netWeight']['max']);
+                    });
+                });
+            }
+        }
+
+        /*  para request:  weights[grossWeight][min]=568*/
+        if ($request->has('weights')) {
+            $weights = $request->input('weights');
+            if (array_key_exists('grossWeight', $weights)) {
+                $query->whereHas('boxes', function ($subQuery) use ($weights) {
+                    $subQuery->whereHas('box', function ($subSubQuery) use ($weights) {
+                        $subSubQuery->where('gross_weight', '>=', $weights['grossWeight']['min']);
+                        $subSubQuery->where('gross_weight', '<=', $weights['grossWeight']['max']);
+                    });
+                });
+            }
+        }
+
+
+
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
         return PalletResource::collection($query->paginate($perPage));
     }
