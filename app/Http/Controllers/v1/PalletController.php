@@ -47,13 +47,13 @@ class PalletController extends Controller
 
         /* Filtros para unlocateds y locateds */
         if ($request->has('unlocateds') && $request->input('unlocateds') == 'on') {
-            $query->whereDoesntHave('stored_pallets', function ($subQuery) {
+            $query->whereDoesntHave('storedPallets', function ($subQuery) {
                 $subQuery->whereNull('position');
             });
         }
 
         if ($request->has('locateds') && $request->input('locateds') == 'on') {
-            $query->whereHas('stored_pallets', function ($subQuery) {
+            $query->whereHas('storedPallets', function ($subQuery) {
                 $subQuery->whereNotNull('position');
             });
         }
