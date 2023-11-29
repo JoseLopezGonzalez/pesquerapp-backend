@@ -47,7 +47,7 @@ class PalletController extends Controller
 
 
         if ($request->has('unlocateds') && $request->input('unlocateds') == 'on') {
-            $query->whereDoesntHave('storedPallet', function ($subQuery) {
+            $query->whereHas('storedPallet', function ($subQuery) {
                 $subQuery->whereNull('position');
             });
         }
