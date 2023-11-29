@@ -58,6 +58,13 @@ class PalletController extends Controller
             });
         }
 
+        /* Dates */
+
+        if ($request->has('dates') ) {
+            $query->where('created_at', '>=', $request->input('dates')['start']);
+            $query->where('created_at', '<=', $request->input('dates')['end']);
+        }
+
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
         return PalletResource::collection($query->paginate($perPage));
     }
