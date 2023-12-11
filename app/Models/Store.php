@@ -93,4 +93,16 @@ class Store extends Model
             'map' => json_decode($this->map, true),
         ];
     }
+
+    public function toSimpleArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'temperature' => $this->temperature,
+            'capacity' => $this->capacity,
+            'netWeightPallets' => $this->netWeightPallets,
+            'totalNetWeight' => $this->totalNetWeight,
+        ];
+    }
 }

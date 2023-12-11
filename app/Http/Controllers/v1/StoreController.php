@@ -15,7 +15,9 @@ class StoreController extends Controller
      */
     public function index()
     {
-        return StoreResource::collection(Store::all());
+        /* return StoreResource::collection(Store::all()); */
+        /* Return toSimpleArray */
+        return Store::all()->toSimpleArray();
 
     }
 
