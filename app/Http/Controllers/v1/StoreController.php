@@ -15,7 +15,9 @@ class StoreController extends Controller
      */
     public function index()
     {
-        return Store::all()->map->toSimpleArray();
+        $stores = Store::all()->map->toSimpleArray();
+
+    return ['data' => $stores];
     }
 
     /**
