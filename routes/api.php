@@ -43,5 +43,5 @@ Route::apiResource('v1/articles/products', ProductController::class)->only(['sho
 Route::apiResource('v1/customers', CustomerController::class); 
 Route::apiResource('v1/orders', OrderController::class); 
 Route::apiResource('v1/transports', TransportController::class);
-Route::apiResuirce('v1/salespeople', SalespersonController::class);
+Route::apiResource('v1/salespeople', SalespersonController::class);
 
