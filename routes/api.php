@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\v1\StoreController;
 use App\Http\Controllers\v1\StoredPalletController;
+use App\Http\Controllers\v1\TransportController;
 use App\Http\Resources\v1\CustomerResource;
 
 /*
@@ -40,4 +41,5 @@ Route::apiResource('v1/stores', StoreController::class)->only(['show', 'index'])
 Route::apiResource('v1/articles/products', ProductController::class)->only(['show', 'index']);
 Route::apiResource('v1/customers', CustomerController::class); 
 Route::apiResource('v1/orders', OrderController::class); 
+Route::apiResource('v1/transports', TransportController::class);
 
