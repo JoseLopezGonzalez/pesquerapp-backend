@@ -14,7 +14,7 @@ class SalespersonController extends Controller
      */
     public function index()
     {
-       /*  return SalespersonResource::collection(Salesperson::all());  */
+        return SalespersonResource::collection(Salesperson::all()); 
     }
 
     /**
