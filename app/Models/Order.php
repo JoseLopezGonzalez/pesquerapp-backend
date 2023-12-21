@@ -30,4 +30,9 @@ class Order extends Model
     {
         return $this->belongsToMany(Pallet::class, 'order_pallets');
     }
+
+    public function payment_term()
+    {
+        return $this->belongsTo(PaymentTerm::class);
+    }
 }
