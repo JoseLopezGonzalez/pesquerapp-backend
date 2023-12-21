@@ -13,4 +13,13 @@ class Country extends Model
     {
         return $this->hasMany(Customer::class);
     }
+
+    public function toArrayAssoc(){
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'createdAt' => $this->created_at,
+            'updatedAt' => $this->updated_at,
+        ];
+    }
 }
