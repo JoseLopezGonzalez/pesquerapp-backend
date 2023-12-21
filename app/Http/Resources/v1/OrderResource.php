@@ -28,7 +28,7 @@ class OrderResource extends JsonResource
             'transport' => $this->transport->toArrayAssoc(),
             'entryDate' => $this->entry_date,
             'loadDate' => $this->load_date,
-            'status' => $this->status, 
+            'status' => $this->status,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];

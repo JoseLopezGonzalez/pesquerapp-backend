@@ -31,4 +31,34 @@ class Customer extends Model
         return $this->belongsTo(Transport::class);
     }
 
+    public function toArrayAssoc(){
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'vatNumber' => $this->vat_number,
+            'paymentTerm' => $this->payment_term->toArrayAssoc(),
+            'billingAddress' => $this->billing_address,
+            'shippingAddress' => $this->shipping_address,
+            'transportationNotes' => $this->transportation_notes,
+            'productionNotes' => $this->production_notes,
+            'accountingNotes' => $this->accounting_notes,
+            'salesperson' => $this->salesperson->toArrayAssoc(),
+            'emails' => $this->emails,
+            'contactInfo' => $this->contact_info,
+            'country' => $this->country->toArrayAssoc(),
+            'transport' => $this->transport->toArrayAssoc(),
+            'createdAt' => $this->created_at,
+            'updatedAt' => $this->updated_at,
+        ];
+    }
+
+    public function toArrayAssocShort(){
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'vatNumber' => $this->vat_number,
+            'billingAddress' => $this->billing_address,
+        ];
+    }
+
 }
