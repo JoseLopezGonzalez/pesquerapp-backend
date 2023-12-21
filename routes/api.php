@@ -5,6 +5,7 @@ use App\Http\Controllers\v1\LocatePalletController;
 use App\Http\Controllers\v1\OrderController;
 use App\Http\Controllers\v1\PalletController;
 use App\Http\Controllers\v1\ProductController;
+use App\Http\Controllers\v1\SalespersonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,4 +43,5 @@ Route::apiResource('v1/articles/products', ProductController::class)->only(['sho
 Route::apiResource('v1/customers', CustomerController::class); 
 Route::apiResource('v1/orders', OrderController::class); 
 Route::apiResource('v1/transports', TransportController::class);
+Route::apiResuirce('v1/salespeople', SalespersonController::class);
 
