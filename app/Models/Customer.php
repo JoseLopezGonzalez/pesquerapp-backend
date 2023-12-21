@@ -31,6 +31,11 @@ class Customer extends Model
         return $this->belongsTo(Transport::class);
     }
 
+    public function payment_term()
+    {
+        return $this->belongsTo(PaymentTerm::class);
+    }
+
     public function toArrayAssoc(){
         return [
             'id' => $this->id,
