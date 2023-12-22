@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->text('buyer_reference')->nullable();
             $table->foreignId('customer_id')->constrained(); // Clave foránea a customers
             $table->foreignId('payment_term_id')->constrained(); // Clave foránea a payment_terms
             $table->text('billing_address');
