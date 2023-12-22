@@ -4,6 +4,7 @@ use App\Http\Controllers\v1\CustomerController;
 use App\Http\Controllers\v1\LocatePalletController;
 use App\Http\Controllers\v1\OrderController;
 use App\Http\Controllers\v1\PalletController;
+use App\Http\Controllers\v1\PaymentTermController;
 use App\Http\Controllers\v1\ProductController;
 use App\Http\Controllers\v1\SalespersonController;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use App\Http\Controllers\v1\StoreController;
 use App\Http\Controllers\v1\StoredPalletController;
 use App\Http\Controllers\v1\TransportController;
 use App\Http\Resources\v1\CustomerResource;
+use App\Models\PaymentTerm;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +46,4 @@ Route::apiResource('v1/customers', CustomerController::class);
 Route::apiResource('v1/orders', OrderController::class); 
 Route::apiResource('v1/transports', TransportController::class);
 Route::apiResource('v1/salespeople', SalespersonController::class);
-
+Route::apiResource('v1/payment_terms' , PaymentTermController::class);
