@@ -17,7 +17,6 @@ class PaymentTermResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'days' => $this->days,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];

@@ -29,6 +29,7 @@ class OrderResource extends JsonResource
             'entryDate' => $this->entry_date,
             'loadDate' => $this->load_date,
             'status' => $this->status,
+            'pallets' => $this->pallets->toArray(),
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];
