@@ -38,7 +38,7 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return new OrderResource(Order::findOrFail($id));
     }
 
     /**
