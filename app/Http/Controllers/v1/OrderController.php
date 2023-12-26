@@ -92,22 +92,48 @@ class OrderController extends Controller
         ]);
 
         $order = Order::findOrFail($id);
-        $order->buyer_reference = $request->buyerReference;
-        $order->payment_term_id = $request->paymentTerm['id'];
-        $order->billing_address = $request->billingAddress;
-        $order->shipping_address = $request->shippingAddress;
-        $order->transportation_notes = $request->transportationNotes;
-        $order->production_notes = $request->productionNotes;
-        $order->accounting_notes = $request->accountingNotes;
-        $order->salesperson_id = $request->salesperson['id'];
-        $order->emails = $request->emails;
-        $order->transport_id = $request->transport['id'];
-        $order->entry_date = $request->entryDate;
-        $order->load_date = $request->loadDate;
-        $order->status = $request->status;
+        if($request->has('buyerReference')){
+            $order->buyer_reference = $request->buyerReference;
+        }
+        if($request->has('paymentTerm.id')){
+            $order->payment_term_id = $request->paymentTerm['id'];
+        }
+        if($request->has('billingAddress')){
+            $order->billing_address = $request->billingAddress;
+        }
+        if($request->has('shippingAddress')){
+            $order->shipping_address = $request->shippingAddress;
+        }
+        if($request->has('transportationNotes')){
+            $order->transportation_notes = $request->transportationNotes;
+        }
+        if($request->has('productionNotes')){
+            $order->production_notes = $request->productionNotes;
+        }
+        if($request->has('accountingNotes')){
+            $order->accounting_notes = $request->accountingNotes;
+        }
+        if($request->has('salesperson.id')){
+            $order->salesperson_id = $request->salesperson['id'];
+        }
+        if($request->has('emails')){
+            $order->emails = $request->emails;
+        }
+        if($request->has('transport.id')){
+            $order->transport_id = $request->transport['id'];
+        }
+        if($request->has('entryDate')){
+            $order->entry_date = $request->entryDate;
+        }
+        if($request->has('loadDate')){
+            $order->load_date = $request->loadDate;
+        }
+        if($request->has('status')){
+            $order->status = $request->status;
+        }
         $order->updated_at = now();
         $order->save();
-        /* Return resource */
+        
         return new OrderResource($order);
         /* return response()->json($order, 200); */
     }
