@@ -28,7 +28,7 @@ class Order extends Model
 
     public function pallets()
     {
-        return $this->belongsToMany(Pallet::class, 'order_pallets');
+        return $this->hasMany(Pallet::class);
     }
 
     public function payment_term()
