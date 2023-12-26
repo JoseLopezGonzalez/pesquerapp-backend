@@ -19,10 +19,10 @@ class PalletController extends Controller
      * Display a listing of the resource.
      */
 
-     /*return response()->json(['message' => 'Hola Mundo'], 200);*/
+    /*return response()->json(['message' => 'Hola Mundo'], 200);*/
     /* return PalletResource::collection(Pallet::all()); */
 
-   /*  public function index()
+    /*  public function index()
     {
         return PalletResource::collection(Pallet::paginate(10));
 
@@ -40,11 +40,11 @@ class PalletController extends Controller
         }
 
         if ($request->has('storeds') && $request->input('storeds') == 'on') {
-            $query->where('state_id' , 2);
+            $query->where('state_id', 2);
         }
 
         if ($request->has('shippeds') && $request->input('shippeds') == 'on') {
-            $query->where('state_id' , 3);
+            $query->where('state_id', 3);
         }
 
 
@@ -62,19 +62,19 @@ class PalletController extends Controller
 
         /* Dates */
 
-        if ($request->has('dates') ) {
+        if ($request->has('dates')) {
             $startDate = $request->input('dates')['start'];
             $endDate = $request->input('dates')['end'];
-        
+
             // Asegúrate de ajustar las horas de inicio y fin para cubrir todo el día
             $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
             $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
-        
+
             $query->where('created_at', '>=', $startDate);
             $query->where('created_at', '<=', $endDate);
         }
 
-        if($request->has('observations')){
+        if ($request->has('observations')) {
             $observations = $request->input('observations');
             $query->where('observations', 'like', "%{$observations}%");
         }
@@ -137,7 +137,7 @@ class PalletController extends Controller
 
 
         /*  para request:  weights[grossWeight][min]=568*/
-        
+
 
 
 
@@ -238,12 +238,12 @@ class PalletController extends Controller
 
         //Cuidado con cambiar validación en la opcion de cambiar a enviado un palet
 
-        
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422); // Código de estado 422 - Unprocessable Entity
         }
 
-        
+
 
         $pallet = $request->all();
 
@@ -252,24 +252,30 @@ class PalletController extends Controller
 
         //Updating Order
         if ($request->has('orderId')) {
-            
-            /* Buscar order que contenga pallet */
-            $order = OrderPallet::where('pallet_id', $updatedPallet->id)->first();
-            if($order){
-                if($order->order_id != $pallet['orderId']){
-                    $order->delete();
+
+            if ($pallet['orderId']) {
+
+                $order = OrderPallet::where('pallet_id', $updatedPallet->id)->first();
+                if ($order) {
+                    if ($order->order_id != $pallet['orderId']) {
+                        $order->delete();
+                        OrderPallet::create([
+                            'pallet_id' => $updatedPallet->id,
+                            'order_id' => $pallet['orderId'],
+                        ]);
+                    }
+                } else {
                     OrderPallet::create([
                         'pallet_id' => $updatedPallet->id,
                         'order_id' => $pallet['orderId'],
                     ]);
                 }
             }else{
-                OrderPallet::create([
-                    'pallet_id' => $updatedPallet->id,
-                    'order_id' => $pallet['orderId'],
-                ]);
+                $order = OrderPallet::where('pallet_id', $updatedPallet->id)->first();
+                if ($order) {
+                    $order->delete();
+                }
             }
-
         }
 
 
@@ -280,7 +286,7 @@ class PalletController extends Controller
             if ($updatedPallet->state_id != $pallet['state']['id']) {
                 // UnStoring pallet if it is in a store
                 //echo '$updatedPallet->store ='. $updatedPallet->store. '!= null && $pallet[state][id] ='.$pallet['state']['id'].' != 2';
-                if($updatedPallet->store != null && $pallet['state']['id'] != 2){
+                if ($updatedPallet->store != null && $pallet['state']['id'] != 2) {
                     $updatedPallet->unStore();
                     //return response()->json(['errors' => ['state' => ['El palet se encuentra en un almacen, no se puede cambiar el estado']]], 422);
                 }
@@ -289,8 +295,8 @@ class PalletController extends Controller
         }
 
         //Updating Observations
-        if ($request->has('observations')){
-            if($pallet['observations'] != $updatedPallet->observations){
+        if ($request->has('observations')) {
+            if ($pallet['observations'] != $updatedPallet->observations) {
                 $updatedPallet->observations = $pallet['observations'];
             }
         }
@@ -335,7 +341,7 @@ class PalletController extends Controller
 
                 foreach ($boxes as $index => $updatedBox) {
                     if ($updatedBox['id'] == $box->box->id) {
-                        
+
                         $box->box->article_id = $updatedBox['article']['id'];
                         $box->box->lot = $updatedBox['lot'];
                         $box->box->gs1_128 = $updatedBox['gs1128'];
@@ -376,7 +382,7 @@ class PalletController extends Controller
 
         $updatedPallet->refresh();
 
-       // return new PalletResource(Pallet::findOrFail($id));
+        // return new PalletResource(Pallet::findOrFail($id));
 
         return response()->json(new PalletResource(Pallet::findOrFail($id)), 201);
 
