@@ -30,7 +30,28 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Validación Con mensaje JSON
+
+        $request->validate([
+            'buyerReference' => 'sometimes|nullable|string',
+            'customer.id' => 'required | integer',
+            'paymentTerm.id' => 'required | integer',
+            'billingAddress' => 'required | string',
+            'shippingAddress' => 'required | string',
+            'transportationNotes' => 'sometimes|nullable|string',
+            'productionNotes' => 'sometimes|nullable|string',
+            'accountingNotes' => 'sometimes|nullable|string',
+            'salesperson.id' => 'required | integer',
+            'emails' => 'sometimes|nullable|string',/* comprobar */
+            'transport.id' => 'required | integer',
+            'entryDate' => 'required | date',
+            'loadDate' => 'required | date'
+        ]);
+
+
+        $order = Order::create($request->all());
+        return response()->json($order, 201);
+
     }
 
     /**
@@ -54,7 +75,25 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'buyerReference' => 'sometimes|nullable|string',
+            'paymentTerm.id' => 'sometimes | integer',
+            'billingAddress' => 'sometimes | string',
+            'shippingAddress' => 'sometimes | string',
+            'transportationNotes' => 'sometimes|nullable|string',
+            'productionNotes' => 'sometimes|nullable|string',
+            'accountingNotes' => 'sometimes|nullable|string',
+            'salesperson.id' => 'sometimes | integer',
+            'emails' => 'sometimes|nullable|string',/* comprobar */
+            'transport.id' => 'sometimes | integer',
+            'entryDate' => 'sometimes | date',
+            'loadDate' => 'sometimes | date',
+            'status' => 'sometimes | string'
+        ]);
+
+        $order = Order::findOrFail($id);
+        $order->update($request->all());
+        return response()->json($order, 200);
     }
 
     /**
