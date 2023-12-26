@@ -92,9 +92,24 @@ class OrderController extends Controller
         ]);
 
         $order = Order::findOrFail($id);
-        $order->update($request->all());
+        $order->buyer_reference = $request->buyerReference;
+        $order->payment_term_id = $request->paymentTerm['id'];
+        $order->billing_address = $request->billingAddress;
+        $order->shipping_address = $request->shippingAddress;
+        $order->transportation_notes = $request->transportationNotes;
+        $order->production_notes = $request->productionNotes;
+        $order->accounting_notes = $request->accountingNotes;
+        $order->salesperson_id = $request->salesperson['id'];
+        $order->emails = $request->emails;
+        $order->transport_id = $request->transport['id'];
+        $order->entry_date = $request->entryDate;
+        $order->load_date = $request->loadDate;
+        $order->status = $request->status;
+        $order->updated_at = now();
         $order->save();
-        return response()->json($order, 200);
+        /* Return resource */
+        return new OrderResource($order);
+        /* return response()->json($order, 200); */
     }
 
     /**
