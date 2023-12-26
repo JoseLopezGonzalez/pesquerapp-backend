@@ -255,8 +255,15 @@ class PalletController extends Controller
             
             /* Buscar order que contenga pallet */
             $order = OrderPallet::where('pallet_id', $updatedPallet->id)->first();
-            if($order->order_id != $pallet['orderId']){
-                $order->delete();
+            if($order){
+                if($order->order_id != $pallet['orderId']){
+                    $order->delete();
+                    OrderPallet::create([
+                        'pallet_id' => $updatedPallet->id,
+                        'order_id' => $pallet['orderId'],
+                    ]);
+                }
+            }else{
                 OrderPallet::create([
                     'pallet_id' => $updatedPallet->id,
                     'order_id' => $pallet['orderId'],
