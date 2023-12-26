@@ -30,7 +30,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //Validación Con mensaje JSON
 
         $request->validate([
             'buyerReference' => 'sometimes|nullable|string',
@@ -48,10 +47,33 @@ class OrderController extends Controller
             'loadDate' => 'required | date'
         ]);
 
-
-        $order = Order::create($request->all());
-        return response()->json($order, 201);
-
+        $order = Order::create();
+        if($request->has('buyerReference')){
+            $order->buyer_reference = $request->buyerReference;
+        }
+        $order->customer_id = $request->customer['id'];
+        $order->payment_term_id = $request->paymentTerm['id'];
+        $order->billing_address = $request->billingAddress;
+        $order->shipping_address = $request->shippingAddress;
+        if($request->has('transportationNotes')){
+            $order->transportation_notes = $request->transportationNotes;
+        }
+        if($request->has('productionNotes')){
+            $order->production_notes = $request->productionNotes;
+        }
+        if($request->has('accountingNotes')){
+            $order->accounting_notes = $request->accountingNotes;
+        }
+        $order->salesperson_id = $request->salesperson['id'];
+        if($request->has('emails')){
+            $order->emails = $request->emails;
+        }
+        $order->transport_id = $request->transport['id'];
+        $order->entry_date = $request->entryDate;
+        $order->load_date = $request->loadDate;
+        $order->status = 'pending';
+        $order->save();
+        return new OrderResource($order);
     }
 
     /**
@@ -133,9 +155,7 @@ class OrderController extends Controller
         }
         $order->updated_at = now();
         $order->save();
-        
         return new OrderResource($order);
-        /* return response()->json($order, 200); */
     }
 
     /**
