@@ -27,6 +27,10 @@ class Pallet extends Model
         return $this->hasMany(PalletBox::class, 'pallet_id');
     }
 
+    public function order(){
+        return $this->belongsTo(Order::class, 'order_pallets');
+    }
+
     //Accessor
     public function getNetWeightAttribute()
     {

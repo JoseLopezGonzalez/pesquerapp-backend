@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\PalletResource;
 use App\Models\Box;
+use App\Models\Order;
 use App\Models\Pallet;
 use App\Models\PalletBox;
 use App\Models\StoredPallet;
@@ -231,6 +232,7 @@ class PalletController extends Controller
             'boxes.*.gs1128' => 'required_with:boxes|string',
             'boxes.*.grossWeight' => 'required_with:boxes|numeric',
             'boxes.*.netWeight' => 'required_with:boxes|numeric',
+            'orderId' => 'sometimes|nullable|integer',
         ]);
 
         //Cuidado con cambiar validación en la opcion de cambiar a enviado un palet
@@ -240,10 +242,24 @@ class PalletController extends Controller
             return response()->json(['errors' => $validator->errors()], 422); // Código de estado 422 - Unprocessable Entity
         }
 
+        
+
         $pallet = $request->all();
 
         //Creating Pallet
         $updatedPallet = Pallet::find($id);
+
+        //Updating Order
+        if ($request->has('orderId')) {
+            $order = Order::find($pallet['orderId']);
+            if ($order) {
+                $updatedPallet->order()->associate($order);
+            } else {
+                // Si el orderId es nulo o el Order no se encuentra, puedes desvincular el Pallet del Order actual
+                $updatedPallet->order()->dissociate();
+            }
+        }
+
 
         //Updating State
         if ($request->has('state')) {
