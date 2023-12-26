@@ -251,14 +251,19 @@ class PalletController extends Controller
 
         //Updating Order
         if ($request->has('orderId')) {
-            $order = Order::find($pallet['orderId']);
-            if ($order) {
-                $updatedPallet->order()->associate($order);
-            } else {
-                // Si el orderId es nulo o el Order no se encuentra, puedes desvincular el Pallet del Order actual
-                $updatedPallet->order()->dissociate();
+            
+            /* Buscar order que contenga pallet */
+            $order = Order::where('pallet_id', $updatedPallet->id)->first();
+            if($order->order_id != $pallet['orderId']){
+                $order->delete();
+                Order::create([
+                    'pallet_id' => $updatedPallet->id,
+                    'order_id' => $pallet['orderId'],
+                ]);
             }
+
         }
+
 
 
         //Updating State
