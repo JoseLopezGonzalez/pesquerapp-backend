@@ -255,27 +255,19 @@ class PalletController extends Controller
 
             if ($pallet['orderId']) {
 
-                $order = OrderPallet::where('pallet_id', $updatedPallet->id)->first();
-                if ($order) {
-                    if ($order->order_id != $pallet['orderId']) {
-                        $order->delete();
-                        OrderPallet::create([
-                            'pallet_id' => $updatedPallet->id,
-                            'order_id' => $pallet['orderId'],
-                        ]);
-                    }
-                } else {
-                    OrderPallet::create([
-                        'pallet_id' => $updatedPallet->id,
+                if($updatedPallet->order->id !== $pallet['orderId']){
+                    $updatedPallet->order->delete();
+                    Order::create([
                         'order_id' => $pallet['orderId'],
+                        'pallet_id' => $updatedPallet->id,
                     ]);
                 }
             }else{
-                $order = OrderPallet::where('pallet_id', $updatedPallet->id)->first();
-                if ($order) {
-                    $order->delete();
-                }
+                $updatedPallet->order->delete();
             }
+        
+
+              
         }
 
 
