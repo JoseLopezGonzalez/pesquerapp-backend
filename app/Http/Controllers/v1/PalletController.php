@@ -253,16 +253,15 @@ class PalletController extends Controller
         //Updating Order
         if ($request->has('orderId')) {
 
-            if( Order::find($pallet['orderId']) == null){
-                return response()->json(['errors' => ['orderId' => ['El pedido no existe']]], 422);
-            }else{
-                $updatedPallet->order_id = $pallet['orderId'];
+            if ($pallet['orderId'] == null) {
+                $updatedPallet->order_id = null;
+            } else {
+                if (Order::find($pallet['orderId']) == null) {
+                    return response()->json(['errors' => ['orderId' => ['El pedido no existe']]], 422);
+                } else {
+                    $updatedPallet->order_id = $pallet['orderId'];
+                }
             }
-
-                
-        
-
-              
         }
 
 
