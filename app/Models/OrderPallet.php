@@ -9,6 +9,11 @@ class OrderPallet extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'order_id',
+        'pallet_id',
+    ];
+
     public function toArrayAssoc(){
         return [
             'id' => $this->id,
