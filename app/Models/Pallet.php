@@ -28,7 +28,7 @@ class Pallet extends Model
     }
 
     public function order(){
-        return $this->belongsTo(Order::class, 'order_pallets');
+        return $this->belongsToMany(Order::class, 'order_pallets');
     }
 
     //Accessor
