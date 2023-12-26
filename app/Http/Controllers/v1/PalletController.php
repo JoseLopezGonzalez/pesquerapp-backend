@@ -253,18 +253,13 @@ class PalletController extends Controller
         //Updating Order
         if ($request->has('orderId')) {
 
-            if ($pallet['orderId']) {
-
-                if($updatedPallet->order->id !== $pallet['orderId']){
-                    $updatedPallet->order->delete();
-                    Order::create([
-                        'order_id' => $pallet['orderId'],
-                        'pallet_id' => $updatedPallet->id,
-                    ]);
-                }
+            if( Order::find($pallet['orderId']) == null){
+                return response()->json(['errors' => ['orderId' => ['El pedido no existe']]], 422);
             }else{
-                $updatedPallet->order->delete();
+                $updatedPallet->order_id = $pallet['orderId'];
             }
+
+                
         
 
               
