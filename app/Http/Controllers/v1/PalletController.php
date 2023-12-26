@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\PalletResource;
 use App\Models\Box;
 use App\Models\Order;
+use App\Models\OrderPallet;
 use App\Models\Pallet;
 use App\Models\PalletBox;
 use App\Models\StoredPallet;
@@ -253,10 +254,10 @@ class PalletController extends Controller
         if ($request->has('orderId')) {
             
             /* Buscar order que contenga pallet */
-            $order = Order::where('pallet_id', $updatedPallet->id)->first();
+            $order = OrderPallet::where('pallet_id', $updatedPallet->id)->first();
             if($order->order_id != $pallet['orderId']){
                 $order->delete();
-                Order::create([
+                OrderPallet::create([
                     'pallet_id' => $updatedPallet->id,
                     'order_id' => $pallet['orderId'],
                 ]);
