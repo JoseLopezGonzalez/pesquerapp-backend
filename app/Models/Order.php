@@ -39,7 +39,7 @@ class Order extends Model
     /* Order is active when status is 'finished' and loadDate is < now */
     public function isActive()
     {
-        return $this->status == 'finished' && $this->load_date < now();
+        return $this->status == 'pending' || $this->load_date >= now();
     }
 
    
