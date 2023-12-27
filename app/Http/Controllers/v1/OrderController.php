@@ -52,7 +52,7 @@ class OrderController extends Controller
             return response()->json(['errors' => $validator->errors()], 422); // Código de estado 422 - Unprocessable Entity
         }
 
-        $order = Order::create();
+        $order = new Order;
         if($request->has('buyerReference')){
             $order->buyer_reference = $request->buyerReference;
         }
