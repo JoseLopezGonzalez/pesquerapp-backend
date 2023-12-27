@@ -17,9 +17,11 @@ class OrderController extends Controller
     {
         if($request->has('active')){
             if($request->active == 'true'){
-                return OrderResource::collection(Order::where('status', 'finished')->where('load_date', '<', now())->get());
+                return OrderResource::collection(Order::where('status', '!=', 'finished')->orWhere('load_date', '<', now())->get());
+                /* sustituir en un futuro por comparar el atributo activo */
             }else{
-                return OrderResource::collection(Order::where('status', '!=', 'finished')->orWhere('load_date', '>', now())->get());
+                return OrderResource::collection(Order::where('status', 'finished')->where('load_date', '>', now())->get());
+                
             }
         }else{
             return OrderResource::collection(Order::all());
