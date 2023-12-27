@@ -13,9 +13,17 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return OrderResource::collection(Order::all()); 
+        if($request->has('active')){
+            if($request->active == 'true'){
+                return OrderResource::collection(Order::where('status', 'finished')->where('load_date', '<', now())->get());
+            }else{
+                return OrderResource::collection(Order::where('status', '!=', 'finished')->orWhere('load_date', '>', now())->get());
+            }
+        }else{
+            return OrderResource::collection(Order::all());
+        }
     }
 
     /**

@@ -36,5 +36,11 @@ class Order extends Model
         return $this->belongsTo(PaymentTerm::class);
     }
 
+    /* Order is active when status is 'finished' and loadDate is < now */
+    public function isActive()
+    {
+        return $this->status == 'finished' && $this->load_date < now();
+    }
+
    
 }
