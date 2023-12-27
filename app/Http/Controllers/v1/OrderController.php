@@ -17,12 +17,13 @@ class OrderController extends Controller
     {
         if($request->has('active')){
             if($request->active == 'true'){
-                /* where status is pending or loaddate>=now*/
-                return OrderResource::collection(Order::where('status', 'pending')->orWhere('load_date', '>=', now())->get());
+                /* where status is pending or loaddate>= today at the end of the day */
+
+                $orders = Order::where('status', 'pending')->orWhere('load_date', '>=', now()->endOfDay())->get();
 
             }else{
-                /* where status is finished and loaddate<now*/
-                return OrderResource::collection(Order::where('status', 'finished')->where('load_date', '<', now())->get());
+                /* where status is finished and loaddate< today at the end of the day */
+                $orders = Order::where('status', 'finished')->where('load_date', '<', now()->endOfDay())->get();
                
                 
             }
