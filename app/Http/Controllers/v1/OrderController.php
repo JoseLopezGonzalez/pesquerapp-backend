@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\OrderResource;
 use App\Models\Order;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -31,7 +32,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [ 
             'buyerReference' => 'sometimes|nullable|string',
             'customer.id' => 'required | integer',
             'paymentTerm.id' => 'required | integer',
@@ -46,6 +47,10 @@ class OrderController extends Controller
             'entryDate' => 'required | date',
             'loadDate' => 'required | date'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422); // Código de estado 422 - Unprocessable Entity
+        }
 
         $order = Order::create();
         if($request->has('buyerReference')){
