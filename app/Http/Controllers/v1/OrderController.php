@@ -28,7 +28,16 @@ class OrderController extends Controller
                 
             }
         }else{
-            return OrderResource::collection(Order::all());
+
+            $query = Order::query();
+            if($request->has('customer')){
+                $query->where('customer_id', $request->customer);
+            }
+            
+            $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
+            return OrderResource::collection($query->paginate($perPage));
+
+
         }
     }
 
