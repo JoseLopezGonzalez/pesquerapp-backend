@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('alias')->nullable();
             $table->string('vat_number');
             $table->foreignId('payment_term_id')->constrained(); // Clave foránea a payment_terms
             $table->text('billing_address');
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->foreignId('salesperson_id')->constrained(); // Clave foránea a salespersons
             $table->text('emails'); // Asumiendo que quieres almacenar varios emails en un campo JSON
             $table->text('contact_info');
+
             $table->foreignId('country_id')->constrained(); // Clave foránea a countries
             $table->foreignId('transport_id')->constrained(); // Clave foránea a transports
 

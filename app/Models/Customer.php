@@ -40,6 +40,7 @@ class Customer extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'alias' => $this->alias,
             'vatNumber' => $this->vat_number,
             'paymentTerm' => $this->payment_term->toArrayAssoc(),
             'billingAddress' => $this->billing_address,
@@ -61,6 +62,7 @@ class Customer extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'alias' => $this->alias,
             'vatNumber' => $this->vat_number,
             'billingAddress' => $this->billing_address,
         ];
