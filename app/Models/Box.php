@@ -24,7 +24,7 @@ class Box extends Model
     public function pallet()
     {
 
-        return $this->palletBox()->pallet();
+        return $this->palletBox->pallet;
 
         
        /*  $pallet = PalletBox::where('box_id', $this->id)->first();
