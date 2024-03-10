@@ -21,7 +21,7 @@ class Box extends Model
     {
 
         //necesito recuperaar el pallet_id de la tabla pallet_boxes donde aparezca el id en box_id
-        return  PalletBox::where('box_id', $this->id)->first()->pallet;
+        return  PalletBox::where('box_id', $this->id)->first()->pallet();
 
 
 
