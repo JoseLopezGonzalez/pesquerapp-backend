@@ -137,9 +137,9 @@ class BoxesReportController extends Controller
 
 
         
-
+        return BoxResource::collection($query->get());
         
-        return BoxResource::collection($query); 
+       /*  return BoxResource::collection($query);  */
 
 
 
