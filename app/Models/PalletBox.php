@@ -14,6 +14,11 @@ class PalletBox extends Model
         return $this->belongsTo(Box::class, 'box_id');
     }
 
+    public function pallet()
+    {
+        return $this->belongsTo(Pallet::class, 'pallet_id');
+    }
+
     public function toArrayAssoc()
     {
         return $this->box->toArrayAssoc();
