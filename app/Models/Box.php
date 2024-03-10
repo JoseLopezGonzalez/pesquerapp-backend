@@ -21,7 +21,9 @@ class Box extends Model
         return $this->hasOne(PalletBox::class, 'box_id');
     }
 
-    public function pallet()
+    //para usar como un atributo
+
+    public function getPalletAttribute()
     {
 
         return $this->palletBox->pallet;
