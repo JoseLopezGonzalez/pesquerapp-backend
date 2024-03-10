@@ -39,16 +39,19 @@ class BoxesReportController extends Controller
 
         if ($request->has('text')) {
             $text = $request->input('text');
-            //Buscar en boxes si el pallet->id es igual a $text
-            //pero en la tabla box no contiene pallet_id sino que existe una tabla llamada pallet_boxes
-            //que contiene los id de las cajas y los id de los palets
-            //por lo que necesito buscar en la tabla pallet_boxes
-            $query->whereHas('pallet', function ($subQuery) use ($text) {
+            
+           
+            //si el box pertenece a un palet si no no
+
+            
+
+
+           /*  $query->whereHas('pallet', function ($subQuery) use ($text) {
                 $subQuery->where('id', 'like', "%{$text}%");
-            });
+            }); */
         }
 
-        
+
         if ($request->has('storeds') && $request->input('storeds') == 'on') {
             $query->whereHas('pallet', function ($subQuery) {
                 $subQuery->where('state_id', 2);
@@ -94,7 +97,7 @@ class BoxesReportController extends Controller
 
         if ($request->has('observations')) {
             $observations = $request->input('observations');
-            $query->whereHas('pallet', function ($subQuery) use ($observations) {
+            $query->has('pallet')->whereHas('pallet', function ($subQuery) use ($observations) {
                 $subQuery->where('observations', 'like', "%{$observations}%");
             });
         }
