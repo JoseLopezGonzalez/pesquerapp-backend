@@ -22,8 +22,8 @@ class Box extends Model
 
         //necesito recuperaar el pallet_id de la tabla pallet_boxes donde aparezca el id en box_id
         $pallet_id= PalletBox::where('box_id', $this->id);
-        //hacer que se mueestre por pantalla pallet_id y que se termine la ejecucion
-        echo $pallet_id;
+        //hacer que se mueestre la variable pallet_id y que se termine la ejecucion
+        var_dump($pallet_id);
         die();
         /* return $this->belongsToMany(Pallet::class, 'pallet_boxes', 'box_id', 'pallet_id'); */
 
