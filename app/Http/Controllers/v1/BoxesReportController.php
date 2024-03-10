@@ -53,19 +53,19 @@ class BoxesReportController extends Controller
 
 
         if ($request->has('storeds') && $request->input('storeds') == 'on') {
-            $query->whereHas('pallet', function ($subQuery) {
+            $query->whereHas('palletBox.pallet', function ($subQuery) {
                 $subQuery->where('state_id', 2);
             });
         }
 
         if ($request->has('shippeds') && $request->input('shippeds') == 'on') {
-            $query->whereHas('pallet', function ($subQuery) {
+            $query->whereHas('palletBox.pallet', function ($subQuery) {
                 $subQuery->where('state_id', 3);
             });
         }
 
         if ($request->has('unlocateds') && $request->input('unlocateds') == 'on') {
-            $query->whereHas('pallet', function ($subQuery) {
+            $query->whereHas('palletBox.pallet', function ($subQuery) {
                 $subQuery->whereHas('storedPallet', function ($subSubQuery) {
                     $subSubQuery->whereNull('position');
                 });
@@ -73,7 +73,7 @@ class BoxesReportController extends Controller
         }
 
         if ($request->has('locateds') && $request->input('locateds') == 'on') {
-            $query->whereHas('pallet', function ($subQuery) {
+            $query->whereHas('palletBox.pallet', function ($subQuery) {
                 $subQuery->whereHas('storedPallet', function ($subSubQuery) {
                     $subSubQuery->whereNotNull('position');
                 });
@@ -97,7 +97,7 @@ class BoxesReportController extends Controller
 
         if ($request->has('observations')) {
             $observations = $request->input('observations');
-            $query->has('pallet')->whereHas('pallet', function ($subQuery) use ($observations) {
+            $query->whereHas('palletBox.pallet', function ($subQuery) use ($observations) {
                 $subQuery->where('observations', 'like', "%{$observations}%");
             });
         }
