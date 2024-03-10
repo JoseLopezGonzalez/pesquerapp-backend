@@ -20,28 +20,24 @@ class Box extends Model
     public function pallet()
     {
 
-        //necesito recuperaar el pallet_id de la tabla pallet_boxes donde aparezca el id en box_id
-
-        //añade la opcion de que no lo encuentre entonces pallet sera null
-
-        //$pallet_id= PalletBox::where('box_id', $this->id)->first()->pallet_id->withDefault(null);
-
-        $pallet = PalletBox::where('box_id', $this->id)->first();
+        
+       /*  $pallet = PalletBox::where('box_id', $this->id)->first();
         if($pallet){
             $pallet_id = $pallet->pallet_id;
             return $pallet;
         }else{
             $pallet_id = null;
             return null;
-        }
+        } */
+
+
+       
+
+    return $this->belongsToMany(Pallet::class, 'pallet_boxes', 'box_id', 'pallet_id')->withTimestamps();
 
         
 
-        //hacer que se mueestre la variable pallet_id y que se termine la ejecucion
-        /* var_dump($pallet_id);
-        die(); */
-        /* return $this->belongsToMany(Pallet::class, 'pallet_boxes', 'box_id', 'pallet_id'); */
-
+       
 
 
 
