@@ -29,13 +29,17 @@ class Box extends Model
         $pallet = PalletBox::where('box_id', $this->id)->first();
         if($pallet){
             $pallet_id = $pallet->pallet_id;
+            return $pallet;
         }else{
             $pallet_id = null;
+            return null;
         }
 
+        
+
         //hacer que se mueestre la variable pallet_id y que se termine la ejecucion
-        var_dump($pallet_id);
-        die();
+        /* var_dump($pallet_id);
+        die(); */
         /* return $this->belongsToMany(Pallet::class, 'pallet_boxes', 'box_id', 'pallet_id'); */
 
 

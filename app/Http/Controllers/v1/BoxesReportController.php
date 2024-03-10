@@ -48,6 +48,7 @@ class BoxesReportController extends Controller
             });
         }
 
+        
         if ($request->has('storeds') && $request->input('storeds') == 'on') {
             $query->whereHas('pallet', function ($subQuery) {
                 $subQuery->where('state_id', 2);
