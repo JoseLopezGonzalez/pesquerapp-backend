@@ -136,7 +136,6 @@ class BoxesReportController extends Controller
 
         
         return BoxResource::collection($query); 
-    
 
 
 
