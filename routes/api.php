@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\v1\BoxesReportController;
 use App\Http\Controllers\v1\CustomerController;
 use App\Http\Controllers\v1\LocatePalletController;
 use App\Http\Controllers\v1\OrderController;
@@ -47,3 +48,4 @@ Route::apiResource('v1/orders', OrderController::class);
 Route::apiResource('v1/transports', TransportController::class);
 Route::apiResource('v1/salespeople', SalespersonController::class);
 Route::apiResource('v1/payment_terms' , PaymentTermController::class);
+Route::apiResource('v1/boxes_report' , BoxesReportController::class)->only(['index']);
