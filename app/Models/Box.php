@@ -33,7 +33,7 @@ class Box extends Model
 
        
 
-    return $this->belongsToMany(Pallet::class, 'pallet_boxes', 'box_id', 'pallet_id')->withTimestamps();
+    return $this->belongsTo(Pallet::class, 'pallet_boxes', 'box_id', 'pallet_id')->withTimestamps();
 
         
 
