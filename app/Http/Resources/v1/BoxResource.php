@@ -16,7 +16,7 @@ class BoxResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'palletId' => $this->pallet->id,
+            'palletId' => $this->pallet->id || null, //si no tiene palet no mostrar nada
             'article' => $this->article->toArrayAssoc(),
             'lot' => $this->lot,
             'gs1128' => $this->gs1_128,
