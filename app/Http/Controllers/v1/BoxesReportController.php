@@ -104,7 +104,11 @@ class BoxesReportController extends Controller
 
         if ($request->has('lots')) {
             $lots = $request->input('lots');
-            $query->where('lot', 'like', "%{$lots}%");
+            //Lots en un array hay que utilizar in
+            
+            $query->whereIn('lot', $lots);
+        
+            /* $query->where('lot', 'like', "%{$lots}%"); */
         }
 
         if ($request->has('products')) {
