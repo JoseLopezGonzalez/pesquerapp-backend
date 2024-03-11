@@ -26,7 +26,8 @@ class Box extends Model
     public function getPalletAttribute()
     {
 
-        return $this->palletBox->pallet;
+        return $this->palletBox ? $this->palletBox->pallet : null;
+        /* return $this->palletBox->pallet; */
 
         
        /*  $pallet = PalletBox::where('box_id', $this->id)->first();
