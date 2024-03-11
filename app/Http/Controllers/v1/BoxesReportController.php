@@ -113,7 +113,9 @@ class BoxesReportController extends Controller
 
         if ($request->has('products')) {
             $articles = $request->input('products');
-            $query->where('article_id', 'like', "%{$articles}%");
+            //WHEREIN
+            $query->whereIn('article_id', $articles);
+            /* $query->where('article_id', 'like', "%{$articles}%"); */
         }
 
         if ($request->has('weights')) {
