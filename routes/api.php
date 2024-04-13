@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderDocumentMailerController;
 use App\Http\Controllers\v1\BoxesReportController;
 use App\Http\Controllers\v1\CustomerController;
 use App\Http\Controllers\v1\LocatePalletController;
@@ -49,3 +50,7 @@ Route::apiResource('v1/transports', TransportController::class);
 Route::apiResource('v1/salespeople', SalespersonController::class);
 Route::apiResource('v1/payment_terms' , PaymentTermController::class);
 Route::apiResource('v1/boxes_report' , BoxesReportController::class)->only(['index']);
+ 
+
+// Ruta personalizada para enviar documentación de un pedido (NO CRUD)
+Route::post('v1/send_order_documentation/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentation'])->name('send_order_documentation');
