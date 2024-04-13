@@ -81,8 +81,8 @@ class Order extends Model
             }
             
             if ($type == 'cc' && (str_starts_with($email, 'CC:') || str_starts_with($email, 'cc:'))) {
-                $result[] = substr($email, 3);  // Remove 'CC:' prefix and add to results
-            } elseif ($type == 'regular' && !str_starts_with($email, 'CC:')) {
+                $result[] = substr($email, 3);  // Remove 'CC:' prefix and add to results 
+            } elseif ($type == 'regular' && !str_starts_with($email, 'CC:') && !str_starts_with($email, 'cc:')) {
                 $result[] = $email;  // Add regular email to results
             }
         }
