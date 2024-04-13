@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\OrderDocumentMailerController;
+use App\Http\Controllers\v1\OrderDocumentMailerController;
 use App\Http\Controllers\v1\BoxesReportController;
 use App\Http\Controllers\v1\CustomerController;
 use App\Http\Controllers\v1\LocatePalletController;
