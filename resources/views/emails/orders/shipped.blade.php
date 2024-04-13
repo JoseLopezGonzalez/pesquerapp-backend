@@ -2,7 +2,7 @@
 
 # {{ $customer_name }}
 
-
+<br>
 
 **ES -** Su pedido con número **#{{$order_id}}** ha sido enviado. En breve recibirá su factura.
 
@@ -27,6 +27,5 @@
 Delivery Note
 </x-mail::button>
 
-Saludos / Saluti / Best regards / Cordialement / Atenciosamente,<br>
-{{ config('app.name') }}
+Saludos / Saluti / Best regards / Cordialement / Atenciosamente.
 </x-mail::message>
