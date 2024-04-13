@@ -39,7 +39,7 @@ a img {
 
 h1 {
     color: #3d4852;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
     margin-top: 0;
     text-align: left;
@@ -80,7 +80,7 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #303030;
+    background-color: #131313;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -123,7 +123,7 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #303030;
+    background-color: #131313;
     border-bottom: 1px solid #edf2f7;
     border-top: 1px solid #edf2f7;
     margin: 0;
