@@ -39,7 +39,8 @@ class OrderShipped extends Mailable
         return new Content(
             markdown: 'emails.orders.shipped',
             with: [
-                'customer_name' => $this->order->customer->name
+                'customer_name' => $this->order->customer->name,
+                'order_id' => $this->order->id
             ]
         );
     }
