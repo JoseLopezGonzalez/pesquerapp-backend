@@ -1,4 +1,5 @@
 <x-mail::message>
+
 # {{ $customer_name }}
 
 
