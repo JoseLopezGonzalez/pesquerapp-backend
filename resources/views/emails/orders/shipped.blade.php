@@ -22,6 +22,19 @@
 
 **PT -** Seu pedido com o número **#{{$order_id}}** foi enviado. Você receberá sua fatura em breve.
 
+<br>
+
+<x-mail::panel>
+This is the panel content.
+</x-mail::panel>
+
+<x-mail::table>
+| Laravel       | Table         | Example  |
+| ------------- |:-------------:| --------:|
+| Col 2 is      | Centered      | $10      |
+| Col 3 is      | Right-Aligned | $20      |
+</x-mail::table>
+
 
 <x-mail::button :url="''">
 Delivery Note
