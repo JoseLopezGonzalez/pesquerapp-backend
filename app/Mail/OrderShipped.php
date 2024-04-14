@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -52,6 +53,16 @@ class OrderShipped extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        // Generar el PDF usando la vista delivery_note.blade.php
+        $pdf = PDF::loadView('pdf.delivery_note', ['order' => $this->order])->output();
+
+        // Adjuntar el PDF al correo electrónico
+        return [
+            new \Illuminate\Mail\Mailables\Attachment(
+                data: $pdf,
+                name: 'delivery-note-' . $this->order->id . '.pdf',
+                contentType: 'application/pdf'
+            )
+        ];
     }
 }

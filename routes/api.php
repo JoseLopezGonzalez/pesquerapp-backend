@@ -7,6 +7,7 @@ use App\Http\Controllers\v1\LocatePalletController;
 use App\Http\Controllers\v1\OrderController;
 use App\Http\Controllers\v1\PalletController;
 use App\Http\Controllers\v1\PaymentTermController;
+use App\Http\Controllers\v1\PDFController;
 use App\Http\Controllers\v1\ProductController;
 use App\Http\Controllers\v1\SalespersonController;
 use Illuminate\Http\Request;
@@ -50,7 +51,9 @@ Route::apiResource('v1/transports', TransportController::class);
 Route::apiResource('v1/salespeople', SalespersonController::class);
 Route::apiResource('v1/payment_terms' , PaymentTermController::class);
 Route::apiResource('v1/boxes_report' , BoxesReportController::class)->only(['index']);
+
  
 
 // Ruta personalizada para enviar documentación de un pedido (NO CRUD)
 Route::post('v1/send_order_documentation/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentation'])->name('send_order_documentation');
+Route::get('v1/orders/{orderId}/delivery-note', [PDFController::class, 'generateDeliveryNote'])->name('generate_delivery_note');
