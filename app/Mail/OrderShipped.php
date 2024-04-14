@@ -53,13 +53,13 @@ class OrderShipped extends Mailable
      */
     public function attachments(): array
     {
-        // Generar el PDF usando la vista delivery_note.blade.php
-        $pdf = PDF::loadView('pdf.delivery_note', ['order' => $this->order])->output();
+        // Obtener una instancia del servicio PDF
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('pdf.delivery_note', ['order' => $this->order]);
 
-        // Adjuntar el PDF al correo electrónico
         return [
             new \Illuminate\Mail\Mailables\Attachment(
-                data: $pdf,
+                data: $pdf->output(),
                 name: 'delivery-note-' . $this->order->id . '.pdf',
                 contentType: 'application/pdf'
             )
