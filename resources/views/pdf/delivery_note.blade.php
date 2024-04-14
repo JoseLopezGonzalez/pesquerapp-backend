@@ -78,6 +78,11 @@
                                 <td class="text-center">{{ $article['boxes'] }}</td>
                                 <td class="text-center">{{ number_format($article['netWeight'], 2) }} kg</td>
                             </tr>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left font-medium p-1.5">{{ $article['species']->scientificName.' - '. $article['species']->fao }}</th>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                            </tr>
 
                         @endforeach
                     @endforeach
