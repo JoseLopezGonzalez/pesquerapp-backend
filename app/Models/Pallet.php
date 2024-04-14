@@ -38,7 +38,7 @@ class Pallet extends Model
             $article = $box->box->article;
             if (!isset($summary[$article->id])) {
                 $summary[$article->id] = [
-                    'article_name' => $article->product->species->name,
+                    'article_name' => $article->id,
                     'boxes' => 0,
                     'netWeight' => 0,
                 ];
