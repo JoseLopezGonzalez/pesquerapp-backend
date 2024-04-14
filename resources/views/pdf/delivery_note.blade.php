@@ -6,7 +6,8 @@
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="{{ asset('resources/css/app.css') }}">
 
-   
+    <script src="https://cdn.tailwindcss.com"></script>
+
 
 
     <style>
