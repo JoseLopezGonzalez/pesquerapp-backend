@@ -78,8 +78,8 @@
                                 <td class="text-center">{{ $article['boxes'] }}</td>
                                 <td class="text-center">{{ number_format($article['netWeight'], 2) }} kg</td>
                             </tr>
-                            <tr class="border-b border-gray-200" style="font-size: 1rem">
-                                <th class="text-left  p-1.5">{{ $article['species']->scientific_name.'('. $article['species']->fao.')'.' - '.$article['product']->captureZone->name }}</th>
+                            <tr class="border-b border-gray-200" style="font-size: 5px">
+                                <th class="text-left  p-1.5" style="font-size: 5px">{{ $article['species']->scientific_name.'('. $article['species']->fao.')'.' - '.$article['product']->captureZone->name }}</th>
                                 <td class="text-center"></td>
                                 <td class="text-center"></td>
                             </tr>
