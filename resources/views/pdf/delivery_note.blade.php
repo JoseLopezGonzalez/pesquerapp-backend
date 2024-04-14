@@ -19,7 +19,7 @@
     <div class="pt-4">
         <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
             <div class="col-span-4">
-                <img src="{{ asset('images/logos/brisamar-slogan.png') }}" alt="Logo">
+                <img src="https://congeladosbrisamar.es/logo2" alt="Logo">
             </div>
             <div class="col-span-8" style="line-height: 122%; text-align: right; color: #1E79BB;">
                 <p style="font-size: 10pt;">
@@ -57,7 +57,7 @@
             </div>
             <div class="col-span-7 text-right mt-2" style="line-height: 100%;">
                 <p class="cliente preserve-line-breaks bold-first-line" style="font-size: 0.9rem;">
-                    {{ $order->billingAddress }}
+                    {{ $order->billing_address }}
                 </p>
             </div>
         </div>
@@ -100,7 +100,7 @@
             <div class="col-span-10">
                 <p style="font-size: 1.2rem;"><strong>Delivery Address:</strong></p>
                 <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
-                    {{ $order->shippingAddress }}
+                    {{ $order->shipping_address }}
                 </p>
                 <p style="font-size: 1.2rem; margin-top: 3rem;"><strong>Terms & Conditions:</strong></p>
                 <p class="mt-3 text-sm">
