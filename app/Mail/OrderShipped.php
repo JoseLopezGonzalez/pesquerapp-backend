@@ -2,10 +2,11 @@
 
 namespace App\Mail;
 
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Barryvdh\DomPDF\Facade as PDF; // Importa correctamente la fachada de PDF
+
 
 class OrderShipped extends Mailable
 {
@@ -30,6 +31,7 @@ class OrderShipped extends Mailable
      */
     public function build()
     {
+        
         $pdf = PDF::loadView('pdf.delivery_note', ['order' => $this->order])->output();
 
         return $this->subject('Order Shipped: #' . $this->order->id)
