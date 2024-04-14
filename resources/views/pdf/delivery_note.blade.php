@@ -4,6 +4,8 @@
 <head>
     <title>Delivery Note </title>
     @vite('resources/css/app.css')
+    <link rel="stylesheet" href="{{ asset('resources/css/app.css') }}">
+
    
 
 
