@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Delivery Note </title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 
 
     <style>
