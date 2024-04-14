@@ -39,6 +39,7 @@ class Pallet extends Model
             if (!isset($summary[$article->id])) {
                 /* dd($article); */
                 $summary[$article->id] = [
+                    'product' => $article,
                     'article_name' => $article->article->name,
                     'species' => $article->species,
                     'boxes' => 0,
