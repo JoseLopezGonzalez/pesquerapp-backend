@@ -39,7 +39,8 @@ class OrderShipped extends Mailable
         return $this->subject('Order Shipped: #' . $this->order->id)
                     ->markdown('emails.orders.shipped', [
                         'customer_name' => $this->order->customer->name,
-                        'order_id' => $this->order->id
+                        'order_id' => $this->order->id,
+                        'order' => $this->order,
                     ])
                     ->attachData($pdf, 'delivery-note-' . $this->order->id . '.pdf', [
                         'mime' => 'application/pdf',
