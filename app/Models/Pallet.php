@@ -37,7 +37,7 @@ class Pallet extends Model
         $this->boxes->map(function ($box) use (&$summary) {
             $article = $box->box->article;
             if (!isset($summary[$article->id])) {
-                dd($article);
+                /* dd($article); */
                 $summary[$article->id] = [
                     'article_name' => $article->article->name,
                     'species_name' => $article->species->name,
