@@ -2,7 +2,8 @@
 
 namespace App\Mail;
 
-use Barryvdh\DomPDF\Facade as PDF;  // Usar la fachada correcta
+use PDF; // Al principio de tu archivo PHP donde necesitas usar DomPDF
+
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;

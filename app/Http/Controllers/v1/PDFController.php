@@ -6,7 +6,8 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order; // Asegúrate de importar tu modelo Order
-use Barryvdh\DomPDF\PDF;
+use PDF; // Al principio de tu archivo PHP donde necesitas usar DomPDF
+
 
 class PDFController extends Controller
 {
