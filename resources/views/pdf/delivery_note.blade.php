@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Nota de Entrega</title>
+    <title>Delivery Note </title>
     <style>
         body { font-family: 'DejaVu Sans'; }
         table { width: 100%; border-collapse: collapse; }
@@ -10,25 +10,99 @@
     </style>
 </head>
 <body>
-    <h1>Nota de Entrega</h1>
-    <p>Pedido Número: {{ $order->id }}</p>
-    <table>
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-            </tr>
-        </thead>
-        <tbody>
-           {{--  @foreach ($order->items as $item)
-                <tr>
-                    <td>{{ $item->product->name }}</td>
-                    <td>{{ $item->quantity }}</td>
-                    <td>${{ number_format($item->price, 2) }}</td>
-                </tr>
-            @endforeach --}}
-        </tbody>
-    </table>
+    <div class="pt-4">
+        <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
+            <div class="col-span-4">
+                <img src="{{ asset('images/logos/brisamar-slogan.png') }}" alt="Logo">
+            </div>
+            <div class="col-span-8" style="line-height: 122%; text-align: right; color: #1E79BB;">
+                <p style="font-size: 10pt;">
+                    <strong>CONGELADOS BRISAMAR S.L.</strong><br>
+                    C.I.F.: B-215 732 82<br>
+                    Poligono vista hermosa, nave 11A<br>
+                    21410 Isla Cristina Huelva
+                </p>
+            </div>
+        </div>
+        <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
+            <!-- Color bars across the top -->
+            <div class="col-span-3" style="padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #06d6ff;"></div>
+            <div class="col-span-3" style="padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #079def;"></div>
+            <div class="col-span-3" style="padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #d1d1d1;"></div>
+            <div class="col-span-3" style="padding-right: 0; padding-left: 0; height: 0.1rem; background-color: black;"></div>
+        </div>
+        <div class="grid grid-cols-12 mt-2 mb-4">
+            <div class="col-span-12">
+                <p style="margin-top: 1.2rem; font-size: 1.5rem;"><strong>DELIVERY NOTE</strong></p>
+            </div>
+            <div class="col-span-5 mt-3">
+                <table class="w-full">
+                    <tbody>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left font-medium text-sm p-2">Number</th>
+                            <td class="text-left text-sm">{{ $order->id }}</td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left font-medium text-sm p-2">Date</th>
+                            <td class="text-left text-sm">{{-- {{ $order->loadDate->format('m/d/Y') }} --}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-span-7 text-right mt-2" style="line-height: 100%;">
+                <p class="cliente preserve-line-breaks bold-first-line" style="font-size: 0.9rem;">
+                    {{ $order->billingAddress }}
+                </p>
+            </div>
+        </div>
+        <div class="w-full mt-12">
+            <table class="w-full text-sm">
+                <thead class="border-b-2 border-black">
+                    <tr>
+                        <th class="text-left p-1.5">Item</th>
+                        <th class="text-center">Boxes</th>
+                        <th class="text-center">Weight</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   {{--  @foreach($order->summary->pallets() as $item)
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left font-medium p-1.5">{{ $item->article->name }}</th>
+                            <td class="text-center">{{ $item->boxes }}</td>
+                            <td class="text-center">{{ number_format($item->netWeight, 2) }} kg</td>
+                        </tr>
+                    @endforeach --}}
+                    <tr class="border-b border-gray-200">
+                        <th class="italic text-left p-1.5 font-normal">Octopus Vulgaris - FAO 27 – Atlantic, Northeast</th>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="border-b border-black">
+                        <th class="text-left p-1.5 font-normal">Pallets: 56</th>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th class="text-left font-medium p-1.5">Total</th>
+                        <td class="text-center">{{-- {{ $order->summary->total()->boxes }} --}}</td>
+                        <td class="text-center">{{-- {{ number_format($order->summary->total()->netWeight, 2) }}  --}}kg</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="grid grid-cols-12 mt-8">
+            <div class="col-span-10">
+                <p style="font-size: 1.2rem;"><strong>Delivery Address:</strong></p>
+                <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
+                    {{ $order->shippingAddress }}
+                </p>
+                <p style="font-size: 1.2rem; margin-top: 3rem;"><strong>Terms & Conditions:</strong></p>
+                <p class="mt-3 text-sm">
+                    <strong class="mr-1">INCOTERM:</strong> DDP (delivered duty paid).
+                </p>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
