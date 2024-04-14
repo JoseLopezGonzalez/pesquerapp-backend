@@ -3,7 +3,8 @@
 <html>
 <head>
     <title>Delivery Note </title>
-    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+    @vite('resources/css/app.css')
+   
 
 
     <style>
