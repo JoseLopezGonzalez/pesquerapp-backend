@@ -31,6 +31,24 @@ class Pallet extends Model
         return $this->belongsTo(Order::class);
     }
 
+    //Resumen de articulos : devuelve un array de articulos, cajas por articulos y cantidad total por articulos
+    public function getSummaryAttribute(){
+        $summary = [];
+        $this->boxes->map(function ($box) use (&$summary) {
+            $article = $box->box->article;
+            if (!isset($summary[$article->id])) {
+                $summary[$article->id] = [
+                    'article' => $article,
+                    'boxes' => 0,
+                    'netWeight' => 0,
+                ];
+            }
+            $summary[$article->id]['boxes']++;
+            $summary[$article->id]['netWeight'] += $box->box->net_weight;
+        });
+        return $summary;
+    }
+
     //Accessor
     public function getNetWeightAttribute()
     {

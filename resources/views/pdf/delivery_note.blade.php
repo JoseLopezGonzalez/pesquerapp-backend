@@ -71,13 +71,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                   {{--  @foreach($order->summary->pallets() as $item)
-                        <tr class="border-b border-gray-200">
-                            <th class="text-left font-medium p-1.5">{{ $item->article->name }}</th>
-                            <td class="text-center">{{ $item->boxes }}</td>
-                            <td class="text-center">{{ number_format($item->netWeight, 2) }} kg</td>
-                        </tr>
-                    @endforeach --}}
+                    @foreach($order->pallets as $pallet)
+                        @foreach($pallet->summary as $article)
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left font-medium p-1.5">{{ $article->article }}</th>
+                                <td class="text-center">{{ $article->boxes }}</td>
+                                <td class="text-center">{{ number_format($article->netWeight, 2) }} kg</td>
+                            </tr>
+
+                        @endforeach
+                    @endforeach
                     <tr class="border-b border-gray-200">
                         <th class="italic text-left p-1.5 font-normal">Octopus Vulgaris - FAO 27 – Atlantic, Northeast</th>
                         <td></td>
@@ -100,7 +103,7 @@
             <div class="col-span-10">
                 <p style="font-size: 1.2rem;"><strong>Delivery Address:</strong></p>
                 <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
-                    {!! nl2br($order->shiping_address) !!}
+                    {!! nl2br($order->shipping_address) !!}
                 </p>
                 <p style="font-size: 1.2rem; margin-top: 3rem;"><strong>Terms & Conditions:</strong></p>
                 <p class="mt-3 text-sm">

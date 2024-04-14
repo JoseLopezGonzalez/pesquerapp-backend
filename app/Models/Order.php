@@ -31,6 +31,13 @@ class Order extends Model
         return $this->hasMany(Pallet::class);
     }
 
+    //Resumen productos pedido
+    
+
+    public function getSummaryAttribute(){
+       
+    }
+
     public function payment_term()
     {
         return $this->belongsTo(PaymentTerm::class);
