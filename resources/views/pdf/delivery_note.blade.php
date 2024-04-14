@@ -3,6 +3,8 @@
 <html>
 <head>
     <title>Delivery Note </title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <style>
         body { font-family: 'DejaVu Sans'; }
         table { width: 100%; border-collapse: collapse; }
