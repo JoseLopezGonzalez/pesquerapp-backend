@@ -3,7 +3,8 @@
 <html>
 <head>
     <title>Delivery Note </title>
-    @vite('resources/css/app.css')
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 
     <style>
         body { font-family: 'DejaVu Sans'; }
