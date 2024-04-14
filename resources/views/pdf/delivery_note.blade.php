@@ -74,7 +74,7 @@
                     @foreach($order->pallets as $pallet)
                         @foreach($pallet->summary as $article)
                             <tr class="border-b border-gray-200">
-                                <th class="text-left font-medium p-1.5">{{ $article['article_name'] }}</th>
+                                <th class="text-left font-medium p-1.5">{{ $article['article_name'].$article['species_name'] }}</th>
                                 <td class="text-center">{{ $article['boxes'] }}</td>
                                 <td class="text-center">{{ number_format($article['netWeight'], 2) }} kg</td>
                             </tr>
