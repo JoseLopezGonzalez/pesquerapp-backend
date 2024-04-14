@@ -5,8 +5,8 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
-use Barryvdh\DomPDF\Facade as PDF;
 use App\Models\Order; // Asegúrate de importar tu modelo Order
+use Barryvdh\DomPDF\PDF;
 
 class PDFController extends Controller
 {
