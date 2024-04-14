@@ -3,8 +3,7 @@
 <html>
 <head>
     <title>Delivery Note </title>
-    @vite('resources/css/app.css')
-    <link rel="stylesheet" href="{{ asset('resources/css/app.css') }}">
+    {{-- Tailwind no funciona, lo cojo todo directamente de un cdn --}}
 
     <script src="https://cdn.tailwindcss.com"></script>
 
