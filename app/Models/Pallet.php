@@ -35,19 +35,17 @@ class Pallet extends Model
     public function getSummaryAttribute(){
         $summary = [];
         $this->boxes->map(function ($box) use (&$summary) {
-            $article = $box->box->article;
-            if (!isset($summary[$article->id])) {
-                /* dd($article); */
-                $summary[$article->id] = [
-                    'product' => $article,
-                    'article_name' => $article->article->name,
-                    'species' => $article->species,
+            $product = $box->box->product;
+            if (!isset($summary[$product->id])) {
+                $summary[$product->id] = [
+                    'product' => $product,
+                    'species' => $product->species,
                     'boxes' => 0,
                     'netWeight' => 0,
                 ];
             }
-            $summary[$article->id]['boxes']++;
-            $summary[$article->id]['netWeight'] += $box->box->net_weight;
+            $summary[$product->id]['boxes']++;
+            $summary[$product->id]['netWeight'] += $box->box->net_weight;
         });
         return $summary;
     }

@@ -32,10 +32,10 @@ class Order extends Model
     }
 
     //Resumen productos pedido
-    
 
-    public function getSummaryAttribute(){
-       
+
+    public function getSummaryAttribute()
+    {
     }
 
     public function payment_term()
@@ -47,6 +47,43 @@ class Order extends Model
     public function isActive()
     {
         return $this->status == 'pending' || $this->load_date >= now();
+    }
+
+    // Resumen de productos agrupados por especie && zona de captura, necesito 
+
+    public function getProductsBySpeciesAndCaptureZone()
+    {
+        $summary = [];
+        $this->pallets->map(function ($pallet) use (&$summary) {
+            $pallet->boxes->map(function ($box) use (&$summary) {
+                $product = $box->box->product;
+                $species = $product->species;
+                $captureZone = $product->captureZone;
+                $key = $species->id . '-' . $captureZone->id;
+
+                if (!isset($summary[$key])) {
+                    $summary[$key] = [
+                        'species' => $species,
+                        'captureZone' => $captureZone,
+                        'products' => []
+                    ];
+                }
+
+                $productKey = $product->id;
+                if (!isset($summary[$key]['products'][$productKey])) {
+                    $summary[$key]['products'][$productKey] = [
+                        'product' => $product,
+                        'boxes' => 0,
+                        'netWeight' => 0
+                    ];
+                }
+
+                $summary[$key]['products'][$productKey]['boxes']++;
+                $summary[$key]['products'][$productKey]['netWeight'] += $box->netWeight;
+            });
+        });
+
+        return $summary;
     }
 
 
@@ -86,7 +123,7 @@ class Order extends Model
             if (empty($email)) {
                 continue;
             }
-            
+
             if ($type == 'cc' && (str_starts_with($email, 'CC:') || str_starts_with($email, 'cc:'))) {
                 $result[] = substr($email, 3);  // Remove 'CC:' prefix and add to results 
             } elseif ($type == 'regular' && !str_starts_with($email, 'CC:') && !str_starts_with($email, 'cc:')) {
@@ -96,6 +133,4 @@ class Order extends Model
 
         return $result;
     }
-
-   
 }

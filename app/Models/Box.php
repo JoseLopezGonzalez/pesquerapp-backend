@@ -12,7 +12,14 @@ class Box extends Model
 
     protected $fillable = ['pallet_id', 'article_id', 'lot', 'gs1_128', 'gross_weight', 'net_weight'];
 
+    //Alguna parte del codigo usa esto todavia aunque este mal semanticamente
     public function article()
+    {
+        return $this->belongsTo(Product::class, 'article_id');
+    }
+
+
+    public function product()
     {
         return $this->belongsTo(Product::class, 'article_id');
     }

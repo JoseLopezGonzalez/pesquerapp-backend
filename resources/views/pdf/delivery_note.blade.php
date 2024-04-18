@@ -71,26 +71,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($order->pallets as $pallet)
-                        @foreach($pallet->summary as $article)
+                    @foreach($order->productsBySpeciesAndCaptureZone as $productsBySpeciesAndCaptureZone)
+                        @foreach($productsBySpeciesAndCaptureZone['products'] as $product)
                             <tr class="border-b border-gray-200">
-                                <th class="text-left font-medium p-1.5">{{ $article['article_name']}}</th>
-                                <td class="text-center">{{ $article['boxes'] }}</td>
-                                <td class="text-center">{{ number_format($article['netWeight'], 2) }} kg</td>
+                                <th class="text-left font-medium p-1.5">{{ $product['product']->article->name}}</th>
+                                <td class="text-center">{{ $product['boxes'] }}</td>
+                                <td class="text-center">{{ number_format($product['netWeight'], 2) }} kg</td>
                             </tr>
-                            <tr class="border-b border-gray-200" style="font-size: 5px">
-                                <th class="text-left  p-1.5" style="font-size: 10px">{{ $article['species']->scientific_name.'('. $article['species']->fao.')'.' - '.$article['product']->captureZone->name }}</th>
-                                <td class="text-center"></td>
-                                <td class="text-center"></td>
-                            </tr>
+                            
 
                         @endforeach
+
+                        <tr class="border-b border-gray-200" style="font-size: 5px">
+                            <th class="text-left  p-1.5" style="font-size: 10px">{{ $productBySpeciesAndCaptureZone['species']->scientific_name.'('. $productBySpeciesAndCaptureZone['species']->fao.')'.' - '.$productBySpeciesAndCaptureZone['captureZone']->captureZone->name }}</th>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        </tr>
                     @endforeach
-                    <tr class="border-b border-gray-200">
+                    {{-- <tr class="border-b border-gray-200">
                         <th class="italic text-left p-1.5 font-normal">Octopus Vulgaris - FAO 27 – Atlantic, Northeast</th>
                         <td></td>
                         <td></td>
-                    </tr>
+                    </tr> --}}
                     <tr class="border-b border-black">
                         <th class="text-left p-1.5 font-normal">Pallets: 56</th>
                         <td></td>
