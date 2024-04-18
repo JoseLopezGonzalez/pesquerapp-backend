@@ -51,7 +51,7 @@ class Order extends Model
 
     // Resumen de productos agrupados por especie && zona de captura, necesito 
 
-    public function getProductsBySpeciesAndCaptureZone()
+    public function getProductsBySpeciesAndCaptureZoneAttribute()
     {
         $summary = [];
         $this->pallets->map(function ($pallet) use (&$summary) {
