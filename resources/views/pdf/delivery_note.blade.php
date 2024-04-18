@@ -50,7 +50,7 @@
                         </tr>
                         <tr class="border-b border-gray-200">
                             <th class="text-left font-medium text-sm p-2">Date</th>
-                            <td class="text-left text-sm">{{-- {{ $order->loadDate->format('m/d/Y') }} --}}</td>
+                            <td class="text-left text-sm">{{ $order->load_date->format('m/d/Y') }}</td>
                         </tr>
                         <tr class="border-b border-gray-200">
                             <th class="text-left font-medium text-sm p-2">Buyer Reference</th>
