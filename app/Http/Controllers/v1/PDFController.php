@@ -6,8 +6,7 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order; // Asegúrate de importar tu modelo Order
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
-
+ use PDF; // Comenta temporalmente esta línea para desactivar la generación de PDF
 
 
 class PDFController extends Controller

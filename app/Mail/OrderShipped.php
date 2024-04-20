@@ -2,8 +2,7 @@
 
 namespace App\Mail;
 
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
-
+use PDF; // Al principio de tu archivo PHP donde necesitas usar DomPDF
 
 
 use Illuminate\Bus\Queueable;
@@ -34,17 +33,17 @@ class OrderShipped extends Mailable
      */
     public function build()
     {
-
+        
         $pdf = PDF::loadView('pdf.delivery_note', ['order' => $this->order])->output();
 
         return $this->subject('Order Shipped: #' . $this->order->id)
-            ->markdown('emails.orders.shipped', [
-                'customer_name' => $this->order->customer->name,
-                'order_id' => $this->order->id,
-                'order' => $this->order,
-            ])
-            ->attachData($pdf, 'delivery-note-' . $this->order->id . '.pdf', [
-                'mime' => 'application/pdf',
-            ]);
+                    ->markdown('emails.orders.shipped', [
+                        'customer_name' => $this->order->customer->name,
+                        'order_id' => $this->order->id,
+                        'order' => $this->order,
+                    ])
+                    ->attachData($pdf, 'delivery-note-' . $this->order->id . '.pdf', [
+                        'mime' => 'application/pdf',
+                    ]);
     }
 }
