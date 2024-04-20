@@ -88,7 +88,7 @@
                         @endforeach
 
                         <tr class="border-b border-gray-200" >
-                            <th class="text-left font-light italic  p-1.5" style="font-size:0.50rem" >{{ $productsBySpeciesAndCaptureZone['species']->scientific_name.'('. $productsBySpeciesAndCaptureZone['species']->fao.')'.' - '.$productsBySpeciesAndCaptureZone['captureZone']->name }}</th>
+                            <th class="text-left font-light italic  p-1.5" style="font-size:0.60rem; line-height:100%" >{{ $productsBySpeciesAndCaptureZone['species']->scientific_name.'('. $productsBySpeciesAndCaptureZone['species']->fao.')'.' - '.$productsBySpeciesAndCaptureZone['captureZone']->name }}</th>
                             <td class="text-center"></td>
                             <td class="text-center"></td>
                         </tr>
