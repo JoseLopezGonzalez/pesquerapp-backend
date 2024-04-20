@@ -31,12 +31,12 @@
                 </p>
             </div>
         </div>
-        <div class="grid grid-cols-12" style="width:100%; margin-bottom: 1rem;">
+        <div class="grid grid-cols-12" style=" margin-bottom: 1rem;">
             <!-- Color bars across the top -->
-            <div class="col-span-3" style="width:25%; padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #06d6ff;"></div>
-            <div class="col-span-3" style="width:25%; padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #079def;"></div>
-            <div class="col-span-3" style="width:25%; padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #d1d1d1;"></div>
-            <div class="col-span-3" style="width:25%; padding-right: 0; padding-left: 0; height: 0.1rem; background-color: black;"></div>
+            <div class="col-span-3" style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #06d6ff;"></div>
+            <div class="col-span-3" style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #079def;"></div>
+            <div class="col-span-3" style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #d1d1d1;"></div>
+            <div class="col-span-3" style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: black;"></div>
         </div>
         <div class="grid grid-cols-12 mt-2 mb-4">
             <div class="col-span-12">
