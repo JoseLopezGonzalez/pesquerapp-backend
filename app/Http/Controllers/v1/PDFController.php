@@ -26,9 +26,16 @@ class PDFController extends Controller
     {
         $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
 
-        return Pdf::view('pdf.invoice', ['order' => $order])
-            ->format('a4')
-            ->name('your-invoice.pdf');
+
+
+        try {
+            return Pdf::view('pdf.invoice', ['order' => $order])
+                ->format('a4')
+                ->name('your-invoice.pdf');
+        } catch (\Exception $e) {
+            Log::error("Error generando PDF: " . $e->getMessage());
+            // Considera retornar algún tipo de respuesta HTTP de error aquí
+        }
 
         /* return pdf('pdf.invoice', [
             'order' => $order, 
@@ -36,7 +43,7 @@ class PDFController extends Controller
 
         /* return view('pdf.delivery_note', ['order' => $order]); */
 
-       
+
 
 
 
