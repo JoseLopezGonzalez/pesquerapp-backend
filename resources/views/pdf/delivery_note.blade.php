@@ -15,19 +15,29 @@
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
         /* Tailwind */
         .pt-4 { padding-top: 1rem; }
-        .grid { display: grid; }
-        .grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
-        .text-left { text-align: left; }
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
-        .text-sm { font-size: 0.875rem; }
-        .font-medium { font-weight: 500; }
-        .mt-2 { margin-top: 0.5rem; }
-        .mb-4 { margin-bottom: 1rem; }
-        .line-height-122 { line-height: 122%; }
-        .border-b { border-bottom: 1px solid #ccc; }
-        .border-black { border-color: black; }
-        .bg-blue-500 { background-color: #4299e1; } /* Example blue */
+    .grid { display: grid; }
+    .grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .col-span-3 { grid-column: span 3; }
+    .col-span-4 { grid-column: span 4; }
+    .col-span-5 { grid-column: span 5; }
+    .col-span-7 { grid-column: span 7; }
+    .col-span-8 { grid-column: span 8; }
+    .col-span-10 { grid-column: span 10; }
+    .col-span-12 { grid-column: span 12; }
+    .text-right { text-align: right; }
+    .text-left { text-align: left; }
+    .text-center { text-align: center; }
+    .text-sm { font-size: 0.875rem; }
+    .font-medium { font-weight: 500; }
+    .border-b { border-bottom: 1px solid #e2e8f0; }
+    .border-b-2 { border-bottom: 2px solid black; }
+    .w-full { width: 100%; }
+    .mt-2 { margin-top: 0.5rem; }
+    .mt-3 { margin-top: 0.75rem; }
+    .mt-8 { margin-top: 2rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .p-1.5 { padding: 0.375rem; }
+    .p-2 { padding: 0.5rem; }
     </style>
 </head>
 <body>
