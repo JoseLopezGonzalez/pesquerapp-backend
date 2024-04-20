@@ -36,16 +36,20 @@ class PDFController extends Controller
         $html = view('pdf.delivery_note', ['order' => $order])->render();
 
         $tempPath = tempnam(sys_get_temp_dir(), 'delivery-note');
+
+        // Asegúrate de que la ruta del archivo temporal tenga la extensión .pdf
+        $pdfPath = $tempPath . '.pdf';
+
         Browsershot::html($html)
             ->format('A4')
             ->showBackground()
             ->margins(10, 10, 10, 10)
-            ->save($tempPath);
+            ->save($pdfPath);
 
         if (file_exists($tempPath) && filesize($tempPath) > 0) {
             return response()->file($tempPath);
         } else {
-            Log::error('Failed to generate PDF'); 
+            Log::error('Failed to generate PDF');
             // Lanza una excepción o maneja el error como prefieras
         }
 
