@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93dd69ac4c137d2e4b1e35975e39c5a1",
+    "content-hash": "35ed2912b5488e1bf4cac9e7c4b25d77",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -160,6 +160,58 @@
                 }
             ],
             "time": "2024-03-09T19:20:39+00:00"
+        },
+        {
+            "name": "beganovich/snappdf",
+            "version": "v4.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/beganovich/snappdf.git",
+                "reference": "ad181634736ca15b7adba1637e982d151165656d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/beganovich/snappdf/zipball/ad181634736ca15b7adba1637e982d151165656d",
+                "reference": "ad181634736ca15b7adba1637e982d151165656d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zip": "*",
+                "php": "^8.1|^8.2",
+                "symfony/console": "^6.2",
+                "symfony/filesystem": "^6.2",
+                "symfony/process": "^6.2"
+            },
+            "require-dev": {
+                "ext-fileinfo": "*",
+                "friendsofphp/php-cs-fixer": "^3.6",
+                "phpunit/phpunit": "^9.5"
+            },
+            "bin": [
+                "snappdf"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Beganovich\\Snappdf\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Beganović",
+                    "email": "k1pstabug@gmail.com"
+                }
+            ],
+            "description": "Convert webpages or HTML into the PDF file using Chromium or Google Chrome.",
+            "support": {
+                "issues": "https://github.com/beganovich/snappdf/issues",
+                "source": "https://github.com/beganovich/snappdf/tree/v4.0.3"
+            },
+            "time": "2023-11-13T17:05:08+00:00"
         },
         {
             "name": "brick/math",
@@ -4420,6 +4472,69 @@
                 }
             ],
             "time": "2024-01-23T14:51:35+00:00"
+        },
+        {
+            "name": "symfony/filesystem",
+            "version": "v6.4.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/filesystem.git",
+                "reference": "9919b5509ada52cc7f66f9a35c86a4a29955c9d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/9919b5509ada52cc7f66f9a35c86a4a29955c9d3",
+                "reference": "9919b5509ada52cc7f66f9a35c86a4a29955c9d3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-mbstring": "~1.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides basic utilities for the filesystem",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/filesystem/tree/v6.4.6"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-03-21T19:36:20+00:00"
         },
         {
             "name": "symfony/finder",

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 use Spatie\Browsershot\Browsershot; // Importa Browsershot
 use Spatie\LaravelPdf\Facades\Pdf;
+use Snappdf\Snappdf;
 
 
 
@@ -27,15 +28,25 @@ class PDFController extends Controller
         $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
 
 
+        $snappdf = new Snappdf(); 
+        $html = view('pdf.invoice', ['data' => 'Your data here'])->render();
+        
+        $pdf = $snappdf->setHtml($html)
+                       ->generate();
+        
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf;
+        }, 'invoice.pdf', ['Content-Type' => 'application/pdf']);
 
-        try {
+
+        /* try {
             return Pdf::view('pdf.invoice', ['order' => $order])
                 ->format('a4')
                 ->name('your-invoice.pdf');
         } catch (\Exception $e) {
             Log::error("Error generando PDF: " . $e->getMessage());
             return response()->json(['error' => 'Error al generar el PDF'], 500);
-        }
+        } */
 
         /* return pdf('pdf.invoice', [
             'order' => $order, 
