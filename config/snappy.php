@@ -37,9 +37,18 @@ return [
         'enabled' => true,
         'binary'  => env('WKHTML_PDF_BINARY', '/usr/bin/wkhtmltopdf'),
         'timeout' => false,
-        'options' => [],
+        'options' => [
+            'enable-local-file-access' => true,
+            'no-background' => false,
+            'enable-javascript' => true,
+            'javascript-delay' => 1000,  // ajusta según necesidad, permite que el JS se ejecute
+            'no-stop-slow-scripts' => true,
+            'disable-smart-shrinking' => true,
+            'user-style-sheet' => public_path('css/tailwind.css')  // asumiendo que has precompilado Tailwind CSS
+        ],
         'env'     => [],
     ],
+    
     
     'image' => [
         'enabled' => true,
