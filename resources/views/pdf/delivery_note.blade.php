@@ -98,13 +98,13 @@
                         <td></td>
                         <td></td>
                     </tr> --}}
-                    <tr class="border-b border-black">
+                    {{-- <tr class="border-b border-black">
                         <th class="text-left p-1.5 font-normal">Pallets: 56</th>
                         <td></td>
                         <td></td>
-                    </tr>
+                    </tr> --}}
                     <tr>
-                        <th class="text-left font-medium p-1.5">Total</th>
+                        <th class="text-left font-medium p-1.5">Total (Pallets:1)</th>
                         <td class="text-center">{{-- {{ $order->summary->total()->boxes }} --}}</td>
                         <td class="text-center">{{-- {{ number_format($order->summary->total()->netWeight, 2) }}  --}}kg</td>
                     </tr>
@@ -126,7 +126,7 @@
                 </div>
             </div>
     
-            <div class="grid grid-cols-12 mt-8">
+            {{-- <div class="grid grid-cols-12 mt-8">
                 <div class="col-span-10">
                     <p style="font-size: 1.2rem;"><strong>Delivery Address:</strong></p>
                     <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
@@ -137,7 +137,7 @@
                         <strong class="mr-1">INCOTERM:</strong> DDP (delivered duty paid).
                     </p>
                 </div>
-            </div>
+            </div> --}}
         </div>
         
     </div>
