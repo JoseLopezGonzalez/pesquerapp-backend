@@ -1,22 +1,27 @@
+<!-- resources/views/pdf/delivery_note.blade.php -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Delivery Note</title>
+    <title>Delivery Note </title>
+    {{-- Tailwind no funciona, lo cojo todo directamente de un cdn --}}
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+
     <style>
         body { font-family: 'DejaVu Sans'; }
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        .preserve-line-breaks { white-space: pre-line; }
-        .bold-first-line { font-weight: bold; }
     </style>
 </head>
 <body>
-    <div style="padding-top: 1rem;">
-        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); margin-bottom: 1rem;">
-            <div style="grid-column: span 4 / span 4;">
+    <div class="pt-4">
+        <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
+            <div class="col-span-4">
                 <img src="https://congeladosbrisamar.es/logo2" alt="Logo" style="max-width: 50px;">
             </div>
-            <div style="grid-column: span 8 / span 8; line-height: 122%; text-align: right; color: #1E79BB;">
+            <div class="col-span-8" style="line-height: 122%; text-align: right; color: #1E79BB;">
                 <p style="font-size: 10pt;">
                     <strong>CONGELADOS BRISAMAR S.L.</strong><br>
                     C.I.F.: B-215 732 82<br>
@@ -25,79 +30,88 @@
                 </p>
             </div>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); margin-bottom: 1rem;">
-            <div style="grid-column: span 3 / span 3; padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #06d6ff;"></div>
-            <div style="grid-column: span 3 / span 3; padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #079def;"></div>
-            <div style="grid-column: span 3 / span 3; padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #d1d1d1;"></div>
-            <div style="grid-column: span 3 / span 3; padding-right: 0; padding-left: 0; height: 0.1rem; background-color: black;"></div>
+        <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
+            <!-- Color bars across the top -->
+            <div class="col-span-3" style="padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #06d6ff;"></div>
+            <div class="col-span-3" style="padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #079def;"></div>
+            <div class="col-span-3" style="padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #d1d1d1;"></div>
+            <div class="col-span-3" style="padding-right: 0; padding-left: 0; height: 0.1rem; background-color: black;"></div>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); margin-top: 0.5rem; margin-bottom: 1rem;">
-            <div style="grid-column: span 12 / span 12;">
+        <div class="grid grid-cols-12 mt-2 mb-4">
+            <div class="col-span-12">
                 <p style="margin-top: 1.2rem; font-size: 1.5rem;"><strong>DELIVERY NOTE</strong></p>
             </div>
-            <div style="grid-column: span 5 / span 5; margin-top: 0.75rem;">
-                <table style="width: 100%;">
+            <div class="col-span-5 mt-3">
+                <table class="w-full">
                     <tbody>
-                        <tr style="border-bottom: 1px solid #ccc;">
-                            <th style="text-align: left; font-weight: bold; font-size: small; padding: 8px;">Number</th>
-                            <td style="text-align: left; font-size: small; padding: 8px;">{{ $order->id }}</td>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left font-medium text-sm p-2">Number</th>
+                            <td class="text-left text-sm">{{ $order->id }}</td>
                         </tr>
-                        <tr style="border-bottom: 1px solid #ccc;">
-                            <th style="text-align: left; font-weight: bold; font-size: small; padding: 8px;">Date</th>
-                            <td style="text-align: left; font-size: small; padding: 8px;">{{ $order->load_date }}</td>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left font-medium text-sm p-2">Date</th>
+                            <td class="text-left text-sm">{{ $order->load_date }}</td>
                         </tr>
-                        <tr style="border-bottom: 1px solid #ccc;">
-                            <th style="text-align: left; font-weight: bold; font-size: small; padding: 8px;">Buyer Reference</th>
-                            <td style="text-align: left; font-size: small; padding: 8px;">{{ $order->buyer_reference }}</td>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left font-medium text-sm p-2">Buyer Reference</th>
+                            <td class="text-left text-sm">{{ $order->buyer_reference }}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div style="grid-column: span 7 / span 7; text-align: right; line-height: 100%; margin-top: 0.5rem;">
+            <div class="col-span-7 text-right mt-2" style="line-height: 100%;">
                 <p class="cliente preserve-line-breaks bold-first-line" style="font-size: 0.9rem;">
                     {!! nl2br($order->billing_address) !!}
                 </p>
             </div>
         </div>
-        <div style="width: 100%; margin-top: 3rem;">
-            <table style="width: 100%; font-size: small;">
-                <thead style="border-bottom: 2px solid black;">
+        <div class="w-full mt-12">
+            <table class="w-full text-sm">
+                <thead class="border-b-2 border-black">
                     <tr>
-                        <th style="text-align: left; padding: 6px;">Item</th>
-                        <th style="text-align: center;">Boxes</th>
-                        <th style="text-align: center;">Weight</th>
+                        <th class="text-left p-1.5">Item</th>
+                        <th class="text-center">Boxes</th>
+                        <th class="text-center">Weight</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($order->productsBySpeciesAndCaptureZone as $productsBySpeciesAndCaptureZone)
                         @foreach($productsBySpeciesAndCaptureZone['products'] as $product)
-                            <tr style="border-bottom: 1px solid #ccc;">
-                                <th style="text-align: left; font-weight: bold; padding: 6px;">{{ $product['product']->article->name}}</th>
-                                <td style="text-align: center;">{{ $product['boxes'] }}</td>
-                                <td style="text-align: center;">{{ number_format($product['netWeight'], 2) }} kg</td>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left font-medium p-1.5">{{ $product['product']->article->name}}</th>
+                                <td class="text-center">{{ $product['boxes'] }}</td>
+                                <td class="text-center">{{ number_format($product['netWeight'], 2) }} kg</td>
                             </tr>
+                            
+
                         @endforeach
-                        <tr style="border-bottom: 1px solid #ccc;">
-                            <th style="text-align: left; padding: 6px;">{{ $productsBySpeciesAndCaptureZone['species']->scientific_name.'('. $productsBySpeciesAndCaptureZone['species']->fao.')'.' - '.$productsBySpeciesAndCaptureZone['captureZone']->name }}</th>
-                            <td style="text-align: center;"></td>
-                            <td style="text-align: center;"></td>
+
+                        <tr class="border-b border-gray-200" style="font-size: 5px">
+                            <th class="text-left  p-1.5" style="font-size: 10px">{{ $productsBySpeciesAndCaptureZone['species']->scientific_name.'('. $productsBySpeciesAndCaptureZone['species']->fao.')'.' - '.$productsBySpeciesAndCaptureZone['captureZone']->name }}</th>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
                         </tr>
                     @endforeach
-                    <tr style="border-bottom: 2px solid black;">
-                        <th style="text-align: left; font-weight: normal; padding: 6px;">Pallets: 56</th>
+                    {{-- <tr class="border-b border-gray-200">
+                        <th class="italic text-left p-1.5 font-normal">Octopus Vulgaris - FAO 27 – Atlantic, Northeast</th>
+                        <td></td>
+                        <td></td>
+                    </tr> --}}
+                    <tr class="border-b border-black">
+                        <th class="text-left p-1.5 font-normal">Pallets: 56</th>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <th style="text-align: left; font-weight: bold; padding: 6px;">Total</th>
-                        <td style="text-align: center;"></td>
-                        <td style="text-align: center;"></td>
+                        <th class="text-left font-medium p-1.5">Total</th>
+                        <td class="text-center">{{-- {{ $order->summary->total()->boxes }} --}}</td>
+                        <td class="text-center">{{-- {{ number_format($order->summary->total()->netWeight, 2) }}  --}}kg</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); margin-top: 2rem;">
-            <div style="grid-column: span 10 / span 10;">
+        <div class="grid grid-cols-12 mt-8">
+            <div class="col-span-10">
                 <p style="font-size: 1.2rem;"><strong>Delivery Address:</strong></p>
                 <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
                     {!! nl2br($order->shipping_address) !!}
@@ -109,6 +123,6 @@
             </div>
         </div>
     </div>
+    
 </body>
 </html>
-
