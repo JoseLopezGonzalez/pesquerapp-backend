@@ -26,7 +26,7 @@ class PDFController extends Controller
     {
         $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
 
-        return Pdf::view('pdfs.invoice', ['order' => $order])
+        return Pdf::view('pdf.invoice', ['order' => $order])
             ->format('a4')
             ->name('your-invoice.pdf');
 
