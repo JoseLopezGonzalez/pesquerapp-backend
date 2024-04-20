@@ -45,7 +45,7 @@
             <div class="col-span-5 mt-3">
                 <table class="w-full  border-none">
                     <tbody>
-                        <tr class="border-b-2 border-b-red-500 border-gray-200 ">
+                        <tr class="border-b-2 border-gray-200 ">
                             <th class="text-left font-medium text-sm p-2">Number</th>
                             <td class="text-left text-sm">{{ $order->id }}</td>
                         </tr>
@@ -88,7 +88,7 @@
                         @endforeach
 
                         <tr class="border-b border-gray-200" style="font-size: 5px">
-                            <th class="text-left  p-1.5" style="font-size: 10px">{{ $productsBySpeciesAndCaptureZone['species']->scientific_name.'('. $productsBySpeciesAndCaptureZone['species']->fao.')'.' - '.$productsBySpeciesAndCaptureZone['captureZone']->name }}</th>
+                            <th class="text-left text-sm  p-1.5" >{{ $productsBySpeciesAndCaptureZone['species']->scientific_name.'('. $productsBySpeciesAndCaptureZone['species']->fao.')'.' - '.$productsBySpeciesAndCaptureZone['captureZone']->name }}</th>
                             <td class="text-center"></td>
                             <td class="text-center"></td>
                         </tr>
