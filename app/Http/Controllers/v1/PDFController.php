@@ -28,7 +28,7 @@ class PDFController extends Controller
     {
         $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
 
-        return view('pdf.delivery_note', ['order' => $order])->render();
+        /* return view('pdf.delivery_note', ['order' => $order])->render(); */
 
         $snappdf = new Snappdf();
         $html = view('pdf.delivery_note', ['order' => $order])->render();
