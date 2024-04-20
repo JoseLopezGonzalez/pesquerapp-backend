@@ -6,9 +6,11 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order; // Asegúrate de importar tu modelo Order
-use PDF; // Comenta temporalmente esta línea para desactivar la generación de PDF
+//use PDF; // Comenta temporalmente esta línea para desactivar la generación de PDF
 
 use Spatie\Browsershot\Browsershot; // Importa Browsershot
+use function Spatie\LaravelPdf\Support\pdf;
+
 
 
 class PDFController extends Controller
@@ -23,20 +25,26 @@ class PDFController extends Controller
     {
         $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
 
+
+        return pdf('pdf.delivery_note', [
+            'order' => $order, 
+        ]);
+
+
         // Renderiza la vista como HTML
-        $html = view('pdf.delivery_note', ['order' => $order])->render();
+        //$html = view('pdf.delivery_note', ['order' => $order])->render();
 
         // Usa Browsershot para convertir el HTML a PDF
-        $pdfContent = Browsershot::html($html)
+        /* $pdfContent = Browsershot::html($html)
             ->format('A4')
             ->showBackground()
             ->margins(10, 10, 10, 10)
-            ->pdf();
+            ->pdf(); */
 
         // Generar una respuesta de descarga con el PDF
-        return response()->streamDownload(function () use ($pdfContent) {
+       /*  return response()->streamDownload(function () use ($pdfContent) {
             echo $pdfContent;
-        }, "delivery-note-{$order->id}.pdf", ['Content-Type' => 'application/pdf']);
+        }, "delivery-note-{$order->id}.pdf", ['Content-Type' => 'application/pdf']); */
 
         /*  $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
 
