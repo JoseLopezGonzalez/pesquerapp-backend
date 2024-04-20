@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Log;
 
 use Spatie\Browsershot\Browsershot; // Importa Browsershot
 use Spatie\LaravelPdf\Facades\Pdf;
-use Snappdf\Snappdf;
+use Beganovich\Snappdf\Snappdf;
+
 
 
 
