@@ -34,7 +34,7 @@ class PDFController extends Controller
                 ->name('your-invoice.pdf');
         } catch (\Exception $e) {
             Log::error("Error generando PDF: " . $e->getMessage());
-            // Considera retornar algún tipo de respuesta HTTP de error aquí
+            return response()->json(['error' => 'Error al generar el PDF'], 500);
         }
 
         /* return pdf('pdf.invoice', [
