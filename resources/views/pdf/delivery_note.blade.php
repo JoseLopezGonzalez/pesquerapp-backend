@@ -11,8 +11,8 @@
 
     <style>
         body { font-family: 'DejaVu Sans'; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+       /*  table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; } */
         
     </style>
 </head>
