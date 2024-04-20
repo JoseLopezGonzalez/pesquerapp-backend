@@ -29,7 +29,7 @@ class PDFController extends Controller
         $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
 
 
-       /*  $snappdf = new Snappdf();
+        $snappdf = new Snappdf();
         $html = view('pdf.invoice', ['data' => 'Your data here'])->render();
         $snappdf->setChromiumPath('/usr/bin/chromium'); // Asegúrate de cambiar esto por tu ruta específica
 
@@ -59,17 +59,17 @@ class PDFController extends Controller
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;
-        }, 'invoice.pdf', ['Content-Type' => 'application/pdf']); */
+        }, 'invoice.pdf', ['Content-Type' => 'application/pdf']);
 
 
-        try {
+       /*  try {
             return Pdf::view('pdf.invoice', ['order' => $order])
                 ->format('a4')
                 ->name('your-invoice.pdf');
         } catch (\Exception $e) {
             Log::error("Error generando PDF: " . $e->getMessage());
             return response()->json(['error' => 'Error al generar el PDF'], 500);
-        }
+        } */
 
         /* return pdf('pdf.invoice', [
             'order' => $order, 
