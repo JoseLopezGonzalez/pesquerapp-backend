@@ -168,7 +168,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class, //Eliminar 
+        Barryvdh\Snappy\ServiceProvider::class,
+
 
     ])->toArray(),
 
@@ -185,7 +187,10 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class, // Asegúrate de que esto está añadido
+        'PDF' => Barryvdh\DomPDF\Facade::class, // Eliminar
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+
 
     ])->toArray(),
 

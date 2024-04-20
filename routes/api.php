@@ -18,6 +18,7 @@ use App\Http\Controllers\v1\StoredPalletController;
 use App\Http\Controllers\v1\TransportController;
 use App\Http\Resources\v1\CustomerResource;
 use App\Models\PaymentTerm;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,3 +58,9 @@ Route::apiResource('v1/boxes_report' , BoxesReportController::class)->only(['ind
 // Ruta personalizada para enviar documentación de un pedido (NO CRUD)
 Route::post('v1/send_order_documentation/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentation'])->name('send_order_documentation');
 Route::get('v1/orders/{orderId}/delivery-note', [PDFController::class, 'generateDeliveryNote'])->name('generate_delivery_note');
+
+Route::get('/test-pdf', function () {
+    $pdf = App::make('snappy.pdf.wrapper');
+    $pdf->loadHTML('<h1>Test PDF</h1>');
+    return $pdf->inline();
+});
