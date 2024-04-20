@@ -6,6 +6,7 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order; // Asegúrate de importar tu modelo Order
+use Illuminate\Support\Facades\Log;
 //use PDF; // Comenta temporalmente esta línea para desactivar la generación de PDF
 
 use Spatie\Browsershot\Browsershot; // Importa Browsershot
@@ -30,7 +31,24 @@ class PDFController extends Controller
             'order' => $order, 
         ]); */
 
-        return view('pdf.delivery_note', ['order' => $order]);
+        /* return view('pdf.delivery_note', ['order' => $order]); */
+
+        $html = view('pdf.delivery_note', ['order' => $order])->render();
+
+        $tempPath = tempnam(sys_get_temp_dir(), 'delivery-note');
+        Browsershot::html($html)
+            ->format('A4')
+            ->showBackground()
+            ->margins(10, 10, 10, 10)
+            ->save($tempPath);
+
+        if (file_exists($tempPath) && filesize($tempPath) > 0) {
+            return response()->file($tempPath);
+        } else {
+            Log::error('Failed to generate PDF'); 
+            // Lanza una excepción o maneja el error como prefieras
+        }
+
 
 
 
@@ -45,7 +63,7 @@ class PDFController extends Controller
             ->pdf(); */
 
         // Generar una respuesta de descarga con el PDF
-       /*  return response()->streamDownload(function () use ($pdfContent) {
+        /*  return response()->streamDownload(function () use ($pdfContent) {
             echo $pdfContent;
         }, "delivery-note-{$order->id}.pdf", ['Content-Type' => 'application/pdf']); */
 
