@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 //use PDF; // Comenta temporalmente esta línea para desactivar la generación de PDF
 
 use Spatie\Browsershot\Browsershot; // Importa Browsershot
-use function Spatie\LaravelPdf\Support\pdf;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 
 
@@ -26,10 +26,13 @@ class PDFController extends Controller
     {
         $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
 
+        return Pdf::view('pdfs.invoice', ['order' => $order])
+            ->format('a4')
+            ->name('your-invoice.pdf');
 
-        return pdf('pdf.invoice', [
+        /* return pdf('pdf.invoice', [
             'order' => $order, 
-        ]);
+        ]); */
 
         /* return view('pdf.delivery_note', ['order' => $order]); */
 
