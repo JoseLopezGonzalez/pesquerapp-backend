@@ -33,25 +33,23 @@ class PDFController extends Controller
         $html = view('pdf.invoice', ['data' => 'Your data here'])->render();
         $snappdf->setChromiumPath('/usr/bin/chromium-browser'); // Asegúrate de cambiar esto por tu ruta específica
 
-        // Configura las opciones personalizadas de lanzamiento para Chromium
-        $snappdf->addChromiumArguments([
-            'disable-gpu',
-            'disable-translate',
-            'disable-extensions',
-            'disable-sync',
-            'disable-background-networking',
-            'disable-software-rasterizer',
-            'disable-default-apps',
-            'disable-dev-shm-usage',
-            'safebrowsing-disable-auto-update',
-            'run-all-compositor-stages-before-draw',
-            'no-first-run',
-            'no-margins',
-            'print-to-pdf-no-header',
-            'no-pdf-header-footer',
-            'hide-scrollbars',
-            'ignore-certificate-errors'
-        ]);
+        // Agrega argumentos de Chromium uno por uno
+        $snappdf->addChromiumArguments('disable-gpu');
+        $snappdf->addChromiumArguments('disable-translate');
+        $snappdf->addChromiumArguments('disable-extensions');
+        $snappdf->addChromiumArguments('disable-sync');
+        $snappdf->addChromiumArguments('disable-background-networking');
+        $snappdf->addChromiumArguments('disable-software-rasterizer');
+        $snappdf->addChromiumArguments('disable-default-apps');
+        $snappdf->addChromiumArguments('disable-dev-shm-usage');
+        $snappdf->addChromiumArguments('safebrowsing-disable-auto-update');
+        $snappdf->addChromiumArguments('run-all-compositor-stages-before-draw');
+        $snappdf->addChromiumArguments('no-first-run');
+        $snappdf->addChromiumArguments('no-margins');
+        $snappdf->addChromiumArguments('print-to-pdf-no-header');
+        $snappdf->addChromiumArguments('no-pdf-header-footer');
+        $snappdf->addChromiumArguments('hide-scrollbars');
+        $snappdf->addChromiumArguments('ignore-certificate-errors');
 
         $pdf = $snappdf->setHtml($html)
             ->generate();
