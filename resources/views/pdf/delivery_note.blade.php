@@ -111,18 +111,35 @@
                 </tbody>
             </table>
         </div>
-        <div class="grid grid-cols-12 mt-8">
-            <div class="col-span-10">
-                <p style="font-size: 1.2rem;"><strong>Delivery Address:</strong></p>
-                <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
-                    {!! nl2br($order->shipping_address) !!}
-                </p>
-                <p style="font-size: 1.2rem; margin-top: 3rem;"><strong>Terms & Conditions:</strong></p>
-                <p class="mt-3 text-sm">
-                    <strong class="mr-1">INCOTERM:</strong> DDP (delivered duty paid).
-                </p>
+        <div class="grid grid-cols-2">
+
+            <div class="grid grid-cols-12 mt-8">
+                <div class="col-span-10">
+                    <p style="font-size: 1.2rem;"><strong>Delivery Address:</strong></p>
+                    <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
+                        {!! nl2br($order->shipping_address) !!}
+                    </p>
+                    <p style="font-size: 1.2rem; margin-top: 3rem;"><strong>Terms & Conditions:</strong></p>
+                    <p class="mt-3 text-sm">
+                        <strong class="mr-1">INCOTERM:</strong> DDP (delivered duty paid).
+                    </p>
+                </div>
+            </div>
+    
+            <div class="grid grid-cols-12 mt-8">
+                <div class="col-span-10">
+                    <p style="font-size: 1.2rem;"><strong>Delivery Address:</strong></p>
+                    <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
+                        {!! nl2br($order->shipping_address) !!}
+                    </p>
+                    <p style="font-size: 1.2rem; margin-top: 3rem;"><strong>Terms & Conditions:</strong></p>
+                    <p class="mt-3 text-sm">
+                        <strong class="mr-1">INCOTERM:</strong> DDP (delivered duty paid).
+                    </p>
+                </div>
             </div>
         </div>
+        
     </div>
     
 </body>
