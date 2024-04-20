@@ -45,7 +45,7 @@
             <div class="col-span-5 mt-3">
                 <table class="w-full">
                     <tbody>
-                        <tr class="border-b border-b-red-500 border-gray-200">
+                        <tr class="border-b-2 border-b-red-500 border-gray-200 border-hidden">
                             <th class="text-left font-medium text-sm p-2">Number</th>
                             <td class="text-left text-sm">{{ $order->id }}</td>
                         </tr>
