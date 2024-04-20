@@ -31,7 +31,7 @@ class PDFController extends Controller
 
         $snappdf = new Snappdf(); 
         $html = view('pdf.invoice', ['data' => 'Your data here'])->render();
-        $snappdf->setChromiumPath('/usr/bin/chromium'); // Asegúrate de cambiar esto por tu ruta específica
+        $snappdf->setChromiumPath('/usr/bin/chromium-browser'); // Asegúrate de cambiar esto por tu ruta específica
         $pdf = $snappdf->setHtml($html)
                        ->generate();
         
