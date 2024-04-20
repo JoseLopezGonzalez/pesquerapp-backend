@@ -75,7 +75,7 @@
                         <th class="text-center">Weight</th>
                     </tr>
                 </thead>
-                <tbody class="border-b border-black">
+                <tbody class="border-b-2 border-black">
                     @foreach($order->productsBySpeciesAndCaptureZone as $productsBySpeciesAndCaptureZone)
                         @foreach($productsBySpeciesAndCaptureZone['products'] as $product)
                             <tr class="border-b border-gray-200">
