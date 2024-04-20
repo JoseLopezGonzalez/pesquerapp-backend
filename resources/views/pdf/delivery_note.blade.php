@@ -7,9 +7,9 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
+{{--     <style>
         {{ File::get(public_path('css/tailwind.css')) }}
-        </style>
+        </style> --}}
 
     <style>
         body { font-family: 'DejaVu Sans'; }
