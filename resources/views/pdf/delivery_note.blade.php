@@ -7,14 +7,27 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-{{--     <style>
-        {{ File::get(public_path('css/tailwind.css')) }}
-        </style> --}}
+   
 
     <style>
         body { font-family: 'DejaVu Sans'; }
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        /* Tailwind */
+        .pt-4 { padding-top: 1rem; }
+        .grid { display: grid; }
+        .grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        .text-sm { font-size: 0.875rem; }
+        .font-medium { font-weight: 500; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .line-height-122 { line-height: 122%; }
+        .border-b { border-bottom: 1px solid #ccc; }
+        .border-black { border-color: black; }
+        .bg-blue-500 { background-color: #4299e1; } /* Example blue */
     </style>
 </head>
 <body>
