@@ -43,7 +43,7 @@
                 <p style="margin-top: 1.2rem; font-size: 1.5rem;"><strong>DELIVERY NOTE</strong></p>
             </div>
             <div class="col-span-5 mt-3">
-                <table class="w-full border-hidden">
+                <table class="w-full border-t-0 border-l-0 border-r-0">
                     <tbody>
                         <tr class="border-b-2 border-b-red-500 border-gray-200 ">
                             <th class="text-left font-medium text-sm p-2">Number</th>
