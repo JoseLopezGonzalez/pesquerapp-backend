@@ -5,7 +5,7 @@
     <title>Delivery Note </title>
     {{-- Tailwind no funciona, lo cojo todo directamente de un cdn --}}
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 
    
 
