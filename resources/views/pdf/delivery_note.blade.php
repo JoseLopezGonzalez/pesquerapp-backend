@@ -103,8 +103,8 @@
                         <td></td>
                         <td></td>
                     </tr> --}}
-                    <tr>
-                        <th class="text-left font-medium p-1.5">Total (Pallets:1)</th>
+                    <tr class="border-t border-black">
+                        <th class="text-left font-medium p-1.5">Total </th>
                         <td class="text-center">{{-- {{ $order->summary->total()->boxes }} --}}</td>
                         <td class="text-center">{{-- {{ number_format($order->summary->total()->netWeight, 2) }}  --}}kg</td>
                     </tr>
