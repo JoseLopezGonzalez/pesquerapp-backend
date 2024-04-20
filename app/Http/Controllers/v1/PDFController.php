@@ -26,7 +26,7 @@ class PDFController extends Controller
         $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
 
 
-        return pdf('pdf.delivery_note', [
+        return pdf('pdf.invoice', [
             'order' => $order, 
         ]);
 
