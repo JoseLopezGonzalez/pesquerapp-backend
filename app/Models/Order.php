@@ -115,8 +115,8 @@ class Order extends Model
             $pallet->boxes->map(function ($box) use (&$lots) {
                 $product = $box->box->product;
                 $lot = $product->lot;
-                if (!isset($lots[$lot->id])) {
-                    $lots[$lot->id] = $lot;
+                if (!isset($lots[$lot])) {
+                    $lots[$lot] = $lot;
                 }
             });
         });
