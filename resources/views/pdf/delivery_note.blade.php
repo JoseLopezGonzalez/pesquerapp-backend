@@ -93,9 +93,9 @@
                             <td class="text-center"></td>
                         </tr>
                     @endforeach
-                    <tr class="border-b border-gray-200">
+                    {{-- <tr class="border-b border-gray-200">
                         <th class="italic text-left p-1.5 font-normal">Lots: 
-                            {{-- Mostrar lotes separados por comas del array $order->lots --}}
+                          
                             {{ implode(', ', $order->lots)}}
                         </th>
                         <td></td>
@@ -105,7 +105,7 @@
                         <th class="text-left p-1.5 font-normal">Pallets: {{ $order->numberOfPallets}}</th>
                         <td></td>
                         <td></td>
-                    </tr>
+                    </tr> --}}
                     
                 </tbody>
                 <tfoot>
@@ -142,8 +142,8 @@
                 </div>
             </div>
 
-            <div class=" mt-8">
-                <div class="">
+            <div class="grid grid-cols-12 mt-8">
+                <div class="col-span-10">
                     <p class="text-sm mt-1 preserve-line-breaks bold-first-line">
                         <strong>Lots:</strong> {{ implode(', ', $order->lots)}}
                     </p>
