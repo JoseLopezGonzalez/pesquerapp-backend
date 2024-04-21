@@ -130,5 +130,18 @@ class Pallet extends Model
         
     }
 
+
+    public function getLotsAttribute()
+    {
+        $lots = [];
+        $this->boxes->map(function ($box) use (&$lots) {
+            $lot = $box->box->lot;
+            if (!isset($lots[$lot])) {
+                $lots[$lot] = $lot;
+            }
+        });
+
+        return $lots;
+    }
     
 }

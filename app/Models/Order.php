@@ -113,8 +113,7 @@ class Order extends Model
         $lots = [];
         $this->pallets->map(function ($pallet) use (&$lots) {
             $pallet->boxes->map(function ($box) use (&$lots) {
-                $product = $box->box->product;
-                $lot = $product->lot;
+                $lot = $box->box->lot;
                 if (!isset($lots[$lot])) {
                     $lots[$lot] = $lot;
                 }
