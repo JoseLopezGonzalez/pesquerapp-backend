@@ -20,7 +20,7 @@
     <div class="pt-4">
         <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
             <div class="col-span-4">
-                <img src="https://congeladosbrisamar.es/logo2" alt="Logo" style="max-width: 50px;">
+                <img src="https://congeladosbrisamar.es/brisamar-slogan.png" alt="Logo" style="max-width: 50px;">
             </div>
             <div class="col-span-8" style="line-height: 122%; text-align: right; color: #1E79BB;">
                 <p style="font-size: 10pt;">
@@ -75,7 +75,7 @@
                         <th class="text-center">Weight</th>
                     </tr>
                 </thead>
-                <tbody class="border-b border-black">
+                <tbody class="border-b-2 border-black">
                     @foreach($order->productsBySpeciesAndCaptureZone as $productsBySpeciesAndCaptureZone)
                         @foreach($productsBySpeciesAndCaptureZone['products'] as $product)
                             <tr class="border-b border-gray-200">
