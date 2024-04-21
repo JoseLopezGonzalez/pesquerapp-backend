@@ -134,12 +134,10 @@
     
             <div class="grid grid-cols-12 mt-8">
                 <div class="col-span-10">
-                    <p style="font-size: 1.2rem;"><strong>Lots:</strong></p>
-                    <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
+                    <p class="text-sm mt-1 preserve-line-breaks bold-first-line">
                         <strong>Lots:</strong> {{ implode(', ', $order->lots)}}
                     </p>
-                    <p style="font-size: 1.2rem; margin-top: 3rem;"><strong>Pallets:</strong></p>
-                    <p class="mt-3 text-sm">
+                    <p class="mt-1 text-sm">
                         <strong>Pallets:</strong> {{ $order->numberOfPallets}}
                     </p>
                 </div>
