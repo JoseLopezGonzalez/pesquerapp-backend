@@ -103,6 +103,26 @@ class Order extends Model
         return $totals;
     }
 
+    public function getNumberOfPalletsAttribute()
+    {
+        return $this->pallets->count();
+    }
+
+    public function getLotsAttribute()
+    {
+        $lots = [];
+        $this->pallets->map(function ($pallet) use (&$lots) {
+            $pallet->boxes->map(function ($box) use (&$lots) {
+                $product = $box->box->product;
+                $lot = $product->lot;
+                if (!isset($lots[$lot->id])) {
+                    $lots[$lot->id] = $lot;
+                }
+            });
+        });
+
+        return $lots;
+    }
 
     /**
      * Get the array of regular emails.

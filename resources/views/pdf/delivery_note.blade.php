@@ -93,16 +93,19 @@
                             <td class="text-center"></td>
                         </tr>
                     @endforeach
-                    {{-- <tr class="border-b border-gray-200">
-                        <th class="italic text-left p-1.5 font-normal">Octopus Vulgaris - FAO 27 – Atlantic, Northeast</th>
+                    <tr class="border-b border-gray-200">
+                        <th class="italic text-left p-1.5 font-normal">Lots: 
+                            {{-- Mostrar lotes separados por comas del array $order->lots --}}
+                            {{ implode(', ', $order->lots)}}
+                        </th>
                         <td></td>
                         <td></td>
-                    </tr> --}}
-                    {{-- <tr class="border-b border-black">
-                        <th class="text-left p-1.5 font-normal">Pallets: 56</th>
+                    </tr>
+                    <tr class="border-b border-black">
+                        <th class="text-left p-1.5 font-normal">Pallets: {{ $order->numberOfPallets}}</th>
                         <td></td>
                         <td></td>
-                    </tr> --}}
+                    </tr>
                     
                 </tbody>
                 <tfoot>
