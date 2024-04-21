@@ -136,11 +136,11 @@
                 <div class="col-span-10">
                     <p style="font-size: 1.2rem;"><strong>Lots:</strong></p>
                     <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
-                        {{ implode(', ', $order->lots)}}
+                        <strong>Lots:</strong> {{ implode(', ', $order->lots)}}
                     </p>
                     <p style="font-size: 1.2rem; margin-top: 3rem;"><strong>Pallets:</strong></p>
                     <p class="mt-3 text-sm">
-                        {{ $order->numberOfPallets}}
+                        <strong>Pallets:</strong> {{ $order->numberOfPallets}}
                     </p>
                 </div>
             </div>
