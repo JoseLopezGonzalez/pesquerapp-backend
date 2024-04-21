@@ -111,15 +111,19 @@ class Order extends Model
     public function getLotsAttribute()
     {
 
-        /* Utiliza el atributo lots de cada palets (array de lotes) para devolver los lotes totales del order*/
         $lots = [];
-        $this->pallets->map(function ($pallet) use (&$lots) {
-            $pallet->lots->map(function ($lot) use (&$lots) {
+        // Asumiendo que $this->pallets es una colección
+        $this->pallets->each(function ($pallet) use (&$lots) {
+            // Asegúrate de que $pallet->lots sea un array antes de intentar iterar sobre él
+            foreach ($pallet->lots as $lot) {
                 if (!in_array($lot, $lots)) {
                     $lots[] = $lot;
                 }
-            });
+            }
         });
+    
+        return $lots; // Devuelve la lista acumulada de lotes únicos
+        
     }
 
     /**
