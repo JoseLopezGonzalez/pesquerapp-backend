@@ -143,7 +143,7 @@
             </div>
 
             <div class="grid grid-cols-12 mt-8">
-                <div class="">
+                <div class="col-span-10">
                     <p class="text-sm mt-1 preserve-line-breaks bold-first-line">
                         <strong>Lots:</strong> {{ implode(', ', $order->lots)}}
                     </p>
