@@ -123,12 +123,7 @@
     
             <div class="grid grid-cols-12 mt-8">
                 <div class="col-span-10">
-                    <p class="text-sm mt-1 preserve-line-breaks bold-first-line">
-                        <strong>Lots:</strong> {{ implode(', ', $order->lots)}}
-                    </p>
-                    <p class="mt-1 text-sm">
-                        <strong>Pallets:</strong> {{ $order->numberOfPallets}}
-                    </p>
+                   
 
                     <div class="col-span-10">
                         <p style="font-size: 1.2rem;"><strong>Delivery Address:</strong></p>
@@ -148,10 +143,12 @@
             </div>
 
             <div class="grid grid-cols-12 mt-8">
-                <div class="col-span-10">
-                    <p style="font-size: 1.2rem;"><strong>Delivery Address:</strong></p>
-                    <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
-                        {!! nl2br($order->shipping_address) !!}
+                <div class="">
+                    <p class="text-sm mt-1 preserve-line-breaks bold-first-line">
+                        <strong>Lots:</strong> {{ implode(', ', $order->lots)}}
+                    </p>
+                    <p class="mt-1 text-sm">
+                        <strong>Pallets:</strong> {{ $order->numberOfPallets}}
                     </p>
                     
                 </div>
