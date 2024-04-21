@@ -86,6 +86,23 @@ class Order extends Model
         return $summary;
     }
 
+    public function getTotalsAttribute()
+    {
+        $totals = [
+            'boxes' => 0,
+            'netWeight' => 0
+        ];
+
+        $this->pallets->map(function ($pallet) use (&$totals) {
+            $pallet->boxes->map(function ($box) use (&$totals) {
+                $totals['boxes']++;
+                $totals['netWeight'] += $box->netWeight;
+            });
+        });
+
+        return $totals;
+    }
+
 
     /**
      * Get the array of regular emails.

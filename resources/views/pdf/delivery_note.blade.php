@@ -75,7 +75,7 @@
                         <th class="text-center">Weight</th>
                     </tr>
                 </thead>
-                <tbody class="border-b-2 border-black/50">
+                <tbody class="border-b border-black">
                     @foreach($order->productsBySpeciesAndCaptureZone as $productsBySpeciesAndCaptureZone)
                         @foreach($productsBySpeciesAndCaptureZone['products'] as $product)
                             <tr class="border-b border-gray-200">
@@ -107,9 +107,9 @@
                 </tbody>
                 <tfoot>
                     <tr class="">
-                        <th class="text-left font-medium p-1.5">Total </th>
-                        <td class="text-center">{{-- {{ $order->summary->total()->boxes }} --}}</td>
-                        <td class="text-center">{{-- {{ number_format($order->summary->total()->netWeight, 2) }}  --}}kg</td>
+                        <th class="text-left font-medium p-1.5">Total</th>
+                        <td class="text-center">{{ $order->totals['boxes'] }}</td>
+                        <td class="text-center">{{ number_format($order->totals['netWeight'], 2) }} kg</td>
                     </tr>
                 </tfoot>
             </table>
