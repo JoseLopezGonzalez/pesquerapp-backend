@@ -125,10 +125,7 @@
                     <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
                         {!! nl2br($order->shipping_address) !!}
                     </p>
-                    <p style="font-size: 1.2rem; margin-top: 3rem;"><strong>Terms & Conditions:</strong></p>
-                    <p class="mt-3 text-sm">
-                        <strong class="mr-1">INCOTERM:</strong> DDP (delivered duty paid).
-                    </p>
+                    
                 </div>
             </div>
     
@@ -139,6 +136,10 @@
                     </p>
                     <p class="mt-1 text-sm">
                         <strong>Pallets:</strong> {{ $order->numberOfPallets}}
+                    </p>
+                    <p style="font-size: 1.2rem; margin-top: 3rem;"><strong>Terms & Conditions:</strong></p>
+                    <p class="mt-3 text-sm">
+                        <strong class="mr-1">INCOTERM:</strong> DDP (delivered duty paid).
                     </p>
                 </div>
             </div>
