@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-    <div class="pt-4 px-3">
+    <div class="pt-4 pl-2 pr-5">
         <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
             <div class="col-span-4">
                 <img src="https://congeladosbrisamar.es/brisamar-slogan.png" alt="Logo" >
