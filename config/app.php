@@ -168,8 +168,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class, //Eliminar 
-        Barryvdh\Snappy\ServiceProvider::class,
+       /*  Barryvdh\DomPDF\ServiceProvider::class, //Eliminar 
+        Barryvdh\Snappy\ServiceProvider::class, */
 
 
     ])->toArray(),
