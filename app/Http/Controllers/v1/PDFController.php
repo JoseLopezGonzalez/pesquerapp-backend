@@ -32,7 +32,7 @@ class PDFController extends Controller
 
         /* Personalizando el PDF */
         $snappdf->addChromiumArguments('--margin-top=10mm');
-        $snappdf->addChromiumArguments('--margin-right=10mm');
+        $snappdf->addChromiumArguments('--margin-right=30mm');
         $snappdf->addChromiumArguments('--margin-bottom=10mm');
         $snappdf->addChromiumArguments('--margin-left=10mm');
 
