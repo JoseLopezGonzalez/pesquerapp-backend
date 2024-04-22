@@ -47,7 +47,7 @@
                     <tbody>
                         <tr class="border-b-2 border-gray-200 ">
                             <th class="text-left font-medium text-sm p-2">Number</th>
-                            <td class="text-left text-sm">{{ $order->id }}</td>
+                            <td class="text-left text-sm">{{ $order->formattedId }}</td>
                         </tr>
                         <tr class="border-b border-gray-200">
                             <th class="text-left font-medium text-sm p-2">Date</th>

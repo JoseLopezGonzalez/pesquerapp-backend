@@ -1,20 +1,18 @@
 <?php
 
-// Dentro de app/Http/Controllers/v1/PDFController.php
 
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order; // Asegúrate de importar tu modelo Order
-use Illuminate\Support\Facades\Log;
-//use PDF; // Comenta temporalmente esta línea para desactivar la generación de PDF
-
-use Spatie\Browsershot\Browsershot; // Importa Browsershot
-use Spatie\LaravelPdf\Facades\Pdf;
+use App\Models\Order;
 use Beganovich\Snappdf\Snappdf;
 
-
-
+/* 
+use Illuminate\Support\Facades\Log;
+use PDF; 
+use Spatie\Browsershot\Browsershot; 
+use Spatie\LaravelPdf\Facades\Pdf; 
+*/
 
 class PDFController extends Controller
 {
@@ -28,16 +26,13 @@ class PDFController extends Controller
     {
         $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
 
-        /* return view('pdf.delivery_note', ['order' => $order])->render(); */
-
         $snappdf = new Snappdf();
         $html = view('pdf.delivery_note', ['order' => $order])->render();
         $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Asegúrate de cambiar esto por tu ruta específica
 
-
-        $snappdf->addChromiumArguments('--no-sandbox');
-
         // Agrega argumentos de Chromium uno por uno
+        // Configuración para que el servidor no de errores y pueda trabajar bien con el PDF
+        $snappdf->addChromiumArguments('--no-sandbox');
         $snappdf->addChromiumArguments('disable-gpu');
         $snappdf->addChromiumArguments('disable-translate');
         $snappdf->addChromiumArguments('disable-extensions');
@@ -60,50 +55,6 @@ class PDFController extends Controller
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;
-        }, 'invoice.pdf', ['Content-Type' => 'application/pdf']);
-
-
-       /*  try {
-            return Pdf::view('pdf.invoice', ['order' => $order])
-                ->format('a4')
-                ->name('your-invoice.pdf');
-        } catch (\Exception $e) {
-            Log::error("Error generando PDF: " . $e->getMessage());
-            return response()->json(['error' => 'Error al generar el PDF'], 500);
-        } */
-
-        /* return pdf('pdf.invoice', [
-            'order' => $order, 
-        ]); */
-
-        /* return view('pdf.delivery_note', ['order' => $order]); */
-
-
-
-
-
-
-        // Renderiza la vista como HTML
-        //$html = view('pdf.delivery_note', ['order' => $order])->render();
-
-        // Usa Browsershot para convertir el HTML a PDF
-        /* $pdfContent = Browsershot::html($html)
-            ->format('A4')
-            ->showBackground()
-            ->margins(10, 10, 10, 10)
-            ->pdf(); */
-
-        // Generar una respuesta de descarga con el PDF
-        /*  return response()->streamDownload(function () use ($pdfContent) {
-            echo $pdfContent;
-        }, "delivery-note-{$order->id}.pdf", ['Content-Type' => 'application/pdf']); */
-
-        /*  $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
-
-         $pdf = PDF::loadView('pdf.delivery_note', ['order' => $order]);
-         return $pdf->download("delivery-note-{$order->id}.pdf");
- */
-        // Temporalmente, retornamos una vista en lugar de descargar un PDF
-        /* return view('pdf.delivery_note', ['order' => $order]); */
+        }, 'Delivery_note_(' . $order->formattedId . ').pdf', ['Content-Type' => 'application/pdf']);
     }
 }
