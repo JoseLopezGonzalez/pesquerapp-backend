@@ -55,6 +55,6 @@ class PDFController extends Controller
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;
-        }, 'Delivery_note_(' . $order->formattedId . ').pdf', ['Content-Type' => 'application/pdf']);
+        }, 'Delivery_note_' . $order->formattedId . '.pdf', ['Content-Type' => 'application/pdf']);
     }
 }
