@@ -30,6 +30,13 @@ class PDFController extends Controller
         $html = view('pdf.delivery_note', ['order' => $order])->render();
         $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Asegúrate de cambiar esto por tu ruta específica
 
+        /* Personalizando el PDF */
+        $snappdf->addChromiumArguments('--margin-top=10mm');
+        $snappdf->addChromiumArguments('--margin-right=10mm');
+        $snappdf->addChromiumArguments('--margin-bottom=10mm');
+        $snappdf->addChromiumArguments('--margin-left=10mm');
+
+
         // Agrega argumentos de Chromium uno por uno
         // Configuración para que el servidor no de errores y pueda trabajar bien con el PDF
         $snappdf->addChromiumArguments('--no-sandbox');
