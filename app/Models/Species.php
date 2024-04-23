@@ -22,5 +22,12 @@ class Species extends Model
         ];
     }
 
+    /* Clave foranea fishing_gear - Actualización nueva */
+    /* $table->unsignedBigInteger('fishing_gear_id'); */
+    public function fishingGear()
+    {
+        return $this->belongsTo(FishingGear::class);
+    }
+
 
 }
