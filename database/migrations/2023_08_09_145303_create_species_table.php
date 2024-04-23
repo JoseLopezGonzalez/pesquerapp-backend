@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('scientific_name');
             $table->string('fao', 3);
             $table->string('image');
-            /* Clave foranea fishing_gear */
+            /* Clave foranea fishing_gear - Actualización nueva */
             $table->unsignedBigInteger('fishing_gear_id');
+
             $table->timestamps();
         });
     }
