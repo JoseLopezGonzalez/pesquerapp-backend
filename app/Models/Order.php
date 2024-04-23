@@ -92,6 +92,7 @@ class Order extends Model
         return $summary;
     }
 
+
     public function getTotalsAttribute()
     {
         $totals = [
