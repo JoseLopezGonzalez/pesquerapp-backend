@@ -71,6 +71,7 @@ class Order extends Model
                     $summary[$key] = [
                         'species' => $species,
                         'captureZone' => $captureZone,
+                        'fishing_gear'=> $species->fishingGear,
                         'products' => []
                     ];
                 }
