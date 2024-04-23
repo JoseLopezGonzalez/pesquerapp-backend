@@ -26,7 +26,7 @@ class Species extends Model
     /* $table->unsignedBigInteger('fishing_gear_id'); */
     public function fishingGear()
     {
-        return $this->belongsTo(FishingGear::class);
+        return $this->belongsTo(FishingGear::class , 'fishing_gear_id');
     }
 
 
