@@ -67,6 +67,8 @@ class OrderController extends Controller
             'salesperson.id' => 'required | integer',
             'emails' => 'sometimes|nullable|string',/* comprobar */
             'transport.id' => 'required | integer',
+            /* Incoterm */
+            'incoterm.id' => 'required | integer',
             'entryDate' => 'required | date',
             'loadDate' => 'required | date'
         ]);
@@ -97,6 +99,7 @@ class OrderController extends Controller
             $order->emails = $request->emails;
         }
         $order->transport_id = $request->transport['id'];
+        $order->incoterm_id = $request->incoterm['id'];
         $order->entry_date = $request->entryDate;
         $order->load_date = $request->loadDate;
         $order->status = 'pending';
