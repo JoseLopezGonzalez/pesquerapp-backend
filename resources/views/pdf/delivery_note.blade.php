@@ -81,7 +81,7 @@
                             <tr class="border-b border-gray-200">
                                 <th class="text-left font-medium p-1.5">{{ $product['product']->article->name}}</th>
                                 <td class="text-center">{{ $product['boxes'] }}</td>
-                                <td class="text-center">{{ number_format($product['netWeight'], 2) }} kg</td>
+                                <td class="text-center">{{ number_format($product['netWeight'], 2,',', '.') }} kg</td>
                             </tr>
                             
 
@@ -114,7 +114,7 @@
                     <tr class="">
                         <th class="text-left font-medium p-1.5">Total</th>
                         <td class="text-center">{{ $order->totals['boxes'] }}</td>
-                        <td class="text-center">{{ number_format($order->totals['netWeight'], 2) }} kg</td>
+                        <td class="text-center">{{ number_format($order->totals['netWeight'], 2,',', '.') }} kg</td>
                     </tr>
                 </tfoot>
             </table>
@@ -137,7 +137,7 @@
 
                     <p style="font-size: 1.2rem; margin-top: 1.5rem;"><strong>Terms & Conditions:</strong></p>
                     <p class="mt-3 text-sm">
-                        <strong class="mr-1">INCOTERM:</strong> {{ $order->incoterm->code}} ({{$order->incoterm->description}}).
+                        <strong class="mr-1">INCOTERM:</strong> {{ $order->incoterm->code}} ({{$order->incoterm->description}})
                     </p>
 
 
