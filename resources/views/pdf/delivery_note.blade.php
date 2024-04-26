@@ -11,6 +11,9 @@
 
     <style>
         body { font-family: 'DejaVu Sans'; }
+        .bold-first-line::first-line {
+            font-weight: bold;
+        }
        /*  table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; } */
         
