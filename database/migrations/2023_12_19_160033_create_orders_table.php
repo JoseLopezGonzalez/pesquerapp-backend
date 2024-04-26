@@ -27,6 +27,7 @@ return new class extends Migration
             $table->date('entry_date'); // Fecha de entrada
             $table->date('load_date'); // Fecha de carga
             $table->string('status'); // Estado del pedido
+            $table->foreignId('incoterm_id')->constrained('incoterms'); // Clave foránea a incoterms
             $table->timestamps();
         });
     }

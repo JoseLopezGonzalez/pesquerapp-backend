@@ -33,6 +33,7 @@ class OrderResource extends JsonResource
             'pallets' => $this->pallets->map(function ($pallet) {
                 return $pallet->toArrayAssoc();
             }),
+            'incoterm' => $this->incoterm->toArrayAssoc(),
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];

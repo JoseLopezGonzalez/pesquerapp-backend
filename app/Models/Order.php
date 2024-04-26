@@ -17,6 +17,12 @@ class Order extends Model
         return '#' . str_pad($this->id, 5, '0', STR_PAD_LEFT);
     }
 
+    // Relación con Incoterm
+    public function incoterm()
+    {
+        return $this->belongsTo(Incoterm::class, 'incoterm_id');
+    }
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
