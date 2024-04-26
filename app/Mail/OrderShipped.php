@@ -35,8 +35,8 @@ class OrderShipped extends Mailable
     public function build()
     {
 
-        
-            // Usar Browsershot para generar el PDF
+
+        /* // Usar Browsershot para generar el PDF
             $html = view('pdf.delivery_note', ['order' => $this->order])->render();
             $pdf = Browsershot::html($html)
                 ->format('A4')
@@ -56,9 +56,9 @@ class OrderShipped extends Mailable
                             'as' => 'delivery-note-' . $this->order->id . '.pdf',
                             'mime' => 'application/pdf',
                         ]);
-        
-        
-       /*  $pdf = PDF::loadView('pdf.delivery_note', ['order' => $this->order])->output();
+         */
+
+        /*  $pdf = PDF::loadView('pdf.delivery_note', ['order' => $this->order])->output();
 
         return $this->subject('Order Shipped: #' . $this->order->id)
                     ->markdown('emails.orders.shipped', [
@@ -69,5 +69,30 @@ class OrderShipped extends Mailable
                     ->attachData($pdf, 'delivery-note-' . $this->order->id . '.pdf', [
                         'mime' => 'application/pdf',
                     ]); */
+
+
+        $snappdf = new Snappdf();
+        $html = view('pdf.delivery_note', ['order' => $this->order])->render();
+        $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Configura el camino correcto a Chrome
+        $snappdf->setHtml($html);
+
+        // Personaliza tu PDF con argumentos y opciones
+        $snappdf->addChromiumArguments('--no-sandbox');
+        // Añadir más argumentos según necesidad
+
+        $pdfContent = $snappdf->generate();
+
+        // Guarda temporalmente el PDF para adjuntarlo
+        $pdfPath = storage_path('app/public/delivery-note-' . $this->order->id . '.pdf');
+        file_put_contents($pdfPath, $pdfContent);
+
+        return $this->subject('Order Shipped: #' . $this->order->id)
+            ->markdown('emails.orders.shipped', [
+                'order' => $this->order,
+            ])
+            ->attach($pdfPath, [
+                'as' => 'delivery-note-' . $this->order->id . '.pdf',
+                'mime' => 'application/pdf',
+            ]);
     }
 }
