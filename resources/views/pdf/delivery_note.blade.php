@@ -137,7 +137,7 @@
 
                     <p style="font-size: 1.2rem; margin-top: 1.5rem;"><strong>Terms & Conditions:</strong></p>
                     <p class="mt-3 text-sm">
-                        <strong class="mr-1">INCOTERM:</strong> {{ $order->incoterm->code}} ({{$order->incoterm->description}}).
+                        <strong class="mr-1">INCOTERM:</strong> {{ dd($order)}} ({{$order->incoterm->description}}).
                     </p>
 
 
