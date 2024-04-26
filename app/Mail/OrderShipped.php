@@ -8,6 +8,7 @@ use PDF; // Al principio de tu archivo PHP donde necesitas usar DomPDF
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Beganovich\Snappdf\Snappdf;
 use Spatie\Browsershot\Browsershot; // Importa Browsershot
 
 
@@ -71,7 +72,7 @@ class OrderShipped extends Mailable
                     ]); */
 
 
-        $snappdf = new Snappdf();
+        $snappdf = new Snappdf(); 
         $html = view('pdf.delivery_note', ['order' => $this->order])->render();
         $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Configura el camino correcto a Chrome
         $snappdf->setHtml($html);
