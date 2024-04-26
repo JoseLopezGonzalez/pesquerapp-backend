@@ -138,7 +138,9 @@ class OrderController extends Controller
             'transport.id' => 'sometimes | integer',
             'entryDate' => 'sometimes | date',
             'loadDate' => 'sometimes | date',
-            'status' => 'sometimes | string'
+            'status' => 'sometimes | string',
+            /* Incoterm */
+            'incoterm.id' => 'sometimes | integer',
         ]);
 
         $order = Order::findOrFail($id);
@@ -181,6 +183,10 @@ class OrderController extends Controller
         if($request->has('status')){
             $order->status = $request->status;
         }
+        if($request->has('incoterm.id')){
+            $order->incoterm_id = $request->incoterm['id'];
+        }
+
         $order->updated_at = now();
         $order->save();
         return new OrderResource($order);
