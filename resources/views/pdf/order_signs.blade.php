@@ -20,7 +20,7 @@
         }
 
         @page {
-            size: A4 landscape;
+            size: landscape;
             /* margin: 10mm 30mm 10mm 10mm;  */
             /* top, right, bottom, left */
         }
