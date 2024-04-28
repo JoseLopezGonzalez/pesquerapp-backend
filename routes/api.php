@@ -62,6 +62,7 @@ Route::apiResource('v1/boxes_report' , BoxesReportController::class)->only(['ind
 Route::post('v1/send_order_documentation/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentation'])->name('send_order_documentation');
 Route::get('v1/orders/{orderId}/delivery-note', [PDFController::class, 'generateDeliveryNote'])->name('generate_delivery_note');
 Route::get('v1/orders/{orderId}/restricted-delivery-note', [PDFController::class, 'generateRestrictedDeliveryNote'])->name('generate_restricted_delivery_note');
+Route::get('v1/orders/{orderId}/order-signs', [PDFController::class, 'generateOrderSigns'])->name('generate_order_signs');
 
 
 Route::get('/test-pdf', function () {
