@@ -46,9 +46,9 @@
                 <div class="border-2 border-black p-5">
                     <p class="font-bold"><u>Lugar de entrega:</u></p>
                     <p class="preserve-line-breaks">
-                        </b>
-                        {{ $order->customer->alias }}
                         <b>
+                        {{ $order->customer->alias }}
+                        </b>
                             <br />
                             {{-- Delete first line of Text of shipping Address y respetar los saltos de lineas del texto original con nl2br --}}
 
