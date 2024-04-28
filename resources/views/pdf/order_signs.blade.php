@@ -32,7 +32,7 @@
 
 <body>
     @foreach ($order->pallets as $pallet)
-        <div class="flex flex-col h-screen border-2 border-black">
+        <div class="flex flex-col h-full border-2 border-black">
             <div class="w-full text-center p-5 border-2 border-black">
                 <h1 class="font-bold text-5xl">{{ $order->customer->alias }}</h1>
                 <h3 class="font-medium text-3xl">{{ $order->formattedId }} - Pallet Nº {{ $pallet->id }}</h3>
