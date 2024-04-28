@@ -17,7 +17,7 @@
 
         @page {
             size: A4 landscape;
-            margin: 10mm 30mm 10mm 10mm; /* top, right, bottom, left */
+            /* margin: 10mm 30mm 10mm 10mm;  *//* top, right, bottom, left */
         }
        /*  table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; } */
