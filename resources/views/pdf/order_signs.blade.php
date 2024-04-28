@@ -64,9 +64,9 @@
                 <table class="w-full text-sm">
                     <tbody>
                         <tr class="text-2xl">
-                            <th class="text-start font-medium p-1.5">Pulpo Fresco</th>
-                            {{-- <td class="text-center">{{ count($pallet['boxes']) }} /cajas</td>
-                            <td class="text-center">{{ number_format($pallet['netWeight'], 2) }} kg</td> --}}
+                            <th class="text-start font-medium p-1.5">Productos de la pesca</th>
+                            <td class="text-center">{{ $pallet->totals['boxes'] }} /cajas</td>
+                            <td class="text-center">{{ number_format($pallet->totals['netWeight'], 2) }} kg</td>
                         </tr>
                     </tbody>
                 </table>

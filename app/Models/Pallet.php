@@ -110,6 +110,19 @@ class Pallet extends Model
         return $this->hasOne(StoredPallet::class, 'pallet_id');
     }
 
+    /* Totals, boxes and netweight */
+    public function getTotalsAttribute()
+    {
+        $totals = [
+            'boxes' => 0,
+            'netWeight' => 0,
+        ];
+        $this->boxes->map(function ($box) use (&$totals) {
+            $totals['boxes']++;
+            $totals['netWeight'] += $box->net_weight;
+        });
+        return $totals;
+    }
    
 
     public function unStore(){
