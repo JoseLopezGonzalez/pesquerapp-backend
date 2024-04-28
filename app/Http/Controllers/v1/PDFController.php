@@ -117,7 +117,6 @@ class PDFController extends Controller
         $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Asegúrate de cambiar esto por tu ruta específica
 
         /* Personalizando el PDF */
-        $snappdf->addChromiumArguments('--landscape'); 
         $snappdf->addChromiumArguments('--margin-top=10mm');
         $snappdf->addChromiumArguments('--margin-right=30mm');
         $snappdf->addChromiumArguments('--margin-bottom=10mm');
