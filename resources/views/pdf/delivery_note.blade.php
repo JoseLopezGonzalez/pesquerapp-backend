@@ -23,7 +23,7 @@
     <div class="pt-4 pl-2 pr-7">
         <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
             <div class="col-span-4">
-                <img src="{{ asset(env('DELIVERY_NOTE_LOGO_PATH')) }}" class=" h-20" alt="Logo" >
+                <img src="{{ asset(env('DELIVERY_NOTE_LOGO_PATH')) }}" class=" h-32" alt="Logo" >
             </div>
             <div class="col-span-8" style="line-height: 122%; text-align: right; color: #1E79BB;">
                 <p style="font-size: 10pt;">
