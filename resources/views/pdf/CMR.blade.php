@@ -35,7 +35,7 @@
             <div class="imprimir" style="width: 21cm; height: 29.7cm; position: relative; page-break-before: always;">
                 <div class="text-center text-uppercase" style="position: relative;">
                     <div style="position: absolute;">
-                        <img src="images/documents/CMR/{{ $img }}" width="100%" />
+                        <img src="images/documents/CMR/cmr-page-1.png" width="100%" />{{-- {{ $img }} --}}
                     </div>
                     <p style="text-align: left; font-size: 9pt; left: 65px; top: 80px; position: absolute;">
                         CONGELADOS BRISAMAR S.L.<br />
