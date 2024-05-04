@@ -35,7 +35,7 @@
             <div class="imprimir" style="width: 21cm; height: 29.7cm; position: relative; page-break-before: always;">
                 <div class="text-center text-uppercase" style="position: relative;">
                     <div style="position: absolute;">
-                        <img src="/images/documents/{{ $img }}" width="100%" />
+                        <img src="/images/documents/CMR/{{ $img }}" width="100%" />
                     </div>
                     <p style="text-align: left; font-size: 9pt; left: 65px; top: 80px; position: absolute;">
                         CONGELADOS BRISAMAR S.L.<br />
@@ -50,11 +50,11 @@
                     </p>
                     <p class="preserve-line-breaks" style="text-align: left; font-size: 7pt; left: 65px; top: 178px; position: absolute;">
                         {{ $order->customer->alias }} <br/>
-                        {{ TextHelper::deleteFirstLineOfText($order->billing_address) }}
+                       {{--  {{ TextHelper::deleteFirstLineOfText($order->billing_address) }} --}}
                     </p>
                     <p class="preserve-line-breaks" style="text-align: left; font-size: 6pt; left: 65px; top: 270px; position: absolute;">
                         {{ $order->customer->alias }} <br/>
-                        {{ TextHelper::deleteFirstLineOfText($order->shipping_address) }}
+                        {{-- {{ TextHelper::deleteFirstLineOfText($order->shipping_address) }} --}}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 65px; top: 350px; position: absolute;">
                         ISLA CRISTINA - HUELVA
