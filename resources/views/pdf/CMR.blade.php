@@ -35,7 +35,7 @@
             <div class="imprimir" style="width: 21cm; height: 29.7cm; position: relative; page-break-before: always;">
                 <div class="text-center text-uppercase" style="position: relative;">
                     <div style="position: absolute;">
-                        <img src="images/documents/CMR/logo-b-color.svg" width="100%" />
+                        <img src="{{ asset('images/documents/CMR/{{ $img }}') }}" width="100%" />
                         {{-- <img src="images/documents/CMR/cmr-page-1.png" width="100%" /> --}}{{-- {{ $img }} --}}
                 {{-- <img src="{{ asset(env('DELIVERY_NOTE_LOGO_PATH')) }}" class="h-24" alt="Logo" > --}}
 
