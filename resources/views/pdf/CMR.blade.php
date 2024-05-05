@@ -57,7 +57,7 @@
                         HUELVA - ESPAÑA
                     </p>
                     <p
-                        style="font-weight: bold; text-align: left; font-size: 9pt; left: 665px; top: 60px; position: absolute;">
+                        style="font-weight: bold; text-align: left; font-size: 9pt; left: 655px; top: 50px; position: absolute;">
                         {{ $order->formattedId }}</p>
                     <p class="preserve-line-breaks"
                         style="text-align: left; font-size: 8pt; left: 420px; top: 168px; position: absolute;">
@@ -108,13 +108,13 @@
                         {{ $order->numberOfPallets }} palets
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 180px; top: 460px; position: absolute;">
-                        {{ $order->totals['boxes'] }} cajas
+                        {{ $order->totals['boxes'] }} 
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 280px; top: 460px; position: absolute;">
-                        CAJAS
+                        cajas
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 350px; top: 460px; position: absolute;">
-                        PRODUCTOS DE LA PESCA
+                    <p class="text-xs" style="text-align: left; font-size: 9pt; left: 350px; top: 460px; position: absolute;">
+                        produtos de la pesca
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 580px; top: 460px; position: absolute;">
                         {{ number_format($order->totals['netWeight'], 2) }} kg
