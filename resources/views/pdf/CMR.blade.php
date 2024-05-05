@@ -60,7 +60,7 @@
                         style="font-weight: bold; text-align: left; font-size: 9pt; left: 665px; top: 60px; position: absolute;">
                         {{ $order->formattedId }}</p>
                     <p class="preserve-line-breaks"
-                        style="text-align: left; font-size: 8pt; left: 420px; top: 170px; position: absolute;">
+                        style="text-align: left; font-size: 8pt; left: 420px; top: 168px; position: absolute;">
                         {{ $order->transport->name }} <br />
                         {!! nl2br(e($order->transport->address)) !!}
 
@@ -104,28 +104,28 @@
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 390px; position: absolute;">
                         ALBARÁN {{ $order->formattedId }}
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 90px; top: 470px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 90px; top: 460px; position: absolute;">
                         {{ $order->numberOfPallets }} palets
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 180px; top: 470px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 180px; top: 460px; position: absolute;">
                         {{ $order->totals['boxes'] }} cajas
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 280px; top: 470px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 280px; top: 460px; position: absolute;">
                         CAJAS
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 350px; top: 470px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 350px; top: 460px; position: absolute;">
                         PRODUCTOS DE LA PESCA
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 580px; top: 470px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 580px; top: 460px; position: absolute;">
                         {{ number_format($order->totals['netWeight'], 2) }} kg
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 190px; top: 680px; position: absolute;">
                         0 ºC
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 160px; top: 850px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 160px; top: 855px; position: absolute;">
                         ISLA CRISTINA
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 290px; top: 850px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 290px; top: 855px; position: absolute;">
                         {{ $order->load_date }}
                     </p>
                 </div>
