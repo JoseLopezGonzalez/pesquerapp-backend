@@ -54,7 +54,7 @@
                         {{ $order->transport->name }}
                         {{ $order->transport->address }}
                     </p>
-                    <p class="preserve-line-breaks" style="text-align: left; font-size: 7pt; left: 90px; top: 168px; position: absolute;">
+                    <p class="preserve-line-breaks" style="text-align: left; font-size: 7pt; left: 90px; top: 163px; position: absolute;">
                         {{ $order->customer->alias }} <br/>
                         @php
                         // Separamos el texto en líneas
