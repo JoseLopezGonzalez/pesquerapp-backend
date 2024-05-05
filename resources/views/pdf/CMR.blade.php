@@ -56,7 +56,8 @@
                     </p>
                     <p class="preserve-line-breaks" style="text-align: left; font-size: 7pt; left: 90px; top: 168px; position: absolute;">
                         {{ $order->customer->alias }} <br/>
-                       {{ !! nl2br(e($order->billing_address)) !! }}
+                    {!! nl2br(e($order->billing_address))) !!}
+
                     </p>
                     <p class="preserve-line-breaks" style="text-align: left; font-size: 6pt; left: 90px; top: 260px; position: absolute;">
                         {{ $order->customer->alias }} <br/>
