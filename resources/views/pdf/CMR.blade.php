@@ -43,7 +43,7 @@
                         <img src="{{ asset('images/documents/CMR/' . $img) }}" class="h-full" />
 
                     </div>
-                    <p style="text-align: left; font-size: 9pt; left: 90px; top: 80px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 90px; top: 60px; position: absolute;">
                         CONGELADOS BRISAMAR S.L.<br />
                         POLIGONO VISTA HERMOSA, N11A<br />
                         21410 ISLA CRISTINA<br />
