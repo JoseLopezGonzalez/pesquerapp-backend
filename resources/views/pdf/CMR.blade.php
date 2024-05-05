@@ -56,7 +56,16 @@
                     </p>
                     <p class="preserve-line-breaks" style="text-align: left; font-size: 7pt; left: 90px; top: 168px; position: absolute;">
                         {{ $order->customer->alias }} <br/>
-                    {!! nl2br(e($order->billing_address)) !!}
+                        @php
+                        // Separamos el texto en líneas
+                        $addressLines = explode("\n", $order->billing_address);
+                        // Quitamos la primera línea
+                        array_shift($addressLines);
+                        // Unimos nuevamente el texto, excluyendo la primera línea
+                        $modifiedAddress = implode("\n", $addressLines);
+                    @endphp
+
+                    {!! nl2br(e($modifiedAddress)) !!}
 
                     </p>
                     <p class="preserve-line-breaks" style="text-align: left; font-size: 6pt; left: 90px; top: 260px; position: absolute;">
