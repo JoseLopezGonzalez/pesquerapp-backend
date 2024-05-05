@@ -32,7 +32,7 @@
 
     <div>
         @foreach ($imgs as $index => $img)
-            <div class="imprimir" style="width: 21cm; height: 29.7cm; position: relative; page-break-before: always;">
+            <div class="imprimir" style="h-svh position: relative; page-break-before: always;">
                 <div class="text-center text-uppercase" style="position: relative;">
                     <div style="position: absolute;">
                         <img src="{{ asset('images/documents/CMR/' . $img) }}" width="100%" />
