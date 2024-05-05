@@ -104,19 +104,19 @@
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 390px; position: absolute;">
                         ALBARÁN {{ $order->formattedId }}
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 90px; top: 460px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 90px; top: 450px; position: absolute;">
                         {{ $order->numberOfPallets }} palets
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 200px; top: 460px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 200px; top: 450px; position: absolute;">
                         {{ $order->totals['boxes'] }} 
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 280px; top: 460px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 280px; top: 450px; position: absolute;">
                         cajas
                     </p>
                     <p style="font-size:5pt; text-align: left; font-size: 9pt; left: 350px; top: 450px; position: absolute;">
                         produtos de <br/> la pesca
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 580px; top: 460px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 580px; top: 450px; position: absolute;">
                         {{ number_format($order->totals['netWeight'], 2) }} kg
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 190px; top: 680px; position: absolute;">
