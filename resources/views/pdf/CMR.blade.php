@@ -40,7 +40,7 @@
             <div class="imprimir h-svh " >
                 <div class="text-center text-uppercase" style="position: relative;">
                     <div style="position: absolute;">
-                        <img src="{{ asset('images/documents/CMR/' . $img) }}" width="100%" />
+                        <img src="{{ asset('images/documents/CMR/' . $img) }}" class="h-full" />
 
                     </div>
                     <p style="text-align: left; font-size: 9pt; left: 65px; top: 80px; position: absolute;">
