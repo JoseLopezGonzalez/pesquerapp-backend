@@ -113,7 +113,7 @@
                     <p style="text-align: left; font-size: 9pt; left: 280px; top: 450px; position: absolute;">
                         cajas
                     </p>
-                    <p style="font-size:5pt; text-align: left; font-size: 9pt; left: 360px; top: 450px; position: absolute;">
+                    <p style="font-size:5pt; text-align: left; font-size: 9pt; left: 370px; top: 450px; position: absolute;">
                         produtos de <br/> la pesca
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 580px; top: 450px; position: absolute;">
