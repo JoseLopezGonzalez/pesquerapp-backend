@@ -126,7 +126,7 @@
                         ISLA CRISTINA
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 290px; top: 855px; position: absolute;">
-                        {{ $order->load_date }}
+                        {{ date('d/m/Y', strtotime($order->load_date)) }}
                     </p>
                 </div>
             </div>
