@@ -113,8 +113,8 @@
                     <p style="text-align: left; font-size: 9pt; left: 280px; top: 460px; position: absolute;">
                         cajas
                     </p>
-                    <p style="font-size:5pt; text-align: left; font-size: 9pt; left: 350px; top: 460px; position: absolute;">
-                        produtos de la pesca
+                    <p style="font-size:5pt; text-align: left; font-size: 9pt; left: 350px; top: 450px; position: absolute;">
+                        produtos de <br/> la pesca
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 580px; top: 460px; position: absolute;">
                         {{ number_format($order->totals['netWeight'], 2) }} kg
