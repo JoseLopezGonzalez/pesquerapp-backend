@@ -44,9 +44,9 @@
 
                     </div>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 70px; position: absolute;">
-                        CONGELADOS BRISAMAR S.L.<br>
-                        POLIGONO VISTA HERMOSA, N11A<br>
-                        21410 ISLA CRISTINA<br>
+                        CONGELADOS BRISAMAR S.L.</br>
+                        POLIGONO VISTA HERMOSA, N11A</br>
+                        21410 ISLA CRISTINA</br>
                         HUELVA - ESPAÑA
                     </p>
                     <p style="font-weight: bold; text-align: left; font-size: 9pt; left: 665px; top: 60px; position: absolute;">{{ $order->formattedId }}</p>
@@ -69,7 +69,7 @@
 
                     </p>
                     <p class="preserve-line-breaks" style="text-align: left; font-size: 6pt; left: 90px; top: 253px; position: absolute;">
-                        {{ $order->customer->alias }} <br/>
+                        {{-- {{ $order->customer->alias }} <br/> --}}
                         
                     @php
                         // Separamos el texto en líneas
@@ -85,7 +85,7 @@
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 330px; position: absolute;">
                         ISLA CRISTINA - HUELVA
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 315px; top: 302px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 320px; top: 302px; position: absolute;">
                         {{ date('d/m/Y', strtotime($order->load_date)) }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 390px; position: absolute;">
