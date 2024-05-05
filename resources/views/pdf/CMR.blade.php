@@ -14,6 +14,11 @@
         .bold-first-line::first-line {
             font-weight: bold;
         }
+        @page {
+            
+            margin: 5mm 5mm 5mm 5mm; 
+            /* top, right, bottom, left */
+        }
        /*  table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; } */
         
