@@ -44,9 +44,9 @@
 
                     </div>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 70px; position: absolute;">
-                        CONGELADOS BRISAMAR S.L.<br />
-                        POLIGONO VISTA HERMOSA, N11A<br />
-                        21410 ISLA CRISTINA<br />
+                        CONGELADOS BRISAMAR S.L.<br>
+                        POLIGONO VISTA HERMOSA, N11A<br>
+                        21410 ISLA CRISTINA<br>
                         HUELVA - ESPAÑA
                     </p>
                     <p style="font-weight: bold; text-align: left; font-size: 9pt; left: 665px; top: 60px; position: absolute;">{{ $order->formattedId }}</p>
