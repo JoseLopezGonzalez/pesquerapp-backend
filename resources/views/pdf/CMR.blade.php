@@ -54,21 +54,21 @@
                         {{ $order->transport->name }}
                         {{ $order->transport->address }}
                     </p>
-                    <p class="preserve-line-breaks" style="text-align: left; font-size: 7pt; left: 65px; top: 178px; position: absolute;">
+                    <p class="preserve-line-breaks" style="text-align: left; font-size: 7pt; left: 90px; top: 178px; position: absolute;">
                         {{ $order->customer->alias }} <br/>
                        {{--  {{ TextHelper::deleteFirstLineOfText($order->billing_address) }} --}}
                     </p>
-                    <p class="preserve-line-breaks" style="text-align: left; font-size: 6pt; left: 65px; top: 270px; position: absolute;">
+                    <p class="preserve-line-breaks" style="text-align: left; font-size: 6pt; left: 90px; top: 270px; position: absolute;">
                         {{ $order->customer->alias }} <br/>
                         {{-- {{ TextHelper::deleteFirstLineOfText($order->shipping_address) }} --}}
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 65px; top: 350px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 90px; top: 350px; position: absolute;">
                         ISLA CRISTINA - HUELVA
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 310px; top: 322px; position: absolute;">
                         {{ $order->load_date }}
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 65px; top: 415px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 90px; top: 415px; position: absolute;">
                         ALBARÁN {{ $order->formattedId }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 55px; top: 490px; position: absolute;">
