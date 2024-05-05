@@ -16,7 +16,7 @@
         }
         @page {
             
-            margin: 5mm 5mm 5mm 5mm; 
+            margin: 1mm 1mm 1mm 1mm; 
             /* top, right, bottom, left */
         }
        /*  table { width: 100%; border-collapse: collapse; }
