@@ -56,17 +56,27 @@
                     </p>
                     <p class="preserve-line-breaks" style="text-align: left; font-size: 7pt; left: 90px; top: 168px; position: absolute;">
                         {{ $order->customer->alias }} <br/>
-                       {{--  {{ TextHelper::deleteFirstLineOfText($order->billing_address) }} --}}
-                    </p>M8JwNp5l
+                       {{ !! nl2br(($order->billing_address) !! }}
+                    </p>
                     <p class="preserve-line-breaks" style="text-align: left; font-size: 6pt; left: 90px; top: 260px; position: absolute;">
                         {{ $order->customer->alias }} <br/>
-                        {{-- {{ TextHelper::deleteFirstLineOfText($order->shipping_address) }} --}}
+                        
+                    @php
+                        // Separamos el texto en líneas
+                        $addressLines = explode("\n", $order->shipping_address);
+                        // Quitamos la primera línea
+                        array_shift($addressLines);
+                        // Unimos nuevamente el texto, excluyendo la primera línea
+                        $modifiedAddress = implode("\n", $addressLines);
+                    @endphp
+
+                    {!! nl2br(e($modifiedAddress)) !!}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 340px; position: absolute;">
                         ISLA CRISTINA - HUELVA
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 310px; top: 312px; position: absolute;">
-                        {{ $order->load_date }}
+                        {{ date('d/m/Y', strtotime($order->load_date)) }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 405px; position: absolute;">
                         ALBARÁN {{ $order->formattedId }}
