@@ -37,7 +37,7 @@
 
     <div>
         @foreach ($imgs as $index => $img)
-            <div class="imprimir h-svh " >
+            <div class="imprimir  h-screen " >
                 <div class="text-center text-uppercase" style="position: relative;">
                     <div style="position: absolute;">
                         <img src="{{ asset('images/documents/CMR/' . $img) }}" class="h-full" />
