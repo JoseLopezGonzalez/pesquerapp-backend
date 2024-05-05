@@ -107,13 +107,13 @@
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 460px; position: absolute;">
                         {{ $order->numberOfPallets }} palets
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 195px; top: 460px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 200px; top: 460px; position: absolute;">
                         {{ $order->totals['boxes'] }} 
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 280px; top: 460px; position: absolute;">
                         cajas
                     </p>
-                    <p style="font-size:5pt text-align: left; font-size: 9pt; left: 350px; top: 460px; position: absolute;">
+                    <p style="font-size:5pt; text-align: left; font-size: 9pt; left: 350px; top: 460px; position: absolute;">
                         produtos de la pesca
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 580px; top: 460px; position: absolute;">
