@@ -129,7 +129,7 @@ class OrderShipped extends Mailable
                 'order' => $this->order,
             ])
             ->attach($pdfPath, [
-                'as' => 'delivery-note-' . $this->order->id . '.pdf',
+                'as' => 'Delivery-note-' . $this->order->formattedId . '.pdf',
                 'mime' => 'application/pdf',
             ]);
     }
