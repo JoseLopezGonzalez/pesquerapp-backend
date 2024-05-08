@@ -12,14 +12,13 @@
 - **Destino:** {!! nl2br(e($order->shipping_address)) !!}
 
 <x-mail::table>
-| Nº Palet | Cajas | Peso Total |
-|----------|-------|------------|
-{{-- Bucle por $order->pallets --}}
+| Nº Palet    | Cajas       | Peso Total   |
+|-------------|-------------|--------------|
 @foreach ($order->pallets as $pallet)
-| #{{ $pallet->id }} | {{ $pallet->numberOfBoxes }} | {{ number_format($pallet->netWeight, 2, ',', '.') }}kg |
+| {{ str_pad($pallet->id, 10, ' ', STR_PAD_RIGHT) }} | {{ str_pad($pallet->numberOfBoxes, 10, ' ', STR_PAD_RIGHT) }} | {{ str_pad(number_format($pallet->netWeight, 2, ',', '.') . ' kg', 10, ' ', STR_PAD_RIGHT) }} |
 @endforeach
-{{-- Fin del bucle por $order->pallets --}}
 </x-mail::table>
+
 
 
 
