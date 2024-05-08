@@ -12,6 +12,7 @@ class Pallet extends Model
 
     protected $fillable = ['observations', 'state_id', 'store_id'];
 
+
     public function palletState()
     {
         return $this->belongsTo(PalletState::class, 'state_id');
@@ -64,6 +65,12 @@ class Pallet extends Model
         return $this->boxes->reduce(function ($carry, $box) {
             return $carry + $box->net_weight;
         }, 0);
+    }
+
+    /* numero total de cajas */
+    public function getNumberOfBoxesAttribute()
+    {
+        return $this->boxes->count();
     }
 
     public function getPositionAttribute()

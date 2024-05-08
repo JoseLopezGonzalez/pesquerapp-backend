@@ -16,7 +16,7 @@
 |--|--|--|
 {{-- Bucle por $order->pallets --}}
 @foreach ($order->pallets as $pallet)
-| #{{ $pallet->formattedId }} | {{ $pallet->boxes }} | {{ number_format($pallet->totalWeight, 2, ',', '.') }}kg |
+| #{{ $pallet->id }} | {{ $pallet->numberOfBoxes }} | {{ number_format($pallet->netWeight, 2, ',', '.') }}kg |
 @endforeach
 {{-- Fin del bucle por $order->pallets --}}
 
