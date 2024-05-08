@@ -23,7 +23,7 @@
 ## Palets:
 
 @foreach ($order->pallets as $pallet)
-- **Nº Palet:** #{{ $pallet->id }}
+**Palet #{{ $pallet->id }}**
 - **Cajas:** {{ $pallet->numberOfBoxes }}
 - **Peso Neto:** {{ number_format($pallet->netWeight, 2, ',', '.') }}kg
 @endforeach
