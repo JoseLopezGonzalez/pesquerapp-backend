@@ -15,9 +15,19 @@ class ProductController extends Controller
     public function index()
     {
         /* Sort by A-Z Product->article->name*/
-        return ProductResource::collection(Product::with('article')->orderBy('name')->get());
+        /* Products tiene un atributo id que es clave foranea del id de articles donde se encuentra el atributo name */
+
+        $products = Product::with(['article'])->get(); // Load products and their corresponding articles
+
+        // Sort products based on the article name
+        $sortedProducts = $products->sortBy(function ($product) {
+            return $product->article->name;
+        });
+
+        return ProductResource::collection($sortedProducts);
+
         /* return ProductResource::collection(Product::orderBy('name')->get()); */
-       /*  return ProductResource::collection(Product::all()); */
+        /*  return ProductResource::collection(Product::all()); */
     }
 
     /**
