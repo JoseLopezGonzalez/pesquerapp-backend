@@ -11,13 +11,23 @@
 - **Fecha de carga:** {{ date('d/m/Y', strtotime($order->load_date)) }}
 - **Destino:** {!! nl2br(e($order->shipping_address)) !!}
 
-
+<x-mail::table>
+| Nº Palet | Cajas | Peso Total |
+|----------|-------|------------|
+{{-- Bucle por $order->pallets --}}
 @foreach ($order->pallets as $pallet)
-**Palet #{{ $pallet->id }}**
-- **Cajas:** {{ $pallet->numberOfBoxes }}
-- **Peso Neto:** {{ number_format($pallet->netWeight, 2, ',', '.') }}kg
+| #{{ $pallet->id }} | {{ $pallet->numberOfBoxes }} | {{ number_format($pallet->netWeight, 2, ',', '.') }}kg |
 @endforeach
+{{-- Fin del bucle por $order->pallets --}}
+</x-mail::table>
 
+
+
+
+| Laravel       | Table         | Example  |
+| ------------- | ------------- | -------- |
+| Col 2 is      | Centered      | $10      |
+| Col 3 is      | Right-Aligned | $20      |
 
 
 ## Documentación Adjunta:
