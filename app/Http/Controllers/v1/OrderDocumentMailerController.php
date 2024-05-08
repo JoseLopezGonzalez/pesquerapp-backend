@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
 use App\Mail\OrderShipped;
+use App\Mail\TransportShipmentDetails;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -38,7 +39,7 @@ class OrderDocumentMailerController extends Controller
         Mail::to($order->transport->emailsArray)
         ->cc($order->transport->ccEmailsArray)  // Ejemplo de añadir un CC
         ->bcc('orders@brisatlantic.com')  // Ejemplo de añadir un BCC
-        ->send(new OrderShipped($order)); // Envía el correo con la documentación
+        ->send(new TransportShipmentDetails($order)); // Envía el correo con la documentación
 
 
         return response()->json(['message' => 'Documentation sent successfully!']);

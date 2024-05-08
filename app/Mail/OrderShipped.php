@@ -9,7 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Beganovich\Snappdf\Snappdf;
-use Spatie\Browsershot\Browsershot; // Importa Browsershot
+
 
 
 class OrderShipped extends Mailable
