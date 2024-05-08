@@ -11,11 +11,13 @@
 - **Fecha de carga:** {{ date('d/m/Y', strtotime($order->load_date)) }}
 - **Destino:** {!! nl2br(e($order->shipping_address)) !!}
 
+## &nbsp;
+
 <x-mail::table>
 | Nº Palet    | Cajas       | Peso Total   |
 |:-----------:|:-----------:|:------------:|
 @foreach ($order->pallets as $pallet)
-| {{ str_pad($pallet->id, 10, ' ', STR_PAD_RIGHT) }} | {{ str_pad($pallet->numberOfBoxes, 10, ' ', STR_PAD_RIGHT) }} | {{ str_pad(number_format($pallet->netWeight, 2, ',', '.') . ' kg', 10, ' ', STR_PAD_RIGHT) }} |
+| #{{ str_pad($pallet->id, 9, ' ', STR_PAD_RIGHT) }} | {{ str_pad($pallet->numberOfBoxes, 10, ' ', STR_PAD_RIGHT) }} | {{ str_pad(number_format($pallet->netWeight, 2, ',', '.') . ' kg', 10, ' ', STR_PAD_RIGHT) }} |
 @endforeach
 </x-mail::table>
 
