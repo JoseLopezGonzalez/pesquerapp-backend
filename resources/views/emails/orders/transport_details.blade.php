@@ -16,6 +16,7 @@
     Se adjunta la documentación relevante necesaria para la manipulación y transporte de las mercancías.
 </x-mail::panel>
 
+<br>
 Por favor, revise los documentos adjuntos para asegurarse de que todos los detalles son correctos y que tiene todo lo necesario para un proceso de transporte sin inconvenientes.
 
 
