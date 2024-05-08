@@ -19,7 +19,7 @@
 @endforeach
 </x-mail::table>
 
-##
+##-
 
 ## Documentación Adjunta:
 
@@ -27,7 +27,7 @@
     Se adjunta la documentación relevante necesaria para la manipulación y transporte de las mercancías.
 </x-mail::panel>
 
-##
+##-
 
 ## Observaciones:
 
