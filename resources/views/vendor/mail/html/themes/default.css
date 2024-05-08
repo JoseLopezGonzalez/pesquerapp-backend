@@ -261,7 +261,7 @@ img {
 
 .panel {
     border-left: #2d3748 solid 4px;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; *//* corregir */
     margin: 21px 0;
 }
 
