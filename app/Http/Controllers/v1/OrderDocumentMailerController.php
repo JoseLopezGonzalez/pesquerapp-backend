@@ -38,7 +38,7 @@ class OrderDocumentMailerController extends Controller
         $order = Order::findOrFail($orderId); // Asegúrate de que el pedido existe
         Mail::to($order->transport->emailsArray)
         ->cc($order->transport->ccEmailsArray)  // Ejemplo de añadir un CC
-        ->bcc('orders@brisatlantic.com')  // Ejemplo de añadir un BCC
+        ->bcc('pedidos@congeladosbrisamar.es')  // Ejemplo de añadir un BCC
         ->send(new TransportShipmentDetails($order)); // Envía el correo con la documentación
 
 
