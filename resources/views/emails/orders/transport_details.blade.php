@@ -6,10 +6,20 @@
 
 ## Detalles del Envío:
 
-- ** {{ $order->customer->alias }} **
+- **{{ $order->customer->alias }}**
 - **Número de Pedido:** {{ $order->formattedId }}
 - **Fecha de carga:** {{ date('d/m/Y', strtotime($order->load_date)) }}
 - **Destino:** {!! nl2br(e($order->shipping_address)) !!}
+
+
+| Nº Palet | Cajas | Peso Total |
+|--|--|--|
+{{-- Bucle por $order->pallets --}}
+@foreach ($order->pallets as $pallet)
+| #{{ $pallet->formattedId }} | {{ $pallet->boxes }} | {{ number_format($pallet->totalWeight, 2, ',', '.') }}kg |
+@endforeach
+{{-- Fin del bucle por $order->pallets --}}
+
 
 ## Documentación Adjunta:
 
