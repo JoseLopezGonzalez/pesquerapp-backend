@@ -81,7 +81,7 @@ class TransportShipmentDetails extends Mailable
         $pdfPath = storage_path('app/public/delivery-note-' . $this->order->id . '.pdf');
         file_put_contents($pdfPath, $pdfContent);
 
-        return $this->subject('Detalle mercancía ' . /* formated date */ $this->order->load_date->format('d-m-Y') . ' - ' . $this->order->customer->name)
+        return $this->subject('Detalle mercancía ' . /* formated date */ date('d/m/Y', strtotime($this->order->load_date)) . ' - ' . $this->order->customer->name)
             ->markdown('emails.orders.transport_details', [
                 'order' => $this->order,
             ])
