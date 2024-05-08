@@ -7,7 +7,7 @@
 ## Detalles del Envío:
 
 - **Número de Pedido:** {{ $order->formattedId }}
-- **Fecha de carga:** {{ strtotime($order->load_date) }}
+- **Fecha de carga:** {{ date('d/m/Y', strtotime($order->load_date)) }}
 - **Destino:** {!! nl2br(e($order->shipping_address)) !!}
 
 ## Documentación Adjunta:
@@ -18,10 +18,10 @@
 
 ## Observaciones:
 
-Por favor, revise los documentos adjuntos para asegurarse de que todos los detalles son correctos y que tiene todo lo necesario para un proceso de transporte sin inconvenientes.
+Por favor, revisen los documentos adjuntos para aseguraros que todos los detalles son correctos y que tienen todo lo necesario.
 
 
-*Si encuentra alguna discrepancia o si necesita más información, no dude en contactarnos al +34 620 714 139.*
+*Si encuentran alguna discrepancia o necesitan más información, no duden en contactarnos a pedidos@congeladosbrisamar.es (+34 613 091 494) .*
 
 
 Saludos.
