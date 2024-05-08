@@ -13,7 +13,7 @@
 
 
 | Nº Palet | Cajas | Peso Total |
-| --------:|:-----:| ----------:|
+|----------|-------|------------|
 {{-- Bucle por $order->pallets --}}
 @foreach ($order->pallets as $pallet)
 | #{{ $pallet->id }} | {{ $pallet->numberOfBoxes }} | {{ number_format($pallet->netWeight, 2, ',', '.') }}kg |
@@ -23,7 +23,7 @@
 
 
 | Laravel       | Table         | Example  |
-| ------------- |:-------------:| --------:|
+| ------------- | ------------- | -------- |
 | Col 2 is      | Centered      | $10      |
 | Col 3 is      | Right-Aligned | $20      |
 
