@@ -1,6 +1,6 @@
 @props(['url'])
-<tr>
-<td style="display:none">
+<tr style="display:none">
+<td >
     Congelados Brisamar S.L.
 </td>
 </tr>
