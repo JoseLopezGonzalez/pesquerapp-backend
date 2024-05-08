@@ -19,7 +19,7 @@
 ## Detalles del Envío:
 
 - **Número de Pedido:** {{ $order->formattedId }}
-- **Fecha de carga:** {{ strtotime($order->load_date)) }}
+- **Fecha de carga:** {{ strtotime($order->load_date) }}
 - **Destino:** {!! nl2br(e($order->shipping_address)) !!}
 
 ## Documentación Adjunta:
