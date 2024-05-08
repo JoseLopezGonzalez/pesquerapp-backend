@@ -3,6 +3,7 @@
 
 # {{ $order->transport->name }}
 
+## &nbsp;
 
 ## Detalles del Envío:
 
