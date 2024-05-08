@@ -12,29 +12,12 @@
 - **Destino:** {!! nl2br(e($order->shipping_address)) !!}
 
 
-| Nº Palet | Cajas | Peso Total |
-|----------|-------|------------|
-{{-- Bucle por $order->pallets --}}
-@foreach ($order->pallets as $pallet)
-| #{{ $pallet->id }} | {{ $pallet->numberOfBoxes }} | {{ number_format($pallet->netWeight, 2, ',', '.') }}kg |
-@endforeach
-{{-- Fin del bucle por $order->pallets --}}
-
-## Palets:
-
 @foreach ($order->pallets as $pallet)
 **Palet #{{ $pallet->id }}**
 - **Cajas:** {{ $pallet->numberOfBoxes }}
 - **Peso Neto:** {{ number_format($pallet->netWeight, 2, ',', '.') }}kg
 @endforeach
 
-
-
-
-| Laravel       | Table         | Example  |
-| ------------- | ------------- | -------- |
-| Col 2 is      | Centered      | $10      |
-| Col 3 is      | Right-Aligned | $20      |
 
 
 ## Documentación Adjunta:
