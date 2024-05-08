@@ -1,8 +1,11 @@
 @props(['url'])
 <tr>
-    <td style="display:none">
-        Congelados Brisamar S.L.
-    </td>
+<td style="display:none">
+    Congelados Brisamar S.L.
+</td>
+</tr>
+<tr>
+   
 
 <td class="header">
 <a href="{{ $url }}" style="display: inline-block;">
