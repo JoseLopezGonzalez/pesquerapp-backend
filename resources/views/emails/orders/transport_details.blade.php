@@ -13,7 +13,7 @@
 
 <x-mail::table>
 | Nº Palet    | Cajas       | Peso Total   |
-|-------------|-------------|--------------|
+|:-----------:|:-----------:|:------------:|
 @foreach ($order->pallets as $pallet)
 | {{ str_pad($pallet->id, 10, ' ', STR_PAD_RIGHT) }} | {{ str_pad($pallet->numberOfBoxes, 10, ' ', STR_PAD_RIGHT) }} | {{ str_pad(number_format($pallet->netWeight, 2, ',', '.') . ' kg', 10, ' ', STR_PAD_RIGHT) }} |
 @endforeach
