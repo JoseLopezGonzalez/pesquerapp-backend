@@ -20,6 +20,15 @@
 @endforeach
 {{-- Fin del bucle por $order->pallets --}}
 
+## Palets:
+
+@foreach ($order->pallets as $pallet)
+- **Nº Palet:** #{{ $pallet->id }}
+- **Cajas:** {{ $pallet->numberOfBoxes }}
+- **Peso Neto:** {{ number_format($pallet->netWeight, 2, ',', '.') }}kg
+@endforeach
+
+
 
 
 | Laravel       | Table         | Example  |
