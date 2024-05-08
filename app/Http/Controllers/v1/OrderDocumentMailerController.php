@@ -30,5 +30,19 @@ class OrderDocumentMailerController extends Controller
         return response()->json(['message' => 'Documentation sent successfully!']);
     }
 
+
+    public function sendDocumentationTransport($orderId)
+    {
+        
+        $order = Order::findOrFail($orderId); // Asegúrate de que el pedido existe
+        Mail::to($order->transport->emailsArray)
+        ->cc($order->transport->ccEmailsArray)  // Ejemplo de añadir un CC
+        ->bcc('orders@brisatlantic.com')  // Ejemplo de añadir un BCC
+        ->send(new OrderShipped($order)); // Envía el correo con la documentación
+
+
+        return response()->json(['message' => 'Documentation sent successfully!']);
+    }
+
     //
 }

@@ -31,4 +31,51 @@ class Transport extends Model
         ];
     }
 
+    /**
+     * Get the array of regular emails.
+     *
+     * @return array
+     */
+    public function getEmailsArrayAttribute()
+    {
+        return $this->extractEmails('regular');
+    }
+
+    /**
+     * Get the array of CC emails.
+     *
+     * @return array
+     */
+    public function getCcEmailsArrayAttribute()
+    {
+        return $this->extractEmails('cc');
+    }
+
+    /**
+     * Helper method to extract emails based on type.
+     *
+     * @param string $type 'regular' or 'cc'
+     * @return array
+     */
+    protected function extractEmails($type)
+    {
+        $emails = explode(';', $this->emails);
+        $result = [];
+
+        foreach ($emails as $email) {
+            $email = trim($email);
+            if (empty($email)) {
+                continue;
+            }
+
+            if ($type == 'cc' && (str_starts_with($email, 'CC:') || str_starts_with($email, 'cc:'))) {
+                $result[] = substr($email, 3);  // Remove 'CC:' prefix and add to results 
+            } elseif ($type == 'regular' && !str_starts_with($email, 'CC:') && !str_starts_with($email, 'cc:')) {
+                $result[] = $email;  // Add regular email to results
+            }
+        }
+
+        return $result;
+    }
+
 }
