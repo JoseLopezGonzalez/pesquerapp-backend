@@ -6,6 +6,7 @@
 
 ## Detalles del Envío:
 
+- ** {{ $order->customer->alias }} **
 - **Número de Pedido:** {{ $order->formattedId }}
 - **Fecha de carga:** {{ date('d/m/Y', strtotime($order->load_date)) }}
 - **Destino:** {!! nl2br(e($order->shipping_address)) !!}
