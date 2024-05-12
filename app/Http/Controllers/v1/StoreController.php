@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Store;
+use App\Http\Resources\v1\StoreDetailsResource;
 use App\Http\Resources\v1\StoreResource;
 
 class StoreController extends Controller
@@ -15,9 +16,12 @@ class StoreController extends Controller
      */
     public function index()
     {
-        $stores = Store::all()->map->toSimpleArray();
+        /* $stores = Store::all()->map->toSimpleArray();
 
-    return ['data' => $stores];
+    return ['data' => $stores]; */
+
+    /* utilizando collection */
+    return StoreResource::collection(Store::all());
     }
 
     /**
@@ -35,7 +39,7 @@ class StoreController extends Controller
     public function show(string $id)
     {
         //return Store::find($id)->toArrayAssoc();
-        return new StoreResource(Store::find($id));
+        return new StoreDetailsResource(Store::find($id));
     }
 
     /**
