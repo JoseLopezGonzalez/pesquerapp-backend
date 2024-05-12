@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\OrderDetailsResource;
 use App\Http\Resources\v1\OrderResource;
 use App\Models\Order;
 use Illuminate\Support\Facades\Validator;
@@ -104,7 +105,7 @@ class OrderController extends Controller
         $order->load_date = $request->loadDate;
         $order->status = 'pending';
         $order->save();
-        return new OrderResource($order);
+        return new OrderDetailsResource($order);
     }
 
     /**
@@ -112,7 +113,7 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        return new OrderResource(Order::findOrFail($id));
+        return new OrderDetailsResource(Order::findOrFail($id));
     }
 
     /**
@@ -192,7 +193,7 @@ class OrderController extends Controller
 
         $order->updated_at = now();
         $order->save();
-        return new OrderResource($order);
+        return new OrderDetailsResource($order);
     }
 
     /**

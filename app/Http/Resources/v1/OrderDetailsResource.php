@@ -5,7 +5,7 @@ namespace App\Http\Resources\v1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrderResource extends JsonResource
+class OrderDetailsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -30,9 +30,9 @@ class OrderResource extends JsonResource
             'entryDate' => $this->entry_date,
             'loadDate' => $this->load_date,
             'status' => $this->status,
-            /* 'pallets' => $this->pallets->map(function ($pallet) {
+            'pallets' => $this->pallets->map(function ($pallet) {
                 return $pallet->toArrayAssoc();
-            }), */
+            }),
             'incoterm' => $this->incoterm->toArrayAssoc(),
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
