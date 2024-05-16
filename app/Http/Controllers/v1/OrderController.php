@@ -66,6 +66,22 @@ class OrderController extends Controller
                 }
             }
 
+            /* entryDate */
+
+            if($request->has('entryDate')){
+                $entryDate = $request->input('entryDate');
+                if(isset($entryDate['start'])){
+                    $startDate = $entryDate['start'];
+                    $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
+                    $query->where('entry_date', '>=', $startDate);
+                }
+                if(isset($entryDate['end'])){
+                    $endDate = $entryDate['end'];
+                    $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
+                    $query->where('entry_date', '<=', $endDate);
+                }
+            }
+
 
 
 
