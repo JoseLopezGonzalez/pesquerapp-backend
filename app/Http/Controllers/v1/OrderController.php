@@ -46,6 +46,23 @@ class OrderController extends Controller
                 $query->where('status', $request->status);
             }
 
+            /* loadDate */
+
+        if ($request->has('loadDate')) {
+            $startDate = $request->input('loadDate')['start'];
+            $endDate = $request->input('loadDate')['end'];
+
+            // Asegúrate de ajustar las horas de inicio y fin para cubrir todo el día
+            $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
+            $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
+
+            $query->where('created_at', '>=', $startDate);
+            $query->where('created_at', '<=', $endDate);
+        }
+
+       
+
+
             $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
             return OrderResource::collection($query->paginate($perPage));
         }
