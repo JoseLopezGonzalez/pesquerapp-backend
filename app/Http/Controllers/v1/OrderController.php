@@ -32,7 +32,7 @@ class OrderController extends Controller
 
             $query = Order::query();
             if($request->has('customer')){
-                $query->where('customer_id', $request->customer->id);
+                $query->where('customer_id', $request->customer);
             }
             
             $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
