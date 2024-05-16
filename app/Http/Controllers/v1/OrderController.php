@@ -82,6 +82,13 @@ class OrderController extends Controller
                 }
             }
 
+            /* transports */
+            
+            if ($request->has('transports')) {
+                $query->whereIn('transport_id', $request->transports);
+                /* $query->where('customer_id', $request->customer); */
+            }
+
 
 
 
