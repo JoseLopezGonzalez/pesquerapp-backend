@@ -54,7 +54,7 @@ class OrderController extends Controller
                 /* Check if $loadDate['start'] exists */
                 if (isset($loadDate['start'])) {
                     $startDate = $loadDate['start'];
-                    $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
+                    $startDate = date('Y-m-d 00:00:01', strtotime($startDate));
                     $query->where('created_at', '>=', $startDate);
                 }
             
