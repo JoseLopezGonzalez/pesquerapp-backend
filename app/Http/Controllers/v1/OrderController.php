@@ -49,14 +49,18 @@ class OrderController extends Controller
             /* loadDate */
 
             if ($request->has('loadDate')) {
-                if ($request->input('loadDate')['start']) {
-                    $startDate = $request->input('loadDate')['start'];
+                $loadDate = $request->input('loadDate');
+            
+                /* Check if $loadDate['start'] exists */
+                if (isset($loadDate['start'])) {
+                    $startDate = $loadDate['start'];
                     $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
                     $query->where('created_at', '>=', $startDate);
                 }
-
-                if ($request->input('loadDate')['end']) {
-                    $endDate = $request->input('loadDate')['end'];
+            
+                /* Check if $loadDate['end'] exists */
+                if (isset($loadDate['end'])) {
+                    $endDate = $loadDate['end'];
                     $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
                     $query->where('created_at', '<=', $endDate);
                 }
