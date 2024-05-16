@@ -41,6 +41,11 @@ class OrderController extends Controller
                 $query->where('id', 'like', "%{$text}%");
             }
 
+            /* status */
+            if ($request->has('status')) {
+                $query->where('status', $request->status);
+            }
+
             $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
             return OrderResource::collection($query->paginate($perPage));
         }
