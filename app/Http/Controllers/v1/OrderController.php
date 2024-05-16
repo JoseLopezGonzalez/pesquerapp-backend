@@ -35,7 +35,7 @@ class OrderController extends Controller
                 $query->where('customer_id', $request->customer);
             }
             
-            $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
+            $perPage = $request->input('perPage', 14); // Default a 10 si no se proporciona
             return OrderResource::collection($query->paginate($perPage));
 
 
