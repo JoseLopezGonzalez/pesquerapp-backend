@@ -16,32 +16,33 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->has('active')){
-            if($request->active == 'true'){
+        if ($request->has('active')) {
+            if ($request->active == 'true') {
                 /* where status is pending or loaddate>= today at the end of the day */
 
                 return OrderResource::collection(Order::where('status', 'pending')->orWhereDate('load_date', '>=', now())->get());
-
-            }else{
+            } else {
                 /* where status is finished and loaddate< today at the end of the day */
                 return OrderResource::collection(Order::where('status', 'finished')->whereDate('load_date', '<', now())->get());
-               
-                
             }
-        }else{
+        } else {
 
             /* $request->customers is a array of Customers Id ¿hay que utilizar Where In? */
-            
+
             $query = Order::query();
-            if($request->has('customers')){
+            if ($request->has('customers')) {
                 $query->whereIn('customer_id', $request->customers);
                 /* $query->where('customer_id', $request->customer); */
             }
-            
+
+            /* $request->has('id') like id*/
+            if ($request->has('id')) {
+                $text = $request->id;
+                $query->where('id', 'like', "%{$text}%");
+            }
+
             $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
             return OrderResource::collection($query->paginate($perPage));
-
-
         }
     }
 
@@ -59,7 +60,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [ 
+        $validator = Validator::make($request->all(), [
             'buyerReference' => 'sometimes|nullable|string',
             'customer.id' => 'required | integer',
             'paymentTerm.id' => 'required | integer',
@@ -82,24 +83,24 @@ class OrderController extends Controller
         }
 
         $order = new Order;
-        if($request->has('buyerReference')){
+        if ($request->has('buyerReference')) {
             $order->buyer_reference = $request->buyerReference;
         }
         $order->customer_id = $request->customer['id'];
         $order->payment_term_id = $request->paymentTerm['id'];
         $order->billing_address = $request->billingAddress;
         $order->shipping_address = $request->shippingAddress;
-        if($request->has('transportationNotes')){
+        if ($request->has('transportationNotes')) {
             $order->transportation_notes = $request->transportationNotes;
         }
-        if($request->has('productionNotes')){
+        if ($request->has('productionNotes')) {
             $order->production_notes = $request->productionNotes;
         }
-        if($request->has('accountingNotes')){
+        if ($request->has('accountingNotes')) {
             $order->accounting_notes = $request->accountingNotes;
         }
         $order->salesperson_id = $request->salesperson['id'];
-        if($request->has('emails')){
+        if ($request->has('emails')) {
             $order->emails = $request->emails;
         }
         $order->transport_id = $request->transport['id'];
@@ -151,46 +152,46 @@ class OrderController extends Controller
         ]);
 
         $order = Order::findOrFail($id);
-        if($request->has('buyerReference')){
+        if ($request->has('buyerReference')) {
             $order->buyer_reference = $request->buyerReference;
         }
-        if($request->has('paymentTerm.id')){
+        if ($request->has('paymentTerm.id')) {
             $order->payment_term_id = $request->paymentTerm['id'];
         }
-        if($request->has('billingAddress')){
+        if ($request->has('billingAddress')) {
             $order->billing_address = $request->billingAddress;
         }
-        if($request->has('shippingAddress')){
+        if ($request->has('shippingAddress')) {
             $order->shipping_address = $request->shippingAddress;
         }
-        if($request->has('transportationNotes')){
+        if ($request->has('transportationNotes')) {
             $order->transportation_notes = $request->transportationNotes;
         }
-        if($request->has('productionNotes')){
+        if ($request->has('productionNotes')) {
             $order->production_notes = $request->productionNotes;
         }
-        if($request->has('accountingNotes')){
+        if ($request->has('accountingNotes')) {
             $order->accounting_notes = $request->accountingNotes;
         }
-        if($request->has('salesperson.id')){
+        if ($request->has('salesperson.id')) {
             $order->salesperson_id = $request->salesperson['id'];
         }
-        if($request->has('emails')){
+        if ($request->has('emails')) {
             $order->emails = $request->emails;
         }
-        if($request->has('transport.id')){
+        if ($request->has('transport.id')) {
             $order->transport_id = $request->transport['id'];
         }
-        if($request->has('entryDate')){
+        if ($request->has('entryDate')) {
             $order->entry_date = $request->entryDate;
         }
-        if($request->has('loadDate')){
+        if ($request->has('loadDate')) {
             $order->load_date = $request->loadDate;
         }
-        if($request->has('status')){
+        if ($request->has('status')) {
             $order->status = $request->status;
         }
-        if($request->has('incoterm.id')){
+        if ($request->has('incoterm.id')) {
             $order->incoterm_id = $request->incoterm['id'];
         }
 
