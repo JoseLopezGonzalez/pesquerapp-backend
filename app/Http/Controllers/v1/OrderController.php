@@ -92,7 +92,7 @@ class OrderController extends Controller
             /* salespeople */
 
             if ($request->has('salespeople')) {
-                $query->whereIn('salespeople_id', $request->salespeople);
+                $query->whereIn('salesperson_id', $request->salespeople);
                 /* $query->where('customer_id', $request->customer); */
             }
 
