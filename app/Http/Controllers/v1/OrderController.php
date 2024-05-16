@@ -30,9 +30,12 @@ class OrderController extends Controller
             }
         }else{
 
+            /* $request->customers is a array of Customers Id ¿hay que utilizar Where In? */
+            
             $query = Order::query();
             if($request->has('customer')){
-                $query->where('customer_id', $request->customer);
+                $query->whereIn('customer_id', $request->customer);
+                /* $query->where('customer_id', $request->customer); */
             }
             
             $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
