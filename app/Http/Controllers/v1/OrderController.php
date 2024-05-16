@@ -89,6 +89,13 @@ class OrderController extends Controller
                 /* $query->where('customer_id', $request->customer); */
             }
 
+            /* salespeople */
+
+            if ($request->has('salespeople')) {
+                $query->whereIn('salespeople_id', $request->salespeople);
+                /* $query->where('customer_id', $request->customer); */
+            }
+
 
 
 
