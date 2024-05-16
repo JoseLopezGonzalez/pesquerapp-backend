@@ -48,19 +48,21 @@ class OrderController extends Controller
 
             /* loadDate */
 
-        if ($request->has('loadDate')) {
-            $startDate = $request->input('loadDate')['start'];
-            $endDate = $request->input('loadDate')['end'];
+            if ($request->has('loadDate')) {
+                if ($request->input('loadDate')['start']) {
+                    $startDate = $request->input('loadDate')['start'];
+                    $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
+                    $query->where('created_at', '>=', $startDate);
+                }
 
-            // Asegúrate de ajustar las horas de inicio y fin para cubrir todo el día
-            $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
-            $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
+                if ($request->input('loadDate')['end']) {
+                    $endDate = $request->input('loadDate')['end'];
+                    $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
+                    $query->where('created_at', '<=', $endDate);
+                }
+            }
 
-            $query->where('created_at', '>=', $startDate);
-            $query->where('created_at', '<=', $endDate);
-        }
 
-       
 
 
             $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
