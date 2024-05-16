@@ -33,8 +33,8 @@ class OrderController extends Controller
             /* $request->customers is a array of Customers Id ¿hay que utilizar Where In? */
             
             $query = Order::query();
-            if($request->has('customer')){
-                $query->whereIn('customer_id', $request->customer);
+            if($request->has('customers')){
+                $query->whereIn('customer_id', $request->customers);
                 /* $query->where('customer_id', $request->customer); */
             }
             
