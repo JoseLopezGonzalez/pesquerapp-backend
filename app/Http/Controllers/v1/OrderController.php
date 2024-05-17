@@ -96,6 +96,8 @@ class OrderController extends Controller
                 /* $query->where('customer_id', $request->customer); */
             }
 
+            
+
 
 
 

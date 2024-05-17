@@ -30,6 +30,7 @@ class OrderResource extends JsonResource
             'entryDate' => $this->entry_date,
             'loadDate' => $this->load_date,
             'status' => $this->status,
+            'numberOfPallets' => $this->numberOfPallets,
             /* 'pallets' => $this->pallets->map(function ($pallet) {
                 return $pallet->toArrayAssoc();
             }), */
