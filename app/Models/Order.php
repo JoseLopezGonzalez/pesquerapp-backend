@@ -139,6 +139,14 @@ class Order extends Model
         
     }
 
+    /* some pallets on storage status */
+    public function hasPalletsOnStorage()
+    {
+        return $this->pallets->some(function ($pallet) {
+            return $pallet->status == 'storage';
+        });
+    }
+
     /**
      * Get the array of regular emails.
      *
