@@ -99,14 +99,18 @@ class OrderController extends Controller
             /* palletState */
 
             if ($request->has('palletState')) {
+                /* if order has any pallets */
+                
                 if($request->palletState == 'stored'){
                     $query->whereHas('pallets', function ($q) use ($request) {
-                        $q->where('state_id', '2');
+                        $q->where('state_id', 2);
                     });
                 }else if ($request->palletState == 'shipping'){
+                    /* Solo tiene palets en el estado 3 */
                     $query->whereHas('pallets', function ($q) use ($request) {
                         $q->where('state_id', '3');
                     });
+                    
                 }
             }
 
