@@ -96,7 +96,6 @@ class PalletController extends Controller
                 
             }
         
-            /* Check if $dates['end'] exists */
             if (isset($dates['end'])) {
                 $endDate = $dates['end'];
                 $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
