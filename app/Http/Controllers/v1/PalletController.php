@@ -67,7 +67,7 @@ class PalletController extends Controller
                     $subQuery->whereNull('position');
                 });
             }
-            
+
            
         }
 
@@ -86,15 +86,21 @@ class PalletController extends Controller
         /* Dates */
 
         if ($request->has('dates')) {
-            $startDate = $request->input('dates')['start'];
-            $endDate = $request->input('dates')['end'];
 
-            // Asegúrate de ajustar las horas de inicio y fin para cubrir todo el día
-            $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
-            $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
+            $dates = $request->input('dates');
 
-            $query->where('created_at', '>=', $startDate);
-            $query->where('created_at', '<=', $endDate);
+            if (isset($dates['start'])) {
+                $startDate = $dates['start'];
+                $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
+                $query->where('load_date', '>=', $startDate);
+            }
+        
+            /* Check if $dates['end'] exists */
+            if (isset($dates['end'])) {
+                $endDate = $dates['end'];
+                $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
+                $query->where('load_date', '<=', $endDate);
+            }
         }
 
         if ($request->has('notes')) {
