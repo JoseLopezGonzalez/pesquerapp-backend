@@ -48,7 +48,15 @@ class PalletController extends Controller
         }
 
 
-        if ($request->has('unlocateds') && $request->input('unlocateds') == 'on') {
+        if($request->has('state')){
+            if($request->input('state') == 'stored'){
+                $query->where('state_id', 2);
+            }else if($request->input('state') == 'shipped'){
+                $query->where('state_id', 3);
+            }
+        }
+
+       /*  if ($request->has('unlocateds') && $request->input('unlocateds') == 'on') {
             $query->whereHas('storedPallet', function ($subQuery) {
                 $subQuery->whereNull('position');
             });
@@ -58,7 +66,7 @@ class PalletController extends Controller
             $query->whereHas('storedPallet', function ($subQuery) {
                 $subQuery->whereNotNull('position');
             });
-        }
+        } */
 
         /* Dates */
 
