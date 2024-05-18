@@ -74,9 +74,9 @@ class PalletController extends Controller
             $query->where('created_at', '<=', $endDate);
         }
 
-        if ($request->has('observations')) {
-            $observations = $request->input('observations');
-            $query->where('observations', 'like', "%{$observations}%");
+        if ($request->has('notes')) {
+            $notes = $request->input('notes');
+            $query->where('observations', 'like', "%{$notes}%");
         }
 
         if ($request->has('lots')) {
