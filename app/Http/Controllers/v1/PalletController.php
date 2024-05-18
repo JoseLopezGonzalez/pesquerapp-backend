@@ -92,14 +92,15 @@ class PalletController extends Controller
             if (isset($dates['start'])) {
                 $startDate = $dates['start'];
                 $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
-                $query->where('load_date', '>=', $startDate);
+                $query->where('created_at', '>=', $startDate);
+                
             }
         
             /* Check if $dates['end'] exists */
             if (isset($dates['end'])) {
                 $endDate = $dates['end'];
                 $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
-                $query->where('load_date', '<=', $endDate);
+               $query->where('created_at', '<=', $endDate);
             }
         }
 
