@@ -5,7 +5,9 @@ namespace App\Exports\v1;
 use App\Models\Box;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromArray;
 
 class BoxesExport implements FromQuery
 {
