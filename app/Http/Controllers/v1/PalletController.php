@@ -39,15 +39,6 @@ class PalletController extends Controller
             $query->where('id', 'like', "%{$text}%");
         }
 
-        /* if ($request->has('storeds') && $request->input('storeds') == 'on') {
-            $query->where('state_id', 2);
-        }
-
-        if ($request->has('shippeds') && $request->input('shippeds') == 'on') {
-            $query->where('state_id', 3);
-        } */
-
-
         if($request->has('state')){
             if($request->input('state') == 'stored'){
                 $query->where('state_id', 2);
@@ -70,18 +61,6 @@ class PalletController extends Controller
 
            
         }
-
-       /*  if ($request->has('unlocateds') && $request->input('unlocateds') == 'on') {
-            $query->whereHas('storedPallet', function ($subQuery) {
-                $subQuery->whereNull('position');
-            });
-        }
-
-        if ($request->has('locateds') && $request->input('locateds') == 'on') {
-            $query->whereHas('storedPallet', function ($subQuery) {
-                $subQuery->whereNotNull('position');
-            });
-        } */
 
         /* Dates */
 
@@ -117,7 +96,6 @@ class PalletController extends Controller
             });
         }
 
-        /* En vez de lots , con article */
         if ($request->has('products')) {
             $articles = $request->input('products');
             $query->whereHas('boxes', function ($subQuery) use ($articles) {
@@ -127,7 +105,6 @@ class PalletController extends Controller
             });
         }
 
-        /*  para request:  weights[netWeight][min]=... siendo el peso a comparar el peso del palet completo (suma de todas las cajas)*/
         if ($request->has('weights')) {
             $weights = $request->input('weights');
             if (array_key_exists('netWeight', $weights)) {
@@ -165,7 +142,6 @@ class PalletController extends Controller
         }
 
 
-        /*  para request:  weights[grossWeight][min]=568*/
 
 
 
