@@ -3,15 +3,15 @@
 namespace App\Exports\v1;
 
 use App\Models\Box;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\Exportable;
 
-class BoxesExport implements FromCollection
+class BoxesExport implements FromQuery
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    use Exportable;
+
+    public function query()
     {
-        return Box::all();
+        return Box::query(); // Asegúrate de añadir los filtros necesarios aquí
     }
 }

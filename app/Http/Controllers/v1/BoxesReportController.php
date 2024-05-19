@@ -158,6 +158,7 @@ class BoxesReportController extends Controller
 
     public function exportToExcel()
     {
+        ini_set('memory_limit', '1024M');  // Aumentar el límite de memoria solo para esta operación
         return Excel::download(new BoxesExport, 'boxes_report.xlsx');
     }
 
