@@ -34,9 +34,9 @@ class PalletController extends Controller
 
         $query->with('storedPallet');
 
-        if ($request->has('text')) {
-            $text = $request->input('text');
-            $query->where('id', 'like', "%{$text}%");
+        if ($request->has('id')) {
+            $id = $request->input('id');
+            $query->where('id', 'like', "%{$id}%");
         }
 
         if($request->has('state')){

@@ -22,11 +22,11 @@ class BoxesExport implements FromQuery
     {
         $query = Box::query();
 
-        if ($this->filters->has('text')) {
-            $text = $this->filters->input('text');
-            /* en la tabla pallet_boxes , las cajas que cumplan que palet_id es 'like', "%{$text}%" */
-            $query->whereHas('palletBox', function ($subQuery) use ($text) {
-                $subQuery->where('pallet_id', 'like', "%{$text}%");
+        if ($this->filters->has('id')) {
+            $id = $this->filters->input('id');
+            /* en la tabla pallet_boxes , las cajas que cumplan que palet_id es 'like', "%{$id}%" */
+            $query->whereHas('palletBox', function ($subQuery) use ($id) {
+                $subQuery->where('pallet_id', 'like', "%{$id}%");
             });
 
 
