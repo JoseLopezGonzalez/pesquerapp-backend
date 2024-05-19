@@ -67,7 +67,6 @@ class BoxesExport implements FromQuery
         }
 
         /* Dates */
-
         if ($this->filters->has('dates')) {
 
             $dates = $this->filters->input('dates');
@@ -90,7 +89,6 @@ class BoxesExport implements FromQuery
             $query->whereHas('palletBox.pallet', function ($subQuery) use ($notes) {
                 $subQuery->where('observations', 'like', "%{$notes}%");
             });
-            /* $query->where('observations', 'like', "%{$notes}%"); */
         }
 
         if ($this->filters->has('lots')) {
@@ -100,11 +98,37 @@ class BoxesExport implements FromQuery
 
         if ($this->filters->has('products')) {
             $articles = $this->filters->input('products');
-
-                    $query->whereIn('article_id', $articles);
-
+            $query->whereIn('article_id', $articles);
         }
 
         return $query;
+    }
+    
+    public function headings(): array
+    {
+        return [
+            'ID', 
+            'Articulo', 
+            'Lote', 
+            'Peso Neto', 
+            'Peso Bruto', 
+            'Fecha de lectura'
+            // Agrega aquí los encabezados que desees
+        ];
+    }
+
+    public function array(): array
+    {
+        return $this->query()->get()->map(function($box) {
+            return [
+                $box->id,
+                $box->article->name,
+                $box->lot,
+                $box->net_weight,
+                $box->gross_weight,
+                $box->created_at,
+                // Agrega aquí los atributos que desees exportar
+            ];
+        })->toArray();
     }
 }
