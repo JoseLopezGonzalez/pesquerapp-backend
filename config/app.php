@@ -170,6 +170,8 @@ return [
         App\Providers\RouteServiceProvider::class,
        /*  Barryvdh\DomPDF\ServiceProvider::class, //Eliminar 
         Barryvdh\Snappy\ServiceProvider::class, */
+        /* Maatwebsite\Excel\ExcelServiceProvider::class, */
+
 
 
     ])->toArray(),
@@ -190,6 +192,8 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class, // Eliminar
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        /* 'Excel' => Maatwebsite\Excel\Facades\Excel::class, */
+
 
 
     ])->toArray(),

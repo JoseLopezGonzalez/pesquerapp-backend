@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Exports\v1\BoxesExport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\BoxResource;
 use App\Http\Resources\v1\PalletResource;
@@ -13,6 +14,7 @@ use App\Models\PalletBox;
 use App\Models\StoredPallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BoxesReportController extends Controller
 {
@@ -152,6 +154,11 @@ class BoxesReportController extends Controller
         
 
 
+    }
+
+    public function exportToExcel()
+    {
+        return Excel::download(new BoxesExport, 'boxes_report.xlsx');
     }
 
     
