@@ -28,32 +28,42 @@ class BoxesExport implements FromQuery
             $query->whereHas('palletBox', function ($subQuery) use ($id) {
                 $subQuery->where('pallet_id', 'like', "%{$id}%");
             });
-
-
-            /* $query->where('id', 'like', "%{$text}%"); *//* 136.3-5.5 */
         }
 
-        if($this->filters->has('state')){
-            if($this->filters->input('state') == 'stored'){
-                $query->where('state_id', 2);
-            }else if($this->filters->input('state') == 'shipped'){
-                $query->where('state_id', 3);
+        if ($this->filters->has('state')) {
+            if ($this->filters->input('state') == 'stored') {
+                $query->whereHas('palletBox.pallet', function ($subQuery) {
+                    $subQuery->where('state_id', 2);
+                });
+            } else if ($this->filters->input('state') == 'shipped') {
+                $query->whereHas('palletBox.pallet', function ($subQuery) {
+                    $subQuery->where('state_id', 3);
+                });
             }
         }
 
         /* Position */
         if ($this->filters->has('position')) {
-            if($this->filters->input('position') == 'located'){
-                $query->whereHas('storedPallet', function ($subQuery) {
-                    $subQuery->whereNotNull('position');
+            if ($this->filters->input('position') == 'located') {
+                $query->whereHas('palletBox.pallet', function ($subQuery) {
+                    $subQuery->whereHas('storedPallet', function ($subSubQuery) {
+                        $subSubQuery->whereNotNull('position');
+                    });
                 });
-            }else if($this->filters->input('position') == 'unlocated'){
-                $query->whereHas('storedPallet', function ($subQuery) {
-                    $subQuery->whereNull('position');
-                });
-            }
 
-           
+                /* $query->whereHas('storedPallet', function ($subQuery) {
+                    $subQuery->whereNotNull('position');
+                }); */
+            } else if ($this->filters->input('position') == 'unlocated') {
+                $query->whereHas('palletBox.pallet', function ($subQuery) {
+                    $subQuery->whereHas('storedPallet', function ($subSubQuery) {
+                        $subSubQuery->whereNull('position');
+                    });
+                });
+                /* $query->whereHas('storedPallet', function ($subQuery) {
+                    $subQuery->whereNull('position');
+                }); */
+            }
         }
 
         /* Dates */
@@ -66,37 +76,33 @@ class BoxesExport implements FromQuery
                 $startDate = $dates['start'];
                 $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
                 $query->where('created_at', '>=', $startDate);
-                
             }
-        
+
             if (isset($dates['end'])) {
                 $endDate = $dates['end'];
                 $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
-               $query->where('created_at', '<=', $endDate);
+                $query->where('created_at', '<=', $endDate);
             }
         }
 
         if ($this->filters->has('notes')) {
             $notes = $this->filters->input('notes');
-            $query->where('observations', 'like', "%{$notes}%");
+            $query->whereHas('palletBox.pallet', function ($subQuery) use ($notes) {
+                $subQuery->where('observations', 'like', "%{$notes}%");
+            });
+            /* $query->where('observations', 'like', "%{$notes}%"); */
         }
 
         if ($this->filters->has('lots')) {
             $lots = $this->filters->input('lots');
-            $query->whereHas('boxes', function ($subQuery) use ($lots) {
-                $subQuery->whereHas('box', function ($subSubQuery) use ($lots) {
-                    $subSubQuery->whereIn('lot', $lots);
-                });
-            });
+            $query->whereIn('lot', $lots);
         }
 
         if ($this->filters->has('products')) {
             $articles = $this->filters->input('products');
-            $query->whereHas('boxes', function ($subQuery) use ($articles) {
-                $subQuery->whereHas('box', function ($subSubQuery) use ($articles) {
-                    $subSubQuery->whereIn('article_id', $articles);
-                });
-            });
+
+                    $query->whereIn('article_id', $articles);
+
         }
 
         return $query;
