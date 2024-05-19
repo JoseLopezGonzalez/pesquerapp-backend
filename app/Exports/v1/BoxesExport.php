@@ -110,7 +110,7 @@ class BoxesExport implements FromQuery, WithHeadings, WithMapping
     {
         return [
             $box->id,
-            $box->article->name,  // Suponiendo que Box tiene una relación con Article y que article tiene un atributo 'name'
+            $box->article->article->name,  // Suponiendo que Box tiene una relación con Article y que article tiene un atributo 'name'
             $box->lot,
             $box->net_weight,
             $box->gross_weight,
