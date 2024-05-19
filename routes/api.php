@@ -64,7 +64,7 @@ Route::apiResource('v1/payment_terms', PaymentTermController::class);
 /* Incorterm */
 Route::apiResource('v1/incoterms', IncotermController::class);
 /* Route::apiResource('v1/boxes_report', BoxesReportController::class)->only(['index']); */
-Route::get('v1/export-boxes', [BoxesReportController::class, 'exportToExcel'])->name('export.boxes');
+Route::get('v1/boxes_report', [BoxesReportController::class, 'exportToExcel'])->name('export.boxes');
 
 
 
