@@ -6,10 +6,10 @@ use App\Models\Box;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromArray;
 
-class BoxesExport implements FromQuery
+class BoxesExport implements FromQuery, WithHeadings, WithMapping
 {
     use Exportable;
 
@@ -26,7 +26,6 @@ class BoxesExport implements FromQuery
 
         if ($this->filters->has('id')) {
             $id = $this->filters->input('id');
-            /* en la tabla pallet_boxes , las cajas que cumplan que palet_id es 'like', "%{$id}%" */
             $query->whereHas('palletBox', function ($subQuery) use ($id) {
                 $subQuery->where('pallet_id', 'like', "%{$id}%");
             });
@@ -44,7 +43,6 @@ class BoxesExport implements FromQuery
             }
         }
 
-        /* Position */
         if ($this->filters->has('position')) {
             if ($this->filters->input('position') == 'located') {
                 $query->whereHas('palletBox.pallet', function ($subQuery) {
@@ -52,33 +50,22 @@ class BoxesExport implements FromQuery
                         $subSubQuery->whereNotNull('position');
                     });
                 });
-
-                /* $query->whereHas('storedPallet', function ($subQuery) {
-                    $subQuery->whereNotNull('position');
-                }); */
             } else if ($this->filters->input('position') == 'unlocated') {
                 $query->whereHas('palletBox.pallet', function ($subQuery) {
                     $subQuery->whereHas('storedPallet', function ($subSubQuery) {
                         $subSubQuery->whereNull('position');
                     });
                 });
-                /* $query->whereHas('storedPallet', function ($subQuery) {
-                    $subQuery->whereNull('position');
-                }); */
             }
         }
 
-        /* Dates */
         if ($this->filters->has('dates')) {
-
             $dates = $this->filters->input('dates');
-
             if (isset($dates['start'])) {
                 $startDate = $dates['start'];
                 $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
                 $query->where('created_at', '>=', $startDate);
             }
-
             if (isset($dates['end'])) {
                 $endDate = $dates['end'];
                 $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
@@ -119,18 +106,16 @@ class BoxesExport implements FromQuery
         ];
     }
 
-    public function array(): array
+    public function map($box): array
     {
-        return $this->query()->get()->map(function($box) {
-            return [
-                $box->id,
-                $box->article->name,
-                $box->lot,
-                $box->net_weight,
-                $box->gross_weight,
-                $box->created_at,
-                // Agrega aquí los atributos que desees exportar
-            ];
-        })->toArray();
+        return [
+            $box->id,
+            $box->article->name,  // Suponiendo que Box tiene una relación con Article y que article tiene un atributo 'name'
+            $box->lot,
+            $box->net_weight,
+            $box->gross_weight,
+            $box->created_at,
+            // Agrega aquí los atributos que desees exportar
+        ];
     }
 }
