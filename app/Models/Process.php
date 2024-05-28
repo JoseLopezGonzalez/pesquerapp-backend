@@ -21,8 +21,5 @@ class Process extends Model
         return $this->belongsTo(Species::class);
     }
 
-    public function articles()
-    {
-        return $this->belongsToMany(Article::class, 'process_article');
-    }
+   
 }

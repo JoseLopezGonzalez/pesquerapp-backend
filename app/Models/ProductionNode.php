@@ -31,9 +31,9 @@ class ProductionNode extends Model
         return $this->belongsTo(ProductionNode::class, 'parent_id');
     }
 
-    public function articles()
+    public function products()
     {
-        return $this->belongsToMany(Article::class, 'production_node_article')->withPivot('quantity');
+        return $this->belongsToMany(Product::class, 'production_node_product')->withPivot('quantity');
     }
 
     public function childrenRecursive()
