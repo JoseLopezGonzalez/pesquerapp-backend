@@ -35,4 +35,9 @@ class ProductionNode extends Model
     {
         return $this->belongsToMany(Article::class, 'production_node_article')->withPivot('quantity');
     }
+
+    public function childrenRecursive()
+    {
+        return $this->children()->with('childrenRecursive');
+    }
 }

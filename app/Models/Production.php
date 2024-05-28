@@ -15,4 +15,10 @@ class Production extends Model
     {
         return $this->hasMany(ProductionNode::class);
     }
+
+    public function getTreeAttribute()
+    {
+        $nodes = $this->nodes()->whereNull('parent_id')->with('childrenRecursive')->get();
+        return $nodes;
+    }
 }
