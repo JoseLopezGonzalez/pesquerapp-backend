@@ -10,6 +10,7 @@ use App\Http\Controllers\v1\PalletController;
 use App\Http\Controllers\v1\PaymentTermController;
 use App\Http\Controllers\v1\PDFController;
 use App\Http\Controllers\v1\ProductController;
+use App\Http\Controllers\v1\ProductionController;
 use App\Http\Controllers\v1\SalespersonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +62,8 @@ Route::apiResource('v1/orders', OrderController::class);
 Route::apiResource('v1/transports', TransportController::class);
 Route::apiResource('v1/salespeople', SalespersonController::class);
 Route::apiResource('v1/payment_terms', PaymentTermController::class);
+Route::apiResource('v1/productions', ProductionController::class);
+
 /* Incorterm */
 Route::apiResource('v1/incoterms', IncotermController::class);
 /* Route::apiResource('v1/boxes_report', BoxesReportController::class)->only(['index']); */

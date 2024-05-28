@@ -34,4 +34,15 @@ class Article extends Model
             'category' => $this->categoria->toArrayAssoc(),
         ];
     }
+
+    public function processes()
+    {
+        return $this->belongsToMany(Process::class, 'process_article');
+    }
+
+
+    public function productionNodes()
+    {
+        return $this->belongsToMany(ProductionNode::class, 'production_node_article')->withPivot('quantity');
+    }
 }
