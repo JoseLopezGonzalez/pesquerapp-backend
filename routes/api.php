@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\v1\StoreController;
 use App\Http\Controllers\v1\StoredPalletController;
+use App\Http\Controllers\v1\SupplierController;
 use App\Http\Controllers\v1\TransportController;
 use App\Http\Resources\v1\CustomerResource;
 use App\Models\PaymentTerm;
@@ -63,6 +64,8 @@ Route::apiResource('v1/transports', TransportController::class);
 Route::apiResource('v1/salespeople', SalespersonController::class);
 Route::apiResource('v1/payment_terms', PaymentTermController::class);
 Route::apiResource('v1/productions', ProductionController::class);
+Route::apiResource('v1/suppliers', SupplierController::class);
+
 
 /* Incorterm */
 Route::apiResource('v1/incoterms', IncotermController::class);
