@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\RawMaterialReceptionResource;
 use App\Models\RawMaterialReception;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class RawMaterialReceptionController extends Controller
@@ -17,21 +18,38 @@ class RawMaterialReceptionController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'supplier_id' => 'required|exists:suppliers,id',
+
+        $validator = Validator::make($request->all(), [
+            'suplier.id' => 'required',
             'date' => 'required|date',
             'notes' => 'nullable|string',
             'products' => 'required|array',
-            'products.*.product_id' => 'required|exists:products,id',
-            /* Float */
-            'products.*.net_weight' => 'required|numeric',
+            'products.*.id' => 'required|exists:products,id',
+            'products.*.netWeight' => 'required|numeric',
         ]);
 
-        $reception = RawMaterialReception::create($validated);
-
-        foreach ($validated['products'] as $product) {
-            $reception->products()->create($product);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422); // Código de estado 422 - Unprocessable Entity
         }
+
+        $reception = new RawMaterialReception();
+        $reception->supplier_id = $request->supplier->id;
+        $reception->date = $request->date;
+        
+        if($request->has('notes')){
+            $reception->notes = $request->notes;
+        }
+
+        if($request->has('products')){
+            foreach($request->products as $product){
+                $reception->products()->create([
+                    'product_id' => $product->id,
+                    'net_weight' => $product->netWeight
+                ]);
+            }
+        }
+
+        $reception->save();
 
         return new RawMaterialReceptionResource($reception);
     }
@@ -49,7 +67,7 @@ class RawMaterialReceptionController extends Controller
             'date' => 'sometimes|required|date',
             'notes' => 'nullable|string',
             'products' => 'nullable|array',
-            'products.*.product_id' => 'required_with:products|exists:products,id',
+            'products.*.id' => 'required_with:products|exists:products,id',
             'products.*.quantity' => 'required_with:products|integer',
             'products.*.unit' => 'required_with:products|string|max:10'
         ]);
