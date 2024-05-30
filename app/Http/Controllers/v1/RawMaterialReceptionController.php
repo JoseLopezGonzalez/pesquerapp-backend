@@ -23,8 +23,8 @@ class RawMaterialReceptionController extends Controller
             'notes' => 'nullable|string',
             'products' => 'required|array',
             'products.*.product_id' => 'required|exists:products,id',
-            'products.*.quantity' => 'required|integer',
-            'products.*.unit' => 'required|string|max:10'
+            /* Float */
+            'products.*.net_weight' => 'required|numeric',
         ]);
 
         $reception = RawMaterialReception::create($validated);
