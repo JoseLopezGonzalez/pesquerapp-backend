@@ -21,6 +21,10 @@ class RawMaterialController extends Controller
             });
         }
 
+        if ($request->has('fixed')){
+            $query->where( 'fixed' , $request->fixed );
+        }
+
         $rawMaterials = $query->get();
 
         return RawMaterialResource::collection($rawMaterials);
