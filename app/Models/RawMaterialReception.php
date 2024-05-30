@@ -18,6 +18,6 @@ class RawMaterialReception extends Model
 
     public function products()
     {
-        return $this->hasMany(RawMaterialReceptionProduct::class);
+        return $this->hasMany(RawMaterialReceptionProduct::class , 'reception_id');
     }
 }

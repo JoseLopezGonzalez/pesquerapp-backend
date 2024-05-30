@@ -13,6 +13,7 @@ class RawMaterialReceptionProduct extends Model
 
     public function reception()
     {
+        
         return $this->belongsTo(RawMaterialReception::class, 'reception_id');
     }
 
