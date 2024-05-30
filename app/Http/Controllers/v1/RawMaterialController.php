@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\RawMaterialsResource;
+use App\Http\Resources\v1\RawMaterialResource;
 use App\Models\RawMaterial;
 use Illuminate\Http\Request;
 
@@ -23,7 +23,7 @@ class RawMaterialController extends Controller
 
         $rawMaterials = $query->get();
 
-        return RawMaterialsResource::collection($rawMaterials);
+        return RawMaterialResource::collection($rawMaterials);
 
 
 
