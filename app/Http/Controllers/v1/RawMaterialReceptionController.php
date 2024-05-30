@@ -45,11 +45,6 @@ class RawMaterialReceptionController extends Controller
 
         if($request->has('products')){
             foreach($request->products as $product){
-                /* $newProduct = new RawMaterialReceptionProduct();
-                $newProduct->product_id = $product['id'];
-                $newProduct->net_weight = $product['netWeight'];
-                $newProduct->reception_id = $reception->id;
-                $newProduct->save(); */
                 $reception->products()->create([
                     'product_id' => $product['id'],
                     'net_weight' => $product['netWeight']
@@ -59,8 +54,7 @@ class RawMaterialReceptionController extends Controller
 
         $reception->save();
 
-        /* return response()->json($reception->toArrayAssoc(), 201); */
-        /* return RawMaterialReceptionResource::collection($reception); */
+
         return new RawMaterialReceptionResource($reception);
     }
 
