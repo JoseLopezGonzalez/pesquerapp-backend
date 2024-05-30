@@ -43,8 +43,8 @@ class RawMaterialReceptionController extends Controller
         if($request->has('products')){
             foreach($request->products as $product){
                 $reception->products()->create([
-                    'product_id' => $product->id,
-                    'net_weight' => $product->netWeight
+                    'product_id' => $product['id'],
+                    'net_weight' => $product['netWeight']
                 ]);
             }
         }
