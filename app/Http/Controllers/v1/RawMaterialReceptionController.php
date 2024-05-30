@@ -46,7 +46,8 @@ class RawMaterialReceptionController extends Controller
                 $newProduct = new RawMaterialReceptionProduct();
                 $newProduct->product_id = $product['id'];
                 $newProduct->net_weight = $product['netWeight'];
-                $reception->products()->save($newProduct);
+                $newProduct->reception_id = $reception->id;
+                $$newProduct->save();
                 /* $reception->products()->create([
                     'product_id' => $product['id'],
                     'net_weight' => $product['netWeight']
