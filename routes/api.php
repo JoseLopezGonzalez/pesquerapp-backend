@@ -13,6 +13,7 @@ use App\Http\Controllers\v1\ProductController;
 use App\Http\Controllers\v1\ProductionController;
 use App\Http\Controllers\v1\RawMaterialReceptionController;
 use App\Http\Controllers\v1\SalespersonController;
+use App\Http\Controllers\v1\SpeciesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -67,6 +68,8 @@ Route::apiResource('v1/payment_terms', PaymentTermController::class);
 Route::apiResource('v1/productions', ProductionController::class);
 Route::apiResource('v1/suppliers', SupplierController::class);
 Route::apiResource('v1/raw-material-receptions', RawMaterialReceptionController::class);
+Route::apiResource('v1/species', SpeciesController::class);
+
 
 
 

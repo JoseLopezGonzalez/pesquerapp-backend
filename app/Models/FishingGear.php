@@ -16,4 +16,12 @@ class FishingGear extends Model
     {
         return $this->hasMany(Species::class);
     }
+
+    public function toArrayAssoc(){
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description
+        ];
+    }
 }
