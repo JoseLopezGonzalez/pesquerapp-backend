@@ -19,8 +19,9 @@ class ProductController extends Controller
 
         $query = Product::query();
 
-        if ($request->has('species')) {
-            $query->where('species_id', $request->species);
+        
+        if ($request->has('species.id')) {
+            $query->where('species_id', $request->species['id']);
         }
 
         $products = $query->get();
