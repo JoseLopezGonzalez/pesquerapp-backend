@@ -48,5 +48,10 @@ class Product extends Model
         return $this->belongsToMany(ProductionNode::class, 'production_node_product')->withPivot('quantity');
     }
 
+    public function rawMaterials()
+    {
+        return $this->has(RawMaterial::class , 'id');
+    }
+
     
 }
