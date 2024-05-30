@@ -17,7 +17,7 @@ class RawMaterialController extends Controller
         if ($request->has('species') && $request->has('species.id')) {
             /* Raw Material */
             $query->whereHas('product', function ($q) use ($request) {
-                $q->where('specie_id', $request->species['id']);
+                $q->where('species_id', $request->species['id']);
             });
         }
 
