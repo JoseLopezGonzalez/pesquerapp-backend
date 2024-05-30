@@ -59,7 +59,7 @@ class RawMaterialReceptionController extends Controller
 
         $reception->save();
 
-        return new RawMaterialReceptionResource($reception);
+        return response()->json($reception->toArrayAssoc(), 201);
     }
 
     public function show($id)
