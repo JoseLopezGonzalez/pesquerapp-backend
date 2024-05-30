@@ -41,6 +41,8 @@ class RawMaterialReceptionController extends Controller
             $reception->notes = $request->notes;
         }
 
+        $reception->save();
+
         if($request->has('products')){
             foreach($request->products as $product){
                 $newProduct = new RawMaterialReceptionProduct();
