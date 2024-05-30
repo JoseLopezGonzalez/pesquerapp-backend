@@ -20,7 +20,7 @@ class RawMaterialReceptionController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'suplier.id' => 'required',
+            'supplier.id' => 'required',
             'date' => 'required|date',
             'notes' => 'nullable|string',
             'products' => 'required|array',
