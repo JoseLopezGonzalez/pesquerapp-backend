@@ -33,7 +33,7 @@ class RawMaterialReceptionController extends Controller
         }
 
         $reception = new RawMaterialReception();
-        $reception->supplier_id = $request->supplier->id;
+        $reception->supplier_id = $request->supplier['id'];
         $reception->date = $request->date;
         
         if($request->has('notes')){
