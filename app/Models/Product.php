@@ -47,4 +47,6 @@ class Product extends Model
     {
         return $this->belongsToMany(ProductionNode::class, 'production_node_product')->withPivot('quantity');
     }
+
+    
 }
