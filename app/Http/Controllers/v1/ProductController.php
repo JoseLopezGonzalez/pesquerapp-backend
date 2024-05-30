@@ -20,7 +20,7 @@ class ProductController extends Controller
         $query = Product::query();
 
         
-        if ($request->has('species.id')) {
+        if ($request->has('species') && $request->has('species.id')) {
             $query->where('species_id', $request->species['id']);
         }
 
