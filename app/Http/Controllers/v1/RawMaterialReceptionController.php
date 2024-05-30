@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\RawMaterialReceptionResource;
 use App\Models\RawMaterialReception;
+use App\Models\RawMaterialReceptionProduct;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -42,10 +43,14 @@ class RawMaterialReceptionController extends Controller
 
         if($request->has('products')){
             foreach($request->products as $product){
-                $reception->products()->create([
+                $newProduct = new RawMaterialReceptionProduct();
+                $newProduct->product_id = $product['id'];
+                $newProduct->net_weight = $product['netWeight'];
+                $reception->products()->save($newProduct);
+                /* $reception->products()->create([
                     'product_id' => $product['id'],
                     'net_weight' => $product['netWeight']
-                ]);
+                ]); */
             }
         }
 
