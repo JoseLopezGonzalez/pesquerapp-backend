@@ -23,6 +23,7 @@ class RawMaterialReceptionController extends Controller
             },
             species: [],
             products: [],
+            notes:'',
         } */
         $query = RawMaterialReception::query();
         $query->with('supplier', 'products.product');
@@ -49,6 +50,10 @@ class RawMaterialReceptionController extends Controller
             $query->whereHas('products.product', function ($query) use ($request) {
                 $query->whereIn('id', $request->products);
             });
+        }
+
+        if ($request->has('notes')) {
+            $query->where('notes', 'like', '%' . $request->notes . '%');
         }
 
 
