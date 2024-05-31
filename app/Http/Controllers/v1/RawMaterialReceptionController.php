@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\RawMaterialReceptionResource;
+use App\Models\RawMaterial;
 use App\Models\RawMaterialReception;
 use App\Models\RawMaterialReceptionProduct;
 use Illuminate\Support\Facades\Validator;
@@ -13,16 +14,46 @@ class RawMaterialReceptionController extends Controller
 {
     public function index(Request $request)
     {
+        /* const initialFilters = {
+            id: '',
+            suppliers: [],
+            dates: {
+                start: '',
+                end: '',
+            },
+            species: [],
+            products: [],
+        } */
+        $query = RawMaterialReception::query();
+        $query->with('supplier', 'products.product');
+
+        if ($request->has('id')) {
+            $query->where('id', $request->id);
+        }
+
+        if ($request->has('suppliers')) {
+            $query->whereIn('supplier_id', $request->suppliers);
+        }
+
+        if ($request->has('dates')) {
+            $query->whereBetween('date', [$request->dates['start'], $request->dates['end']]);
+        }
+
+        if ($request->has('species')) {
+            $query->whereHas('products.product', function ($query) use ($request) {
+                $query->whereIn('species_id', $request->species);
+            });
+        }
+
+        if ($request->has('products')) {
+            $query->whereHas('products.product', function ($query) use ($request) {
+                $query->whereIn('id', $request->products);
+            });
+        }
+
 
         $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
-        /* return PalletResource::collection($query->paginate($perPage));
-
-
-        $receptions = RawMaterialReception::with('supplier', 'products.product')->get(); */
-
-        /* return RawMaterialReceptionResource::collection($receptions); */
-
-        return RawMaterialReceptionResource::collection(RawMaterialReception::with('supplier', 'products.product')->paginate($perPage));
+        return RawMaterialReceptionResource::collection($query->paginate($perPage));
     }
 
     public function store(Request $request)
