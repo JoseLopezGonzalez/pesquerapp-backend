@@ -21,7 +21,7 @@
 
         @page {
 
-            margin: 20mm 1mm 1mm 1mm;
+            margin: 20mm 1mm 10mm 1mm;
             /* top, right, bottom, left */
         }
 
