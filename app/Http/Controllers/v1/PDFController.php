@@ -4,8 +4,11 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\RawMaterialReceptionProductResource;
 use App\Models\Order;
+use App\Models\RawMaterialReception;
 use Beganovich\Snappdf\Snappdf;
+use Illuminate\Http\Request;
 
 /* 
 use Illuminate\Support\Facades\Log;
@@ -192,5 +195,86 @@ class PDFController extends Controller
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;
         }, 'CMR_' . $order->formattedId . '.pdf', ['Content-Type' => 'application/pdf']);
+    }
+
+    /* Generar pdf con todas las RawMaterialReceptions */
+    public function generateRawMaterialReceptionsDocument(Request $request)
+    {
+        // Reutiliza la lógica de filtro del método index
+    $query = RawMaterialReception::with('supplier', 'products.product');
+
+    $query->when($request->filled('id'), function ($query) use ($request) {
+        $query->where('id', $request->id);
+    });
+
+    $query->when($request->filled('suppliers'), function ($query) use ($request) {
+        $query->whereIn('supplier_id', $request->suppliers);
+    });
+
+    $query->when($request->filled('dates'), function ($query) use ($request) {
+        $query->whereBetween('date', [$request->dates['start'], $request->dates['end']]);
+    });
+
+    $query->when($request->filled('species'), function ($query) use ($request) {
+        $query->whereHas('products.product', function ($query) use ($request) {
+            $query->whereIn('species_id', $request->species);
+        });
+    });
+
+    $query->when($request->filled('products'), function ($query) use ($request) {
+        $query->whereHas('products.product', function ($query) use ($request) {
+            $query->whereIn('id', $request->products);
+        });
+    });
+
+    $query->when($request->filled('notes'), function ($query) use ($request) {
+        $query->where('notes', 'like', '%' . $request->notes . '%');
+    });
+
+    $rawMaterialReceptions = $query->get();
+
+    if ($rawMaterialReceptions->isEmpty()) {
+        return response()->json(['message' => 'No se encontraron recepciones de materia prima con los filtros proporcionados.'], 404);
+    } 
+
+
+
+        $snappdf = new Snappdf();
+        $html = view('pdf.rawMaterialReceptions.document', ['rawMaterialReceptions' => $rawMaterialReceptions])->render();
+
+
+
+        $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Asegúrate de cambiar esto por tu ruta específica
+        /* Personalizando el PDF */
+        $snappdf->addChromiumArguments('--margin-top=10mm');
+        $snappdf->addChromiumArguments('--margin-right=30mm');
+        $snappdf->addChromiumArguments('--margin-bottom=10mm');
+        $snappdf->addChromiumArguments('--margin-left=10mm');
+        // Agrega argumentos de Chromium uno por uno
+        // Configuración para que el servidor no de errores y pueda trabajar bien con el PDF
+        $snappdf->addChromiumArguments('--no-sandbox');
+        $snappdf->addChromiumArguments('disable-gpu');
+        $snappdf->addChromiumArguments('disable-translate');
+        $snappdf->addChromiumArguments('disable-extensions');
+        $snappdf->addChromiumArguments('disable-sync');
+        $snappdf->addChromiumArguments('disable-background-networking');
+        $snappdf->addChromiumArguments('disable-software-rasterizer');
+        $snappdf->addChromiumArguments('disable-default-apps');
+        $snappdf->addChromiumArguments('disable-dev-shm-usage');
+        $snappdf->addChromiumArguments('safebrowsing-disable-auto-update');
+        $snappdf->addChromiumArguments('run-all-compositor-stages-before-draw');
+        $snappdf->addChromiumArguments('no-first-run');
+        $snappdf->addChromiumArguments('no-margins');
+        $snappdf->addChromiumArguments('print-to-pdf-no-header');
+        $snappdf->addChromiumArguments('no-pdf-header-footer');
+        $snappdf->addChromiumArguments('hide-scrollbars');
+        $snappdf->addChromiumArguments('ignore-certificate-errors');
+
+        $pdf = $snappdf->setHtml($html)
+            ->generate();
+
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf;
+        }, 'Recepciones_materia_prima_filtradas.pdf', ['Content-Type' => 'application/pdf']);
     }
 }

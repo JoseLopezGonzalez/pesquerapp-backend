@@ -14,17 +14,6 @@ class RawMaterialReceptionController extends Controller
 {
     public function index(Request $request)
     {
-        /* const initialFilters = {
-            id: '',
-            suppliers: [],
-            dates: {
-                start: '',
-                end: '',
-            },
-            species: [],
-            products: [],
-            notes:'',
-        } */
         $query = RawMaterialReception::query();
         $query->with('supplier', 'products.product');
 
@@ -55,7 +44,6 @@ class RawMaterialReceptionController extends Controller
         if ($request->has('notes')) {
             $query->where('notes', 'like', '%' . $request->notes . '%');
         }
-
 
         $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
         return RawMaterialReceptionResource::collection($query->paginate($perPage));
