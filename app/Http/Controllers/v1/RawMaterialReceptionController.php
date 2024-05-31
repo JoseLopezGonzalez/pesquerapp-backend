@@ -25,7 +25,7 @@ class RawMaterialReceptionController extends Controller
             'date' => 'required|date',
             'notes' => 'nullable|string',
             'details' => 'required|array',
-            'details.*.product.id' => 'required|exists:details,id',
+            'details.*.product.id' => 'required|exists:products,id',
             'details.*.netWeight' => 'required|numeric',
         ]);
 
