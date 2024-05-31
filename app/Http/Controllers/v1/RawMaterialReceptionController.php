@@ -24,9 +24,9 @@ class RawMaterialReceptionController extends Controller
             'supplier.id' => 'required',
             'date' => 'required|date',
             'notes' => 'nullable|string',
-            'products' => 'required|array',
-            'products.*.id' => 'required|exists:products,id',
-            'products.*.netWeight' => 'required|numeric',
+            'details' => 'required|array',
+            'details.*.product.id' => 'required|exists:details,id',
+            'details.*.netWeight' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -43,11 +43,11 @@ class RawMaterialReceptionController extends Controller
 
         $reception->save();
 
-        if($request->has('products')){
-            foreach($request->products as $product){
+        if($request->has('details')){
+            foreach($request->details as $detail){
                 $reception->products()->create([
-                    'product_id' => $product['id'],
-                    'net_weight' => $product['netWeight']
+                    'product_id' => $detail['product']['id'],
+                    'net_weight' => $detail['netWeight']
                 ]);
             }
         }
