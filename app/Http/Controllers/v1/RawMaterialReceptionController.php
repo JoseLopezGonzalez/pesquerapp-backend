@@ -11,10 +11,18 @@ use Illuminate\Http\Request;
 
 class RawMaterialReceptionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $receptions = RawMaterialReception::with('supplier', 'products.product')->get();
-        return RawMaterialReceptionResource::collection($receptions);
+
+        $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
+        /* return PalletResource::collection($query->paginate($perPage));
+
+
+        $receptions = RawMaterialReception::with('supplier', 'products.product')->get(); */
+
+        /* return RawMaterialReceptionResource::collection($receptions); */
+
+        return RawMaterialReceptionResource::collection(RawMaterialReception::with('supplier', 'products.product')->paginate($perPage));
     }
 
     public function store(Request $request)
