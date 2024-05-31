@@ -30,7 +30,7 @@
     </style>
 </head>
 
-<body class="p-20 flex flex-col gap-10">
+<body class="px-20 flex flex-col gap-10">
 
 
     @foreach($rawMaterialReceptions as $rawMaterialReception)
