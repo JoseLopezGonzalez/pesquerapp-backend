@@ -20,4 +20,9 @@ class RawMaterialReception extends Model
     {
         return $this->hasMany(RawMaterialReceptionProduct::class , 'reception_id');
     }
+
+    public function getNetWeightAttribute()
+    {
+        return $this->products->sum('net_weight');
+    }
 }
