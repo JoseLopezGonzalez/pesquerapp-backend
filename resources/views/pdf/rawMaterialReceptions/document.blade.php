@@ -30,12 +30,12 @@
     </style>
 </head>
 
-<body>
+<body class="p-20 flex flex-col gap-10">
 
 
     @foreach($rawMaterialReceptions as $rawMaterialReception)
 
-    <div class="gap-4 flex flex-col items-start justify-center text-black w-full">
+    <div class="gap-4 flex flex-col items-start justify-center text-black w-full break-inside-avoid">
         <div>
             <p class="font-bold text-3xl">NOTA DE ENTRADA</p>
         </div>
@@ -69,7 +69,7 @@
                 @foreach($rawMaterialReception->products as $product)
                     <tr>
                         <td>{{ $product->product->article->name }}</td>
-                        <td class="text-end">{{ $product->netWeight }} kg</td>
+                        <td class="text-end">{{ $product->net_weight }} kg</td>
                     </tr>
                 @endforeach
                 <!-- Total -->
