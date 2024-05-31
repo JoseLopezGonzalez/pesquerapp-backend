@@ -14,7 +14,7 @@ class RawMaterialReceptionController extends Controller
     public function index(Request $request)
     {
 
-        $perPage = $request->input('perPage', 13); // Default a 10 si no se proporciona
+        $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
         /* return PalletResource::collection($query->paginate($perPage));
 
 
