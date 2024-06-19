@@ -99,16 +99,33 @@ class RawMaterialReceptionController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'supplier_id' => 'sometimes|required|exists:suppliers,id',
-            'date' => 'sometimes|required|date',
+            'supplier.id' => 'required',
+            'date' => 'required|date',
             'notes' => 'nullable|string',
-            'products' => 'nullable|array',
-            'products.*.id' => 'required_with:products|exists:products,id',
-            'products.*.quantity' => 'required_with:products|integer',
-            'products.*.unit' => 'required_with:products|string|max:10'
+            'details' => 'required|array',
+            'details.*.product.id' => 'required|exists:products,id',
+            'details.*.netWeight' => 'required|numeric',
         ]);
 
         $reception = RawMaterialReception::findOrFail($id);
+        $reception->update([
+            'supplier_id' => $validated['supplier']['id'],
+            'date' => $validated['date'],
+            'notes' => $validated['notes']
+        ]);
+
+        $reception->products()->delete();
+        foreach ($validated['details'] as $detail) {
+            $reception->products()->create([
+                'product_id' => $detail['product']['id'],
+                'net_weight' => $detail['netWeight']
+            ]);
+        }
+
+        return new RawMaterialReceptionResource($reception);
+        
+
+        /* $reception = RawMaterialReception::findOrFail($id);
         $reception->update($validated);
 
         if ($request->has('products')) {
@@ -118,7 +135,7 @@ class RawMaterialReceptionController extends Controller
             }
         }
 
-        return new RawMaterialReceptionResource($reception);
+        return new RawMaterialReceptionResource($reception); */
     }
 
     public function destroy($id)
