@@ -3,6 +3,7 @@
 use App\Http\Controllers\v1\AuthController;
 use App\Http\Controllers\v1\OrderDocumentMailerController;
 use App\Http\Controllers\v1\BoxesReportController;
+use App\Http\Controllers\v1\CeboDispatchController;
 use App\Http\Controllers\v1\CustomerController;
 use App\Http\Controllers\v1\IncotermController;
 use App\Http\Controllers\v1\LocatePalletController;
@@ -78,6 +79,7 @@ Route::get('v1/me', [AuthController::class, 'me'])->middleware('auth:api');
     Route::apiResource('v1/productions', ProductionController::class);
     Route::apiResource('v1/suppliers', SupplierController::class);
     Route::apiResource('v1/raw-material-receptions', RawMaterialReceptionController::class);
+    Route::apiResource('v1/cebo-dispatches', CeboDispatchController::class);
     Route::apiResource('v1/species', SpeciesController::class);
     Route::apiResource('v1/raw-materials', RawMaterialController::class);
     /* Incorterm */
