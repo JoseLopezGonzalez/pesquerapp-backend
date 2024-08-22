@@ -3,6 +3,7 @@
 use App\Http\Controllers\v1\AuthController;
 use App\Http\Controllers\v1\OrderDocumentMailerController;
 use App\Http\Controllers\v1\BoxesReportController;
+use App\Http\Controllers\v1\CeboController;
 use App\Http\Controllers\v1\CeboDispatchController;
 use App\Http\Controllers\v1\CustomerController;
 use App\Http\Controllers\v1\IncotermController;
@@ -82,6 +83,8 @@ Route::get('v1/me', [AuthController::class, 'me'])->middleware('auth:api');
     Route::apiResource('v1/cebo-dispatches', CeboDispatchController::class);
     Route::apiResource('v1/species', SpeciesController::class);
     Route::apiResource('v1/raw-materials', RawMaterialController::class);
+    Route::apiResource('v1/cebos',CeboController::class);
+
     /* Incorterm */
     Route::apiResource('v1/incoterms', IncotermController::class);
     Route::get('v1/boxes_report', [BoxesReportController::class, 'exportToExcel'])->name('export.boxes');
