@@ -33,7 +33,7 @@
 <body class="px-20 flex flex-col gap-20">
 
 
-    @foreach($rawMaterialReceptions as $rawMaterialReception)
+    @foreach($ceboDispatches as $ceboDispatch)
 
     <div class="gap-4 flex flex-col items-start justify-center text-black w-full break-inside-avoid">
         <div>
@@ -44,14 +44,14 @@
             <table class="text-start w-full">
                 <tbody class="text-xl w-full">
                     <tr>
-                        <td class="text-start"><span class="font-bold">Numero: </span>#{{ $rawMaterialReception->id }}</td>
+                        <td class="text-start"><span class="font-bold">Numero: </span>#{{ $ceboDispatch->id }}</td>
                     </tr>
                     <tr>
-                        <td class="text-start"><span class="font-bold">Proveedor: </span>{{ $rawMaterialReception->supplier->name }}</td>
+                        <td class="text-start"><span class="font-bold">Proveedor: </span>{{ $ceboDispatch->supplier->name }}</td>
                     </tr>
                     <tr>
                         <td class="text-start"><span class="font-bold">Fecha: </span>
-                            {{ \Carbon\Carbon::parse($rawMaterialReception->date)->format('d/m/Y') }}
+                            {{ \Carbon\Carbon::parse($ceboDispatch->date)->format('d/m/Y') }}
                         </td>
                     </tr>
                 </tbody>
@@ -66,7 +66,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($rawMaterialReception->products as $product)
+                @foreach($ceboDispatch->products as $product)
                     <tr>
                         <td>{{ $product->product->article->name }}</td>
                         <td class="text-end">{{ $product->net_weight }} kg</td>
@@ -75,14 +75,14 @@
                 <!-- Total -->
                 <tr>
                     <td class="font-bold">Total</td>
-                    <td class="text-end font-bold">{{ number_format($rawMaterialReception->netWeight, 2) }} kg</td>
+                    <td class="text-end font-bold">{{ number_format($ceboDispatch->netWeight, 2) }} kg</td>
                 </tr>
             </tbody>
         </table>
     
         <!-- Notes -->
         <div class="w-full">
-            <p><span class="font-bold">Notas:</span> {{ $rawMaterialReception->notes }}</p>
+            <p><span class="font-bold">Notas:</span> {{ $ceboDispatch->notes }}</p>
         </div>
     </div>
 
