@@ -98,7 +98,7 @@ Route::get('v1/orders/{orderId}/order-signs', [PDFController::class, 'generateOr
 Route::get('v1/orders/{orderId}/order_CMR', [PDFController::class, 'generateOrderCMR'])->name('generate_order_CMR');
 Route::get('v1/rawMaterialReceptions/document', [PDFController::class, 'generateRawMaterialReceptionsDocument'])->name('generate_raw_material_receptions_document');
 
-Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDocument'])->name('generate_cebo_document');
+Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDispatchesDocument'])->name('generate_cebo_document');
 
 
 //});
