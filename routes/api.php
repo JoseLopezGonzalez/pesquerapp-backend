@@ -59,43 +59,46 @@ Route::get('v1/me', [AuthController::class, 'me'])->middleware('auth:api');
 
 //Route::group(['middleware' => ['auth:api']], function () {
 
-    Route::apiResource('v1/stores/pallets', StoredPalletController::class)
-        ->names([
-            'index' => 'stores.pallets.index',
-            'create' => 'stores.pallets.create',
-            'store' => 'stores.pallets.store',
-            'show' => 'stores.pallets.show',
-            'edit' => 'stores.pallets.edit',
-            'update' => 'stores.pallets.update',
-            'destroy' => 'stores.pallets.destroy',
-        ]);
-    Route::apiResource('v1/pallets', PalletController::class);
-    Route::apiResource('v1/stores', StoreController::class)->only(['show', 'index']);
-    Route::apiResource('v1/articles/products', ProductController::class)->only(['show', 'index']);
-    Route::apiResource('v1/customers', CustomerController::class);
-    Route::apiResource('v1/orders', OrderController::class);
-    Route::apiResource('v1/transports', TransportController::class);
-    Route::apiResource('v1/salespeople', SalespersonController::class);
-    Route::apiResource('v1/payment_terms', PaymentTermController::class);
-    Route::apiResource('v1/productions', ProductionController::class);
-    Route::apiResource('v1/suppliers', SupplierController::class);
-    Route::apiResource('v1/raw-material-receptions', RawMaterialReceptionController::class);
-    Route::apiResource('v1/cebo-dispatches', CeboDispatchController::class);
-    Route::apiResource('v1/species', SpeciesController::class);
-    Route::apiResource('v1/raw-materials', RawMaterialController::class);
-    Route::apiResource('v1/cebos',CeboController::class);
+Route::apiResource('v1/stores/pallets', StoredPalletController::class)
+    ->names([
+        'index' => 'stores.pallets.index',
+        'create' => 'stores.pallets.create',
+        'store' => 'stores.pallets.store',
+        'show' => 'stores.pallets.show',
+        'edit' => 'stores.pallets.edit',
+        'update' => 'stores.pallets.update',
+        'destroy' => 'stores.pallets.destroy',
+    ]);
+Route::apiResource('v1/pallets', PalletController::class);
+Route::apiResource('v1/stores', StoreController::class)->only(['show', 'index']);
+Route::apiResource('v1/articles/products', ProductController::class)->only(['show', 'index']);
+Route::apiResource('v1/customers', CustomerController::class);
+Route::apiResource('v1/orders', OrderController::class);
+Route::apiResource('v1/transports', TransportController::class);
+Route::apiResource('v1/salespeople', SalespersonController::class);
+Route::apiResource('v1/payment_terms', PaymentTermController::class);
+Route::apiResource('v1/productions', ProductionController::class);
+Route::apiResource('v1/suppliers', SupplierController::class);
+Route::apiResource('v1/raw-material-receptions', RawMaterialReceptionController::class);
+Route::apiResource('v1/cebo-dispatches', CeboDispatchController::class);
+Route::apiResource('v1/species', SpeciesController::class);
+Route::apiResource('v1/raw-materials', RawMaterialController::class);
+Route::apiResource('v1/cebos', CeboController::class);
 
-    /* Incorterm */
-    Route::apiResource('v1/incoterms', IncotermController::class);
-    Route::get('v1/boxes_report', [BoxesReportController::class, 'exportToExcel'])->name('export.boxes');
-    // Ruta personalizada para enviar documentación de un pedido (NO CRUD)
-    Route::post('v1/send_order_documentation/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentation'])->name('send_order_documentation');
-    /* Send order documentation to Transport  */
-    Route::post('v1/send_order_documentation_transport/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentationTransport'])->name('send_order_documentation_transport');
-    Route::get('v1/orders/{orderId}/delivery-note', [PDFController::class, 'generateDeliveryNote'])->name('generate_delivery_note');
-    Route::get('v1/orders/{orderId}/restricted-delivery-note', [PDFController::class, 'generateRestrictedDeliveryNote'])->name('generate_restricted_delivery_note');
-    Route::get('v1/orders/{orderId}/order-signs', [PDFController::class, 'generateOrderSigns'])->name('generate_order_signs');
-    Route::get('v1/orders/{orderId}/order_CMR', [PDFController::class, 'generateOrderCMR'])->name('generate_order_CMR');
-    Route::get('v1/rawMaterialReceptions/document', [PDFController::class, 'generateRawMaterialReceptionsDocument'])->name('generate_raw_material_receptions_document');
+/* Incorterm */
+Route::apiResource('v1/incoterms', IncotermController::class);
+Route::get('v1/boxes_report', [BoxesReportController::class, 'exportToExcel'])->name('export.boxes');
+// Ruta personalizada para enviar documentación de un pedido (NO CRUD)
+Route::post('v1/send_order_documentation/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentation'])->name('send_order_documentation');
+/* Send order documentation to Transport  */
+Route::post('v1/send_order_documentation_transport/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentationTransport'])->name('send_order_documentation_transport');
+Route::get('v1/orders/{orderId}/delivery-note', [PDFController::class, 'generateDeliveryNote'])->name('generate_delivery_note');
+Route::get('v1/orders/{orderId}/restricted-delivery-note', [PDFController::class, 'generateRestrictedDeliveryNote'])->name('generate_restricted_delivery_note');
+Route::get('v1/orders/{orderId}/order-signs', [PDFController::class, 'generateOrderSigns'])->name('generate_order_signs');
+Route::get('v1/orders/{orderId}/order_CMR', [PDFController::class, 'generateOrderCMR'])->name('generate_order_CMR');
+Route::get('v1/rawMaterialReceptions/document', [PDFController::class, 'generateRawMaterialReceptionsDocument'])->name('generate_raw_material_receptions_document');
+
+Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDocument'])->name('generate_cebo_document');
+
 
 //});

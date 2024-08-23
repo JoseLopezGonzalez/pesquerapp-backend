@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('cebo_dispatches', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('supllier_id');
+            $table->unsignedBigInteger('supplier_id');
             $table->date('date');
             $table->text('notes')->nullable();
             $table->timestamps();
-
-            $table->foreign('supllier_id')->references('id')->on('suppliers')->onDelete('cascade');
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
         });
     }
 

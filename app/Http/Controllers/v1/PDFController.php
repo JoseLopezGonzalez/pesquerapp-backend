@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\RawMaterialReceptionProductResource;
+use App\Models\CeboDispatch;
 use App\Models\Order;
 use App\Models\RawMaterialReception;
 use Beganovich\Snappdf\Snappdf;
@@ -201,41 +202,41 @@ class PDFController extends Controller
     public function generateRawMaterialReceptionsDocument(Request $request)
     {
         // Reutiliza la lógica de filtro del método index
-    $query = RawMaterialReception::with('supplier', 'products.product');
+        $query = RawMaterialReception::with('supplier', 'products.product');
 
-    $query->when($request->filled('id'), function ($query) use ($request) {
-        $query->where('id', $request->id);
-    });
-
-    $query->when($request->filled('suppliers'), function ($query) use ($request) {
-        $query->whereIn('supplier_id', $request->suppliers);
-    });
-
-    $query->when($request->filled('dates'), function ($query) use ($request) {
-        $query->whereBetween('date', [$request->dates['start'], $request->dates['end']]);
-    });
-
-    $query->when($request->filled('species'), function ($query) use ($request) {
-        $query->whereHas('products.product', function ($query) use ($request) {
-            $query->whereIn('species_id', $request->species);
+        $query->when($request->filled('id'), function ($query) use ($request) {
+            $query->where('id', $request->id);
         });
-    });
 
-    $query->when($request->filled('products'), function ($query) use ($request) {
-        $query->whereHas('products.product', function ($query) use ($request) {
-            $query->whereIn('id', $request->products);
+        $query->when($request->filled('suppliers'), function ($query) use ($request) {
+            $query->whereIn('supplier_id', $request->suppliers);
         });
-    });
 
-    $query->when($request->filled('notes'), function ($query) use ($request) {
-        $query->where('notes', 'like', '%' . $request->notes . '%');
-    });
+        $query->when($request->filled('dates'), function ($query) use ($request) {
+            $query->whereBetween('date', [$request->dates['start'], $request->dates['end']]);
+        });
 
-    $rawMaterialReceptions = $query->get();
+        $query->when($request->filled('species'), function ($query) use ($request) {
+            $query->whereHas('products.product', function ($query) use ($request) {
+                $query->whereIn('species_id', $request->species);
+            });
+        });
 
-    if ($rawMaterialReceptions->isEmpty()) {
-        return response()->json(['message' => 'No se encontraron recepciones de materia prima con los filtros proporcionados.'], 404);
-    } 
+        $query->when($request->filled('products'), function ($query) use ($request) {
+            $query->whereHas('products.product', function ($query) use ($request) {
+                $query->whereIn('id', $request->products);
+            });
+        });
+
+        $query->when($request->filled('notes'), function ($query) use ($request) {
+            $query->where('notes', 'like', '%' . $request->notes . '%');
+        });
+
+        $rawMaterialReceptions = $query->get();
+
+        if ($rawMaterialReceptions->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron recepciones de materia prima con los filtros proporcionados.'], 404);
+        }
 
 
 
@@ -276,5 +277,51 @@ class PDFController extends Controller
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;
         }, 'Recepciones_materia_prima_filtradas.pdf', ['Content-Type' => 'application/pdf']);
+    }
+
+    public function generateCeboDispatchesDocument(Request $request)
+    {
+        // Reutiliza la lógica de filtro del método index para CeboDispatch
+        $query = CeboDispatch::with('supplier', 'products.product');
+
+        if ($request->has('id')) {
+            $query->where('id', $request->id);
+        }
+
+        if ($request->has('suppliers')) {
+            $query->whereIn('supplier_id', $request->suppliers);
+        }
+
+        if ($request->has('dates')) {
+            $query->whereBetween('date', [$request->dates['start'], $request->dates['end']]);
+        }
+
+        if ($request->has('products')) {
+            $query->whereHas('products.product', function ($query) use ($request) {
+                $query->whereIn('id', $request->products);
+            });
+        }
+
+        if ($request->has('notes')) {
+            $query->where('notes', 'like', '%' . $request->notes . '%');
+        }
+
+        $ceboDispatches = $query->get();
+
+        if ($ceboDispatches->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron despachos de cebo con los filtros proporcionados.'], 404);
+        }
+
+        $snappdf = new Snappdf();
+        $html = view('pdf.ceboDispatches.document', ['ceboDispatches' => $ceboDispatches])->render();
+
+        $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Ajusta esta ruta según tu sistema
+
+        // Genera el PDF
+        $pdf = $snappdf->setHtml($html)->generate();
+
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf;
+        }, 'Salidas_cebo_filtradas.pdf', ['Content-Type' => 'application/pdf']);
     }
 }
