@@ -25,4 +25,11 @@ class RawMaterialReception extends Model
     {
         return $this->products->sum('net_weight');
     }
+
+
+    /* GEnerar atributo especie segun la especie a la que pertenezca sus productos */
+    public function getSpecieAttribute()
+    {
+        return $this->products->first()->product->article->specie;
+    }
 }
