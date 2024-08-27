@@ -25,7 +25,10 @@ class RawMaterialReceptionProduct extends Model
     /* Alias Attribute from RawMaterial atribute that coincida con el id de producto */
     public function getAliasAttribute()
     {
-        return $this->product->rawMaterials->where('id', $this->product_id)->first()->alias;
+        /* Find RawMaterial(product_id) */
+        $rawMaterial = RawMaterial::where('id', $this->product_id)->first();
+        return $rawMaterial->alias;
+        /* return $this->product->rawMaterials->where('id', $this->product_id)->first()->alias; */
     }
 
 }
