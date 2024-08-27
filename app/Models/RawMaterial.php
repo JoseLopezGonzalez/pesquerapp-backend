@@ -12,6 +12,7 @@ class RawMaterial extends Model
     protected $fillable = [
         'id',
         'fixed',
+        'alias',
         'created_at',
         'updated_at',
     ];
@@ -26,6 +27,7 @@ class RawMaterial extends Model
         return [
             'id' => $this->id,
             'name' => $this->product->article->name,
+            'alias' => $this->alias,
             'fixed' => $this->fixed,
             'product' => $this->product->toArrayAssoc(),
         ];

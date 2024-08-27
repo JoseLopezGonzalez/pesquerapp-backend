@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             /* Boolean named fixed */
             $table->boolean('fixed');
+            /* alias */
+            $table->string('alias')->nullable();
             $table->timestamps();
             $table->foreign('id')->references('id')->on('products')->onDelete('cascade');
         });
