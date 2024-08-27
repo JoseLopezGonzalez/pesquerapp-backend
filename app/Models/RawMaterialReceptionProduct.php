@@ -21,4 +21,11 @@ class RawMaterialReceptionProduct extends Model
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
+
+    /* Alias Attribute from RawMaterial atribute that coincida con el id de producto */
+    public function getAliasAttribute()
+    {
+        return $this->product->rawMaterial->alias;
+    }
+
 }

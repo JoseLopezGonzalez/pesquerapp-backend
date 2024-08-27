@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->decimal('net_weight', 6, 2);
             $table->timestamps();
-    
             $table->foreign('reception_id')->references('id')->on('raw_material_receptions')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
