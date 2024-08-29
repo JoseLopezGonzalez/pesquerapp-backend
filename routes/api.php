@@ -102,10 +102,11 @@ Route::get('v1/orders/{orderId}/order-signs', [PDFController::class, 'generateOr
 Route::get('v1/orders/{orderId}/order_CMR', [PDFController::class, 'generateOrderCMR'])->name('generate_order_CMR');
 Route::get('v1/rawMaterialReceptions/document', [PDFController::class, 'generateRawMaterialReceptionsDocument'])->name('generate_raw_material_receptions_document');
 
+/* No funciona */
 Route::get('v1/raw-material-receptions/monthly-stats', [RawMaterialReceptionsStatsController::class, 'getMonthlyStats'])->name('raw_material_receptions.monthly_stats');
 
 
-/* MonthlyStatsTest */
+/* No funciona */
 Route::get('v1/raw-material-receptions/monthly-stats-test', [RawMaterialReceptionsStatsTestController::class, 'getMonthlyStatsTest'])->name('raw_material_receptions.monthly_stats_test');
 
 Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDispatchesDocument'])->name('generate_cebo_document');
