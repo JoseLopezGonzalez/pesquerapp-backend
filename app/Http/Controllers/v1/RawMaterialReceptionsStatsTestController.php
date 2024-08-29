@@ -101,11 +101,13 @@ class RawMaterialReceptionsStatsTestController extends Controller
         });
 
 
-
+/* Formato data = "" */
         return response()->json([
-            'totalNetWeight' => $totalNetWeightCurrentMonth,
-            'percentageChange' => $percentageChange,
-            'dailyNetWeights' => $dailyNetWeights,
+            'data' => [
+                'totalNetWeight' => $totalNetWeightCurrentMonth,
+                'percentageChange' => $percentageChange,
+                'dailyNetWeights' => $dailyNetWeights,
+            ]
         ]);
     }
 }
