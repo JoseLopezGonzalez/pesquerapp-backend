@@ -11,7 +11,7 @@ class RawMaterialReceptionsStatsController extends Controller
 {
     public function getMonthlyStats(Request $request)
     {
-        // Validar la entrada
+       /*  // Validar la entrada
         $request->validate([
             'month' => 'required|date_format:Y-m', // Espera un formato de mes y año 'YYYY-MM'
         ]);
@@ -62,6 +62,8 @@ class RawMaterialReceptionsStatsController extends Controller
             'totalNetWeight' => $totalNetWeightCurrentMonth,
             'percentageChange' => $percentageChange,
             'dailyNetWeights' => $dailyNetWeights,
-        ]);
+        ]); */
+
+        return 0;
     }
 }
