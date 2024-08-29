@@ -33,7 +33,7 @@ class RawMaterialReceptionsStatsTestController extends Controller
         $previousMonth = $month->copy()->subMonth();
         $startOfPreviousMonth = $previousMonth->startOfMonth();
         $endOfPreviousMonth = $previousMonth->endOfMonth();
-        
+
 
         /* Obtener totalNetWeight del mes */
         $totalNetWeightCurrentMonth = RawMaterialReception::whereBetween('date', [$startOfMonth, $endOfMonth])
@@ -43,7 +43,7 @@ class RawMaterialReceptionsStatsTestController extends Controller
                 return $carry + $reception->products->sum('net_weight');
             }, 0);
 
-            /* Obtener totalNerWeight para el mes anterior */
+        /* Obtener totalNerWeight para el mes anterior */
         $totalNetWeightPreviousMonth = RawMaterialReception::whereBetween('date', [$startOfPreviousMonth, $endOfPreviousMonth])
             ->with('products')
             ->get()
@@ -54,7 +54,7 @@ class RawMaterialReceptionsStatsTestController extends Controller
         /* Calcular la comparativa en porcentaje con el mes anterior */
         $percentageChange = $totalNetWeightPreviousMonth > 0
             ? (($totalNetWeightCurrentMonth - $totalNetWeightPreviousMonth) / $totalNetWeightPreviousMonth) * 100
-            : null; 
+            : null;
 
         /* Obtener los datos de peso neto por día 
         con el siguiente formato 
@@ -65,17 +65,40 @@ class RawMaterialReceptionsStatsTestController extends Controller
 
         }
         */
-        $dailyNetWeights = RawMaterialReception::whereBetween('date', [$startOfMonth, $endOfMonth])
+        $currentMonthData = RawMaterialReception::whereBetween('date', [$startOfMonth, $endOfMonth])
             ->with('products')
             ->get()
             ->groupBy(function ($date) {
-                return Carbon::parse($date->date)->format('Y-m-d');
+                return Carbon::parse($date->date)->format('d'); // Agrupar por día del mes
             })
             ->map(function ($day) {
                 return $day->reduce(function ($carry, $reception) {
                     return $carry + $reception->products->sum('net_weight');
                 }, 0);
             });
+
+        $previousMonthData = RawMaterialReception::whereBetween('date', [$startOfPreviousMonth, $endOfPreviousMonth])
+            ->with('products')
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->date)->format('d'); // Agrupar por día del mes
+            })
+            ->map(function ($day) {
+                return $day->reduce(function ($carry, $reception) {
+                    return $carry + $reception->products->sum('net_weight');
+                }, 0);
+            });
+
+        // Combina los datos de ambos meses para obtener el formato requerido
+        $dailyNetWeights = collect(range(1, $endOfMonth->format('d')))->map(function ($day) use ($currentMonthData, $previousMonthData) {
+            $dayFormatted = str_pad($day, 2, '0', STR_PAD_LEFT); // Asegura que los días tengan dos dígitos
+
+            return [
+                'name' => $dayFormatted,
+                'currentMonth' => $currentMonthData->get($dayFormatted, 0), // Peso neto del día para el mes actual
+                'previousMonth' => $previousMonthData->get($dayFormatted, 0) // Peso neto del día para el mes anterior
+            ];
+        });
 
 
 
@@ -84,10 +107,5 @@ class RawMaterialReceptionsStatsTestController extends Controller
             'percentageChange' => $percentageChange,
             'dailyNetWeights' => $dailyNetWeights,
         ]);
-
-   
-        
-
     }
-        
 }
