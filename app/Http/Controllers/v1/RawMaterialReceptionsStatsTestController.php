@@ -43,15 +43,7 @@ class RawMaterialReceptionsStatsTestController extends Controller
                 return $carry + $reception->products->sum('net_weight');
             }, 0);
 
-    /*     // Obtener el peso neto total para el mes solicitado
-        $totalNetWeightCurrentMonth = RawMaterialReception::whereBetween('date', [$startOfMonth, $endOfMonth])
-            ->with('products')
-            ->get()
-            ->reduce(function ($carry, $reception) {
-                return $carry + $reception->products->sum('net_weight');
-            }, 0);
-
-        // Obtener el peso neto total para el mes anterior
+            /* Obtener totalNerWeight para el mes anterior */
         $totalNetWeightPreviousMonth = RawMaterialReception::whereBetween('date', [$startOfPreviousMonth, $endOfPreviousMonth])
             ->with('products')
             ->get()
@@ -59,12 +51,12 @@ class RawMaterialReceptionsStatsTestController extends Controller
                 return $carry + $reception->products->sum('net_weight');
             }, 0);
 
-        // Calcular la comparativa en porcentaje con el mes anterior
+        /* Calcular la comparativa en porcentaje con el mes anterior */
         $percentageChange = $totalNetWeightPreviousMonth > 0
             ? (($totalNetWeightCurrentMonth - $totalNetWeightPreviousMonth) / $totalNetWeightPreviousMonth) * 100
-            : null;
+            : null; 
 
-        // Obtener los datos de peso neto por día
+        /* Obtener los datos de peso neto por día */
         $dailyNetWeights = RawMaterialReception::whereBetween('date', [$startOfMonth, $endOfMonth])
             ->with('products')
             ->get()
@@ -77,14 +69,13 @@ class RawMaterialReceptionsStatsTestController extends Controller
                 }, 0);
             });
 
-        // Devolver la respuesta en formato JSON
         return response()->json([
             'totalNetWeight' => $totalNetWeightCurrentMonth,
             'percentageChange' => $percentageChange,
             'dailyNetWeights' => $dailyNetWeights,
-        ]); */
+        ]);
 
-        return ['hola' => $totalNetWeightCurrentMonth];
+   
         
 
     }
