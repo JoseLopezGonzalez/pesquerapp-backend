@@ -27,12 +27,12 @@ class RawMaterialReceptionsStatsTestController extends Controller
             return response()->json(['errors' => $validator->errors()], 422); // Código de estado 422 - Unprocessable Entity
         }
 
-        /* $month = Carbon::createFromFormat('Y-m', $request->input('month'));
+        $month = Carbon::createFromFormat('Y-m', $request->month);
         $startOfMonth = $month->copy()->startOfMonth();
         $endOfMonth = $month->copy()->endOfMonth();
         $previousMonth = $month->copy()->subMonth();
         $startOfPreviousMonth = $previousMonth->startOfMonth();
-        $endOfPreviousMonth = $previousMonth->endOfMonth(); */
+        $endOfPreviousMonth = $previousMonth->endOfMonth();
 
     /*     // Obtener el peso neto total para el mes solicitado
         $totalNetWeightCurrentMonth = RawMaterialReception::whereBetween('date', [$startOfMonth, $endOfMonth])
