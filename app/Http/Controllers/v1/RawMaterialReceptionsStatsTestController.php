@@ -56,7 +56,15 @@ class RawMaterialReceptionsStatsTestController extends Controller
             ? (($totalNetWeightCurrentMonth - $totalNetWeightPreviousMonth) / $totalNetWeightPreviousMonth) * 100
             : null; 
 
-        /* Obtener los datos de peso neto por día */
+        /* Obtener los datos de peso neto por día 
+        con el siguiente formato 
+        {
+            "name" : "01" , //Dia
+            "currentMonth" : 1000, //Peso neto del dia
+            "previousMonth" : 500 //Peso neto del dia
+
+        }
+        */
         $dailyNetWeights = RawMaterialReception::whereBetween('date', [$startOfMonth, $endOfMonth])
             ->with('products')
             ->get()
@@ -68,6 +76,8 @@ class RawMaterialReceptionsStatsTestController extends Controller
                     return $carry + $reception->products->sum('net_weight');
                 }, 0);
             });
+
+
 
         return response()->json([
             'totalNetWeight' => $totalNetWeightCurrentMonth,
