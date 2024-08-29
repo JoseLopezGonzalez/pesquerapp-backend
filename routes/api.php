@@ -17,8 +17,6 @@ use App\Http\Controllers\v1\ProductionController;
 use App\Http\Controllers\v1\RawMaterialController;
 use App\Http\Controllers\v1\RawMaterialReceptionController;
 use App\Http\Controllers\v1\RawMaterialReceptionsStatsController;
-use App\Http\Controllers\v1\RawMaterialReceptionsStatsControllerTest;
-use App\Http\Controllers\v1\RawMaterialReceptionsStatsTestController;
 use App\Http\Controllers\v1\SalespersonController;
 use App\Http\Controllers\v1\SpeciesController;
 use Illuminate\Http\Request;
@@ -103,11 +101,8 @@ Route::get('v1/orders/{orderId}/order_CMR', [PDFController::class, 'generateOrde
 Route::get('v1/rawMaterialReceptions/document', [PDFController::class, 'generateRawMaterialReceptionsDocument'])->name('generate_raw_material_receptions_document');
 
 /* No funciona */
-Route::get('v1/raw-material-receptions/monthly-stats', [RawMaterialReceptionsStatsController::class, 'getMonthlyStats'])->name('raw_material_receptions.monthly_stats');
+Route::get('v1/raw-material-receptions-monthly-stats', [RawMaterialReceptionsStatsController::class, 'getMonthlyStats'])->name('raw_material_receptions.monthly_stats');
 
-
-/* No funciona */
-Route::get('v1/monthly-stats-test', [RawMaterialReceptionsStatsTestController::class, 'getMonthlyStatsTest'])->name('raw_material_receptions.monthly_stats_test');
 
 Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDispatchesDocument'])->name('generate_cebo_document');
 
