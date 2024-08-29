@@ -22,7 +22,7 @@ class RawMaterialReceptionsStatsTestController extends Controller
 
         $validator = Validator::make($request->all(), [
             'month' => 'required|date_format:Y-m', // Espera un formato de mes y año 'YYYY-MM'
-            'spaecies' => 'required',
+            'species' => 'required',
         ]);
 
         if ($validator->fails()) {
