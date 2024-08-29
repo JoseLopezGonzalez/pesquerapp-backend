@@ -107,7 +107,7 @@ Route::get('v1/raw-material-receptions/monthly-stats', [RawMaterialReceptionsSta
 
 
 /* No funciona */
-Route::get('v1/raw-material-receptions/monthly-stats-test', [RawMaterialReceptionsStatsTestController::class, 'getMonthlyStatsTest'])->name('raw_material_receptions.monthly_stats_test');
+Route::get('v1/monthly-stats-test', [RawMaterialReceptionsStatsTestController::class, 'getMonthlyStatsTest'])->name('raw_material_receptions.monthly_stats_test');
 
 Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDispatchesDocument'])->name('generate_cebo_document');
 
