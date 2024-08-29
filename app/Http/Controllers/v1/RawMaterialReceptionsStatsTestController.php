@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\RawMaterialReception;
-use Carbon\Carbon;
+/* use App\Models\RawMaterialReception;
+use Carbon\Carbon; */
 use Illuminate\Http\Request;
 
 class RawMaterialReceptionsStatsTestController extends Controller
@@ -12,7 +12,7 @@ class RawMaterialReceptionsStatsTestController extends Controller
     /* Devolver net weight del mes completo, comparativa en % de el mes con respecto al anterior, y un array con cada dia del mes con sus respectivos net weight */
     public function getMonthlyStats(Request $request)
     {
-        // Validar la entrada
+       /*  // Validar la entrada
         $request->validate([
             'month' => 'required|date_format:Y-m', // Espera un formato de mes y año 'YYYY-MM'
         ]);
@@ -66,7 +66,7 @@ class RawMaterialReceptionsStatsTestController extends Controller
             'dailyNetWeights' => $dailyNetWeights,
         ]);
 
-        return 0;
+        return 0; */
 
     }
         
