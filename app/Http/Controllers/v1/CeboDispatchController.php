@@ -44,6 +44,9 @@ class CeboDispatchController extends Controller
             $query->where('notes', 'like', '%' . $request->notes . '%');
         }
 
+        /* Order by Date Descen */
+        $query->orderBy('date', 'desc');
+
         $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
         return CeboDispatchResource::collection($query->paginate($perPage));
     }
