@@ -33,6 +33,15 @@ class RawMaterialReceptionsStatsTestController extends Controller
         $previousMonth = $month->copy()->subMonth();
         $startOfPreviousMonth = $previousMonth->startOfMonth();
         $endOfPreviousMonth = $previousMonth->endOfMonth();
+        
+
+        /* Obtener totalNetWeight del mes */
+        $totalNetWeightCurrentMonth = RawMaterialReception::whereBetween('date', [$startOfMonth, $endOfMonth])
+            ->with('products')
+            ->get()
+            ->reduce(function ($carry, $reception) {
+                return $carry + $reception->products->sum('net_weight');
+            }, 0);
 
     /*     // Obtener el peso neto total para el mes solicitado
         $totalNetWeightCurrentMonth = RawMaterialReception::whereBetween('date', [$startOfMonth, $endOfMonth])
@@ -75,7 +84,7 @@ class RawMaterialReceptionsStatsTestController extends Controller
             'dailyNetWeights' => $dailyNetWeights,
         ]); */
 
-        return ['hola' => 'mundo'];
+        return ['hola' => $totalNetWeightCurrentMonth];
         
 
     }
