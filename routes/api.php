@@ -16,6 +16,7 @@ use App\Http\Controllers\v1\ProductController;
 use App\Http\Controllers\v1\ProductionController;
 use App\Http\Controllers\v1\RawMaterialController;
 use App\Http\Controllers\v1\RawMaterialReceptionController;
+use App\Http\Controllers\v1\RawMaterialReceptionsStatsController;
 use App\Http\Controllers\v1\SalespersonController;
 use App\Http\Controllers\v1\SpeciesController;
 use Illuminate\Http\Request;
@@ -85,6 +86,7 @@ Route::apiResource('v1/species', SpeciesController::class);
 Route::apiResource('v1/raw-materials', RawMaterialController::class);
 Route::apiResource('v1/cebos', CeboController::class);
 
+
 /* Incorterm */
 Route::apiResource('v1/incoterms', IncotermController::class);
 Route::get('v1/boxes_report', [BoxesReportController::class, 'exportToExcel'])->name('export.boxes');
@@ -97,6 +99,9 @@ Route::get('v1/orders/{orderId}/restricted-delivery-note', [PDFController::class
 Route::get('v1/orders/{orderId}/order-signs', [PDFController::class, 'generateOrderSigns'])->name('generate_order_signs');
 Route::get('v1/orders/{orderId}/order_CMR', [PDFController::class, 'generateOrderCMR'])->name('generate_order_CMR');
 Route::get('v1/rawMaterialReceptions/document', [PDFController::class, 'generateRawMaterialReceptionsDocument'])->name('generate_raw_material_receptions_document');
+
+Route::get('v1/raw-material-receptions/monthly-stats', [RawMaterialReceptionsStatsController::class, 'getMonthlyStats']);
+
 
 Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDispatchesDocument'])->name('generate_cebo_document');
 
