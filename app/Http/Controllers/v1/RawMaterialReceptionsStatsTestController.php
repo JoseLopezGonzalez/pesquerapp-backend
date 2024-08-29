@@ -13,8 +13,7 @@ class RawMaterialReceptionsStatsTestController extends Controller
     /* Devolver net weight del mes completo, comparativa en % de el mes con respecto al anterior, y un array con cada dia del mes con sus respectivos net weight */
     public function getMonthlyStats(Request $request)
     {
-        return ['data' => 'Hello World!'];
-       /*  // Validar la entrada
+        // Validar la entrada
         $request->validate([
             'month' => 'required|date_format:Y-m', // Espera un formato de mes y año 'YYYY-MM'
         ]);
@@ -26,7 +25,7 @@ class RawMaterialReceptionsStatsTestController extends Controller
         $startOfPreviousMonth = $previousMonth->startOfMonth();
         $endOfPreviousMonth = $previousMonth->endOfMonth();
 
-        // Obtener el peso neto total para el mes solicitado
+    /*     // Obtener el peso neto total para el mes solicitado
         $totalNetWeightCurrentMonth = RawMaterialReception::whereBetween('date', [$startOfMonth, $endOfMonth])
             ->with('products')
             ->get()
@@ -62,13 +61,13 @@ class RawMaterialReceptionsStatsTestController extends Controller
 
         // Devolver la respuesta en formato JSON
         return response()->json([
-            'totalNetWeightCurrentMonth' => $totalNetWeightCurrentMonth,
-            'totalNetWeightPreviousMonth' => $totalNetWeightPreviousMonth,
+            'totalNetWeight' => $totalNetWeightCurrentMonth,
             'percentageChange' => $percentageChange,
             'dailyNetWeights' => $dailyNetWeights,
-        ]);
+        ]); */
 
-        return 0; */
+        return ['hola' => 'mundo'];
+        
 
     }
         
