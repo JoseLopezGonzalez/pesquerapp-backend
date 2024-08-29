@@ -17,10 +17,12 @@ class RawMaterialReceptionsStatsTestController extends Controller
         // Validar la entrada
         /* $request->validate([
             'month' => 'required|date_format:Y-m', // Espera un formato de mes y año 'YYYY-MM'
+            'species' => 'required',
         ]); */
 
         $validator = Validator::make($request->all(), [
             'month' => 'required|date_format:Y-m', // Espera un formato de mes y año 'YYYY-MM'
+            'spaecies' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -33,22 +35,24 @@ class RawMaterialReceptionsStatsTestController extends Controller
         $previousMonth = $month->copy()->subMonth();
         $startOfPreviousMonth = $previousMonth->startOfMonth();
         $endOfPreviousMonth = $previousMonth->endOfMonth();
+        $speciesId = $request->species;
 
 
-        /* Obtener totalNetWeight del mes */
+        /* Obtener totalNetWeight del mes de la ESPECIE pasada por parametro */
         $totalNetWeightCurrentMonth = RawMaterialReception::whereBetween('date', [$startOfMonth, $endOfMonth])
             ->with('products')
             ->get()
-            ->reduce(function ($carry, $reception) {
-                return $carry + $reception->products->sum('net_weight');
+            ->reduce(function ($carry, $reception) use ($speciesId) {
+                return $carry + $reception->products->where('species_id', $speciesId)->sum('net_weight');
             }, 0);
+        
 
-        /* Obtener totalNerWeight para el mes anterior */
+        /* Obtener totalNerWeight para el mes anterior segun especie*/
         $totalNetWeightPreviousMonth = RawMaterialReception::whereBetween('date', [$startOfPreviousMonth, $endOfPreviousMonth])
             ->with('products')
             ->get()
-            ->reduce(function ($carry, $reception) {
-                return $carry + $reception->products->sum('net_weight');
+            ->reduce(function ($carry, $reception) use ($speciesId) {
+                return $carry + $reception->products->where('species_id', $speciesId)->sum('net_weight');
             }, 0);
 
         /* Calcular la comparativa en porcentaje con el mes anterior */
@@ -65,27 +69,30 @@ class RawMaterialReceptionsStatsTestController extends Controller
 
         }
         */
+
+        /* currentMonthData segun especie */
         $currentMonthData = RawMaterialReception::whereBetween('date', [$startOfMonth, $endOfMonth])
             ->with('products')
             ->get()
             ->groupBy(function ($date) {
                 return Carbon::parse($date->date)->format('d'); // Agrupar por día del mes
             })
-            ->map(function ($day) {
-                return $day->reduce(function ($carry, $reception) {
-                    return $carry + $reception->products->sum('net_weight');
+            ->map(function ($day) use ($speciesId) {
+                return $day->reduce(function ($carry, $reception) use ($speciesId) {
+                    return $carry + $reception->products->where('species_id', $speciesId)->sum('net_weight');
                 }, 0);
             });
 
+        /* previousMonthData segun especie */
         $previousMonthData = RawMaterialReception::whereBetween('date', [$startOfPreviousMonth, $endOfPreviousMonth])
             ->with('products')
             ->get()
             ->groupBy(function ($date) {
                 return Carbon::parse($date->date)->format('d'); // Agrupar por día del mes
             })
-            ->map(function ($day) {
-                return $day->reduce(function ($carry, $reception) {
-                    return $carry + $reception->products->sum('net_weight');
+            ->map(function ($day) use ($speciesId) {
+                return $day->reduce(function ($carry, $reception) use ($speciesId) {
+                    return $carry + $reception->products->where('species_id', $speciesId)->sum('net_weight');
                 }, 0);
             });
 
