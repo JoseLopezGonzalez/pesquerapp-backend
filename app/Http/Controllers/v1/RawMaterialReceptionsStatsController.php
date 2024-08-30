@@ -78,42 +78,26 @@ class RawMaterialReceptionsStatsController extends Controller
                         return $carry + $reception->products->sum('net_weight');
                     }, 0);
                 });
-    
-            /* Obtener los datos de peso neto por día para el mes anterior */
-            $previousMonthData = RawMaterialReception::whereBetween('date', [$startOfPreviousMonth, $endOfPreviousMonth])
-                ->with(['products' => function ($query) use ($speciesId) {
-                    $query->whereHas('product', function ($query) use ($speciesId) {
-                        $query->where('species_id', $speciesId);
-                    });
-                }])
-                ->get()
-                ->groupBy(function ($date) {
-                    return Carbon::parse($date->date)->format('d'); // Agrupar por día del mes
-                })
-                ->map(function ($day) {
-                    return $day->reduce(function ($carry, $reception) {
-                        return $carry + $reception->products->sum('net_weight');
-                    }, 0);
-                });
-    
-            // Combina los datos de ambos meses para obtener el formato requerido
-            $dailyNetWeights = collect(range(1, $endOfMonth->format('d')))->map(function ($day) use ($currentMonthData, $previousMonthData) {
-                $dayFormatted = str_pad($day, 2, '0', STR_PAD_LEFT); // Asegura que los días tengan dos dígitos
-    
-                return [
-                    'name' => $dayFormatted,
-                    'currentMonth' => $currentMonthData->get($dayFormatted, 0), // Peso neto del día para el mes actual
-                    'previousMonth' => $previousMonthData->get($dayFormatted, 0) // Peso neto del día para el mes anterior
-                ];
-            });
-    
-            /* Formato data = "" */
+
+            /* Formato data = "YYYY-MM" */
             return response()->json([
                 'data' => [
                     'totalNetWeight' => $totalNetWeightCurrentMonth,
                     'percentageChange' => $percentageChange,
-                    'dailyNetWeights' => $dailyNetWeights,
+                    'dailyNetWeight' => $currentMonthData,
                 ]
             ]);
+    
+            
+    
+    
+            /* Formato data = "" */
+            /* return response()->json([
+                'data' => [
+                    'totalNetWeight' => $totalNetWeightCurrentMonth,
+                    'percentageChange' => $percentageChange,
+                    
+                ]
+            ]); */
         }
 }
