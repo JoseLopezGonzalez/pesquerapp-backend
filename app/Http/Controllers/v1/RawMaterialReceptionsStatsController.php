@@ -79,31 +79,20 @@ class RawMaterialReceptionsStatsController extends Controller
                     }, 0);
                 });
     
-            /* Obtener los datos de peso neto por día para el mes anterior */
-            $previousMonthData = RawMaterialReception::whereBetween('date', [$startOfPreviousMonth, $endOfPreviousMonth])
-                ->with(['products' => function ($query) use ($speciesId) {
-                    $query->whereHas('product', function ($query) use ($speciesId) {
-                        $query->where('species_id', $speciesId);
-                    });
-                }])
-                ->get()
-                ->groupBy(function ($date) {
-                    return Carbon::parse($date->date)->format('d'); // Agrupar por día del mes
-                })
-                ->map(function ($day) {
-                    return $day->reduce(function ($carry, $reception) {
-                        return $carry + $reception->products->sum('net_weight');
-                    }, 0);
-                });
     
-            // Combina los datos de ambos meses para obtener el formato requerido
-            $dailyNetWeights = collect(range(1, $endOfMonth->format('d')))->map(function ($day) use ($currentMonthData, $previousMonthData) {
-                $dayFormatted = str_pad($day, 2, '0', STR_PAD_LEFT); // Asegura que los días tengan dos dígitos
-    
+            /* Formato requerido
+            Ejemplo:
+            dailyNetWeights => [
+                name => '01-05-2024',
+                currentMonth => 1000,
+            ]
+            
+            */
+            $dailyNetWeights = $currentMonthData->map(function ($weight, $day) use ($startOfMonth) {
                 return [
-                    'name' => $dayFormatted,
-                    'currentMonth' => $currentMonthData->get($dayFormatted, 0), // Peso neto del día para el mes actual
-                    'previousMonth' => $previousMonthData->get($dayFormatted, 0) // Peso neto del día para el mes anterior
+                    'name' => $startOfMonth->copy()->addDays($day - 1)->format('d-m-Y'),
+                    /* Format weight as decimal with 2 numbers */
+                    'currentMonth' => $weight,
                 ];
             });
     
