@@ -37,7 +37,7 @@ class RawMaterialReceptionsStatsController extends Controller
             $previousMonth = $month->copy()->subMonth();
             $startOfPreviousMonth = $previousMonth->copy()->startOfMonth();
             $endOfPreviousMonth = $previousMonth->copy()->endOfMonth();
-            
+
 
             $speciesId = $request->species;
     
@@ -108,4 +108,97 @@ class RawMaterialReceptionsStatsController extends Controller
                 ]
             ]);
         }
+
+        /* Anual stats  segun el año pasado por parametro*/
+        public function getAnnualStats(Request $request)
+        {
+            // Validar la entrada
+            $validator = Validator::make($request->all(), [
+                'year' => 'required|date_format:Y', // Espera un formato de año 'YYYY'
+                'species' => 'required', // Especie requerida
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422); // Código de estado 422 - Unprocessable Entity
+            }
+    
+            $year = Carbon::createFromFormat('Y', $request->year);
+            $startOfYear = $year->copy()->startOfYear();
+            $endOfYear = $year->copy()->endOfYear();
+
+            $previousYear = $year->copy()->subYear();
+            $startOfPreviousYear = $previousYear->copy()->startOfYear();
+            $endOfPreviousYear = $previousYear->copy()->endOfYear();
+
+            $speciesId = $request->species;
+    
+            /* Obtener totalNetWeight del año de la ESPECIE pasada por parámetro */
+            $totalNetWeightCurrentYear = RawMaterialReception::whereBetween('date', [$startOfYear, $endOfYear])
+                ->with(['products' => function ($query) use ($speciesId) {
+                    $query->whereHas('product', function ($query) use ($speciesId) {
+                        $query->where('species_id', $speciesId);
+                    });
+                }])
+                ->get()
+                ->reduce(function ($carry, $reception) {
+                    return $carry + $reception->products->sum('net_weight');
+                }, 0);
+    
+            /* Obtener totalNetWeight para el año anterior según especie */
+            $totalNetWeightPreviousYear = RawMaterialReception::whereBetween('date', [$startOfPreviousYear, $endOfPreviousYear])
+                ->with(['products' => function ($query) use ($speciesId) {
+                    $query->whereHas('product', function ($query) use ($speciesId) {
+                        $query->where('species_id', $speciesId);
+                    });
+                }])
+                ->get()
+                ->reduce(function ($carry, $reception) {
+                    return $carry + $reception->products->sum('net_weight');
+                }, 0);
+    
+            /* Calcular la comparativa en porcentaje con el año anterior */
+
+            $percentageChange = $totalNetWeightPreviousYear > 0
+                ? (($totalNetWeightCurrentYear - $totalNetWeightPreviousYear) / $totalNetWeightPreviousYear) * 100
+                : null;
+
+            /* Obtener los datos de peso neto por mes para el año actual */
+            $currentYearData = RawMaterialReception::whereBetween('date', [$startOfYear, $endOfYear])
+                ->with(['products' => function ($query) use ($speciesId) {
+                    $query->whereHas('product', function ($query) use ($speciesId) {
+                        $query->where('species_id', $speciesId);
+                    });
+                }])
+                ->get()
+                ->groupBy(function ($date) {
+                    return Carbon::parse($date->date)->format('m'); // Agrupar por mes
+                })
+                ->map(function ($month) {
+                    return $month->reduce(function ($carry, $reception) {
+                        return $carry + $reception->products->sum('net_weight');
+                    }, 0);
+                });
+
+            /* monthlyNetWeights debe ser un array de objetos cuando sea json */
+            $monthlyNetWeights = $currentYearData->map(function ($weight, $month) {
+                return [
+                    'name' => Carbon::createFromFormat('m', $month)->format('F'),
+                    'currentYear' => $weight,
+                    'previousYear' => 0,
+                ];
+            })->values()->all();
+
+            /* Formato data = "" */
+            return response()->json([
+                'data' => [
+                    'totalNetWeight' => $totalNetWeightCurrentYear,
+                    'percentageChange' => $percentageChange,
+                    'monthlyNetWeights' => $monthlyNetWeights,
+                    'totalNetWeightPreviousYear' => $totalNetWeightPreviousYear
+                ]
+            ]);
+
+        }
+
+
 }
