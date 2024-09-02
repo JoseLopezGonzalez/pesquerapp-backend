@@ -206,4 +206,88 @@ class RawMaterialReceptionsStatsController extends Controller
             ]
         ]);
     }
+
+    /* Devolver el peso neto total y el peso neto total por producto pasado por parametros el dia y la especie 
+    
+    
+    data => [
+        totalNetWeight => 1234.56,
+        totalNetWeightByProducts => [
+            [
+                name => 'Product 1',
+                totalNetWeight => 123.45
+            ],
+            [
+                name => 'Product 2',
+                totalNetWeight => 234.56
+            ],
+            ...
+        ]
+    ]
+    */
+    public  function getDailyByProductsStats(Request $request)
+    {
+        // Validar la entrada
+        $validator = Validator::make($request->all(), [
+            'date' => 'required|date', // Espera un formato de fecha 'YYYY-MM-DD'
+            'species' => 'required', // Especie requerida
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422); // Código de estado 422 - Unprocessable Entity
+        }
+
+        $date = Carbon::createFromFormat('Y-m-d', $request->date);
+        $startOfDay = $date->copy()->startOfDay();
+        $endOfDay = $date->copy()->endOfDay();
+
+        $speciesId = $request->species;
+
+        /* Obtener totalNetWeight del día de la ESPECIE pasada por parámetro */
+        $totalNetWeight = RawMaterialReception::whereBetween('date', [$startOfDay, $endOfDay])
+            ->with(['products' => function ($query) use ($speciesId) {
+                $query->whereHas('product', function ($query) use ($speciesId) {
+                    $query->where('species_id', $speciesId);
+                });
+            }])
+            ->get()
+            ->reduce(function ($carry, $reception) {
+                return $carry + $reception->products->sum('net_weight');
+            }, 0);
+
+        /* Obtener el peso neto total por producto para el día actual */
+        $totalNetWeightByProducts = RawMaterialReception::whereBetween('date', [$startOfDay, $endOfDay])
+            ->with(['products' => function ($query) use ($speciesId) {
+                $query->whereHas('product', function ($query) use ($speciesId) {
+                    $query->where('species_id', $speciesId);
+                });
+            }])
+            ->get()
+            ->flatMap(function ($reception) {
+                return $reception->products->map(function ($product) {
+                    return [
+                        'name' => $product->product->name,
+                        'totalNetWeight' => $product->net_weight,
+                    ];
+                });
+            })
+            ->groupBy('name')
+            ->map(function ($products) {
+                return [
+                    'name' => $products->first()['name'],
+                    'totalNetWeight' => $products->sum('totalNetWeight'),
+                ];
+            })
+            ->values()
+            ->all();
+
+        /* Formato data = "" */
+        return response()->json([
+            'data' => [
+                'totalNetWeight' => $totalNetWeight,
+                'totalNetWeightByProducts' => $totalNetWeightByProducts
+            ]
+        ]);
+
+    }
 }
