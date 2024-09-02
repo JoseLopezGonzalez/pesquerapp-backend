@@ -88,15 +88,25 @@ class RawMaterialReceptionsStatsController extends Controller
             ]
             
             */
-            $dailyNetWeights = $currentMonthData->map(function ($weight, $day) use ($startOfMonth) {
+            /* $dailyNetWeights = $currentMonthData->map(function ($weight, $day) use ($startOfMonth) {
                 return [
-                    /* 'name' => $startOfMonth->copy()->addDays($day - 1)->format('d-m-Y'), */
-                    'name' => $day,
-                    /* Format weight as decimal with 2 numbers */
+                    'name' => $startOfMonth->copy()->addDays($day - 1)->format('d-m-Y'), 
+                  
+                   
                     'currentMonth' => $weight,
                     'previousMonth' => 0,
                 ];
-            });
+            }); */
+
+            /* dailyNetWeights debe ser un array de objetos cuando sea json */
+            $dailyNetWeights = $currentMonthData->map(function ($weight, $day) use ($startOfMonth) {
+                return [
+                    'name' => $startOfMonth->copy()->addDays($day - 1)->format('d-m-Y'),
+                    'currentMonth' => $weight,
+                    'previousMonth' => 0,
+                ];
+            })->values()->all();
+
     
             /* Formato data = "" */
             return response()->json([
