@@ -28,9 +28,11 @@ class RawMaterialReceptionsStatsController extends Controller
             $month = Carbon::createFromFormat('Y-m', $request->month);
             $startOfMonth = $month->copy()->startOfMonth();
             $endOfMonth = $month->copy()->endOfMonth();
+
             $previousMonth = $month->copy()->subMonth();
             $startOfPreviousMonth = $previousMonth->startOfMonth();
             $endOfPreviousMonth = $previousMonth->endOfMonth();
+
             $speciesId = $request->species;
     
             /* Obtener totalNetWeight del mes de la ESPECIE pasada por parámetro */
@@ -45,7 +47,7 @@ class RawMaterialReceptionsStatsController extends Controller
                     return $carry + $reception->products->sum('net_weight');
                 }, 0);
     
-            /* Obtener totalNetWeight para el mes anterior según especie */
+            /* Obtener totalNetWeight para el mes anterior según especie  (NO FUNCIONA)*/
             $totalNetWeightPreviousMonth = RawMaterialReception::whereBetween('date', [$startOfPreviousMonth, $endOfPreviousMonth])
                 ->with(['products' => function ($query) use ($speciesId) {
                     $query->whereHas('product', function ($query) use ($speciesId) {
@@ -79,24 +81,6 @@ class RawMaterialReceptionsStatsController extends Controller
                     }, 0);
                 });
     
-    
-            /* Formato requerido
-            Ejemplo:
-            dailyNetWeights => [
-                name => '01-05-2024',
-                currentMonth => 1000,
-            ]
-            
-            */
-            /* $dailyNetWeights = $currentMonthData->map(function ($weight, $day) use ($startOfMonth) {
-                return [
-                    'name' => $startOfMonth->copy()->addDays($day - 1)->format('d-m-Y'), 
-                  
-                   
-                    'currentMonth' => $weight,
-                    'previousMonth' => 0,
-                ];
-            }); */
 
             /* dailyNetWeights debe ser un array de objetos cuando sea json */
             $dailyNetWeights = $currentMonthData->map(function ($weight, $day) use ($startOfMonth) {
@@ -114,6 +98,7 @@ class RawMaterialReceptionsStatsController extends Controller
                     'totalNetWeight' => $totalNetWeightCurrentMonth,
                     'percentageChange' => $percentageChange,
                     'dailyNetWeights' => $dailyNetWeights,
+                    'totalNetWeightPreviousMonth' => $totalNetWeightPreviousMonth
                 ]
             ]);
         }
