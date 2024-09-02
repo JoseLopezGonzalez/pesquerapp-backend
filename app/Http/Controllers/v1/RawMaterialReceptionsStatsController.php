@@ -93,6 +93,7 @@ class RawMaterialReceptionsStatsController extends Controller
                     'name' => $startOfMonth->copy()->addDays($day - 1)->format('d-m-Y'),
                     /* Format weight as decimal with 2 numbers */
                     'currentMonth' => $weight,
+                    'previousMonth' => 0,
                 ];
             });
     
