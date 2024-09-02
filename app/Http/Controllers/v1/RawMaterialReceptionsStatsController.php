@@ -165,7 +165,7 @@ class RawMaterialReceptionsStatsController extends Controller
                 ? (($totalNetWeightCurrentYear - $totalNetWeightPreviousYear) / $totalNetWeightPreviousYear) * 100
                 : null;
 
-            /* Obtener los datos de peso neto por mes para el año actual */
+            /* Obtener los datos de peso neto por mes para el año actual , ordenados segun el orden de los meses naturales */
             $currentYearData = RawMaterialReception::whereBetween('date', [$startOfYear, $endOfYear])
                 ->with(['products' => function ($query) use ($speciesId) {
                     $query->whereHas('product', function ($query) use ($speciesId) {
@@ -181,16 +181,37 @@ class RawMaterialReceptionsStatsController extends Controller
                         return $carry + $reception->products->sum('net_weight');
                     }, 0);
                 });
+            /* $currentYearData = RawMaterialReception::whereBetween('date', [$startOfYear, $endOfYear])
+                ->with(['products' => function ($query) use ($speciesId) {
+                    $query->whereHas('product', function ($query) use ($speciesId) {
+                        $query->where('species_id', $speciesId);
+                    });
+                }])
+                ->get()
+                ->groupBy(function ($date) {
+                    return Carbon::parse($date->date)->format('m'); // Agrupar por mes
+                })
+                ->map(function ($month) {
+                    return $month->reduce(function ($carry, $reception) {
+                        return $carry + $reception->products->sum('net_weight');
+                    }, 0);
+                }); */
 
-            /* monthlyNetWeights debe ser un array de objetos cuando sea json */
+            /* monthlyNetWeights debe ser un array de objetos cuando sea json , ordenados segun el orden de los meses naturales */
             $monthlyNetWeights = $currentYearData->map(function ($weight, $month) {
                 return [
-                    /* Name in spanish */
                     'name' => Carbon::createFromFormat('m', $month)->format('F'),
                     'currentYear' => $weight,
                     'previousYear' => 0,
                 ];
             })->values()->all();
+            /* $monthlyNetWeights = $currentYearData->map(function ($weight, $month) {
+                return [
+                    'name' => Carbon::createFromFormat('m', $month)->format('F'),
+                    'currentYear' => $weight,
+                    'previousYear' => 0,
+                ];
+            })->values()->all(); */
 
             /* Formato data = "" */
             return response()->json([
