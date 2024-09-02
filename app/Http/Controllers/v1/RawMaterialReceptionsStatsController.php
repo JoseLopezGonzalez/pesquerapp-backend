@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+// Establecer el locale a español
+Carbon::setLocale('es');
+
 class RawMaterialReceptionsStatsController extends Controller
 {
     /* Devolver net weight del mes completo, comparativa en % de el mes con respecto al anterior, y un array con cada dia del mes con sus respectivos net weight */
@@ -182,6 +185,7 @@ class RawMaterialReceptionsStatsController extends Controller
             /* monthlyNetWeights debe ser un array de objetos cuando sea json */
             $monthlyNetWeights = $currentYearData->map(function ($weight, $month) {
                 return [
+                    /* Name in spanish */
                     'name' => Carbon::createFromFormat('m', $month)->format('F'),
                     'currentYear' => $weight,
                     'previousYear' => 0,
