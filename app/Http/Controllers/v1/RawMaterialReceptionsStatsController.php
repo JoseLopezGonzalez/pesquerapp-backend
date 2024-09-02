@@ -90,6 +90,8 @@ class RawMaterialReceptionsStatsController extends Controller
                 }, 0);
             });
 
+        /* Ordenar los datos diarios por el día (la clave del grupo) */
+        $currentMonthData = $currentMonthData->sortKeys();
 
         /* dailyNetWeights debe ser un array de objetos cuando sea json */
         $dailyNetWeights = $currentMonthData->map(function ($weight, $day) use ($startOfMonth) {
