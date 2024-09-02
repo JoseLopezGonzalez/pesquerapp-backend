@@ -29,9 +29,15 @@ class RawMaterialReceptionsStatsController extends Controller
             $startOfMonth = $month->copy()->startOfMonth();
             $endOfMonth = $month->copy()->endOfMonth();
 
-            $previousMonth = $month->copy()->subMonth();
+            /* No funcionan */
+            /* $previousMonth = $month->copy()->subMonth();
             $startOfPreviousMonth = $previousMonth->startOfMonth();
-            $endOfPreviousMonth = $previousMonth->endOfMonth();
+            $endOfPreviousMonth = $previousMonth->endOfMonth(); */
+
+            $previousMonth = $month->copy()->subMonth();
+            $startOfPreviousMonth = $previousMonth->copy()->startOfMonth();
+            $endOfPreviousMonth = $previousMonth->copy()->endOfMonth();
+            
 
             $speciesId = $request->species;
     
