@@ -91,7 +91,9 @@ class RawMaterialReceptionsStatsController extends Controller
             $dailyNetWeights = $currentMonthData->map(function ($weight, $day) use ($startOfMonth) {
                 return [
                     'name' => $startOfMonth->copy()->addDays($day - 1)->format('d-m-Y'),
-                    'currentMonth' => $weight,
+                    /* Format weight as decimal with 2 numbers after the coma */
+                    'currentMonth' => number_format($weight, 2),
+                    /* 'currentMonth' => $weight, */
                 ];
             });
     
