@@ -276,7 +276,7 @@ class RawMaterialReceptionsStatsController extends Controller
                 return [
                     'name' => $products->first()['name'],
                     'totalNetWeight' => $products->sum('totalNetWeight'),
-                    'percentage' => $products->sum('totalNetWeight') / $totalNetWeight * 100,
+                    'percentage' => $products->sum('totalNetWeight') / $totalNetWeight * 100 /* O cero si el divisor es 0 */ ?? 0,
                 ];
             })
             ->values()
