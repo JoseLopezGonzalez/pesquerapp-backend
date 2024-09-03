@@ -17,17 +17,17 @@ class StoresStatsController extends Controller
         $species = Species::all();
         $speciesInventory = [];
         foreach ($species as $specie) {
-            $totalWeight = 0;
+            $totalNetWeight = 0;
             foreach ($inventory as $pallet) {
                 foreach ($pallet->boxes as $box) {
                     if ($box->product->specie_id == $specie->id) {
-                        $totalWeight += $box->netWeight;
+                        $totalNetWeight += $box->netWeight;
                     }
                 }
             }
             $speciesInventory[] = [
                 'specie' => $specie->name,
-                'totalWeight' => $totalWeight
+                'totalNetWeight' => $totalNetWeight
             ];
         }
         return response()->json($speciesInventory);
