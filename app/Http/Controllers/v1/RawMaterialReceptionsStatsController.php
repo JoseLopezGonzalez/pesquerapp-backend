@@ -14,7 +14,6 @@ Carbon::setLocale('es');
 
 class RawMaterialReceptionsStatsController extends Controller
 {
-    /* Devolver net weight del mes completo, comparativa en % de el mes con respecto al anterior, y un array con cada dia del mes con sus respectivos net weight */
     public function getMonthlyStats(Request $request)
     {
 
@@ -114,7 +113,7 @@ class RawMaterialReceptionsStatsController extends Controller
         ]);
     }
 
-    /* Anual stats  segun el año pasado por parametro*/
+    
     public function getAnnualStats(Request $request)
     {
         // Validar la entrada
@@ -207,24 +206,6 @@ class RawMaterialReceptionsStatsController extends Controller
         ]);
     }
 
-    /* Devolver el peso neto total y el peso neto total por producto pasado por parametros el dia y la especie 
-    
-    
-    data => [
-        totalNetWeight => 1234.56,
-        totalNetWeightByProducts => [
-            [
-                name => 'Product 1',
-                totalNetWeight => 123.45
-            ],
-            [
-                name => 'Product 2',
-                totalNetWeight => 234.56
-            ],
-            ...
-        ]
-    ]
-    */
     public  function getDailyByProductsStats(Request $request)
     {
         // Validar la entrada
