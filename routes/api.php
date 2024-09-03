@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\v1\StoreController;
 use App\Http\Controllers\v1\StoredPalletController;
+use App\Http\Controllers\v1\StoresStatsController;
 use App\Http\Controllers\v1\SupplierController;
 use App\Http\Controllers\v1\TransportController;
 use App\Http\Resources\v1\CustomerResource;
@@ -108,7 +109,7 @@ Route::get('v1/raw-material-receptions-monthly-stats', [RawMaterialReceptionsSta
 Route::get('v1/raw-material-receptions-annual-stats', [RawMaterialReceptionsStatsController::class, 'getAnnualStats'])->name('raw_material_receptions.annual_stats');
 Route::get('v1/raw-material-receptions-daily-by-products-stats', [RawMaterialReceptionsStatsController::class, 'getDailyByProductsStats'])->name('raw_material_receptions.daily_by_products_stats');
 /* totalInventoryBySpecies */
-Route::get('v1/total-inventory-by-species', [RawMaterialReceptionsStatsController::class, 'totalInventoryBySpecies'])->name('total_inventory_by_species');
+Route::get('v1/total-inventory-by-species', [StoresStatsController::class, 'totalInventoryBySpecies'])->name('total_inventory_by_species');
 
 Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDispatchesDocument'])->name('generate_cebo_document');
 
