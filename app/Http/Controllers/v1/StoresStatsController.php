@@ -31,10 +31,15 @@ class StoresStatsController extends Controller
                     }
                 }
             }
+
+            if ($totalNetWeight == 0) {
+                continue;
+            }
+            
             $speciesInventory[] = [
                 'name' => $specie->name,
                 'totalNetWeight' => $totalNetWeight,
-                'percentage' => ($totalNetWeight / $specie->totalNetWeight) * 100 ?? 0
+                
             ];
         }
         return response()->json($speciesInventory);
