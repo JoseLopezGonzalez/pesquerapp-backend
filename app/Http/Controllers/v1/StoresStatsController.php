@@ -13,7 +13,13 @@ class StoresStatsController extends Controller
     las cajas no tienen directamente vinculación con un almacen, por el contrario son los palets que contienen cajas quienes estan vinculados con un almacen */
     public function totalInventoryBySpecies()
     {
-        $inventory = StoredPallet::with('boxes')->get();
+
+        /* StoredPallet no tiene boxes, tiene pallet que a su vez tiene  */
+        /* $inventory = StoredPallet::with('boxes')->get(); */
+        /* No hace falta el with  */
+        $inventory = StoredPallet::all();
+
+
         $species = Species::all();
         $speciesInventory = [];
         foreach ($species as $specie) {
