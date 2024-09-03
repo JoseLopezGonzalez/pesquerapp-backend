@@ -27,7 +27,8 @@ class StoresStatsController extends Controller
             }
             $speciesInventory[] = [
                 'name' => $specie->name,
-                'totalNetWeight' => $totalNetWeight
+                'totalNetWeight' => $totalNetWeight,
+                'percentage' => ($totalNetWeight / $specie->totalNetWeight) * 100 ?? 0
             ];
         }
         return response()->json($speciesInventory);
