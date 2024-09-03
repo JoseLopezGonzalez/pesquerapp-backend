@@ -26,7 +26,7 @@ class StoresStatsController extends Controller
                 }
             }
             $speciesInventory[] = [
-                'specie' => $specie->name,
+                'name' => $specie->name,
                 'totalNetWeight' => $totalNetWeight
             ];
         }
