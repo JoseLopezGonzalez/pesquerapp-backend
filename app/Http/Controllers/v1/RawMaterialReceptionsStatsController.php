@@ -290,11 +290,21 @@ class RawMaterialReceptionsStatsController extends Controller
             
             */
 
-            $totalNetWeightByProducts = collect($totalNetWeightByProducts)->map(function ($product) use ($totalNetWeight) {
-                return array_merge($product, [
-                    'percentage' => $product['totalNetWeight'] / $totalNetWeight * 100
-                ]);
-            })->values()->all();
+            if($totalNetWeight > 0){
+                $totalNetWeightByProducts = collect($totalNetWeightByProducts)->map(function ($product) use ($totalNetWeight) {
+                    return array_merge($product, [
+                        'percentage' => $product['totalNetWeight'] / $totalNetWeight * 100
+                    ]);
+                })->values()->all();
+            }else{
+                $totalNetWeightByProducts = collect($totalNetWeightByProducts)->map(function ($product) {
+                    return array_merge($product, [
+                        'percentage' => 0
+                    ]);
+                })->values()->all();
+            }
+
+            
 
 
 
