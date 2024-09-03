@@ -18,10 +18,10 @@ class StoresStatsController extends Controller
         $speciesInventory = [];
         foreach ($species as $specie) {
             $totalNetWeight = 0;
-            foreach ($inventory as $pallet) {
-                foreach ($pallet->pallet->boxes as $box) {
-                    if ($box->product->specie_id == $specie->id) {
-                        $totalNetWeight += $box->netWeight;
+            foreach ($inventory as $storedPallet) {
+                foreach ($storedPallet->pallet->boxes as $palletBox) {
+                    if ($palletBox->box->product->specie->id == $specie->id) {
+                        $totalNetWeight += $palletBox->box->netWeight;
                     }
                 }
             }
