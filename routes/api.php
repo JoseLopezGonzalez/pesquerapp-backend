@@ -110,6 +110,8 @@ Route::get('v1/raw-material-receptions-annual-stats', [RawMaterialReceptionsStat
 Route::get('v1/raw-material-receptions-daily-by-products-stats', [RawMaterialReceptionsStatsController::class, 'getDailyByProductsStats'])->name('raw_material_receptions.daily_by_products_stats');
 /* totalInventoryBySpecies */
 Route::get('v1/total-inventory-by-species', [StoresStatsController::class, 'totalInventoryBySpecies'])->name('total_inventory_by_species');
+/* totalInventoryByProducts */
+Route::get('v1/total-inventory-by-products', [StoresStatsController::class, 'totalInventoryByProducts'])->name('total_inventory_by_products');
 
 Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDispatchesDocument'])->name('generate_cebo_document');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\Species;
 use App\Models\StoredPallet;
 use Illuminate\Http\Request;
@@ -68,4 +69,52 @@ class StoresStatsController extends Controller
             ]
         ]);
     }
+
+
+    /* Get inventario total de todos los almacenes agrupados por productos */
+    public function totalInventoryByProducts()
+    {
+        $inventory = StoredPallet::all();
+        $products = Product::all();
+        $productsInventory = [];
+        foreach ($products as $product) {
+            $totalNetWeight = 0;
+            foreach ($inventory as $storedPallet) {
+                foreach ($storedPallet->pallet->boxes as $palletBox) {
+                    if ($palletBox->box->product->id == $product->id) {
+                        $totalNetWeight += $palletBox->box->net_weight;
+                    }
+                }
+            }
+
+            if($totalNetWeight == 0){
+                continue;
+            }
+
+            $productsInventory[] = [
+                'name' => $product->name,
+                'totalNetWeight' => $totalNetWeight,
+            ];
+        }
+
+        /* TotalNetWeight en global */
+        $totalNetWeight = 0;
+        foreach ($productsInventory as $productInventory) {
+            $totalNetWeight += $productInventory['totalNetWeight'];
+        }
+
+        /* Añadir porcentaje */
+
+        foreach ($productsInventory as &$productInventory) {
+            $productInventory['percentage'] = $productInventory['totalNetWeight'] / $totalNetWeight * 100;
+        }
+
+        return response()->json([
+            'data' => [
+                'totalNetWeight' => $totalNetWeight,
+                'productsInventory' => $productsInventory,
+            ]
+        ]);
+    }
+
 }
