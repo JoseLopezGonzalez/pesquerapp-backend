@@ -266,7 +266,7 @@ class RawMaterialReceptionsStatsController extends Controller
             ->flatMap(function ($reception) {
                 return $reception->products->map(function ($product) {
                     return [
-                        'name' => $product->product->name,
+                        'name' => $product->product->article->name,
                         'totalNetWeight' => $product->net_weight,
                     ];
                 });
