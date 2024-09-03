@@ -42,6 +42,10 @@ class StoresStatsController extends Controller
                 
             ];
         }
-        return response()->json($speciesInventory);
+        return response()->json([
+            'data' => [
+                'speciesInventory' => $speciesInventory,
+            ]
+        ]);
     }
 }
