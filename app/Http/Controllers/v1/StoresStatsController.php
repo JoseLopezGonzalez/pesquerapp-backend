@@ -35,7 +35,9 @@ class StoresStatsController extends Controller
             if ($totalNetWeight == 0) {
                 continue;
             }
+
             
+
             $speciesInventory[] = [
                 'name' => $specie->name,
                 'totalNetWeight' => $totalNetWeight,
