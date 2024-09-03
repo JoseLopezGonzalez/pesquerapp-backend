@@ -92,7 +92,7 @@ class StoresStatsController extends Controller
             }
 
             $productsInventory[] = [
-                'name' => $product->name,
+                'name' => $product->article->name,
                 'totalNetWeight' => $totalNetWeight,
             ];
         }
