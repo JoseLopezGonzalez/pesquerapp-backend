@@ -42,8 +42,19 @@ class StoresStatsController extends Controller
                 
             ];
         }
+
+        /* TotalNetWeight en global */
+        $totalNetWeight = 0;
+        foreach ($speciesInventory as $specieInventory) {
+            $totalNetWeight += $specieInventory['totalNetWeight'];
+        }
+        
+
+
+
         return response()->json([
             'data' => [
+                'totalNetWeight' => $totalNetWeight,
                 'speciesInventory' => $speciesInventory,
             ]
         ]);
