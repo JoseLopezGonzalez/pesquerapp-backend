@@ -33,12 +33,14 @@ class StoresStatsController extends Controller
             }
 
             
-
-
+            if($totalNetWeight == 0){
+                continue;
+            }
 
             $speciesInventory[] = [
                 'name' => $specie->name,
                 'totalNetWeight' => $totalNetWeight,
+                
                 
             ];
         }
@@ -48,6 +50,13 @@ class StoresStatsController extends Controller
         foreach ($speciesInventory as $specieInventory) {
             $totalNetWeight += $specieInventory['totalNetWeight'];
         }
+
+        /* Añadir porcentaje */
+
+        foreach ($speciesInventory as &$specieInventory) {
+            $specieInventory['percentage'] = $specieInventory['totalNetWeight'] / $totalNetWeight * 100;
+        }
+
         
 
 
