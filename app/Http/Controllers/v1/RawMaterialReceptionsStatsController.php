@@ -272,14 +272,25 @@ class RawMaterialReceptionsStatsController extends Controller
                 });
             })
             ->groupBy('name')
-            ->map(function ($products) {
+            ->map(function ($products , $totalNetWeight) {
                 return [
                     'name' => $products->first()['name'],
                     'totalNetWeight' => $products->sum('totalNetWeight'),
+                    'percentage' => $products->sum('totalNetWeight') / $totalNetWeight * 100,
                 ];
             })
             ->values()
             ->all();
+
+            /* Añadir el campo Porcentaje para que quede tal que asi
+                    'name' => '...'
+                    'totalNetWeight' => '...',
+                    'percentage' => '...'
+            
+            
+            */
+
+
 
         /* Formato data = "" */
         return response()->json([
