@@ -27,7 +27,7 @@ class StoresStatsController extends Controller
             foreach ($inventory as $storedPallet) {
                 foreach ($storedPallet->pallet->boxes as $palletBox) {
                     if ($palletBox->box->product->species->id == $specie->id) {
-                        $totalNetWeight += $palletBox->box->netWeight;
+                        $totalNetWeight += $palletBox->box->net_weight;
                     }
                 }
             }
