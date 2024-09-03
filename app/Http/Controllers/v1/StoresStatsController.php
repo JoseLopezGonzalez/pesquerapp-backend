@@ -109,6 +109,11 @@ class StoresStatsController extends Controller
             $productInventory['percentage'] = $productInventory['totalNetWeight'] / $totalNetWeight * 100;
         }
 
+        /* Sort by netWeight */
+        usort($productsInventory, function ($a, $b) {
+            return $b['totalNetWeight'] - $a['totalNetWeight'];
+        });
+
         return response()->json([
             'data' => [
                 'totalNetWeight' => $totalNetWeight,
