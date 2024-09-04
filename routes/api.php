@@ -15,6 +15,7 @@ use App\Http\Controllers\v1\ProductController;
 use App\Http\Controllers\v1\ProductionController;
 use App\Http\Controllers\v1\RawMaterialController;
 use App\Http\Controllers\v1\RawMaterialReceptionController;
+use App\Http\Controllers\v1\RawMaterialReceptionsReportController;
 use App\Http\Controllers\v1\RawMaterialReceptionsStatsController;
 use App\Http\Controllers\v1\SalespersonController;
 use App\Http\Controllers\v1\SpeciesController;
@@ -90,6 +91,8 @@ Route::apiResource('v1/cebos', CeboController::class);
 /* Incorterm */
 Route::apiResource('v1/incoterms', IncotermController::class);
 Route::get('v1/boxes_report', [BoxesReportController::class, 'exportToExcel'])->name('export.boxes');
+/* RawMaterialReceptionsReportController */
+Route::get('v1/raw_material_receptions_report', [RawMaterialReceptionsReportController::class, 'exportToExcel'])->name('export.raw_material_receptions');
 // Ruta personalizada para enviar documentación de un pedido (NO CRUD)
 Route::post('v1/send_order_documentation/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentation'])->name('send_order_documentation');
 /* Send order documentation to Transport  */

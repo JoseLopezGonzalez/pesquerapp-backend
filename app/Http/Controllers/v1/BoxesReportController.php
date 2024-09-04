@@ -41,14 +41,14 @@ class BoxesReportController extends Controller
 
         if ($request->has('text')) {
             $text = $request->input('text');
-            
-           
+
+
             //si el box pertenece a un palet si no no
 
-            
 
 
-           /*  $query->whereHas('pallet', function ($subQuery) use ($text) {
+
+            /*  $query->whereHas('pallet', function ($subQuery) use ($text) {
                 $subQuery->where('id', 'like', "%{$text}%");
             }); */
         }
@@ -107,9 +107,9 @@ class BoxesReportController extends Controller
         if ($request->has('lots')) {
             $lots = $request->input('lots');
             //Lots en un array hay que utilizar in
-            
+
             $query->whereIn('lot', $lots);
-        
+
             /* $query->where('lot', 'like', "%{$lots}%"); */
         }
 
@@ -144,24 +144,15 @@ class BoxesReportController extends Controller
 
 
 
-        
+
         return BoxResource::collection($query->get());
-        
-       /*  return BoxResource::collection($query);  */
 
-
-
-        
-
-
+        /*  return BoxResource::collection($query);  */
     }
 
     public function exportToExcel(Request $request)
-{
-    ini_set('memory_limit', '1024M');  // Aumentar el límite de memoria solo para esta operación
-    return Excel::download(new BoxesExport($request), 'boxes_report.xlsx');
-}
-
-    
-   
+    {
+        ini_set('memory_limit', '1024M');  // Aumentar el límite de memoria solo para esta operación
+        return Excel::download(new BoxesExport($request), 'boxes_report.xlsx');
+    }
 }
