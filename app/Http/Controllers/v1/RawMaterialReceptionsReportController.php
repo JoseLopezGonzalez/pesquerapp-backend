@@ -32,13 +32,20 @@ class RawMaterialReceptionsReportController extends Controller
 
     } */
 
-    
+
 
     public function exportToExcel(Request $request)
     {
-        ini_set('memory_limit', '1024M');  // Aumentar el límite de memoria solo para esta operación
-        ini_set('max_execution_time', 300);  // Aumentar el tiempo de ejecución solo para esta operación
-        return Excel::download(new RawMaterialReceptionExport($request), 'raw_material_receptions_report.xls');
+        try {
+            // Aumentar el límite de memoria y tiempo de ejecución solo para esta operación
+            ini_set('memory_limit', '1024M');
+            ini_set('max_execution_time', 300);
 
+            // Exportar en formato .xls (Excel 97-2003)
+            return Excel::download(new RawMaterialReceptionExport($request), 'raw_material_receptions_report.xls', \Maatwebsite\Excel\Excel::XLS);
+        } catch (\Exception $e) {
+            // Manejo de la excepción y retorno de un mensaje de error adecuado
+            return response()->json(['error' => 'Error durante la exportación del archivo: ' . $e->getMessage()], 500);
+        }
     }
 }
