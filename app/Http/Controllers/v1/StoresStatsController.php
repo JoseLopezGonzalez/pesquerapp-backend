@@ -62,6 +62,11 @@ class StoresStatsController extends Controller
             $specieInventory['percentage'] = $specieInventory['totalNetWeight'] / $totalNetWeight * 100;
         }
 
+        /* Sort by netWeight */
+        usort($speciesInventory, function ($a, $b) {
+            return $b['totalNetWeight'] - $a['totalNetWeight'];
+        });
+
         
 
 
