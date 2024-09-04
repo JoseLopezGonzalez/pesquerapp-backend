@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Species;
 use App\Models\StoredPallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class StoresStatsController extends Controller
 {
@@ -15,10 +17,38 @@ class StoresStatsController extends Controller
     public function totalInventoryBySpecies()
     {
 
+        // Obtener los pesos netos agrupados por especie
+        $speciesInventory = DB::table('species')
+            ->join('products', 'species.id', '=', 'products.species_id')
+            ->join('boxes', 'products.id', '=', 'boxes.product_id')
+            ->join('pallet_boxes', 'boxes.id', '=', 'pallet_boxes.box_id')
+            ->join('pallets', 'pallet_boxes.pallet_id', '=', 'pallets.id')
+            ->join('stored_pallets', 'pallets.id', '=', 'stored_pallets.pallet_id')
+            ->select('species.name', DB::raw('SUM(boxes.net_weight) as totalNetWeight'))
+            ->groupBy('species.name')
+            ->havingRaw('SUM(boxes.net_weight) > 0')
+            ->get();
+
+        // Calcular el total global de peso neto
+        $totalNetWeight = $speciesInventory->sum('totalNetWeight');
+
+        // Añadir el porcentaje a cada especie
+        $speciesInventory->transform(function ($specieInventory) use ($totalNetWeight) {
+            $specieInventory->percentage = ($specieInventory->totalNetWeight / $totalNetWeight) * 100;
+            return $specieInventory;
+        });
+
+        return response()->json([
+            'data' => [
+                'totalNetWeight' => $totalNetWeight,
+                'speciesInventory' => $speciesInventory,
+            ]
+        ]);
+
         /* StoredPallet no tiene boxes, tiene pallet que a su vez tiene  */
         /* $inventory = StoredPallet::with('boxes')->get(); */
         /* No hace falta el with  */
-        $inventory = StoredPallet::all();
+        /* $inventory = StoredPallet::all();
 
 
         $species = Species::all();
@@ -44,17 +74,17 @@ class StoresStatsController extends Controller
                 
                 
             ];
-        }
+        } */
 
         /* TotalNetWeight en global */
-        $totalNetWeight = 0;
+        /* $totalNetWeight = 0;
         foreach ($speciesInventory as $specieInventory) {
             $totalNetWeight += $specieInventory['totalNetWeight'];
         }
-
+ */
         /* Añadir porcentaje */
 
-        foreach ($speciesInventory as &$specieInventory) {
+        /* foreach ($speciesInventory as &$specieInventory) {
             $specieInventory['percentage'] = $specieInventory['totalNetWeight'] / $totalNetWeight * 100;
         }
 
@@ -67,7 +97,7 @@ class StoresStatsController extends Controller
                 'totalNetWeight' => $totalNetWeight,
                 'speciesInventory' => $speciesInventory,
             ]
-        ]);
+        ]); */
     }
 
 
@@ -87,7 +117,7 @@ class StoresStatsController extends Controller
                 }
             }
 
-            if($totalNetWeight == 0){
+            if ($totalNetWeight == 0) {
                 continue;
             }
 
@@ -121,5 +151,4 @@ class StoresStatsController extends Controller
             ]
         ]);
     }
-
 }
