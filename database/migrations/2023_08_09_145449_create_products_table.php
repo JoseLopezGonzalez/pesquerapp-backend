@@ -21,6 +21,8 @@ return new class extends Migration
             $table->decimal('fixed_weight', 6, 2);
             $table->foreign('species_id')->references('id')->on('species');
             $table->foreign('capture_zone_id')->references('id')->on('capture_zones');
+            /* facilComCode */
+            $table->string('facil_com_code')->nullable();
             $table->timestamps();
         });
     }
