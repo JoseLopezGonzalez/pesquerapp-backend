@@ -74,10 +74,13 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
                 /* Date format DD/MM/YYYY */
                 'date' => date('d/m/Y', strtotime($rawMaterialReception->date)),
                 'supplierId' => $rawMaterialReception->supplier->facil_com_code,
+                'supplierName' => $rawMaterialReception->supplier->name,
                 /* 'date' => $rawMaterialReception->date, */
                 'articleId' => $product->product->facil_com_code,
                 'articleName' => $product->product->article->name,
                 'netWeight' => $product->net_weight,
+                /* Lot es DDMMYYYY */
+                'lot' => date('dmY', strtotime($rawMaterialReception->date)),
             ];
         }
 
@@ -90,9 +93,11 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
             'CODIGO',
             'Fecha',
             'CODIGO CLIENTE',
+            'Destino',
             'Cod. Producto',
             'Producto',
             'Cantidad Kg',
+            'Lote asignado',
         ];
     }
 }
