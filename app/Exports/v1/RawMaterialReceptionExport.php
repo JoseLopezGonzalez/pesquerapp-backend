@@ -94,33 +94,33 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
         $query = RawMaterialReception::query();
         $query->with('supplier', 'products.product');
 
-        if ($this->filters->input->has('id')) {
+        if ($this->filters->has('id')) {
             $query->where('id', $this->filters->input->id);
         }
 
-        if ($this->filters->input->has('suppliers')) {
+        if ($this->filters->has('suppliers')) {
             $query->whereIn('supplier_id', $this->filters->input->suppliers);
         }
 
-        if ($this->filters->input->has('dates')) {
+        if ($this->filters->has('dates')) {
             $query->whereBetween('date', [$this->filters->input->dates['start'], $this->filters->input->dates['end']]);
         }
 
-        if ($this->filters->input->has('species')) {
+        if ($this->filters->has('species')) {
             $species= $this->filters->input->species;
             $query->whereHas('products.product', function ($query) use ($species) {
                 $query->whereIn('species_id', $this->filters->input->species);
             });
         }
 
-        if ($this->filters->input->has('products')) {
+        if ($this->filters->has('products')) {
             $products = $this->filters->input->products;
             $query->whereHas('products.product', function ($query) use ($products) {
                 $query->whereIn('id', $this->filters->input->products);
             });
         }
 
-        if ($this->filters->input->has('notes')) {
+        if ($this->filters->has('notes')) {
             $query->where('notes', 'like', '%' . $this->filters->input->notes . '%');
         }
 
