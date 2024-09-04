@@ -95,33 +95,34 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
         $query->with('supplier', 'products.product');
 
         if ($this->filters->has('id')) {
-            $query->where('id', $this->filters->input->id);
+            $query->where('id', $this->filters->input('id'));
         }
 
         if ($this->filters->has('suppliers')) {
-            $query->whereIn('supplier_id', $this->filters->input->suppliers);
+            $query->whereIn('supplier_id', $this->filters->input('suppliers'));
         }
 
         if ($this->filters->has('dates')) {
-            $query->whereBetween('date', [$this->filters->input->dates['start'], $this->filters->input->dates['end']]);
+            $dates = $this->filters->input('dates');
+            $query->whereBetween('date', [$dates['start'], $dates['end']]);
         }
 
         if ($this->filters->has('species')) {
-            $species= $this->filters->input->species;
+            $species= $this->filters->input('species');
             $query->whereHas('products.product', function ($query) use ($species) {
-                $query->whereIn('species_id', $this->filters->input->species);
+                $query->whereIn('species_id', $species);
             });
         }
 
         if ($this->filters->has('products')) {
-            $products = $this->filters->input->products;
+            $products = $this->filters->input('products');
             $query->whereHas('products.product', function ($query) use ($products) {
-                $query->whereIn('id', $this->filters->input->products);
+                $query->whereIn('id', $products);
             });
         }
 
         if ($this->filters->has('notes')) {
-            $query->where('notes', 'like', '%' . $this->filters->input->notes . '%');
+            $query->where('notes', 'like', '%' . $this->filters->input('notes') . '%');
         }
 
         /* Order by Date Descen */
