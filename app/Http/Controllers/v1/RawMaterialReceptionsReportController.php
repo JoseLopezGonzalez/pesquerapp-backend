@@ -38,7 +38,7 @@ class RawMaterialReceptionsReportController extends Controller
     {
         ini_set('memory_limit', '1024M');  // Aumentar el límite de memoria solo para esta operación
         ini_set('max_execution_time', 300);  // Aumentar el tiempo de ejecución solo para esta operación
-        return Excel::download(new RawMaterialReceptionExport($request), 'raw_material_receptions_report.xlsx');
+        return Excel::download(new RawMaterialReceptionExport($request), 'raw_material_receptions_report.xls');
 
     }
 }
