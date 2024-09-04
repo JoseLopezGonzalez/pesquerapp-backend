@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->text('address')->nullable();
+            /* facil_com_code */
+            $table->string('facil_com_code')->nullable();
             $table->timestamps();
         });
     }

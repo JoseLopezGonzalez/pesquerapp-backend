@@ -73,7 +73,7 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
                 'id' => $rawMaterialReception->id,
                 /* Date format DD/MM/YYYY */
                 'date' => date('d/m/Y', strtotime($rawMaterialReception->date)),
-                'supplierId' => $rawMaterialReception->supplier->id,
+                'supplierId' => $rawMaterialReception->supplier->facil_com_code,
                 /* 'date' => $rawMaterialReception->date, */
                 'articleId' => $product->product->facil_com_code,
                 'articleName' => $product->product->article->name,
