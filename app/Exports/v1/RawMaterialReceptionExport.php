@@ -16,9 +16,9 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
 
     protected $filters;
 
-    public function __construct(Request $this->filters->input)
+    public function __construct(Request $request)
     {
-        $this->filters = $this->filters->input;  // Almacenar la solicitud completa puede no ser lo ideal. Es mejor pasar solo los filtros necesarios.
+        $this->filters = $request;  // Almacenar la solicitud completa puede no ser lo ideal. Es mejor pasar solo los filtros necesarios.
     }
 
     public function query()
