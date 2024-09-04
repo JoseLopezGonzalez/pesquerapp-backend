@@ -71,10 +71,12 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
         foreach ($rawMaterialReception->products as $product) {
             $mappedProducts[] = [
                 'id' => $rawMaterialReception->id,
-                'date' => $rawMaterialReception->date,
+                /* Date format DD/MM/YYYY */
+                'date' => date('d/m/Y', strtotime($rawMaterialReception->date)),
+                /* 'date' => $rawMaterialReception->date, */
                 'articleId' => $product->product->article->id,
                 'articleName' => $product->product->article->name,
-                'netWeight' => $product->netWeight,
+                'netWeight' => $product->net_weight,
             ];
         }
 
