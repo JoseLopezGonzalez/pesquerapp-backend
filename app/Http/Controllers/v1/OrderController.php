@@ -116,7 +116,9 @@ class OrderController extends Controller
 
             
 
-
+            /* Sort by date desc */
+            $query->orderBy('load_date', 'desc');
+            
 
 
             $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
