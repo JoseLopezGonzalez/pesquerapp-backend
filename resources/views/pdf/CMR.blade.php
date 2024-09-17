@@ -61,8 +61,11 @@
                         {{ $order->formattedId }}
                     </p>
 
-                    <p
-                        style="font-weight: bold; text-align: left; font-size: 9pt; left: 563px; top: 24px; position: absolute;">
+                    <p style="font-weight: bold; text-align: left; font-size: 9pt; left: 563px; top: 24px; position: absolute;">
+                        X
+                    </p>
+
+                    <p style="font-weight: bold; text-align: left; font-size: 9pt; left: 403px; top: 24px; position: absolute;">
                         X
                     </p>
 
