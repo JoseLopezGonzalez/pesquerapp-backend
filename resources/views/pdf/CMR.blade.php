@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Delivery Note </title>
+    <title>CMR</title>
     {{-- Tailwind no funciona, lo cojo todo directamente de un cdn --}}
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -62,7 +62,7 @@
                     </p>
 
                     <p
-                        style="font-weight: bold; text-align: left; font-size: 9pt; left: 555px; top: 15px; position: absolute;">
+                        style="font-weight: bold; text-align: left; font-size: 9pt; left: 565px; top: 22px; position: absolute;">
                         X
                     </p>
 
