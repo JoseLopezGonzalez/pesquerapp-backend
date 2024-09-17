@@ -65,7 +65,7 @@
                         X
                     </p>
 
-                    <p style="font-weight: bold; text-align: left; font-size: 9pt; left: 403px; top: 24px; position: absolute;">
+                    <p style="font-weight: bold; text-align: left; font-size: 9pt; left: 423px; top: 24px; position: absolute;">
                         X
                     </p>
 
