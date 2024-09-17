@@ -62,16 +62,24 @@
                     </p>
 
 
-                    {{
-                        // Si el país del cliente es España
-                        $order->customer->country->name === 'España' ? 
-                        // Mostramos la X
-                        <p style="font-weight: bold; text-align: left; font-size: 9pt; left: 563px; top: 24px; position: absolute;">X</p> : 
-                        // Si no, no mostramos nada
-                        <p style="font-weight: bold; text-align: left; font-size: 9pt; left: 423px; top: 24px; position: absolute;">X</p>
-                    }}
+                    @if ($order->customer->country->name === 'España')
+                        <p
+                            style="font-weight: bold; text-align: left; font-size: 9pt; left: 563px; top: 24px; position: absolute;">
+                            X
+                        </p>
+                    @else
+                        <p
+                            style="font-weight: bold; text-align: left; font-size: 9pt; left: 423px; top: 24px; position: absolute;">
+                            X
+                        </p>
+                    @endif
 
-                        
+                    {{-- img --}}
+
+                    <img src="{{ asset('images/documents/CMR/sello-brisamar.png') }}"
+                        style="position: absolute; left: 160px; top: 855px; width: 50px; " />
+
+
 
 
                     <p class="preserve-line-breaks"
