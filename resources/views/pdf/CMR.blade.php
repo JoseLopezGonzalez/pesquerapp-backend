@@ -77,7 +77,7 @@
                     {{-- img --}}
 
                     <img src="{{ asset('images/documents/CMR/sello-brisamar.png') }}"
-                        style="position: absolute; left: 130px; top: 915px; width: 150px; " />
+                        style="position: absolute; left: 100px; top: 935px; width: 170px; " />
 
 
 
