@@ -62,7 +62,7 @@
                     </p>
 
                     <p
-                        style="font-weight: bold; text-align: left; font-size: 9pt; left: 600px; top: 30px; position: absolute;">
+                        style="font-weight: bold; text-align: left; font-size: 9pt; left: 555px; top: 15px; position: absolute;">
                         X
                     </p>
 
