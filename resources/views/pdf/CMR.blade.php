@@ -66,10 +66,12 @@
                         // Si el país del cliente es España
                         $order->customer->country->name === 'España' ? 
                         // Mostramos la X
-                        '<p style="font-weight: bold; text-align: left; font-size: 9pt; left: 563px; top: 24px; position: absolute;">X</p>' : 
+                        <p style="font-weight: bold; text-align: left; font-size: 9pt; left: 563px; top: 24px; position: absolute;">X</p> : 
                         // Si no, no mostramos nada
-                        '<p style="font-weight: bold; text-align: left; font-size: 9pt; left: 423px; top: 24px; position: absolute;">X</p>'
+                        <p style="font-weight: bold; text-align: left; font-size: 9pt; left: 423px; top: 24px; position: absolute;">X</p>
                     }}
+
+                        
 
 
                     <p class="preserve-line-breaks"
