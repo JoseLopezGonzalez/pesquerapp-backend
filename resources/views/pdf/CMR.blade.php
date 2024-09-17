@@ -58,7 +58,14 @@
                     </p>
                     <p
                         style="font-weight: bold; text-align: left; font-size: 9pt; left: 655px; top: 50px; position: absolute;">
-                        {{ $order->formattedId }}</p>
+                        {{ $order->formattedId }}
+                    </p>
+
+                    <p
+                        style="font-weight: bold; text-align: left; font-size: 9pt; left: 600px; top: 30px; position: absolute;">
+                        X
+                    </p>
+
                     <p class="preserve-line-breaks"
                         style="text-align: left; font-size: 8pt; left: 420px; top: 168px; position: absolute;">
                         {{ $order->transport->name }} <br />
@@ -108,13 +115,14 @@
                         {{ $order->numberOfPallets }} palets
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 200px; top: 450px; position: absolute;">
-                        {{ $order->totals['boxes'] }} 
+                        {{ $order->totals['boxes'] }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 280px; top: 450px; position: absolute;">
                         cajas
                     </p>
-                    <p style="font-size:5pt; text-align: left; font-size: 9pt; left: 380px; top: 450px; position: absolute;">
-                        produtos de <br/> la pesca
+                    <p
+                        style="font-size:5pt; text-align: left; font-size: 9pt; left: 380px; top: 450px; position: absolute;">
+                        produtos de <br /> la pesca
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 580px; top: 450px; position: absolute;">
                         {{ number_format($order->totals['netWeight'], 2) }} kg
