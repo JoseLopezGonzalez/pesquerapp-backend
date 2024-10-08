@@ -83,8 +83,10 @@
 
                     <p class="preserve-line-breaks"
                         style="text-align: left; font-size: 8pt; left: 420px; top: 168px; position: absolute;">
-                        {{ $order->transport->name }} <br />
-                        {!! nl2br(e($order->transport->address)) !!}
+                        LA PESCA DEL MERIDION, S.L.U.</br>
+                        PATIO DEL PENINSULAR, 19</br>
+                        21409 - AYAMONTE</br>
+                        HUELVA - ESPAÑA
 
                     </p>
                     <p class="preserve-line-breaks"

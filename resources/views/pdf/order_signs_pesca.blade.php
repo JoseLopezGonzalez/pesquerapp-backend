@@ -81,19 +81,7 @@
                 </div>
             </div>
 
-            <div class="text-center p-4 border-2 border-black">
-                {{-- Mostrar solo la ultima linea de Shipping adress --}}
-
-                @php
-                    // Separamos el texto en líneas
-                    $addressLines = explode("\n", $order->shipping_address);
-                    // Obtenemos la última línea
-                    $lastLine = end($addressLines);
-                @endphp
-                <h1 class="font-bold text-7xl">{{ strtoupper($lastLine) }}</h1>
-                {{-- <h1 class="font-bold text-8xl p-4">{{ strtoupper($oder->shipping_address)) }}</h1> --}}
-                <h1 class="font-bold text-7xl">{{ $order->transport->name }}</h1>
-            </div>
+            
         </div>
     @endforeach
 
