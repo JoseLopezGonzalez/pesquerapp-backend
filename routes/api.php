@@ -108,7 +108,7 @@ Route::get('v1/orders/{orderId}/order_CMR', [PDFController::class, 'generateOrde
 Route::get('v1/orders/{orderId}/order_CMR_pesca', [PDFController::class, 'generateOrderCMRPesca'])->name('generate_order_CMR_Pesca');
 
 
-
+/* d */
 Route::get('v1/rawMaterialReceptions/document', [PDFController::class, 'generateRawMaterialReceptionsDocument'])->name('generate_raw_material_receptions_document');
 
 /* No funciona */
