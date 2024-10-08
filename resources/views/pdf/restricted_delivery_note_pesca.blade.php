@@ -49,7 +49,19 @@
             </div>
             <div class="col-span-7 text-right mt-2" style="line-height: 100%;">
                 <p class="cliente preserve-line-breaks bold-first-line" style="font-size: 0.9rem;">
-                    {!! nl2br($order->billing_address) !!}
+                    {{ $order->customer->alias }} <br />
+                    {{-- Delete first line of Text of billing Address y respetar los saltos de lineas del texto original con nl2br --}}
+
+                    @php
+                        // Separamos el texto en líneas
+                        $addressLines = explode("\n", $order->billing_address);
+                        // Quitamos la primera línea
+                        array_shift($addressLines);
+                        // Unimos nuevamente el texto, excluyendo la primera línea
+                        $modifiedAddress = implode("\n", $addressLines);
+                    @endphp
+
+                    {!! nl2br(e($modifiedAddress)) !!}
                 </p>
             </div>
         </div>
