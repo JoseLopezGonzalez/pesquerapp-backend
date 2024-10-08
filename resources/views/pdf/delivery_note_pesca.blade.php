@@ -29,7 +29,7 @@
         <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
             <div class="col-span-6  ">
                 <p style="margin-top: 1.2rem; font-size: 1.5rem;"><strong>ALBARÁN {{ $order->formattedId }}</strong></p>
-                <table class="w-full  border-none">
+                <table class="w-full  border-none mt-10">
                     <tbody>
                         {{-- <tr class="border-b-2 border-gray-200 ">
                             <th class="text-left font-medium text-sm p-2">Number</th>
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-12 mt-2 mb-4">
+        <div class="grid grid-cols-12 mt-20 mb-4">
 
             <div class="col-span-5 mt-3">
                 <h1 class="text-2xl font-bold">Cliente:</h1>
@@ -81,7 +81,7 @@
         </div>
 
 
-        <div class="w-full mt-12">
+        <div class="w-full mt-20">
             <table class="w-full text-sm">
                 <thead class="border-b-2 border-black">
                     <tr>
