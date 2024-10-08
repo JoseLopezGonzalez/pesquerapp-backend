@@ -105,7 +105,7 @@ Route::get('v1/orders/{orderId}/order-signs', [PDFController::class, 'generateOr
 Route::get('v1/orders/{orderId}/order_CMR', [PDFController::class, 'generateOrderCMR'])->name('generate_order_CMR');
 
 /* La Pesca del Meridión */
-Route::get('v1/orders/{orderId}/order_CMR_Pesca', [PDFController::class, 'generateOrderCMRPesca'])->name('generate_order_CMR_Pesca');
+Route::get('v1/orders/{orderId}/order_CMR_pesca', [PDFController::class, 'generateOrderCMRPesca'])->name('generate_order_CMR_Pesca');
 
 
 
