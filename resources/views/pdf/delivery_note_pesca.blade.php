@@ -29,20 +29,6 @@
         <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
             <div class="col-span-6  ">
                 <p style="margin-top: 1.2rem; font-size: 1.5rem;"><strong>ALBARÁN {{ $order->formattedId }}</strong></p>
-            </div>
-            <div class="col-span-6" style="line-height: 122%; text-align: right; color: green;">
-                <p style="font-size: 10pt;">
-                    <strong>LA PESCA DEL MERIDION, S.L.U.</strong><br>
-                    PATIO DEL PENINSULAR, 19</br>
-                    21409 - AYAMONTE</br>
-                    HUELVA - ESPAÑA
-                </p>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-12 mt-2 mb-4">
-
-            <div class="col-span-5 mt-3">
                 <table class="w-full  border-none">
                     <tbody>
                         {{-- <tr class="border-b-2 border-gray-200 ">
@@ -59,6 +45,21 @@
                         </tr> --}}
                     </tbody>
                 </table>
+            </div>
+            <div class="col-span-6" style="line-height: 122%; text-align: right; color: green;">
+                <p style="font-size: 10pt;">
+                    <strong>LA PESCA DEL MERIDION, S.L.U.</strong><br>
+                    PATIO DEL PENINSULAR, 19</br>
+                    21409 - AYAMONTE</br>
+                    HUELVA - ESPAÑA
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 mt-2 mb-4">
+
+            <div class="col-span-5 mt-3">
+                <h1 class="text-2xl font-bold">Cliente:</h1>
             </div>
             <div class="col-span-7 text-right mt-2" style="line-height: 100%;">
                 <p class="cliente preserve-line-breaks bold-first-line" style="font-size: 0.9rem;">
