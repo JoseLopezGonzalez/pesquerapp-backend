@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>CMR</title>
+    <title>CMR Pesca</title>
     {{-- Tailwind no funciona, lo cojo todo directamente de un cdn --}}
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -37,7 +37,6 @@
     @php
         $imgs = ['cmr-page-1.png', 'cmr-page-2.png', 'cmr-page-3.png', 'cmr-page-4.png'];
     @endphp
-
 
 
 
@@ -76,8 +75,8 @@
 
                     {{-- img --}}
 
-                    <img src="{{ asset('images/documents/CMR/sello-brisamar.png') }}"
-                        style="position: absolute; left: 80px; top: 923px; width: 190px; " />
+                    {{-- <img src="{{ asset('images/documents/CMR/sello-brisamar.png') }}"
+                        style="position: absolute; left: 80px; top: 923px; width: 190px; " /> --}}
 
 
 
