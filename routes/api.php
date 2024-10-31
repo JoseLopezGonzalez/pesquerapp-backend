@@ -79,13 +79,15 @@ Route::apiResource('v1/orders', OrderController::class);
 Route::apiResource('v1/transports', TransportController::class);
 Route::apiResource('v1/salespeople', SalespersonController::class);
 Route::apiResource('v1/payment_terms', PaymentTermController::class);
-Route::apiResource('v1/productions', ProductionController::class);
 Route::apiResource('v1/suppliers', SupplierController::class);
 Route::apiResource('v1/raw-material-receptions', RawMaterialReceptionController::class);
 Route::apiResource('v1/cebo-dispatches', CeboDispatchController::class);
 Route::apiResource('v1/species', SpeciesController::class);
 Route::apiResource('v1/raw-materials', RawMaterialController::class);
 Route::apiResource('v1/cebos', CeboController::class);
+Route::apiResource('v1/productions', ProductionController::class);
+
+
 
 
 /* Incorterm */
