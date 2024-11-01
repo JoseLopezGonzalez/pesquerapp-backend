@@ -67,6 +67,8 @@ class ProductionController extends Controller
             $query->whereIn('capture_zone_id', $captureZoneIds);
         }
 
+        // Ordenar por fecha descendente
+        $query->orderBy('date', 'desc');
 
         // Paginación con un valor predeterminado de 10
         $perPage = $request->input('perPage', 10);
