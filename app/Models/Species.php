@@ -29,5 +29,11 @@ class Species extends Model
         return $this->belongsTo(FishingGear::class , 'fishing_gear_id');
     }
 
+    // Relación con el modelo Production
+    public function productions()
+    {
+        return $this->hasMany(Production::class, 'species_id');
+    }
+
 
 }

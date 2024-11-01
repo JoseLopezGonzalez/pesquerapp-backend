@@ -21,5 +21,17 @@ class Production extends Model
     protected $casts = [
         'diagram_data' => 'array', // Casteo para manipular JSON como array
     ];
+
+    // Relación con el modelo Species
+    public function species()
+    {
+        return $this->belongsTo(Species::class, 'species_id');
+    }
+
+    // Relación con el modelo CaptureZone
+    public function captureZone()
+    {
+        return $this->belongsTo(CaptureZone::class, 'capture_zone_id');
+    }
 }
 

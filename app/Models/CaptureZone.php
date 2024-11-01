@@ -19,4 +19,10 @@ class CaptureZone extends Model
             'name' => $this->name,
         ];
     }
+
+    // Relación con el modelo Production
+    public function productions()
+    {
+        return $this->hasMany(Production::class, 'capture_zone_id');
+    }
 }
