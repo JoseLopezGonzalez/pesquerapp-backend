@@ -18,9 +18,9 @@ class Production extends Model
         'diagram_data',
     ];
 
-    /* protected $casts = [
+    protected $casts = [
         'diagram_data' => 'array', // Casteo para manipular JSON como array
-    ]; */
+    ];
 
     // Relación con el modelo Species
     public function species()
