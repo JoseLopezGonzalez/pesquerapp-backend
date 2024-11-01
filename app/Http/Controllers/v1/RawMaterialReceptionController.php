@@ -128,17 +128,7 @@ class RawMaterialReceptionController extends Controller
         return new RawMaterialReceptionResource($reception);
         
 
-        /* $reception = RawMaterialReception::findOrFail($id);
-        $reception->update($validated);
-
-        if ($request->has('products')) {
-            $reception->products()->delete();
-            foreach ($validated['products'] as $product) {
-                $reception->products()->create($product);
-            }
-        }
-
-        return new RawMaterialReceptionResource($reception); */
+        
     }
 
     public function destroy($id)
