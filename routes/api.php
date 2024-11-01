@@ -90,7 +90,7 @@ Route::apiResource('v1/capture_zones', CaptureZoneController::class);
 Route::apiResource('v1/raw-materials', RawMaterialController::class);
 Route::apiResource('v1/cebos', CeboController::class);
 Route::apiResource('v1/productions', ProductionController::class);
-Route::apiResource('v1/processes', ProcessController::class);
+Route::apiResource('v1/productions/processes', ProcessController::class);
 
 
 
