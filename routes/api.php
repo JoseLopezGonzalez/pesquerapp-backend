@@ -3,6 +3,7 @@
 use App\Http\Controllers\v1\AuthController;
 use App\Http\Controllers\v1\OrderDocumentMailerController;
 use App\Http\Controllers\v1\BoxesReportController;
+use App\Http\Controllers\v1\CaptureZoneController;
 use App\Http\Controllers\v1\CeboController;
 use App\Http\Controllers\v1\CeboDispatchController;
 use App\Http\Controllers\v1\CustomerController;
@@ -83,6 +84,8 @@ Route::apiResource('v1/suppliers', SupplierController::class);
 Route::apiResource('v1/raw-material-receptions', RawMaterialReceptionController::class);
 Route::apiResource('v1/cebo-dispatches', CeboDispatchController::class);
 Route::apiResource('v1/species', SpeciesController::class);
+/* CaptureZones */
+Route::apiResource('v1/capture_zones', CaptureZoneController::class);
 Route::apiResource('v1/raw-materials', RawMaterialController::class);
 Route::apiResource('v1/cebos', CeboController::class);
 Route::apiResource('v1/productions', ProductionController::class);
