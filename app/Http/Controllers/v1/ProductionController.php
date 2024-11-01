@@ -23,11 +23,16 @@ class ProductionController extends Controller
             $query->where('id', 'like', "%{$id}%");
         }
 
-        // Filtro por Lote
-        if ($request->has('lot')) {
-            $lot = $request->input('lot');
-            $query->where('lot', 'like', "%{$lot}%");
+        // Filtro por Lote (acepta múltiples lotes en un array)
+        if ($request->has('lots')) {
+            $lots = $request->input('lots'); // Espera un array de lotes
+            $query->where(function ($q) use ($lots) {
+                foreach ($lots as $lot) {
+                    $q->orWhere('lot', 'like', "%{$lot}%");
+                }
+            });
         }
+
 
         // Filtro por Fecha (rango de fechas)
         if ($request->has('dates')) {
@@ -50,17 +55,18 @@ class ProductionController extends Controller
             $query->where('notes', 'like', "%{$notes}%");
         }
 
-        // Filtro por Especie
-        if ($request->has('species_id')) {
-            $speciesId = $request->input('species_id');
-            $query->where('species_id', $speciesId);
+        // Filtro por Especie (acepta múltiples IDs en un array)
+        if ($request->has('species')) {
+            $speciesIds = $request->input('species'); // Espera un array de IDs
+            $query->whereIn('species_id', $speciesIds);
         }
 
-        // Filtro por Zona de Captura
-        if ($request->has('capture_zone_id')) {
-            $captureZoneId = $request->input('capture_zone_id');
-            $query->where('capture_zone_id', $captureZoneId);
+        // Filtro por Zona de Captura (acepta múltiples IDs en un array)
+        if ($request->has('captureZones')) {
+            $captureZoneIds = $request->input('captureZones'); // Espera un array de IDs
+            $query->whereIn('capture_zone_id', $captureZoneIds);
         }
+
 
         // Paginación con un valor predeterminado de 10
         $perPage = $request->input('perPage', 10);
