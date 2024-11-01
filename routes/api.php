@@ -12,6 +12,7 @@ use App\Http\Controllers\v1\OrderController;
 use App\Http\Controllers\v1\PalletController;
 use App\Http\Controllers\v1\PaymentTermController;
 use App\Http\Controllers\v1\PDFController;
+use App\Http\Controllers\v1\ProcessController;
 use App\Http\Controllers\v1\ProductController;
 use App\Http\Controllers\v1\ProductionController;
 use App\Http\Controllers\v1\RawMaterialController;
@@ -89,6 +90,8 @@ Route::apiResource('v1/capture_zones', CaptureZoneController::class);
 Route::apiResource('v1/raw-materials', RawMaterialController::class);
 Route::apiResource('v1/cebos', CeboController::class);
 Route::apiResource('v1/productions', ProductionController::class);
+Route::apiResource('v1/processes', ProcessController::class);
+
 
 
 
