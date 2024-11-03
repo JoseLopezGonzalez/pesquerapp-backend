@@ -25,8 +25,9 @@ class Production extends Model
     /* diagram_data->totalProfit  si esque existe alguna clave */
     public function getTotalProfitAttribute()
     {
-        return $this->diagram_data['totalProfit'];
+        return array_key_exists('totalProfit', $this->diagram_data) ? $this->diagram_data['totalProfit'] : null;
     }
+
 
     // Relación con el modelo Species
     public function species()
@@ -40,4 +41,3 @@ class Production extends Model
         return $this->belongsTo(CaptureZone::class, 'capture_zone_id');
     }
 }
-
