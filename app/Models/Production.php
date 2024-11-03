@@ -25,10 +25,14 @@ class Production extends Model
     /* diagram_data->totalProfit  si esque existe alguna clave */
     public function getTotalProfitAttribute()
     {
-        return is_array($this->diagram_data) && array_key_exists('totalProfit', $this->diagram_data)
-            ? $this->diagram_data['totalProfit']
+        return is_array($this->diagram_data) &&
+            isset($this->diagram_data['totals']) &&
+            is_array($this->diagram_data['totals']) &&
+            array_key_exists('totalProfit', $this->diagram_data['totals'])
+            ? $this->diagram_data['totals']['totalProfit']
             : null;
     }
+
 
 
 
