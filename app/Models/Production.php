@@ -22,7 +22,7 @@ class Production extends Model
         'diagram_data' => 'array', // Casteo para manipular JSON como array
     ];
 
-    /* diagram_data->totalProfit */
+    /* diagram_data->totalProfit  si esque existe alguna clave */
     public function getTotalProfitAttribute()
     {
         return $this->diagram_data['totalProfit'];

@@ -30,7 +30,7 @@ class ProductionResource extends JsonResource
                 'name' => $this->captureZone->name,
             ],
             'notes' => $this->notes,
-            'total_profit' => $this->total_profit ?? 0,
+            'total_profit' => $this->total_profit,
             'diagram_data' => $this->diagram_data,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
