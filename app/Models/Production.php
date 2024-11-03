@@ -24,18 +24,33 @@ class Production extends Model
 
     /* diagram_data->totalProfit  si esque existe alguna clave */
     public function getTotalProfitAttribute()
-{
-    // Decodificar `diagram_data` en caso de que sea una cadena JSON
-    $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
+    {
+        // Decodificar `diagram_data` en caso de que sea una cadena JSON
+        $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
 
-    // Verificar si `diagramData` es ahora un array y contiene la estructura que necesitamos
-    return is_array($diagramData) &&
-           isset($diagramData['totals']) &&
-           is_array($diagramData['totals']) &&
-           array_key_exists('totalProfit', $diagramData['totals'])
-        ? $diagramData['totals']['totalProfit']
-        : null;
-}
+        // Verificar si `diagramData` es ahora un array y contiene la estructura que necesitamos
+        return is_array($diagramData) &&
+            isset($diagramData['totals']) &&
+            is_array($diagramData['totals']) &&
+            array_key_exists('totalProfit', $diagramData['totals'])
+            ? $diagramData['totals']['totalProfit']
+            : null;
+    }
+
+
+    public function getTotalProfitPerInputKgAttribute()
+    {
+        // Decodificar `diagram_data` en caso de que sea una cadena JSON
+        $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
+
+        // Verificar si `diagramData` es ahora un array y contiene la estructura que necesitamos
+        return is_array($diagramData) &&
+            isset($diagramData['totals']) &&
+            is_array($diagramData['totals']) &&
+            array_key_exists('totalProfitPerInputKg', $diagramData['totals'])
+            ? $diagramData['totals']['totalProfitPerInputKg']
+            : null;
+    }
 
 
 

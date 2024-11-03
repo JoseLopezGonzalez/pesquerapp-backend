@@ -31,6 +31,7 @@ class ProductionResource extends JsonResource
             ],
             'notes' => $this->notes,
             'total_profit' => $this->total_profit,
+            'total_profit_per_input_kg' => $this->total_profit_per_input_kg,
             'diagram_data' => $this->diagram_data,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
