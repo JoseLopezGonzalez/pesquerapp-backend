@@ -22,6 +22,12 @@ class Production extends Model
         'diagram_data' => 'array', // Casteo para manipular JSON como array
     ];
 
+    /* diagram_data->totalProfit */
+    public function getTotalProfitAttribute()
+    {
+        return $this->diagram_data['totalProfit'];
+    }
+
     // Relación con el modelo Species
     public function species()
     {
