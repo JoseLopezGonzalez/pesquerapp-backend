@@ -25,8 +25,11 @@ class Production extends Model
     /* diagram_data->totalProfit  si esque existe alguna clave */
     public function getTotalProfitAttribute()
     {
-        return array_key_exists('totalProfit', $this->diagram_data) ? $this->diagram_data['totalProfit'] : null;
+        return is_array($this->diagram_data) && array_key_exists('totalProfit', $this->diagram_data)
+            ? $this->diagram_data['totalProfit']
+            : null;
     }
+
 
 
     // Relación con el modelo Species
