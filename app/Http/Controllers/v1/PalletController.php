@@ -39,27 +39,45 @@ class PalletController extends Controller
             $query->where('id', 'like', "%{$id}%");
         }
 
-        if($request->has('state')){
-            if($request->input('state') == 'stored'){
+        if ($request->has('state')) {
+            if ($request->input('state') == 'stored') {
                 $query->where('state_id', 2);
-            }else if($request->input('state') == 'shipped'){
+            } else if ($request->input('state') == 'shipped') {
                 $query->where('state_id', 3);
             }
         }
 
+        // Filtro por estado de la orden (pending o finished)
+        if ($request->has('orderState')) {
+            $orderState = $request->input('orderState');
+
+            if ($orderState === 'pending') {
+                $query->whereHas('order', function ($subQuery) {
+                    $subQuery->where('status', 'pending');
+                });
+            } elseif ($orderState === 'finished') {
+                $query->whereHas('order', function ($subQuery) {
+                    $subQuery->where('status', 'finished');
+                });
+            } elseif ($orderState === 'without_order') {
+                // Filtrar pallets que no tienen ninguna orden asociada
+                $query->whereDoesntHave('order');
+            }
+        }
+
+
+
         /* Position */
         if ($request->has('position')) {
-            if($request->input('position') == 'located'){
+            if ($request->input('position') == 'located') {
                 $query->whereHas('storedPallet', function ($subQuery) {
                     $subQuery->whereNotNull('position');
                 });
-            }else if($request->input('position') == 'unlocated'){
+            } else if ($request->input('position') == 'unlocated') {
                 $query->whereHas('storedPallet', function ($subQuery) {
                     $subQuery->whereNull('position');
                 });
             }
-
-           
         }
 
         /* Dates */
@@ -72,13 +90,12 @@ class PalletController extends Controller
                 $startDate = $dates['start'];
                 $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
                 $query->where('created_at', '>=', $startDate);
-                
             }
-        
+
             if (isset($dates['end'])) {
                 $endDate = $dates['end'];
                 $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
-               $query->where('created_at', '<=', $endDate);
+                $query->where('created_at', '<=', $endDate);
             }
         }
 
