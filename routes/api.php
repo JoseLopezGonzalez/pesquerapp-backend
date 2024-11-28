@@ -22,6 +22,7 @@ use App\Http\Controllers\v1\RawMaterialReceptionsStatsController;
 use App\Http\Controllers\v1\SalespersonController;
 use App\Http\Controllers\v1\SpeciesController;
 use App\Http\Controllers\v1\ProcessNodeController;
+use App\Http\Controllers\v1\FinalNodeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
