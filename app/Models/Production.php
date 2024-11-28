@@ -53,6 +53,27 @@ class Production extends Model
     }
 
 
+    
+    public function getProcessNodes()
+    {
+        // Decodificar diagram_data
+        $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
+        $processNodes = $diagramData['processNodes'] ?? [];
+    
+        // Extraer los datos clave de cada nodo
+        return collect($processNodes)->map(function ($node) {
+            return [
+                'node_id' => $node['id'],
+                'process_name' => $node['process']['name'] ?? 'Sin nombre',
+                'input_quantity' => $node['inputQuantity'] ?? 0,
+                'decrease' => $node['decrease'] ?? 0, // Merma
+            ];
+        });
+    }
+    
+
+
+
 
 
 

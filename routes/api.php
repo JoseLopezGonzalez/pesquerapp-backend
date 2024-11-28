@@ -21,6 +21,7 @@ use App\Http\Controllers\v1\RawMaterialReceptionsReportController;
 use App\Http\Controllers\v1\RawMaterialReceptionsStatsController;
 use App\Http\Controllers\v1\SalespersonController;
 use App\Http\Controllers\v1\SpeciesController;
+use App\Http\Controllers\v1\ProcessNodeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -123,6 +124,10 @@ Route::get('v1/rawMaterialReceptions/document', [PDFController::class, 'generate
 
 /* No funciona */
 /* Route::get('v1/monthly-stats', [RawMaterialReceptionsStatsController::class, 'getMonthlyStats'])->name('raw_material_receptions.monthly_stats'); */
+
+
+/* Process Node  */
+Route::get('v1/process-nodes-decrease', [ProcessNodeController::class, 'getProcessNodesDecrease']);
 
 
 /* No funciona */
