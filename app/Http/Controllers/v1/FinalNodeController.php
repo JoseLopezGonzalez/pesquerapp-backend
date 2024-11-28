@@ -33,6 +33,9 @@ class FinalNodeController extends Controller
         foreach ($productions as $production) {
             // Obtener nodos `final` de cada producción
             $finalNodes = $production->getFinalNodes();
+
+            dd($finalNodes);
+            
             foreach ($finalNodes as $node) {
                 $processName = $node['process_name'];
     
