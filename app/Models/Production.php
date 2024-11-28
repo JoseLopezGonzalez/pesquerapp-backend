@@ -79,15 +79,16 @@ class Production extends Model
 
     // Extraer los datos clave de cada nodo
     return collect($finalNodes)->map(function ($node) {
-        $totals = $node['profits']['totals'] ?? [];
+        $totals = $node['profits']['totals'] ?? []; // Corrección aquí
         return [
             'node_id' => $node['id'],
             'process_name' => $node['process']['name'] ?? 'Sin nombre',
             'sold_quantity' => $totals['quantity'] ?? 0,
-            'profit_per_kg' => $totals['averageProfitPerKg'] ?? 0, // Beneficio medio por kg
+            'profit_per_kg' => $totals['averageProfitPerKg'] ?? 0, // Beneficio promedio por kg
         ];
     });
 }
+
 
     
 
