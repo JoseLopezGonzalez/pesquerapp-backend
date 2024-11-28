@@ -53,7 +53,7 @@ class Production extends Model
     }
 
 
-    
+
     public function getProcessNodes()
     {
         // Decodificar diagram_data
@@ -70,6 +70,25 @@ class Production extends Model
             ];
         });
     }
+
+    public function getFinalNodes()
+{
+    // Decodificar diagram_data
+    $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
+    $finalNodes = $diagramData['finalNodes'] ?? [];
+
+    // Extraer los datos clave de cada nodo
+    return collect($finalNodes)->map(function ($node) {
+        $totals = $node['profits']['totals'] ?? [];
+        return [
+            'node_id' => $node['id'],
+            'process_name' => $node['process']['name'] ?? 'Sin nombre',
+            'sold_quantity' => $totals['quantity'] ?? 0,
+            'profit_per_kg' => $totals['averageProfitPerKg'] ?? 0, // Beneficio medio por kg
+        ];
+    });
+}
+
     
 
 

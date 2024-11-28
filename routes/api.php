@@ -129,6 +129,9 @@ Route::get('v1/rawMaterialReceptions/document', [PDFController::class, 'generate
 /* Process Node  */
 Route::get('v1/process-nodes-decrease', [ProcessNodeController::class, 'getProcessNodesDecrease']);
 
+/* Final node */
+Route::get('v1/final-nodes-profit', [FinalNodeController::class, 'getFinalNodesProfit']);
+
 
 /* No funciona */
 Route::get('v1/raw-material-receptions-monthly-stats', [RawMaterialReceptionsStatsController::class, 'getMonthlyStats'])->name('raw_material_receptions.monthly_stats');
