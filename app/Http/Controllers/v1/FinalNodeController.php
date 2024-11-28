@@ -41,7 +41,8 @@ class FinalNodeController extends Controller
                         'process_name' => $processName,
                         'total_quantity' => 0,
                         'weighted_profit_sum' => 0,
-                        'weighted_cost_sum' => 0, // Para coste ponderado
+                        'weighted_cost_sum' => 0,
+                        'products' => [], // Detalles de productos
                     ];
                 }
     
@@ -49,6 +50,12 @@ class FinalNodeController extends Controller
                 $finalData[$processName]['total_quantity'] += $node['total_quantity'];
                 $finalData[$processName]['weighted_profit_sum'] += $node['total_quantity'] * $node['profit_per_kg'];
                 $finalData[$processName]['weighted_cost_sum'] += $node['total_quantity'] * $node['cost_per_kg'];
+    
+                // Agregar detalles de productos
+                $finalData[$processName]['products'] = array_merge(
+                    $finalData[$processName]['products'],
+                    $node['products']
+                );
             }
         }
     
@@ -61,11 +68,13 @@ class FinalNodeController extends Controller
                 'average_profit_per_kg' => $totalQuantity > 0 ? $process['weighted_profit_sum'] / $totalQuantity : 0,
                 'average_cost_per_kg' => $totalQuantity > 0 ? $process['weighted_cost_sum'] / $totalQuantity : 0,
                 'total_quantity' => $totalQuantity,
+                'products' => $process['products'],
             ];
         }
     
         return response()->json($groupedData);
     }
+    
     
 
     

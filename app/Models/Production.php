@@ -72,23 +72,42 @@ class Production extends Model
     }
 
     public function getFinalNodes()
-{
-    $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
-    $finalNodes = $diagramData['finalNodes'] ?? [];
-
-    return collect($finalNodes)->map(function ($node) {
-        $totals = $node['production']['totals'] ?? [];
-        $profits = $node['profits']['totals'] ?? [];
-
-        return [
-            'node_id' => $node['id'] ?? null,
-            'process_name' => $node['process']['name'] ?? 'Sin nombre',
-            'total_quantity' => is_numeric($totals['quantity'] ?? null) ? $totals['quantity'] : 0,
-            'profit_per_kg' => is_numeric($profits['averageProfitPerKg'] ?? null) ? $profits['averageProfitPerKg'] : 0,
-            'cost_per_kg' => is_numeric($totals['averageCostPerKg'] ?? null) ? $totals['averageCostPerKg'] : 0,
-        ];
-    });
-}
+    {
+        $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
+        $finalNodes = $diagramData['finalNodes'] ?? [];
+    
+        return collect($finalNodes)->map(function ($node) {
+            $totals = $node['production']['totals'] ?? [];
+            $profits = $node['profits']['totals'] ?? [];
+    
+            // Detalle de productos
+            $productDetails = collect($node['production']['details'] ?? [])->map(function ($detail) use ($node) {
+                $salesDetails = collect($node['sales']['details'] ?? [])
+                    ->firstWhere('product.id', $detail['product']['id']);
+    
+                $pricePerKg = $salesDetails['price'] ?? 0;
+                $costPerKg = $detail['costPerKg'] ?? 0;
+    
+                return [
+                    'product_name' => $detail['product']['name'] ?? 'Producto desconocido',
+                    'quantity' => is_numeric($detail['quantity']) ? $detail['quantity'] : 0,
+                    'cost_per_kg' => is_numeric($costPerKg) ? $costPerKg : 0,
+                    'profit_per_kg' => is_numeric($pricePerKg) ? $pricePerKg - $costPerKg : 0,
+                ];
+            });
+    
+            return [
+                'node_id' => $node['id'] ?? null,
+                'process_name' => $node['process']['name'] ?? 'Sin nombre',
+                'total_quantity' => is_numeric($totals['quantity'] ?? null) ? $totals['quantity'] : 0,
+                'profit_per_kg' => is_numeric($profits['averageProfitPerKg'] ?? null) ? $profits['averageProfitPerKg'] : 0,
+                'cost_per_kg' => is_numeric($totals['averageCostPerKg'] ?? null) ? $totals['averageCostPerKg'] : 0,
+                'products' => $productDetails->toArray(),
+            ];
+        });
+    }
+    
+    
 
     
 
