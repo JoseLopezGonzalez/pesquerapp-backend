@@ -72,27 +72,24 @@ class Production extends Model
     }
 
     public function getFinalNodes()
-    {
-        $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
-        $finalNodes = $diagramData['finalNodes'] ?? [];
-    
-        return collect($finalNodes)->map(function ($node) {
-            // Usar production.totals.quantity como referencia
-            $totals = $node['production']['totals'] ?? [];
-            $totalQuantity = $totals['quantity'] ?? 0;
-    
-            // Obtener beneficio medio por kg
-            $profits = $node['profits']['totals'] ?? [];
-            $profitPerKg = $profits['averageProfitPerKg'] ?? 0;
-    
-            return [
-                'node_id' => $node['id'] ?? null,
-                'process_name' => $node['process']['name'] ?? 'Sin nombre',
-                'total_quantity' => is_numeric($totalQuantity) ? $totalQuantity : 0,
-                'profit_per_kg' => is_numeric($profitPerKg) ? $profitPerKg : 0,
-            ];
-        });
-    }
+{
+    $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
+    $finalNodes = $diagramData['finalNodes'] ?? [];
+
+    return collect($finalNodes)->map(function ($node) {
+        $totals = $node['production']['totals'] ?? [];
+        $profits = $node['profits']['totals'] ?? [];
+
+        return [
+            'node_id' => $node['id'] ?? null,
+            'process_name' => $node['process']['name'] ?? 'Sin nombre',
+            'total_quantity' => is_numeric($totals['quantity'] ?? null) ? $totals['quantity'] : 0,
+            'profit_per_kg' => is_numeric($profits['averageProfitPerKg'] ?? null) ? $profits['averageProfitPerKg'] : 0,
+            'cost_per_kg' => is_numeric($totals['averageCostPerKg'] ?? null) ? $totals['averageCostPerKg'] : 0,
+        ];
+    });
+}
+
     
 
 
