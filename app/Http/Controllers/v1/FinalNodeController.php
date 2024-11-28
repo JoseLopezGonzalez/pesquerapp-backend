@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Production;
 use Illuminate\Http\Request;
 
 class FinalNodeController extends Controller
