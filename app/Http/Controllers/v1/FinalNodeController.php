@@ -93,22 +93,25 @@ class FinalNodeController extends Controller
                     if (!isset($finalData[$processName]['products'][$productName])) {
                         $finalData[$processName]['products'][$productName] = [
                             'product_name' => $productName,
-                            'total_quantity' => 0,
+                            'total_input_quantity' => 0,
+                            'total_output_quantity' => 0,
                             'weighted_cost_sum' => 0,
                             'weighted_profit_output_sum' => 0,
                             'weighted_profit_input_sum' => 0,
                         ];
                     }
 
-                    $productQuantity = $product['quantity'] ?? 0;
+                    $productInputQuantity = $product['input_quantity'] ?? 0;
+                    $productOutputQuantity = $product['output_quantity'] ?? 0;
                     $productCostPerKg = $product['cost_per_kg'] ?? 0;
                     $productProfitPerOutputKg = $product['profit_per_output_kg'] ?? 0;
                     $productProfitPerInputKg = $product['profit_per_input_kg'] ?? 0;
 
-                    $finalData[$processName]['products'][$productName]['total_quantity'] += $productQuantity;
-                    $finalData[$processName]['products'][$productName]['weighted_cost_sum'] += $productQuantity * $productCostPerKg;
-                    $finalData[$processName]['products'][$productName]['weighted_profit_output_sum'] += $productQuantity * $productProfitPerOutputKg;
-                    $finalData[$processName]['products'][$productName]['weighted_profit_input_sum'] += $productQuantity * $productProfitPerInputKg;
+                    $finalData[$processName]['products'][$productName]['total_input_quantity'] += $productInputQuantity;
+                    $finalData[$processName]['products'][$productName]['total_output_quantity'] += $productOutputQuantity;
+                    $finalData[$processName]['products'][$productName]['weighted_cost_sum'] += $productOutputQuantity * $productCostPerKg;
+                    $finalData[$processName]['products'][$productName]['weighted_profit_output_sum'] += $productOutputQuantity * $productProfitPerOutputKg;
+                    $finalData[$processName]['products'][$productName]['weighted_profit_input_sum'] += $productInputQuantity * $productProfitPerInputKg;
                 }
             }
         }
@@ -118,15 +121,17 @@ class FinalNodeController extends Controller
         foreach ($finalData as $processName => $process) {
             $products = [];
             foreach ($process['products'] as $productName => $product) {
-                $totalQuantity = $product['total_quantity'];
-                $averageCostPerKg = $totalQuantity > 0 ? $product['weighted_cost_sum'] / $totalQuantity : 0;
-                $averageProfitPerOutputKg = $totalQuantity > 0 ? $product['weighted_profit_output_sum'] / $totalQuantity : 0;
-                $averageProfitPerInputKg = $totalQuantity > 0 ? $product['weighted_profit_input_sum'] / $totalQuantity : 0;
+                $totalInputQuantity = $product['total_input_quantity'];
+                $totalOutputQuantity = $product['total_output_quantity'];
+                $averageCostPerKg = $totalOutputQuantity > 0 ? $product['weighted_cost_sum'] / $totalOutputQuantity : 0;
+                $averageProfitPerOutputKg = $totalOutputQuantity > 0 ? $product['weighted_profit_output_sum'] / $totalOutputQuantity : 0;
+                $averageProfitPerInputKg = $totalInputQuantity > 0 ? $product['weighted_profit_input_sum'] / $totalInputQuantity : 0;
                 $margin = $averageCostPerKg > 0 ? ($averageProfitPerOutputKg / $averageCostPerKg) * 100 : 0;
 
                 $products[] = [
                     'product_name' => $product['product_name'],
-                    'total_quantity' => $totalQuantity,
+                    'total_input_quantity' => $totalInputQuantity,
+                    'total_output_quantity' => $totalOutputQuantity,
                     'average_cost_per_kg' => $averageCostPerKg,
                     'average_profit_per_output_kg' => $averageProfitPerOutputKg,
                     'average_profit_per_input_kg' => $averageProfitPerInputKg,
