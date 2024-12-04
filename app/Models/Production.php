@@ -86,13 +86,26 @@ class Production extends Model
                     ->firstWhere('product.id', $detail['product']['id']);
     
                 $pricePerKg = $salesDetails['price'] ?? 0;
-                $costPerKg = $detail['costPerKg'] ?? 0;
+                /* $costPerKg = $detail['costPerKg'] ?? 0; */
+
+                /* Nuevo */
+                $productionSummary = collect($node['production']['summary'] ?? [])
+                    ->firstWhere('product.id', $detail['product']['id']);
+
+                $costPerKg = $productionSummary['averageCostPerKg'] ?? 0;
+
+                $profitsSummary = collect($node['profits']['summary'] ?? [])
+                    ->firstWhere('product.id', $detail['product']['id']);
+
+                $profitPerInputKg = $profitsSummary['profitPerInputKg'] ?? 0;
+                $profitPerOutputKg = $profitsSummary['profitPerOutputKg'] ?? 0;
     
                 return [
                     'product_name' => $detail['product']['name'] ?? 'Producto desconocido',
                     'quantity' => is_numeric($detail['quantity']) ? $detail['quantity'] : 0,
                     'cost_per_kg' => is_numeric($costPerKg) ? $costPerKg : 0,
-                    'profit_per_kg' => is_numeric($pricePerKg) ? $pricePerKg - $costPerKg : 0,
+                    'profit_per_output_kg' => is_numeric($profitPerOutputKg) ? $profitPerOutputKg : 0,
+                    'profit_per_input_kg' => is_numeric($profitPerInputKg) ? $profitPerInputKg : 0,
                 ];
             });
     
