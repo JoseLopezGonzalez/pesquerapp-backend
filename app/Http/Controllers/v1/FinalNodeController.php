@@ -29,8 +29,7 @@ class FinalNodeController extends Controller
 
         // Variables de acumulación global
         $globalTotals = [
-            'total_input_quantity' => 0,
-            'total_output_quantity' => 0,
+            'total_quantity' => 0,
             'total_profit_output' => 0,
             'total_profit_input' => 0,
             'total_cost' => 0,
@@ -51,8 +50,7 @@ class FinalNodeController extends Controller
                 if (!isset($finalData[$processName])) {
                     $finalData[$processName] = [
                         'process_name' => $processName,
-                        'total_input_quantity' => 0,
-                        'total_output_quantity' => 0,
+                        'total_quantity' => 0,
                         'weighted_profit_output_sum' => 0,
                         'weighted_profit_input_sum' => 0,
                         'weighted_cost_sum' => 0,
@@ -61,28 +59,25 @@ class FinalNodeController extends Controller
                     ];
                 }
 
-                $totalInputQuantity = $node['total_input_quantity'] ?? 0;
-                $totalOutputQuantity = $node['total_output_quantity'] ?? 0;
+                $totalQuantity = $node['total_quantity'] ?? 0;
                 $totalProfit = $node['total_profit'] ?? 0; // Nuevo campo
                 $profitPerOutputKg = $node['profit_per_output_kg'] ?? 0;
                 $profitPerInputKg = $node['profit_per_input_kg'] ?? 0;
                 $costPerKg = $node['cost_per_kg'] ?? 0;
 
                 // Actualizar datos globales
-                $globalTotals['total_input_quantity'] += $totalInputQuantity;
-                $globalTotals['total_output_quantity'] += $totalOutputQuantity;
-                $globalTotals['total_profit_output'] += $totalOutputQuantity * $profitPerOutputKg;
-                $globalTotals['total_profit_input'] += $totalInputQuantity * $profitPerInputKg;
-                $globalTotals['total_cost'] += $totalOutputQuantity * $costPerKg;
+                $globalTotals['total_quantity'] += $totalQuantity;
+                $globalTotals['total_profit_output'] += $totalQuantity * $profitPerOutputKg;
+                $globalTotals['total_profit_input'] += $totalQuantity * $profitPerInputKg;
+                $globalTotals['total_cost'] += $totalQuantity * $costPerKg;
                 $globalTotals['total_profit'] += $totalProfit;
 
                 // Actualizar datos del proceso
-                $finalData[$processName]['total_input_quantity'] += $totalInputQuantity;
-                $finalData[$processName]['total_output_quantity'] += $totalOutputQuantity;
-                $finalData[$processName]['weighted_profit_output_sum'] += $totalOutputQuantity * $profitPerOutputKg;
-                $finalData[$processName]['weighted_profit_input_sum'] += $totalInputQuantity * $profitPerInputKg;
-                $finalData[$processName]['weighted_cost_sum'] += $totalOutputQuantity * $costPerKg;
-                $finalData[$processName]['total_profit_sum'] += $totalProfit;
+                $finalData[$processName]['total_quantity'] += $totalQuantity;
+                $finalData[$processName]['weighted_profit_output_sum'] += $totalQuantity * $profitPerOutputKg;
+                $finalData[$processName]['weighted_profit_input_sum'] += $totalQuantity * $profitPerInputKg;
+                $finalData[$processName]['weighted_cost_sum'] += $totalQuantity * $costPerKg;
+                $finalData[$processName]['total_profit_sum'] += $totalProfit; // Sumar el nuevo campo
 
                 // Procesar productos
                 foreach ($node['products'] as $product) {
@@ -132,11 +127,10 @@ class FinalNodeController extends Controller
                 ];
             }
 
-            $totalInputQuantity = $process['total_input_quantity'];
-            $totalOutputQuantity = $process['total_output_quantity'];
-            $averageCostPerKg = $totalOutputQuantity > 0 ? $process['weighted_cost_sum'] / $totalOutputQuantity : 0;
-            $averageProfitPerOutputKg = $totalOutputQuantity > 0 ? $process['weighted_profit_output_sum'] / $totalOutputQuantity : 0;
-            $averageProfitPerInputKg = $totalInputQuantity > 0 ? $process['weighted_profit_input_sum'] / $totalInputQuantity : 0;
+            $totalQuantity = $process['total_quantity'];
+            $averageCostPerKg = $totalQuantity > 0 ? $process['weighted_cost_sum'] / $totalQuantity : 0;
+            $averageProfitPerOutputKg = $totalQuantity > 0 ? $process['weighted_profit_output_sum'] / $totalQuantity : 0;
+            $averageProfitPerInputKg = $totalQuantity > 0 ? $process['weighted_profit_input_sum'] / $totalQuantity : 0;
             $margin = $averageCostPerKg > 0 ? ($averageProfitPerOutputKg / $averageCostPerKg) * 100 : 0;
 
             $processesData[] = [
@@ -144,23 +138,22 @@ class FinalNodeController extends Controller
                 'average_profit_per_output_kg' => $averageProfitPerOutputKg,
                 'average_profit_per_input_kg' => $averageProfitPerInputKg,
                 'average_cost_per_kg' => $averageCostPerKg,
-                'total_profit' => $process['total_profit_sum'],
+                'total_profit' => $process['total_profit_sum'], // Agregado
                 'margin' => $margin,
-                'total_input_quantity' => $totalInputQuantity,
-                'total_output_quantity' => $totalOutputQuantity,
+                'total_quantity' => $totalQuantity,
                 'products' => $products,
             ];
         }
 
         // Calcular medias globales
-        $globalTotals['average_profit_per_output_kg'] = $globalTotals['total_output_quantity'] > 0
-            ? $globalTotals['total_profit_output'] / $globalTotals['total_output_quantity']
+        $globalTotals['average_profit_per_output_kg'] = $globalTotals['total_quantity'] > 0
+            ? $globalTotals['total_profit_output'] / $globalTotals['total_quantity']
             : 0;
-        $globalTotals['average_profit_per_input_kg'] = $globalTotals['total_input_quantity'] > 0
-            ? $globalTotals['total_profit_input'] / $globalTotals['total_input_quantity']
+        $globalTotals['average_profit_per_input_kg'] = $globalTotals['total_quantity'] > 0
+            ? $globalTotals['total_profit_input'] / $globalTotals['total_quantity']
             : 0;
-        $globalTotals['average_cost_per_kg'] = $globalTotals['total_output_quantity'] > 0
-            ? $globalTotals['total_cost'] / $globalTotals['total_output_quantity']
+        $globalTotals['average_cost_per_kg'] = $globalTotals['total_quantity'] > 0
+            ? $globalTotals['total_cost'] / $globalTotals['total_quantity']
             : 0;
         $globalTotals['margin'] = $globalTotals['average_cost_per_kg'] > 0
             ? ($globalTotals['average_profit_per_output_kg'] / $globalTotals['average_cost_per_kg']) * 100
