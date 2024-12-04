@@ -44,13 +44,11 @@ class FinalNodeController extends Controller
         $finalData = [];
 
         foreach ($productions as $production) {
-            // Obtener nodos finales de cada producción
             $finalNodes = $production->getFinalNodes();
 
             foreach ($finalNodes as $node) {
                 $processName = $node['process_name'];
 
-                // Inicializar datos del proceso si no existe
                 if (!isset($finalData[$processName])) {
                     $finalData[$processName] = [
                         'process_name' => $processName,
@@ -64,7 +62,6 @@ class FinalNodeController extends Controller
                     ];
                 }
 
-                // Actualizar datos del nodo
                 $totalInputQuantity = $node['total_input_quantity'] ?? 0;
                 $totalOutputQuantity = $node['total_output_quantity'] ?? 0;
                 $totalProfit = $node['total_profit'] ?? 0;
@@ -72,13 +69,12 @@ class FinalNodeController extends Controller
                 $profitPerOutputKg = $node['profit_per_output_kg'] ?? 0;
                 $profitPerInputKg = $node['profit_per_input_kg'] ?? 0;
 
-                // Actualizar acumuladores globales
+                // Actualizar totales globales
                 $globalTotals['total_input_quantity'] += $totalInputQuantity;
                 $globalTotals['total_output_quantity'] += $totalOutputQuantity;
                 $globalTotals['total_cost'] += $totalOutputQuantity * $costPerOutputKg;
                 $globalTotals['total_profit'] += $totalProfit;
 
-                // Actualizar datos del proceso
                 $finalData[$processName]['total_input_quantity'] += $totalInputQuantity;
                 $finalData[$processName]['total_output_quantity'] += $totalOutputQuantity;
                 $finalData[$processName]['total_profit_sum'] += $totalProfit;
@@ -86,7 +82,6 @@ class FinalNodeController extends Controller
                 $finalData[$processName]['weighted_profit_output_sum'] += $totalOutputQuantity * $profitPerOutputKg;
                 $finalData[$processName]['weighted_profit_input_sum'] += $totalInputQuantity * $profitPerInputKg;
 
-                // Procesar productos
                 foreach ($node['products'] as $product) {
                     $productName = $product['product_name'];
 
@@ -101,7 +96,7 @@ class FinalNodeController extends Controller
                         ];
                     }
 
-                    $productInputQuantity = $product['input_quantity'] ?? 0;
+                    $productInputQuantity = $product['initial_quantity'] ?? 0;
                     $productOutputQuantity = $product['output_quantity'] ?? 0;
                     $productCostPerKg = $product['cost_per_kg'] ?? 0;
                     $productProfitPerOutputKg = $product['profit_per_output_kg'] ?? 0;
@@ -116,7 +111,6 @@ class FinalNodeController extends Controller
             }
         }
 
-        // Calcular medias ponderadas y estructurar la respuesta
         $processesData = [];
         foreach ($finalData as $processName => $process) {
             $products = [];
@@ -159,7 +153,6 @@ class FinalNodeController extends Controller
             ];
         }
 
-        // Calcular medias globales
         $globalTotals['average_cost_per_output_kg'] = $globalTotals['total_output_quantity'] > 0
             ? $globalTotals['total_cost'] / $globalTotals['total_output_quantity']
             : 0;

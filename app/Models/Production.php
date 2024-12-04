@@ -98,7 +98,12 @@ class Production extends Model
     
                 return [
                     'product_name' => $detail['product']['name'] ?? 'Producto desconocido',
-                    'quantity' => is_numeric($detail['quantity']) ? $detail['quantity'] : 0,
+
+                    /* Nuevo */
+                    'output_quantity' => is_numeric($detail['quantity']) ? $detail['quantity'] : 0,
+                    'initial_quantity' => is_numeric($detail['initialQuantity']) ? $detail['initialQuantity'] : 0,
+                    /* --- */
+
                     'cost_per_kg' => is_numeric($costPerKg) ? $costPerKg : 0,
                     'profit_per_output_kg' => is_numeric($profitPerOutputKg) ? $profitPerOutputKg : 0,
                     'profit_per_input_kg' => is_numeric($profitPerInputKg) ? $profitPerInputKg : 0,
