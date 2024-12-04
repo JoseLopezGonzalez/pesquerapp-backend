@@ -96,11 +96,25 @@ class Production extends Model
                 ];
             });
     
-            return [
+           /* 
+           ANTIGUO
+           return [
                 'node_id' => $node['id'] ?? null,
                 'process_name' => $node['process']['name'] ?? 'Sin nombre',
                 'total_quantity' => is_numeric($totals['quantity'] ?? null) ? $totals['quantity'] : 0,
                 'profit_per_kg' => is_numeric($profits['averageProfitPerKg'] ?? null) ? $profits['averageProfitPerKg'] : 0,
+                'cost_per_kg' => is_numeric($totals['averageCostPerKg'] ?? null) ? $totals['averageCostPerKg'] : 0,
+                'products' => $productDetails->toArray(),
+            ]; */
+
+            return [
+                'node_id' => $node['id'] ?? null,
+                'process_name' => $node['process']['name'] ?? 'Sin nombre',
+                'total_quantity' => is_numeric($totals['quantity'] ?? null) ? $totals['quantity'] : 0,
+                // Renombrar profit_per_kg a profit_per_output_kg
+                'profit_per_output_kg' => is_numeric($profits['averageProfitPerKg'] ?? null) ? $profits['averageProfitPerKg'] : 0,
+                // Implementar profit_per_input_kg utilizando $node['averageProfitPerInputKg']
+                'profit_per_input_kg' => is_numeric($node['averageProfitPerInputKg'] ?? null) ? $node['averageProfitPerInputKg'] : 0,
                 'cost_per_kg' => is_numeric($totals['averageCostPerKg'] ?? null) ? $totals['averageCostPerKg'] : 0,
                 'products' => $productDetails->toArray(),
             ];
