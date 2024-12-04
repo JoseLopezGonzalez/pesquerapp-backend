@@ -33,6 +33,7 @@ class FinalNodeController extends Controller
             'total_profit_output' => 0,
             'total_profit_input' => 0,
             'total_cost' => 0,
+            'total_profit' => 0, // Nuevo acumulador global
         ];
 
         // Variables para la agrupación por procesos
@@ -53,11 +54,13 @@ class FinalNodeController extends Controller
                         'weighted_profit_output_sum' => 0,
                         'weighted_profit_input_sum' => 0,
                         'weighted_cost_sum' => 0,
+                        'total_profit_sum' => 0, // Nuevo acumulador
                         'products' => [],
                     ];
                 }
 
                 $totalQuantity = $node['total_quantity'] ?? 0;
+                $totalProfit = $node['total_profit'] ?? 0; // Nuevo campo
                 $profitPerOutputKg = $node['profit_per_output_kg'] ?? 0;
                 $profitPerInputKg = $node['profit_per_input_kg'] ?? 0;
                 $costPerKg = $node['cost_per_kg'] ?? 0;
@@ -67,12 +70,14 @@ class FinalNodeController extends Controller
                 $globalTotals['total_profit_output'] += $totalQuantity * $profitPerOutputKg;
                 $globalTotals['total_profit_input'] += $totalQuantity * $profitPerInputKg;
                 $globalTotals['total_cost'] += $totalQuantity * $costPerKg;
+                $globalTotals['total_profit'] += $totalProfit;
 
                 // Actualizar datos del proceso
                 $finalData[$processName]['total_quantity'] += $totalQuantity;
                 $finalData[$processName]['weighted_profit_output_sum'] += $totalQuantity * $profitPerOutputKg;
                 $finalData[$processName]['weighted_profit_input_sum'] += $totalQuantity * $profitPerInputKg;
                 $finalData[$processName]['weighted_cost_sum'] += $totalQuantity * $costPerKg;
+                $finalData[$processName]['total_profit_sum'] += $totalProfit; // Sumar el nuevo campo
 
                 // Procesar productos
                 foreach ($node['products'] as $product) {
@@ -133,6 +138,7 @@ class FinalNodeController extends Controller
                 'average_profit_per_output_kg' => $averageProfitPerOutputKg,
                 'average_profit_per_input_kg' => $averageProfitPerInputKg,
                 'average_cost_per_kg' => $averageCostPerKg,
+                'total_profit' => $process['total_profit_sum'], // Agregado
                 'margin' => $margin,
                 'total_quantity' => $totalQuantity,
                 'products' => $products,
