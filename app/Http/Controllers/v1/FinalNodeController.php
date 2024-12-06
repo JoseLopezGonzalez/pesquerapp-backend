@@ -69,7 +69,7 @@ class FinalNodeController extends Controller
 
                 // Calcular el coste por kg de entrada
                 $costPerInputKg = $totalInputQuantity > 0
-                    ? $finalData[$processName]['weighted_cost_sum'] / $totalInputQuantity
+                    ? ($totalOutputQuantity * $costPerOutputKg) / $totalInputQuantity
                     : 0;
 
                 // Actualizar totales globales
@@ -105,11 +105,11 @@ class FinalNodeController extends Controller
                     $productCostPerKg = $product['cost_per_kg'] ?? 0;
 
                     // Calcular costes por kg de entrada y salida para el producto
-                    $costPerInputKg = $productInputQuantity > 0
+                    $productCostPerInputKg = $productInputQuantity > 0
                         ? $product['weighted_cost_sum'] / $productInputQuantity
                         : 0;
 
-                    $costPerOutputKg = $productOutputQuantity > 0
+                    $productCostPerOutputKg = $productOutputQuantity > 0
                         ? $product['weighted_cost_sum'] / $productOutputQuantity
                         : 0;
 
@@ -121,38 +121,13 @@ class FinalNodeController extends Controller
                     $finalData[$processName]['products'][$productName]['weighted_profit_input_sum'] += $productInputQuantity * $product['profit_per_input_kg'];
 
                     // Agregar los costes por kg de entrada y salida al producto
-                    $finalData[$processName]['products'][$productName]['cost_per_input_kg'] = $costPerInputKg;
-                    $finalData[$processName]['products'][$productName]['cost_per_output_kg'] = $costPerOutputKg;
+                    $finalData[$processName]['products'][$productName]['cost_per_input_kg'] = $productCostPerInputKg;
+                    $finalData[$processName]['products'][$productName]['cost_per_output_kg'] = $productCostPerOutputKg;
                 }
             }
         }
 
-        $processesData = [];
-        foreach ($finalData as $processName => $process) {
-            $products = [];
-            foreach ($process['products'] as $productName => $product) {
-                $totalInputQuantity = $product['total_input_quantity'];
-                $totalOutputQuantity = $product['total_output_quantity'];
-
-                $products[] = [
-                    'product_name' => $product['product_name'],
-                    'total_input_quantity' => $totalInputQuantity,
-                    'total_output_quantity' => $totalOutputQuantity,
-                    'cost_per_input_kg' => $product['cost_per_input_kg'],
-                    'cost_per_output_kg' => $product['cost_per_output_kg'],
-                ];
-            }
-
-            $processesData[] = [
-                'process_name' => $process['process_name'],
-                'total_input_quantity' => $process['total_input_quantity'],
-                'total_output_quantity' => $process['total_output_quantity'],
-                'cost_per_input_kg' => $costPerInputKg,
-                'cost_per_output_kg' => $costPerOutputKg,
-                'products' => $products,
-            ];
-        }
-
+        // Calcular promedios globales
         $globalTotals['average_cost_per_output_kg'] = $globalTotals['total_output_quantity'] > 0
             ? $globalTotals['total_cost'] / $globalTotals['total_output_quantity']
             : 0;
@@ -163,7 +138,7 @@ class FinalNodeController extends Controller
 
         return response()->json([
             'totals' => $globalTotals,
-            'processes' => $processesData,
+            'processes' => $finalData,
         ]);
     }
 }
