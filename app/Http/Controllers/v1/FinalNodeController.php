@@ -93,7 +93,6 @@ class FinalNodeController extends Controller
                             'weighted_cost_sum' => 0,
                             'weighted_profit_output_sum' => 0,
                             'weighted_profit_input_sum' => 0,
-                            'distribution_percentage' => 0, // Nuevo campo
                         ];
                     }
 
@@ -108,18 +107,20 @@ class FinalNodeController extends Controller
                     $finalData[$processName]['products'][$productName]['weighted_cost_sum'] += $productOutputQuantity * $productCostPerKg;
                     $finalData[$processName]['products'][$productName]['weighted_profit_output_sum'] += $productOutputQuantity * $productProfitPerOutputKg;
                     $finalData[$processName]['products'][$productName]['weighted_profit_input_sum'] += $productInputQuantity * $productProfitPerInputKg;
-
-                    // Calcular porcentaje de distribución basado en `input_quantity`
-                    if ($globalTotals['total_input_quantity'] > 0) {
-                        $finalData[$processName]['products'][$productName]['distribution_percentage'] =
-                            ($productInputQuantity / $globalTotals['total_input_quantity']) * 100;
-                    }
                 }
             }
         }
 
+        // Calcular el total global de input quantities
+        $totalGlobalInputQuantity = array_sum(array_column($finalData, 'total_input_quantity'));
+
         $processesData = [];
         foreach ($finalData as $processName => $process) {
+            // Calcular el porcentaje de distribución del nodo
+            $nodeDistributionPercentage = $totalGlobalInputQuantity > 0
+                ? $process['total_input_quantity'] / $totalGlobalInputQuantity
+                : 0;
+
             $products = [];
             foreach ($process['products'] as $productName => $product) {
                 $totalInputQuantity = $product['total_input_quantity'];
@@ -136,7 +137,6 @@ class FinalNodeController extends Controller
                     'average_cost_per_kg' => $averageCostPerKg,
                     'average_profit_per_output_kg' => $averageProfitPerOutputKg,
                     'average_profit_per_input_kg' => $averageProfitPerInputKg,
-                    'distribution_percentage' => $product['distribution_percentage'], // Nuevo
                     'margin' => $margin,
                 ];
             }
@@ -156,6 +156,7 @@ class FinalNodeController extends Controller
                 'average_profit_per_output_kg' => $averageProfitPerOutputKg,
                 'average_profit_per_input_kg' => $averageProfitPerInputKg,
                 'total_profit' => $process['total_profit_sum'],
+                'node_distribution_percentage' => $nodeDistributionPercentage,
                 'margin' => $margin,
                 'products' => $products,
             ];
