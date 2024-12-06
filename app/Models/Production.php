@@ -1,154 +1,195 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers\v1;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\Controller;
+use App\Models\Production;
+use Illuminate\Http\Request;
 
-class Production extends Model
+class FinalNodeController extends Controller
 {
-    use HasFactory;
-
-    protected $fillable = [
-        'lot',
-        'date',
-        'species_id',
-        'capture_zone_id',
-        'notes',
-        'diagram_data',
-    ];
-
-    protected $casts = [
-        'diagram_data' => 'array', // Casteo para manipular JSON como array
-    ];
-
-    /* diagram_data->totalProfit  si esque existe alguna clave */
-    public function getTotalProfitAttribute()
+    public function getFinalNodesProfit(Request $request)
     {
-        // Decodificar `diagram_data` en caso de que sea una cadena JSON
-        $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $speciesId = $request->input('species_id');
 
-        // Verificar si `diagramData` es ahora un array y contiene la estructura que necesitamos
-        return is_array($diagramData) &&
-            isset($diagramData['totals']) &&
-            is_array($diagramData['totals']) &&
-            array_key_exists('totalProfit', $diagramData['totals'])
-            ? $diagramData['totals']['totalProfit']
-            : null;
-    }
+        // Validar los parámetros
+        if (!$startDate || !$endDate) {
+            return response()->json(['error' => 'Las fechas son requeridas'], 400);
+        }
+        if (!$speciesId) {
+            return response()->json(['error' => 'El ID de la especie es requerido'], 400);
+        }
 
+        // Filtrar producciones por rango de fechas y especie
+        $productions = Production::whereBetween('date', [$startDate, $endDate])
+            ->where('species_id', $speciesId)
+            ->get();
 
-    public function getTotalProfitPerInputKgAttribute()
-    {
-        // Decodificar `diagram_data` en caso de que sea una cadena JSON
-        $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
+        // Variables de acumulación global
+        $globalTotals = [
+            'total_input_quantity' => 0,
+            'total_output_quantity' => 0,
+            'total_cost' => 0,
+            'total_profit' => 0,
+            'average_cost_per_output_kg' => 0,
+            'average_cost_per_input_kg' => 0,
+            'average_profit_per_output_kg' => 0,
+            'average_profit_per_input_kg' => 0,
+            'margin' => 0,
+        ];
 
-        // Verificar si `diagramData` es ahora un array y contiene la estructura que necesitamos
-        return is_array($diagramData) &&
-            isset($diagramData['totals']) &&
-            is_array($diagramData['totals']) &&
-            array_key_exists('totalProfitPerInputKg', $diagramData['totals'])
-            ? $diagramData['totals']['totalProfitPerInputKg']
-            : null;
-    }
+        // Variables para la agrupación por procesos
+        $finalData = [];
 
+        foreach ($productions as $production) {
+            $finalNodes = $production->getFinalNodes();
 
+            foreach ($finalNodes as $node) {
+                $processName = $node['process_name'];
 
-    public function getProcessNodes()
-    {
-        // Decodificar diagram_data
-        $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
-        $processNodes = $diagramData['processNodes'] ?? [];
-    
-        // Extraer los datos clave de cada nodo
-        return collect($processNodes)->map(function ($node) {
-            return [
-                'node_id' => $node['id'],
-                'process_name' => $node['process']['name'] ?? 'Sin nombre',
-                'input_quantity' => $node['inputQuantity'] ?? 0,
-                'decrease' => $node['decrease'] ?? 0, // Merma
-            ];
-        });
-    }
+                if (!isset($finalData[$processName])) {
+                    $finalData[$processName] = [
+                        'process_name' => $processName,
+                        'total_input_quantity' => 0,
+                        'total_output_quantity' => 0,
+                        'total_profit_sum' => 0,
+                        'weighted_cost_sum' => 0,
+                        'weighted_profit_output_sum' => 0,
+                        'weighted_profit_input_sum' => 0,
+                        'products' => [],
+                    ];
+                }
 
-    public function getFinalNodes()
-    {
-        $diagramData = is_string($this->diagram_data) ? json_decode($this->diagram_data, true) : $this->diagram_data;
-        $finalNodes = $diagramData['finalNodes'] ?? [];
-    
-        return collect($finalNodes)->map(function ($node) {
-            $totals = $node['production']['totals'] ?? [];
-            $profits = $node['profits']['totals'] ?? [];
-    
-            // Detalle de productos
-            $productDetails = collect($node['production']['details'] ?? [])->map(function ($detail) use ($node) {
-                $salesDetails = collect($node['sales']['details'] ?? [])
-                    ->firstWhere('product.id', $detail['product']['id']);
+                $totalInputQuantity = $node['total_input_quantity'] ?? 0;
+                $totalOutputQuantity = $node['total_output_quantity'] ?? 0;
+                $totalProfit = $node['total_profit'] ?? 0;
+                $costPerOutputKg = $node['cost_per_output_kg'] ?? 0;
+                $profitPerOutputKg = $node['profit_per_output_kg'] ?? 0;
+                $profitPerInputKg = $node['profit_per_input_kg'] ?? 0;
 
-                $productionSummary = collect($node['production']['summary'] ?? [])
-                    ->firstWhere('product.id', $detail['product']['id']);
+                // Actualizar totales globales
+                $globalTotals['total_input_quantity'] += $totalInputQuantity;
+                $globalTotals['total_output_quantity'] += $totalOutputQuantity;
+                $globalTotals['total_cost'] += $totalOutputQuantity * $costPerOutputKg;
+                $globalTotals['total_profit'] += $totalProfit;
 
-                $costPerKg = $productionSummary['averageCostPerKg'] ?? 0;
+                // Actualizar datos del nodo
+                $finalData[$processName]['total_input_quantity'] += $totalInputQuantity;
+                $finalData[$processName]['total_output_quantity'] += $totalOutputQuantity;
+                $finalData[$processName]['total_profit_sum'] += $totalProfit;
+                $finalData[$processName]['weighted_cost_sum'] += $totalOutputQuantity * $costPerOutputKg;
+                $finalData[$processName]['weighted_profit_output_sum'] += $totalOutputQuantity * $profitPerOutputKg;
+                $finalData[$processName]['weighted_profit_input_sum'] += $totalInputQuantity * $profitPerInputKg;
 
-                $profitsSummary = collect($node['profits']['summary'] ?? [])
-                    ->firstWhere('product.id', $detail['product']['id']);
+                foreach ($node['products'] as $product) {
+                    $productName = $product['product_name'];
 
-                $profitPerInputKg = $profitsSummary['profitPerInputKg'] ?? 0;
-                $profitPerOutputKg = $profitsSummary['profitPerOutputKg'] ?? 0;
-    
-                return [
-                    'product_name' => $detail['product']['name'] ?? 'Producto desconocido',
+                    if (!isset($finalData[$processName]['products'][$productName])) {
+                        $finalData[$processName]['products'][$productName] = [
+                            'product_name' => $productName,
+                            'total_input_quantity' => 0,
+                            'total_output_quantity' => 0,
+                            'weighted_cost_sum' => 0,
+                            'weighted_profit_output_sum' => 0,
+                            'weighted_profit_input_sum' => 0,
+                        ];
+                    }
 
-                    /* Nuevo */
-                    'output_quantity' => is_numeric($detail['quantity']) ? $detail['quantity'] : 0,
-                    'initial_quantity' => is_numeric($detail['initialQuantity']) ? $detail['initialQuantity'] : 0,
-                    /* --- */
+                    $productInputQuantity = $product['initial_quantity'] ?? 0;
+                    $productOutputQuantity = $product['output_quantity'] ?? 0;
+                    $productCostPerKg = $product['cost_per_kg'] ?? 0;
+                    $productProfitPerOutputKg = $product['profit_per_output_kg'] ?? 0;
+                    $productProfitPerInputKg = $product['profit_per_input_kg'] ?? 0;
 
-                    'cost_per_kg' => is_numeric($costPerKg) ? $costPerKg : 0,
-                    'profit_per_output_kg' => is_numeric($profitPerOutputKg) ? $profitPerOutputKg : 0,
-                    'profit_per_input_kg' => is_numeric($profitPerInputKg) ? $profitPerInputKg : 0,
+                    // Actualizar totales del producto
+                    $finalData[$processName]['products'][$productName]['total_input_quantity'] += $productInputQuantity;
+                    $finalData[$processName]['products'][$productName]['total_output_quantity'] += $productOutputQuantity;
+                    $finalData[$processName]['products'][$productName]['weighted_cost_sum'] += $productOutputQuantity * $productCostPerKg;
+                    $finalData[$processName]['products'][$productName]['weighted_profit_output_sum'] += $productOutputQuantity * $productProfitPerOutputKg;
+                    $finalData[$processName]['products'][$productName]['weighted_profit_input_sum'] += $productInputQuantity * $productProfitPerInputKg;
+                }
+            }
+        }
+
+        // Calcular el total global de input quantities
+        $totalGlobalInputQuantity = $globalTotals['total_input_quantity'];
+
+        $processesData = [];
+        foreach ($finalData as $processName => $process) {
+            // Calcular el porcentaje de distribución del nodo
+            $nodeDistributionPercentage = $totalGlobalInputQuantity > 0
+                ? $process['total_input_quantity'] / $totalGlobalInputQuantity
+                : 0;
+
+            $products = [];
+            foreach ($process['products'] as $productName => $product) {
+                $totalInputQuantity = $product['total_input_quantity'];
+                $totalOutputQuantity = $product['total_output_quantity'];
+                $averageCostPerKg = $totalOutputQuantity > 0 ? $product['weighted_cost_sum'] / $totalOutputQuantity : 0;
+                $averageProfitPerOutputKg = $totalOutputQuantity > 0 ? $product['weighted_profit_output_sum'] / $totalOutputQuantity : 0;
+                $averageProfitPerInputKg = $totalInputQuantity > 0 ? $product['weighted_profit_input_sum'] / $totalInputQuantity : 0;
+                $margin = $averageCostPerKg > 0 ? ($averageProfitPerOutputKg / $averageCostPerKg) * 100 : 0;
+
+                // Calcular porcentaje de distribución del producto
+                $distributionPercentage = $process['total_input_quantity'] > 0
+                    ? $totalInputQuantity / $process['total_input_quantity']
+                    : 0;
+
+                $products[] = [
+                    'product_name' => $product['product_name'],
+                    'total_input_quantity' => $totalInputQuantity,
+                    'total_output_quantity' => $totalOutputQuantity,
+                    'average_cost_per_kg' => $averageCostPerKg,
+                    'average_profit_per_output_kg' => $averageProfitPerOutputKg,
+                    'average_profit_per_input_kg' => $averageProfitPerInputKg,
+                    'distribution_percentage' => $distributionPercentage,
+                    'margin' => $margin,
                 ];
-            });
+            }
 
-            return [
-                'node_id' => $node['id'] ?? null,
-                'process_name' => $node['process']['name'] ?? 'Sin nombre',
-                /* Cambiar total_quantity por total_output_quantity */
-                'total_output_quantity' => is_numeric($totals['quantity'] ?? null) ? $totals['quantity'] : 0,
-                /* total_input_quantity nuevo */
-                'total_input_quantity' => is_numeric($node['totalInitialQuantity'] ?? null) ? $node['totalInitialQuantity'] : 0,
-                
+            $totalInputQuantity = $process['total_input_quantity'];
+            $totalOutputQuantity = $process['total_output_quantity'];
+            $averageCostPerOutputKg = $totalOutputQuantity > 0 ? $process['weighted_cost_sum'] / $totalOutputQuantity : 0;
+            $averageProfitPerOutputKg = $totalOutputQuantity > 0 ? $process['weighted_profit_output_sum'] / $totalOutputQuantity : 0;
+            $averageProfitPerInputKg = $totalInputQuantity > 0 ? $process['weighted_profit_input_sum'] / $totalInputQuantity : 0;
+            $margin = $averageCostPerOutputKg > 0 ? ($averageProfitPerOutputKg / $averageCostPerOutputKg) * 100 : 0;
 
-                'total_profit' => is_numeric($profits['totalProfit'] ?? null) ? $profits['totalProfit'] : 0, /* Añadido Nuevo */
-                'profit_per_output_kg' => is_numeric($profits['averageProfitPerKg'] ?? null) ? $profits['averageProfitPerKg'] : 0,
-                'profit_per_input_kg' => is_numeric($node['averageProfitPerInputKg'] ?? null) ? $node['averageProfitPerInputKg'] : 0,
-                'cost_per_output_kg' => is_numeric($totals['averageCostPerKg'] ?? null) ? $totals['averageCostPerKg'] : 0,
-                'products' => $productDetails->toArray(),
+            $processesData[] = [
+                'process_name' => $process['process_name'],
+                'total_input_quantity' => $totalInputQuantity,
+                'total_output_quantity' => $totalOutputQuantity,
+                'average_cost_per_output_kg' => $averageCostPerOutputKg,
+                'average_profit_per_output_kg' => $averageProfitPerOutputKg,
+                'average_profit_per_input_kg' => $averageProfitPerInputKg,
+                'node_distribution_percentage' => $nodeDistributionPercentage,
+                'total_profit' => $process['total_profit_sum'],
+                'margin' => $margin,
+                'products' => $products,
             ];
-        });
-    }
-    
-    
+        }
 
-    
+        // Calcular totales globales
+        $globalTotals['average_cost_per_output_kg'] = $globalTotals['total_output_quantity'] > 0
+            ? $globalTotals['total_cost'] / $globalTotals['total_output_quantity']
+            : 0;
+        $globalTotals['average_cost_per_input_kg'] = $globalTotals['total_input_quantity'] > 0
+            ? $globalTotals['total_cost'] / $globalTotals['total_input_quantity']
+            : 0;
+        $globalTotals['average_profit_per_output_kg'] = $globalTotals['total_output_quantity'] > 0
+            ? $globalTotals['total_profit'] / $globalTotals['total_output_quantity']
+            : 0;
+        $globalTotals['average_profit_per_input_kg'] = $globalTotals['total_input_quantity'] > 0
+            ? $globalTotals['total_profit'] / $globalTotals['total_input_quantity']
+            : 0;
+        $globalTotals['margin'] = $globalTotals['average_cost_per_output_kg'] > 0
+            ? ($globalTotals['average_profit_per_output_kg'] / $globalTotals['average_cost_per_output_kg']) * 100
+            : 0;
 
-
-    
-
-
-
-
-
-
-    // Relación con el modelo Species
-    public function species()
-    {
-        return $this->belongsTo(Species::class, 'species_id');
-    }
-
-    // Relación con el modelo CaptureZone
-    public function captureZone()
-    {
-        return $this->belongsTo(CaptureZone::class, 'capture_zone_id');
+        return response()->json([
+            'totals' => $globalTotals,
+            'processes' => $processesData,
+        ]);
     }
 }
