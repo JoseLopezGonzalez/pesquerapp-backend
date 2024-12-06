@@ -49,6 +49,7 @@ class FinalNodeController extends Controller
             foreach ($finalNodes as $node) {
                 $processName = $node['process_name'];
 
+                // Inicializar el nodo si no existe
                 if (!isset($finalData[$processName])) {
                     $finalData[$processName] = [
                         'process_name' => $processName,
@@ -83,12 +84,13 @@ class FinalNodeController extends Controller
                 $finalData[$processName]['total_output_quantity'] += $totalOutputQuantity;
                 $finalData[$processName]['total_profit_sum'] += $totalProfit;
                 $finalData[$processName]['weighted_cost_sum'] += $totalOutputQuantity * $costPerOutputKg;
-                $finalData[$processName]['weighted_profit_output_sum'] += $totalOutputQuantity * $node['profit_per_output_kg'];
-                $finalData[$processName]['weighted_profit_input_sum'] += $totalInputQuantity * $node['profit_per_input_kg'];
+                $finalData[$processName]['weighted_profit_output_sum'] += $totalOutputQuantity * ($node['profit_per_output_kg'] ?? 0);
+                $finalData[$processName]['weighted_profit_input_sum'] += $totalInputQuantity * ($node['profit_per_input_kg'] ?? 0);
 
                 foreach ($node['products'] as $product) {
                     $productName = $product['product_name'];
 
+                    // Inicializar el producto si no existe
                     if (!isset($finalData[$processName]['products'][$productName])) {
                         $finalData[$processName]['products'][$productName] = [
                             'product_name' => $productName,
@@ -106,7 +108,7 @@ class FinalNodeController extends Controller
 
                     // Calcular costes por kg de entrada y salida para el producto
                     $productCostPerInputKg = $productInputQuantity > 0
-                        ? $product['weighted_cost_sum'] / $productInputQuantity
+                        ? ($productOutputQuantity * $productCostPerKg) / $productInputQuantity
                         : 0;
 
                     $productCostPerOutputKg = $productOutputQuantity > 0
