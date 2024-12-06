@@ -99,6 +99,8 @@ class FinalNodeController extends Controller
                             'weighted_cost_sum' => 0,
                             'weighted_profit_output_sum' => 0,
                             'weighted_profit_input_sum' => 0,
+                            'cost_per_input_kg' => 0,
+                            'cost_per_output_kg' => 0,
                         ];
                     }
 
