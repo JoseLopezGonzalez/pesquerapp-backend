@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\v2;
 
-use App\Exports\v1\OrderExport;
+use App\Exports\v2\OrderExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
