@@ -2,20 +2,9 @@
 
 namespace App\Http\Controllers\v2;
 
-use App\Exports\v1\BoxesExport;
 use App\Exports\v1\OrderExport;
-use App\Exports\v1\RawMaterialReceptionExport;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\BoxResource;
-use App\Http\Resources\v1\PalletResource;
-use App\Models\Box;
-use App\Models\Order;
-use App\Models\OrderPallet;
-use App\Models\Pallet;
-use App\Models\PalletBox;
-use App\Models\StoredPallet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class OrdersReportController extends Controller
