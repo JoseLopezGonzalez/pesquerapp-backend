@@ -41,6 +41,11 @@ class OrderController extends Controller
                 $query->where('id', 'like', "%{$text}%");
             }
 
+            /* ids */
+            if ($request->has('ids')) {
+                $query->whereIn('id', $request->ids);
+            }
+
             /* status */
             if ($request->has('status')) {
                 $query->where('status', $request->status);
