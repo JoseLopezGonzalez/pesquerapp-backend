@@ -46,9 +46,7 @@ class Order extends Model
     //Resumen productos pedido
 
 
-    public function getSummaryAttribute()
-    {
-    }
+    public function getSummaryAttribute() {}
 
     public function payment_term()
     {
@@ -116,6 +114,8 @@ class Order extends Model
         return $totals;
     }
 
+
+
     public function getNumberOfPalletsAttribute()
     {
         return $this->pallets->count();
@@ -134,9 +134,9 @@ class Order extends Model
                 }
             }
         });
-    
+
         return $lots; // Devuelve la lista acumulada de lotes únicos
-        
+
     }
 
     /* some pallets on storage status */
@@ -192,5 +192,22 @@ class Order extends Model
         }
 
         return $result;
+    }
+
+
+    /* Nuevo V2 */
+
+    public function getTotalNetWeightAttribute()
+    {
+        return $this->pallets->sum(function ($pallet) {
+            return $pallet->boxes->sum('netWeight');
+        });
+    }
+
+    public function getTotalBoxesAttribute()
+    {
+        return $this->pallets->sum(function ($pallet) {
+            return $pallet->boxes->count();
+        });
     }
 }

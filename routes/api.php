@@ -35,6 +35,9 @@ use App\Http\Resources\v1\CustomerResource;
 use App\Models\PaymentTerm;
 use Illuminate\Support\Facades\App;
 
+/* API V2 */
+use App\Http\Controllers\v2\OrderController as V2OrderController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -144,6 +147,16 @@ Route::get('v1/total-inventory-by-species', [StoresStatsController::class, 'tota
 Route::get('v1/total-inventory-by-products', [StoresStatsController::class, 'totalInventoryByProducts'])->name('total_inventory_by_products');
 
 Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDispatchesDocument'])->name('generate_cebo_document');
+
+
+
+
+
+
+/* Api V2 */
+
+Route::apiResource('v2/orders', V2OrderController::class);
+
 
 
 //});
