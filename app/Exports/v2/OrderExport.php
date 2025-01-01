@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Exports\v1;
+namespace App\Exports\v2;
 
-use App\Models\Box;
 use App\Models\Order;
-use App\Models\RawMaterialReception;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
