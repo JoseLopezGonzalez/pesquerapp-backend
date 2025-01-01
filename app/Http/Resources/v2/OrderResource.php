@@ -22,23 +22,10 @@ class OrderResource extends JsonResource
             'loadDate' => $this->load_date,
             'salesperson' => $this->salesperson->toArrayAssoc(),
             'transport' => $this->transport->toArrayAssoc(),
-            'numberOfPallets' => $this->numberOfPallets,
+            'pallets' => $this->numberOfPallets,
             'totalBoxes' => $this->totalBoxes,
             'incoterm' => $this->incoterm->toArrayAssoc(),
             'totalNetWeight' => $this->totalNetWeight,
-            
-            /* Antiguo */
-            'paymentTerm' => $this->payment_term->toArrayAssoc(),
-            'billingAddress' => $this->billing_address,
-            'shippingAddress' => $this->shipping_address,
-            'transportationNotes' => $this->transportation_notes,
-            'productionNotes' => $this->production_notes,
-            'accountingNotes' => $this->accounting_notes,
-            'emails' => $this->emails,
-            'hasPalletsOnStorage' => $this->hasPalletsOnStorage(),/* Posiblemente deprecado */
-            'entryDate' => $this->entry_date,
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at,
         ];
     }
 }
