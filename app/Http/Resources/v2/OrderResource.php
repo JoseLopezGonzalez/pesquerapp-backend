@@ -16,13 +16,14 @@ class OrderResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'buyerReference' => $this->buyer_reference,
             'customer' => $this->customer->toArrayAssoc(),
+            'buyerReference' => $this->buyer_reference,
             'status' => $this->status,
             'loadDate' => $this->load_date,
             'salesperson' => $this->salesperson->toArrayAssoc(),
             'transport' => $this->transport->toArrayAssoc(),
             'numberOfPallets' => $this->numberOfPallets,
+            'totalBoxes' => $this->totalBoxes,
             'incoterm' => $this->incoterm->toArrayAssoc(),
             'totalNetWeight' => $this->totalNetWeight,
             
