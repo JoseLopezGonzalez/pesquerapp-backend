@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\App;
 
 /* API V2 */
 use App\Http\Controllers\v2\OrderController as V2OrderController;
+use App\Http\Controllers\v2\RawMaterialReceptionController as V2RawMaterialReceptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -156,6 +157,7 @@ Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDis
 /* Api V2 */
 
 Route::apiResource('v2/orders', V2OrderController::class);
+Route::apiResource('v2/raw-material-receptions', V2RawMaterialReceptionController::class);
 
 
 
