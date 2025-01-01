@@ -46,6 +46,12 @@ class OrderController extends Controller
                 $query->whereIn('id', $request->ids);
             }
 
+            /* buyerReference */
+            if ($request->has('buyerReference')) {
+                $text = $request->buyerReference;
+                $query->where('buyer_reference', 'like', "%{$text}%");
+            }
+
             /* status */
             if ($request->has('status')) {
                 $query->where('status', $request->status);
