@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -28,10 +29,15 @@ class AuthController extends Controller
     // Logout
     public function logout(Request $request)
     {
+        Log::info('Logout attempt', [
+            'headers' => $request->headers->all(),
+            'cookies' => $request->cookies->all(),
+        ]);
+    
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
+    
         return response()->json(['message' => 'Logged out successfully'], 200);
     }
 
