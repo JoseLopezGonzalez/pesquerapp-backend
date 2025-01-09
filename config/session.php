@@ -18,7 +18,9 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'file'),
+    /* 'driver' => env('SESSION_DRIVER', 'file'), */
+    'driver' => 'cookie',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -157,7 +159,7 @@ return [
 
     //'domain' => env('SESSION_DOMAIN'),
     /* 'domain' => '.congeladosbrisamar.com',  *//* Añadido para evitar CORS */
-    'domain' => 'localhost:3000', /* Alocalhost*/
+    'domain' => env('SESSION_DOMAIN', null),
     
 
 
@@ -202,7 +204,7 @@ return [
     |
     */
 
-    'same_site' => null, /* Para localhost */
+    'same_site' => 'none', /* Para localhost */
     /* 'same_site' =>'lax', */
 
 ];
