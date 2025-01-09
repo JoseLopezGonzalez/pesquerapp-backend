@@ -11,6 +11,10 @@ class AuthController extends Controller
     // Login
     public function login(Request $request)
     {
+
+        \Log::info('Método de solicitud:', ['method' => $request->method()]);
+        \Log::info('Datos recibidos:', $request->all());
+        
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
