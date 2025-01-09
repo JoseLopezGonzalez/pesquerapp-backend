@@ -156,7 +156,9 @@ return [
     */
 
     //'domain' => env('SESSION_DOMAIN'),
-    'domain' => '.congeladosbrisamar.com', /* Añadido para evitar CORS */
+    /* 'domain' => '.congeladosbrisamar.com',  *//* Añadido para evitar CORS */
+    'domain' => 'localhost', /* Alocalhost*/
+
 
     /*
     |--------------------------------------------------------------------------
