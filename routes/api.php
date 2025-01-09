@@ -157,17 +157,28 @@ Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDis
 
 
 /* Api V2 */
-Route::middleware(['auth:sanctum'])->group(function () {
-    /* Auth */
+/* Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('v2/login', [V2AuthController::class, 'login'])->name('login');
     Route::post('v2/logout', [V2AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::get('v2/me', [V2AuthController::class, 'me'])->middleware('auth:sanctum');
-    /* Rest */
     Route::apiResource('v2/orders', V2OrderController::class);
     Route::apiResource('v2/raw-material-receptions', V2RawMaterialReceptionController::class);
     Route::get('v2/orders_report', [OrdersReportController::class, 'exportToExcel'])->name('export.orders');
-});
+}); */
 
+Route::group(['prefix' => 'v2'], function () {
+    // Rutas públicas (sin autenticación)
+    Route::post('login', [V2AuthController::class, 'login'])->name('login');;
+    Route::post('logout', [V2AuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::get('me', [V2AuthController::class, 'me'])->middleware('auth:sanctum');
+
+    // Rutas protegidas
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::apiResource('orders', V2OrderController::class);
+        Route::apiResource('raw-material-receptions', V2RawMaterialReceptionController::class);
+        Route::get('orders_report', [OrdersReportController::class, 'exportToExcel'])->name('export.orders');
+    });
+});
 
 
 
