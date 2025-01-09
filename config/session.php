@@ -169,7 +169,9 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    /* 'secure' => env('SESSION_SECURE_COOKIE'), */
+    'secure' => env('SESSION_SECURE_COOKIE', false),/* Para localhost */
+
 
     /*
     |--------------------------------------------------------------------------
@@ -197,6 +199,7 @@ return [
     |
     */
 
-    'same_site' => null,/* 'lax', */
+    'same_site' => null, /* Para localhost */
+    /* 'same_site' =>'lax', */
 
 ];
