@@ -169,7 +169,7 @@ Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDis
 Route::group(['prefix' => 'v2'], function () {
     // Rutas públicas (sin autenticación)
     Route::post('login', [V2AuthController::class, 'login'])->name('login');
-    Route::post('logout', [V2AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
+    Route::post('logout', [V2AuthController::class, 'logout'])->name('logout');
     Route::get('me', [V2AuthController::class, 'me'])->middleware('auth:sanctum')->name('me');
 
     // Rutas protegidas
