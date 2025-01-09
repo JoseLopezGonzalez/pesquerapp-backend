@@ -30,6 +30,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false, /* Antes Cambiado a true para Evitar CORS */
+    'supports_credentials' => true, 
 
 ];
