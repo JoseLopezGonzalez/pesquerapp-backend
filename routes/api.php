@@ -159,9 +159,9 @@ Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDis
 /* Api V2 */
 Route::middleware(['auth:sanctum'])->group(function () {
     /* Auth */
-    Route::post('login', [V2AuthController::class, 'login']);
-    Route::post('logout', [V2AuthController::class, 'logout'])->middleware('auth:sanctum');
-    Route::get('me', [V2AuthController::class, 'me'])->middleware('auth:sanctum');
+    Route::post('v2/login', [V2AuthController::class, 'login']);
+    Route::post('v2/logout', [V2AuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::get('v2/me', [V2AuthController::class, 'me'])->middleware('auth:sanctum');
     /* Rest */
     Route::apiResource('v2/orders', V2OrderController::class);
     Route::apiResource('v2/raw-material-receptions', V2RawMaterialReceptionController::class);
