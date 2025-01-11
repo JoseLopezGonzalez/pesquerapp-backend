@@ -31,6 +31,7 @@ use App\Http\Controllers\v1\StoredPalletController;
 use App\Http\Controllers\v1\StoresStatsController;
 use App\Http\Controllers\v1\SupplierController;
 use App\Http\Controllers\v1\TransportController;
+use App\Http\Controllers\v2\ActivityLogController;
 use App\Http\Controllers\v2\AuthController as V2AuthController;
 use App\Http\Resources\v1\CustomerResource;
 use App\Models\PaymentTerm;
@@ -168,15 +169,33 @@ Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDis
 
 Route::group(['prefix' => 'v2'], function () {
     // Rutas públicas (sin autenticación)
-    Route::post('login', [V2AuthController::class, 'login'])->name('login');
-    Route::post('logout', [V2AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
-    Route::get('me', [V2AuthController::class, 'me'])->middleware('auth:sanctum')->name('me');
+    Route::post('login', [V2AuthController::class, 'login'])->name('v2.login');
+    Route::post('logout', [V2AuthController::class, 'logout'])->middleware('auth:sanctum')->name('v2.logout');
+    Route::get('me', [V2AuthController::class, 'me'])->middleware('auth:sanctum')->name('v2.me');
 
-    // Rutas protegidas
+    // Rutas protegidas por Sanctum
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::apiResource('orders', V2OrderController::class);
-        Route::apiResource('raw-material-receptions', V2RawMaterialReceptionController::class);
-        Route::get('orders_report', [OrdersReportController::class, 'exportToExcel'])->name('export.orders');
+        // Rutas para Superusuario (Técnico)
+        Route::middleware(['role:superuser'])->group(function () {
+            Route::get('orders_report', [OrdersReportController::class, 'exportToExcel'])->name('v2.export.orders');
+            Route::get('activity-log', [ActivityLogController::class, 'index'])->name('v2.activity.log');
+        });
+
+        // Rutas para Gerencia
+        Route::middleware(['role:manager'])->group(function () {
+            Route::apiResource('orders', V2OrderController::class)->only(['index', 'show']);
+        });
+
+        // Rutas para Administración
+        Route::middleware(['role:admin'])->group(function () {
+            Route::apiResource('orders', V2OrderController::class)->except(['destroy']);
+            Route::apiResource('raw-material-receptions', V2RawMaterialReceptionController::class);
+        });
+
+        // Rutas accesibles para múltiples roles
+        Route::middleware(['role:superuser,manager,admin'])->group(function () {
+            //Route::get('shared-resource', [SomeController::class, 'sharedMethod'])->name('v2.shared.resource');
+        });
     });
 });
 

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -42,4 +41,66 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Relación con los roles del usuario.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+    
+
+    /**
+     * Verificar si el usuario tiene un rol específico.
+     *
+     * @param string|array $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        if (is_array($role)) {
+            return $this->roles->whereIn('name', $role)->isNotEmpty();
+        }
+
+        return $this->roles->where('name', $role)->isNotEmpty();
+    }
+
+    /**
+     * Asignar un rol al usuario.
+     *
+     * @param string $roleName
+     * @return void
+     */
+    public function assignRole($roleName)
+    {
+        $role = Role::where('name', $roleName)->first();
+
+        if ($role && !$this->hasRole($roleName)) {
+            $this->roles()->attach($role);
+        }
+    }
+
+    /**
+     * Eliminar un rol del usuario.
+     *
+     * @param string $roleName
+     * @return void
+     */
+    public function removeRole($roleName)
+    {
+        $role = Role::where('name', $roleName)->first();
+
+        if ($role && $this->hasRole($roleName)) {
+            $this->roles()->detach($role);
+        }
+    }
+
+    public function hasAnyRole(array $roles)
+    {
+        return $this->roles()->whereIn('name', $roles)->exists();
+    }
 }
