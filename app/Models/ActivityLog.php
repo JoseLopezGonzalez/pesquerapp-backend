@@ -11,12 +11,18 @@ class ActivityLog extends Model
 
     protected $fillable = [
         'user_id',
-        'action',
         'ip_address',
-        'device',
+        'country',
+        'city',
+        'region',
+        'platform',
         'browser',
-        'location',
-        'details',
+        'device',
+        'path',
+        'method',
+        'action', // Nuevo campo
+        'location', // Nuevo campo
+        'details', // Nuevo campo
     ];
 
     public function user()

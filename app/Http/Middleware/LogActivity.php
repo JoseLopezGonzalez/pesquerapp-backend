@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -34,6 +32,8 @@ class LogActivity
             $userAgentHeader = $request->header('User-Agent');
             if ($userAgentHeader) {
                 $agent->setUserAgent($userAgentHeader);
+            } else {
+                Log::warning("No se encontró un User-Agent en la solicitud.");
             }
 
             // Verificar si el usuario está autenticado antes de registrar la actividad
@@ -49,7 +49,12 @@ class LogActivity
                     'device' => $agent->device() ?? 'Desconocido',
                     'path' => $request->path(),
                     'method' => $request->method(),
+                    'action' => 'default_action', // Ejemplo
+                    'location' => "{$location?->countryName}, {$location?->cityName}", // Ejemplo de formato de ubicación
+                    'details' => $userAgentHeader ?? 'Desconocido', // Guardar el User-Agent completo
                 ]);
+            } else {
+                Log::info("Usuario no autenticado, actividad no registrada.");
             }
         } catch (\Exception $e) {
             Log::error("Error en el middleware LogActivity: " . $e->getMessage());
