@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v2\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -60,7 +61,8 @@ class UserController extends Controller
 
         // Paginación
         $perPage = $request->input('perPage', 10);
-        return response()->json($query->paginate($perPage));
+
+         return UserResource::collection($query->paginate($perPage));
     }
 
     /**
