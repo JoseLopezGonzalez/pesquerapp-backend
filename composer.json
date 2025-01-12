@@ -17,6 +17,7 @@
         "maatwebsite/excel": "^3.1",
         "spatie/browsershot": "^4.0",
         "spatie/laravel-pdf": "^1.5",
+        "stevebauman/location": "^7.4",
         "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {

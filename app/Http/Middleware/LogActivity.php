@@ -1,11 +1,13 @@
 <?php
 
+
 namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use App\Models\ActivityLog;
-use Jenssegers\Agent\Agent; // Necesitas instalar esta librería
+use Jenssegers\Agent\Agent;
+use Stevebauman\Location\Facades\Location;
 
 class LogActivity
 {
@@ -13,24 +15,28 @@ class LogActivity
     {
         $response = $next($request);
 
-        // Obtener información del usuario
-        $user = auth()->user();
+        // Obtener IP del cliente
+        $ip = $request->ip();
 
-        // Obtener información del dispositivo
+        // Obtener información de ubicación
+        $location = Location::get($ip);
+
+        // Analizar el User-Agent
         $agent = new Agent();
-        $device = $agent->device();
-        $browser = $agent->browser();
-        $ipAddress = $request->ip();
-        $action = $request->path();
+        $agent->setUserAgent($request->header('User-Agent'));
 
-        // Guardar el log
+        // Registrar actividad
         ActivityLog::create([
-            'user_id' => $user ? $user->id : null,
-            'action' => $action,
-            'ip_address' => $ipAddress,
-            'device' => $device,
-            'browser' => $browser,
-            'details' => json_encode($request->all()), // Puedes ajustar esto según lo que quieras registrar
+            'user_id' => auth()->id(),
+            'ip_address' => $ip,
+            'country' => $location?->countryName ?? 'Desconocido',
+            'city' => $location?->cityName ?? 'Desconocido',
+            'region' => $location?->regionName ?? 'Desconocido',
+            'platform' => $agent->platform() ?? 'Desconocido',
+            'browser' => $agent->browser() ?? 'Desconocido',
+            'device' => $agent->device() ?? 'Desconocido',
+            'path' => $request->path(),
+            'method' => $request->method(),
         ]);
 
         return $response;
