@@ -20,9 +20,7 @@ class ActivityLog extends Model
         'device',
         'path',
         'method',
-        /* 'action', */ // Nuevo campo
         'location', // Nuevo campo
-        /* 'details',  */// Nuevo campo
     ];
 
     public function user()

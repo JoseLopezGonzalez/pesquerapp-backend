@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\App;
 use App\Http\Controllers\v2\OrderController as V2OrderController;
 use App\Http\Controllers\v2\OrdersReportController;
 use App\Http\Controllers\v2\RawMaterialReceptionController as V2RawMaterialReceptionController;
+use App\Http\Controllers\v2\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -179,6 +180,8 @@ Route::group(['prefix' => 'v2'], function () {
         Route::middleware(['role:superuser'])->group(function () {
             Route::get('orders_report', [OrdersReportController::class, 'exportToExcel'])->name('v2.export.orders');
             Route::get('activity-log', [ActivityLogController::class, 'index'])->name('v2.activity.log');
+            /* Users */
+            Route::apiResource('users', UserController::class);
         });
 
         // Rutas para Gerencia
