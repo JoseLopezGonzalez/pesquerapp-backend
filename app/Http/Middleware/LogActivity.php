@@ -49,9 +49,9 @@ class LogActivity
                     'device' => $agent->device() ?? 'Desconocido',
                     'path' => $request->path(),
                     'method' => $request->method(),
-                    'action' => 'default_action', // Ejemplo
+                    /* 'action' => 'default_action', // Ejemplo */
                     'location' => "{$location?->countryName}, {$location?->cityName}", // Ejemplo de formato de ubicación
-                    'details' => $userAgentHeader ?? 'Desconocido', // Guardar el User-Agent completo
+                    /* 'details' => $userAgentHeader ?? 'Desconocido', // Guardar el User-Agent completo */
                 ]);
             } else {
                 Log::info("Usuario no autenticado, actividad no registrada.");
