@@ -194,6 +194,7 @@ Route::group(['prefix' => 'v2'], function () {
 
         // Rutas accesibles para múltiples roles
         Route::middleware(['role:superuser,manager,admin'])->group(function () {
+            Route::apiResource('orders', V2OrderController::class)->only(['index', 'show']);
             //Route::get('shared-resource', [SomeController::class, 'sharedMethod'])->name('v2.shared.resource');
         });
     });
