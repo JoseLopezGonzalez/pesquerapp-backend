@@ -14,26 +14,37 @@ class AuthController extends Controller
     // Login
     public function login(Request $request)
     {
+        // Validar los datos del formulario
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
+        // Buscar al usuario por email
         $user = User::where('email', $request->email)->first();
 
+        // Verificar si el usuario existe y si la contraseña es correcta
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Credenciales inválidas'], 401);
+            return response()->json([
+                'message' => 'Las credenciales proporcionadas son inválidas.',
+            ], 401); // Respuesta con código de estado 401 (no autorizado)
         }
 
-        // Crear un token personal
+        // Crear un token personal para el usuario
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        // Devolver respuesta exitosa con el token y datos básicos del usuario
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->roles->pluck('name'), // Si usas roles
+            ],
         ]);
     }
-
 
     // Logout
     public function logout(Request $request)
