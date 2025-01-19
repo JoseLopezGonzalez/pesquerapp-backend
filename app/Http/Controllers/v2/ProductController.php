@@ -12,10 +12,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-        
-    }
+    public function index(Request $request) {}
 
     /**
      * Store a newly created resource in storage.
@@ -28,9 +25,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-    }
+    public function show(string $id) {}
 
     /**
      * Update the specified resource in storage.
@@ -57,11 +52,11 @@ class ProductController extends Controller
     {
         /* Ojo que product no tiene name, teiene article que a su vex tiene name */
 
-        $products = Product::with('article')
+        $products = Product::with('article:name') // Carga solo los campos necesarios de Article
             ->select('id', 'name')
             ->orderBy('name', 'asc')
             ->get();
-            
+
         return response()->json($products);
     }
 }
