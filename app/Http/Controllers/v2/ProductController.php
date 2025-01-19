@@ -52,10 +52,11 @@ class ProductController extends Controller
     {
         /* Ojo que product no tiene name, teiene article que a su vex tiene name */
 
-        $products = Product::with('article:name') // Carga solo los campos necesarios de Article
-            ->select('id', 'name')
-            ->orderBy('name', 'asc')
+        $products = Product::join('articles', 'products.id', '=', 'articles.product_id')
+            ->select('products.id', 'articles.name') // Selecciona los campos necesarios
+            ->orderBy('articles.name', 'asc') // Ordena por el nombre del artículo
             ->get();
+
 
         return response()->json($products);
     }
