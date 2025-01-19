@@ -25,8 +25,24 @@ class RawMaterialReceptionController extends Controller
             $query->whereIn('supplier_id', $request->suppliers);
         }
 
-        if ($request->has('dates')) {
+       /*  if ($request->has('dates')) {
             $query->whereBetween('date', [$request->dates['start'], $request->dates['end']]);
+        } */
+
+        if ($request->has('dates')) {
+            $dates = $request->input('dates');
+            /* Check if $dates['start'] exists */
+            if (isset($dates['start'])) {
+                $startDate = $dates['start'];
+                $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
+                $query->where('date', '>=', $startDate);
+            }
+            /* Check if $dates['end'] exists */
+            if (isset($dates['end'])) {
+                $endDate = $dates['end'];
+                $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
+                $query->where('date', '<=', $endDate);
+            }
         }
 
         if ($request->has('species')) {
