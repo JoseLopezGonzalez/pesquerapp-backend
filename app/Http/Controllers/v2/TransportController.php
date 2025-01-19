@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\TransportResource;
+use App\Http\Resources\v2\TransportResource as V2TransportResource;
 use App\Models\Transport;
 use Illuminate\Http\Request;
 
@@ -12,8 +13,34 @@ class TransportController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $query = Transport::query();
+
+        if ($request->has('id')) {
+            $query->where('id', $request->id);
+        }
+
+        if ($request->has('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
+
+        if ($request->has('names')) {
+            $query->whereIn('name', $request->names);
+        }
+
+        /* adrdess like*/
+        if ($request->has('address')) {
+            $query->where('address', 'like', '%' . $request->address . '%');
+        }
+
+        /* Order by name*/
+        $query->orderBy('name', 'asc');
+
+        $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
+        return V2TransportResource::collection($query->paginate($perPage));
+
     }
 
     /**
