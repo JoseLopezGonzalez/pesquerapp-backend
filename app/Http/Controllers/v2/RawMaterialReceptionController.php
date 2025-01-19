@@ -21,13 +21,15 @@ class RawMaterialReceptionController extends Controller
             $query->where('id', $request->id);
         }
 
+        /* ids */
+        if ($request->has('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
+
         if ($request->has('suppliers')) {
             $query->whereIn('supplier_id', $request->suppliers);
         }
 
-       /*  if ($request->has('dates')) {
-            $query->whereBetween('date', [$request->dates['start'], $request->dates['end']]);
-        } */
 
         if ($request->has('dates')) {
             $dates = $request->input('dates');

@@ -42,8 +42,11 @@ use Illuminate\Support\Facades\App;
 /* API V2 */
 use App\Http\Controllers\v2\OrderController as V2OrderController;
 use App\Http\Controllers\v2\OrdersReportController;
+use App\Http\Controllers\v2\ProductController as V2ProductController;
 use App\Http\Controllers\v2\RawMaterialReceptionController as V2RawMaterialReceptionController;
 use App\Http\Controllers\v2\SalespersonController as V2SalespersonController;
+use App\Http\Controllers\v2\SpeciesController as V2SpeciesController;
+use App\Http\Controllers\v2\SupplierController as V2SupplierController;
 use App\Http\Controllers\v2\TransportController as V2TransportController;
 use App\Http\Controllers\v2\UserController;
 
@@ -208,6 +211,13 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/salespeople/options', [V2SalespersonController::class, 'options']);
             Route::get('/transports/options', [V2TransportController::class, 'options']);
             Route::get('/incoterms/options', [V2IncotermController::class, 'options']);
+            Route::get('/suppliers/options', [V2SupplierController::class, 'options']);
+            Route::get('/species/options', [V2SpeciesController::class, 'options']);
+            Route::get('/products/options', [V2ProductController::class, 'options']);
+
+
+
+
 
 
 
