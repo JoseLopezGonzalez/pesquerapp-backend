@@ -202,6 +202,7 @@ Route::group(['prefix' => 'v2'], function () {
         // Rutas accesibles para múltiples roles
         Route::middleware(['role:superuser,manager,admin'])->group(function () {
             Route::apiResource('orders', V2OrderController::class)->only(['index', 'show']);
+            Route::apiResource('raw-material-receptions', V2RawMaterialReceptionController::class);
             //Route::get('shared-resource', [SomeController::class, 'sharedMethod'])->name('v2.shared.resource');
             Route::get('/customers/options', [V2CustomerController::class, 'options']);
             Route::get('/salespeople/options', [V2SalespersonController::class, 'options']);
