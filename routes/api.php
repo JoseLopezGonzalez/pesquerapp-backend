@@ -205,8 +205,8 @@ Route::group(['prefix' => 'v2'], function () {
             //Route::get('shared-resource', [SomeController::class, 'sharedMethod'])->name('v2.shared.resource');
             Route::get('/customers/options', [V2CustomerController::class, 'options']);
             Route::get('/salespeople/options', [V2SalespersonController::class, 'options']);
-            Route::get('/transport/options', [V2TransportController::class, 'options']);
-            Route::get('/incoterm/options', [V2IncotermController::class, 'options']);
+            Route::get('/transports/options', [V2TransportController::class, 'options']);
+            Route::get('/incoterms/options', [V2IncotermController::class, 'options']);
 
 
 
