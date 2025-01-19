@@ -118,6 +118,11 @@ class OrderController extends Controller
                 $query->where('incoterm_id', $request->incoterm);
             }
 
+            /* transport */
+            if ($request->has('transport')) {
+                $query->where('transport_id', $request->transport);
+            }
+
             /* Sort by date desc */
             $query->orderBy('load_date', 'desc');
 
