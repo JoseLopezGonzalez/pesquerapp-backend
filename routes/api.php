@@ -33,6 +33,7 @@ use App\Http\Controllers\v1\SupplierController;
 use App\Http\Controllers\v1\TransportController;
 use App\Http\Controllers\v2\ActivityLogController;
 use App\Http\Controllers\v2\AuthController as V2AuthController;
+use App\Http\Controllers\v2\CustomerController as V2CustomerController;
 use App\Http\Resources\v1\CustomerResource;
 use App\Models\PaymentTerm;
 use Illuminate\Support\Facades\App;
@@ -199,6 +200,8 @@ Route::group(['prefix' => 'v2'], function () {
         Route::middleware(['role:superuser,manager,admin'])->group(function () {
             Route::apiResource('orders', V2OrderController::class)->only(['index', 'show']);
             //Route::get('shared-resource', [SomeController::class, 'sharedMethod'])->name('v2.shared.resource');
+            Route::get('/customers/options', [V2CustomerController::class, 'options']);
+
         });
     });
 });
