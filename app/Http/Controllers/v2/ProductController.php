@@ -52,7 +52,7 @@ class ProductController extends Controller
     {
         /* Ojo que product no tiene name, teiene article que a su vex tiene name */
 
-        $products = Product::join('articles', 'products.id', '=', 'articles.product_id')
+        $products = Product::join('articles', 'products.id', '=', 'articles.id')
             ->select('products.id', 'articles.name') // Selecciona los campos necesarios
             ->orderBy('articles.name', 'asc') // Ordena por el nombre del artículo
             ->get();
