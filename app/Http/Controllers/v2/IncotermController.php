@@ -72,9 +72,16 @@ class IncotermController extends Controller
      */
     public function options()
     {
-        $incoterms = Incoterm::select('id', 'code') // Selecciona solo los campos necesarios
-                       ->orderBy('code', 'asc') // Ordena por nombre, opcional
+        $incoterms = Incoterm::select('id', 'code' , 'description') // Selecciona solo los campos necesarios
                        ->get();
+
+        $incoterms = $incoterms->map(function ($incoterm) {
+            return [
+                'id' => $incoterm->id,
+                'name' => "{$incoterm->code} - {$incoterm->description}"
+            ];
+        });
+
 
         return response()->json($incoterms);
     }
