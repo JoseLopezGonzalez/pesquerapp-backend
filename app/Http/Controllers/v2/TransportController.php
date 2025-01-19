@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\CustomerResource;
-use App\Models\Customer;
+use App\Http\Resources\v1\TransportResource;
+use App\Models\Transport;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class TransportController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        
     }
 
     /**
@@ -66,16 +65,16 @@ class CustomerController extends Controller
     }
 
     /**
-     * Get all options for the customers select box.
+     * Get all options for the transports select box.
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function options()
     {
-        $customers = Customer::select('id', 'name') // Selecciona solo los campos necesarios
+        $transports = Transport::select('id', 'name') // Selecciona solo los campos necesarios
                        ->orderBy('name', 'asc') // Ordena por nombre, opcional
                        ->get();
 
-        return response()->json($customers);
+        return response()->json($transports);
     }
 }

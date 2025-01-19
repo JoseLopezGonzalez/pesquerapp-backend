@@ -43,6 +43,7 @@ use App\Http\Controllers\v2\OrderController as V2OrderController;
 use App\Http\Controllers\v2\OrdersReportController;
 use App\Http\Controllers\v2\RawMaterialReceptionController as V2RawMaterialReceptionController;
 use App\Http\Controllers\v2\SalespersonController as V2SalespersonController;
+use App\Http\Controllers\v2\TransportController as V2TransportController;
 use App\Http\Controllers\v2\UserController;
 
 /*
@@ -203,6 +204,8 @@ Route::group(['prefix' => 'v2'], function () {
             //Route::get('shared-resource', [SomeController::class, 'sharedMethod'])->name('v2.shared.resource');
             Route::get('/customers/options', [V2CustomerController::class, 'options']);
             Route::get('/salespeople/options', [V2SalespersonController::class, 'options']);
+            Route::get('/transport/options', [V2TransportController::class, 'options']);
+
 
 
         });
