@@ -34,6 +34,7 @@ use App\Http\Controllers\v1\TransportController;
 use App\Http\Controllers\v2\ActivityLogController;
 use App\Http\Controllers\v2\AuthController as V2AuthController;
 use App\Http\Controllers\v2\CustomerController as V2CustomerController;
+use App\Http\Controllers\v2\IncotermController as V2IncotermController;
 use App\Http\Resources\v1\CustomerResource;
 use App\Models\PaymentTerm;
 use Illuminate\Support\Facades\App;
@@ -205,6 +206,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/customers/options', [V2CustomerController::class, 'options']);
             Route::get('/salespeople/options', [V2SalespersonController::class, 'options']);
             Route::get('/transport/options', [V2TransportController::class, 'options']);
+            Route::get('/incoterm/options', [V2IncotermController::class, 'options']);
+
 
 
 
