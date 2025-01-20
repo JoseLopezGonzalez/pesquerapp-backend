@@ -35,15 +35,16 @@ class ProductController extends Controller
             });
         }
 
-        /* species */
+        /* species Where in*/
         if ($request->has('species')) {
-            $query->where('species', 'like', '%' . $request->species . '%');
+            $query->whereIn('species_id', $request->species);
         }
 
-        /* capture zone */
-        if ($request->has('capture_zone')) {
-            $query->where('capture_zone', 'like', '%' . $request->capture_zone . '%');
+        /* capture zone where in*/
+        if ($request->has('captureZone')) {
+            $query->whereIn('capture_zone_id', $request->captureZone);
         }
+        
 
         /* Always order by article.name */
         $query->orderBy(
