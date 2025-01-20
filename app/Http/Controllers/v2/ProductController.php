@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\ProductResource;
+use App\Http\Resources\v2\ProductResource as V2ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,40 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request) {}
+    public function index(Request $request) {
+        $query = Product::query();
+
+        if ($request->has('id')) {
+            $query->where('id', $request->id);
+        }
+
+        if ($request->has('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
+
+        /*name but product.article.name  */
+        if ($request->has('name')) {
+            $query->join('articles', 'products.id', '=', 'articles.id')
+                ->where('articles.name', 'like', '%' . $request->name . '%');
+        }
+
+        /* species */
+        if ($request->has('species')) {
+            $query->where('species', 'like', '%' . $request->species . '%');
+        }
+
+        /* capture zone */
+        if ($request->has('capture_zone')) {
+            $query->where('capture_zone', 'like', '%' . $request->capture_zone . '%');
+        }
+
+        /* Order by name*/
+        $query->orderBy('name', 'asc');
+
+        $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
+        return V2ProductResource::collection($query->paginate($perPage));
+
+    }
 
     /**
      * Store a newly created resource in storage.
