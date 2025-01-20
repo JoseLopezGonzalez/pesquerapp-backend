@@ -53,7 +53,7 @@ class ProductController extends Controller
         );
 
 
-        $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
+        $perPage = $request->input('perPage', 14); // Default a 10 si no se proporciona
         return V2ProductResource::collection($query->paginate($perPage));
     }
 
