@@ -41,8 +41,8 @@ class ProductController extends Controller
         }
 
         /* capture zone where in*/
-        if ($request->has('captureZone')) {
-            $query->whereIn('capture_zone_id', $request->captureZone);
+        if ($request->has('captureZones')) {
+            $query->whereIn('capture_zone_id', $request->captureZones);
         }
         
 
