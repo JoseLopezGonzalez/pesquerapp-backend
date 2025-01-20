@@ -15,6 +15,8 @@ class ProductController extends Controller
      */
     public function index(Request $request) {
         $query = Product::query();
+        /* Add article */
+        $query->with('article');
 
         if ($request->has('id')) {
             $query->where('id', $request->id);
@@ -26,8 +28,9 @@ class ProductController extends Controller
 
         /*name but product.article.name  */
         if ($request->has('name')) {
-            $query->join('articles', 'products.id', '=', 'articles.id')
-                ->where('articles.name', 'like', '%' . $request->name . '%');
+            $query->whereHas('article', function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->name . '%');
+            });
         }
 
         /* species */
@@ -40,8 +43,9 @@ class ProductController extends Controller
             $query->where('capture_zone', 'like', '%' . $request->capture_zone . '%');
         }
 
-        /* Order by name*/
-        $query->orderBy('name', 'asc');
+        /* Order by article.name*/
+        $query->orderBy('article.name', 'asc');
+
 
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
         return V2ProductResource::collection($query->paginate($perPage));
