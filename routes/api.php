@@ -47,6 +47,7 @@ use App\Http\Controllers\v2\ProductController as V2ProductController;
 use App\Http\Controllers\v2\RawMaterialReceptionController as V2RawMaterialReceptionController;
 use App\Http\Controllers\v2\SalespersonController as V2SalespersonController;
 use App\Http\Controllers\v2\SpeciesController as V2SpeciesController;
+use App\Http\Controllers\v2\StoreController as V2StoreController;
 use App\Http\Controllers\v2\SupplierController as V2SupplierController;
 use App\Http\Controllers\v2\TransportController as V2TransportController;
 use App\Http\Controllers\v2\UserController;
@@ -220,6 +221,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/species/options', [V2SpeciesController::class, 'options']);
             Route::get('/products/options', [V2ProductController::class, 'options']);
             Route::get('/capture-zones/options', [V2CaptureZoneController::class, 'options']);
+            /* Stores */
+            Route::get('/stores/options', [V2StoreController::class, 'options']);
 
 
 
