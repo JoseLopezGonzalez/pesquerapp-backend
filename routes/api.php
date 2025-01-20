@@ -33,6 +33,7 @@ use App\Http\Controllers\v1\SupplierController;
 use App\Http\Controllers\v1\TransportController;
 use App\Http\Controllers\v2\ActivityLogController;
 use App\Http\Controllers\v2\AuthController as V2AuthController;
+use App\Http\Controllers\v2\CaptureZoneController as V2CaptureZoneController;
 use App\Http\Controllers\v2\CustomerController as V2CustomerController;
 use App\Http\Controllers\v2\IncotermController as V2IncotermController;
 use App\Http\Resources\v1\CustomerResource;
@@ -218,6 +219,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/suppliers/options', [V2SupplierController::class, 'options']);
             Route::get('/species/options', [V2SpeciesController::class, 'options']);
             Route::get('/products/options', [V2ProductController::class, 'options']);
+            Route::get('/capture-zones/options', [V2CaptureZoneController::class, 'options']);
+
 
 
 
