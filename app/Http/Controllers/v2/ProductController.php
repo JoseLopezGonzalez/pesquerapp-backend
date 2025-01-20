@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v2;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\ProductResource;
 use App\Http\Resources\v2\ProductResource as V2ProductResource;
+use App\Models\Article;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,8 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $query = Product::query();
         /* Add article */
         $query->with('article');
@@ -43,12 +45,16 @@ class ProductController extends Controller
             $query->where('capture_zone', 'like', '%' . $request->capture_zone . '%');
         }
 
-        /* Order by name but product.article.name*/
+        /* Always order by article.name */
+        $query->orderBy(
+            Article::select('name')
+                ->whereColumn('articles.id', 'products.id'),
+            'asc'
+        );
 
 
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
         return V2ProductResource::collection($query->paginate($perPage));
-
     }
 
     /**
