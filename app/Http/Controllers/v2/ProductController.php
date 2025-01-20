@@ -43,8 +43,7 @@ class ProductController extends Controller
             $query->where('capture_zone', 'like', '%' . $request->capture_zone . '%');
         }
 
-        /* Order by article.name*/
-        $query->orderBy('article.name', 'asc');
+        /* Order by name but product.article.name*/
 
 
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
