@@ -31,12 +31,12 @@ class Pallet extends Model
         return $articles;
     }
 
-    /* Article names list join by ,*/
+    /* Article names list array*/
     public function getArticlesNamesAttribute()
     {
-        return implode(', ', array_map(function ($article) {
+        return array_map(function ($article) {
             return $article->name;
-        }, $this->articles));
+        }, $this->articles);
     }
 
     
