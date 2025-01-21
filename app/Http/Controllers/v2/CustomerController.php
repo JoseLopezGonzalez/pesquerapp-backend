@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\CustomerResource;
+use App\Http\Resources\v2\CustomerResource as V2CustomerResource;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,26 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Customer::query();
         
+        /* id */
+        if ($request->has('id')) {
+            $query->where('id', $request->id);
+        }
+
+        /* ids */
+        if ($request->has('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
+
+        /* order */
+        $query->orderBy('name', 'asc');
+
+        $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
+        return V2CustomerResource::collection($query->paginate($perPage));
+
     }
 
     /**
