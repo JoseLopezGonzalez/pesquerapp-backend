@@ -17,6 +17,12 @@ class StoredPallet extends Model
         return $this->belongsTo(Pallet::class, 'pallet_id');
     }
 
+    /* has store */
+    public function store()
+    {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
+
     public function toArrayAssoc()
     {
 
