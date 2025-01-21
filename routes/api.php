@@ -44,6 +44,7 @@ use Illuminate\Support\Facades\App;
 /* API V2 */
 use App\Http\Controllers\v2\OrderController as V2OrderController;
 use App\Http\Controllers\v2\OrdersReportController;
+use App\Http\Controllers\v2\PalletController as V2PalletController;
 use App\Http\Controllers\v2\ProductController as V2ProductController;
 use App\Http\Controllers\v2\RawMaterialReceptionController as V2RawMaterialReceptionController;
 use App\Http\Controllers\v2\SalespersonController as V2SalespersonController;
@@ -215,7 +216,9 @@ Route::group(['prefix' => 'v2'], function () {
             /* stores */
             Route::apiResource('stores', V2StoreController::class);
             /* boxes */
-            Route::apiResource('boxes', BoxesController::class);
+            Route::apiResource('boxes', BoxesController::class); /* Algo raro en el nombre */
+            /* pallets */
+            Route::apiResource('pallets', V2PalletController::class);
 
             //Route::get('shared-resource', [SomeController::class, 'sharedMethod'])->name('v2.shared.resource');
             Route::get('/customers/options', [V2CustomerController::class, 'options']);
