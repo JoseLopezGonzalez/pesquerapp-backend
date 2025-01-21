@@ -18,12 +18,12 @@ class Pallet extends Model
         return $this->belongsTo(PalletState::class, 'state_id');
     }
 
-    /* getArticlesAttribute from boxes.boxes.article  */
+    /* getArticlesAttribute from boxes.boxes.article.article  */
     public function getArticlesAttribute()
     {
         $articles = [];
         $this->boxes->map(function ($box) use (&$articles) {
-            $article = $box->box->product;
+            $article = $box->box->article->article;
             if (!isset($articles[$article->id])) {
                 $articles[$article->id] = $article;
             }
