@@ -160,6 +160,10 @@ class PalletController extends Controller
         }
 
 
+/* order by id and show first where state=store */
+        $query->orderBy('id', 'desc');
+        
+        
 
 
 
