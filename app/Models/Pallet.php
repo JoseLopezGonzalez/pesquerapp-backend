@@ -18,6 +18,29 @@ class Pallet extends Model
         return $this->belongsTo(PalletState::class, 'state_id');
     }
 
+    /* getArticlesAttribute from boxes.boxes.article  */
+    public function getArticlesAttribute()
+    {
+        $articles = [];
+        $this->boxes->map(function ($box) use (&$articles) {
+            $article = $box->box->product;
+            if (!isset($articles[$article->id])) {
+                $articles[$article->id] = $article;
+            }
+        });
+        return $articles;
+    }
+
+    /* Article names list join by ,*/
+    public function getArticlesNamesAttribute()
+    {
+        return implode(', ', array_map(function ($article) {
+            return $article->name;
+        }, $this->articles));
+    }
+
+    
+
    /* public function store()
     {
         return $this->belongsTo(Store::class, 'store_id');
