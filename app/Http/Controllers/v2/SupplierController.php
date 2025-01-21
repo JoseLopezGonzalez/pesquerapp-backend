@@ -4,15 +4,36 @@ namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\SupplierResource;
+use App\Http\Resources\v2\SupplierResource as V2SupplierResource;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = Supplier::query();
 
+        if ($request->has('id')) {
+            $query->where('id', $request->id);
+        }
+
+        if ($request->has('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
+
+        if ($request->has('names')) {
+            $query->whereIn('name', $request->names);
+        }
+
+        $query->orderBy('name', 'asc');
+
+        $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
+        return V2SupplierResource::collection($query->paginate($perPage));
     }
+
+
+    
 
     public function store(Request $request)
     {

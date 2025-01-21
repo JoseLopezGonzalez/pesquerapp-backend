@@ -221,6 +221,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::apiResource('pallets', V2PalletController::class);
             /* customers */
             Route::apiResource('customers', V2CustomerController::class);
+            /* suppliers */
+            Route::apiResource('suppliers', V2SupplierController::class);
 
             //Route::get('shared-resource', [SomeController::class, 'sharedMethod'])->name('v2.shared.resource');
             Route::get('/customers/options', [V2CustomerController::class, 'options']);
