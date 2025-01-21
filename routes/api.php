@@ -33,6 +33,7 @@ use App\Http\Controllers\v1\SupplierController;
 use App\Http\Controllers\v1\TransportController;
 use App\Http\Controllers\v2\ActivityLogController;
 use App\Http\Controllers\v2\AuthController as V2AuthController;
+use App\Http\Controllers\v2\BoxesController;
 use App\Http\Controllers\v2\CaptureZoneController as V2CaptureZoneController;
 use App\Http\Controllers\v2\CustomerController as V2CustomerController;
 use App\Http\Controllers\v2\IncotermController as V2IncotermController;
@@ -213,6 +214,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::apiResource('products', V2ProductController::class);
             /* stores */
             Route::apiResource('stores', V2StoreController::class);
+            /* boxes */
+            Route::apiResource('boxes', BoxesController::class);
 
             //Route::get('shared-resource', [SomeController::class, 'sharedMethod'])->name('v2.shared.resource');
             Route::get('/customers/options', [V2CustomerController::class, 'options']);
