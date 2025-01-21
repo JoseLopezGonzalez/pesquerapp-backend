@@ -99,12 +99,25 @@ class Pallet extends Model
         ];
     }
 
-    public function getStoreAttribute()
+    public function getStoreIdAttribute()
     {
         $pallet = StoredPallet::where('pallet_id', $this->id)->first();
         if($pallet)
         {
             return $pallet->store_id;
+        } else{
+            
+               return null;
+
+        }
+    }
+
+    public function getStoreAttribute()
+    {
+        $pallet = StoredPallet::where('pallet_id', $this->id)->first();
+        if($pallet)
+        {
+            return $pallet->store;
         } else{
             
                return null;
