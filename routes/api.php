@@ -229,6 +229,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::apiResource('species', V2SpeciesController::class);
             /* Incoterm */
             Route::apiResource('incoterms', V2IncotermController::class);
+            /* Salespeople */
+            Route::apiResource('salespeople', V2SalespersonController::class);
 
             //Route::get('shared-resource', [SomeController::class, 'sharedMethod'])->name('v2.shared.resource');
             Route::get('/customers/options', [V2CustomerController::class, 'options']);

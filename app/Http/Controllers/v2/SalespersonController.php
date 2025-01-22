@@ -12,7 +12,28 @@ class SalespersonController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {}
+    public function index(Request $request)
+    {
+        $query = Salesperson::query();
+
+        if ($request->has('id')) {
+            $query->where('id', $request->id);
+        }
+
+        if ($request->has('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
+
+        if ($request->has('names')) {
+            $query->whereIn('name', $request->names);
+        }
+
+        $query->orderBy('name', 'asc');
+
+        $perPage = $request->input('perPage', 10);
+        return SalespersonResource::collection($query->paginate($perPage));
+
+    }
 
     /**
      * Show the form for creating a new resource.
