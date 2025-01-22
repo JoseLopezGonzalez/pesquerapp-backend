@@ -184,7 +184,7 @@ Route::group(['prefix' => 'v2'], function () {
     Route::post('login', [V2AuthController::class, 'login'])->name('v2.login');
     Route::post('logout', [V2AuthController::class, 'logout'])->middleware('auth:sanctum')->name('v2.logout');
     Route::get('me', [V2AuthController::class, 'me'])->middleware('auth:sanctum')->name('v2.me');
-    Route::get('/customers/options', [V2CustomerController::class, 'options']);
+    Route::get('/customers/op', [V2CustomerController::class, 'options']);
 
 
     // Rutas protegidas por Sanctum
