@@ -225,6 +225,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::apiResource('suppliers', V2SupplierController::class);
             /* CaptureZones */
             Route::apiResource('capture-zones', V2CaptureZoneController::class);
+            /* Species */
+            Route::apiResource('species', V2SpeciesController::class);
 
             //Route::get('shared-resource', [SomeController::class, 'sharedMethod'])->name('v2.shared.resource');
             Route::get('/customers/options', [V2CustomerController::class, 'options']);
