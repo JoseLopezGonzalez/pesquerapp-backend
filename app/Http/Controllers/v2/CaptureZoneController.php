@@ -17,6 +17,27 @@ class CaptureZoneController extends Controller
     public function index(Request $request)
     {
 
+        $query = CaptureZone::query();
+
+        if ($request->has('id')) {
+            $query->where('id', $request->id);
+        }
+
+        if ($request->has('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
+
+        if ($request->has('names')) {
+            $query->whereIn('name', $request->names);
+        }
+
+        /* order by name */
+        $query->orderBy('name', 'asc');
+
+        $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
+        return V2TransportResource::collection($query->paginate($perPage));
+        
+
     
 
     }
