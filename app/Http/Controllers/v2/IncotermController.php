@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\TransportResource;
+use App\Http\Resources\v2\IncotermResource;
 use App\Models\Incoterm;
 use App\Models\Transport;
 use Illuminate\Http\Request;
@@ -15,6 +16,22 @@ class IncotermController extends Controller
      */
     public function index()
     {
+
+        $query = Incoterm::query();
+
+        if (request()->has('id')) {
+            $query->where('id', request()->id);
+        }
+
+        if (request()->has('ids')) {
+            $query->whereIn('id', request()->ids);
+        }
+
+        /* order */
+        $query->orderBy('code', 'asc');
+
+        $perPage = request()->input('perPage', 10); // Default a 10 si no se proporciona
+        return IncotermResource::collection($query->paginate($perPage));
     }
 
     /**
