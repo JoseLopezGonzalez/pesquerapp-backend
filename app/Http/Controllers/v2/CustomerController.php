@@ -93,6 +93,7 @@ class CustomerController extends Controller
             ->orderBy('name', 'asc') // Ordena por nombre, opcional
             ->get();
 
-        return response()->json($customers);
+        /* json= {Data:[]} format*/
+        return response()->json(['Data' => $customers]);
     }
 }
