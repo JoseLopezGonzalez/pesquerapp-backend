@@ -16,7 +16,7 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $query = Customer::query();
-        
+
         /* id */
         if ($request->has('id')) {
             $query->where('id', $request->id);
@@ -32,7 +32,6 @@ class CustomerController extends Controller
 
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
         return V2CustomerResource::collection($query->paginate($perPage));
-
     }
 
     /**
@@ -91,8 +90,8 @@ class CustomerController extends Controller
     public function options()
     {
         $customers = Customer::select('id', 'name') // Selecciona solo los campos necesarios
-                       ->orderBy('name', 'asc') // Ordena por nombre, opcional
-                       ->get();
+            ->orderBy('name', 'asc') // Ordena por nombre, opcional
+            ->get();
 
         return response()->json($customers);
     }
