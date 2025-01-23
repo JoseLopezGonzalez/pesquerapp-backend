@@ -61,9 +61,9 @@ class BoxesController extends Controller
             });
         }
 
-        /* gs1128 like */
+        /* gs1128 where in */
         if ($request->has('gs1128')) {
-            $query->where('gs1_128', 'like', '%' . $request->gs1128 . '%');
+            $query->whereIn('gs1_128', $request->gs1128);
         }
 
 
