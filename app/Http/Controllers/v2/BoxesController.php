@@ -55,9 +55,9 @@ class BoxesController extends Controller
         }
 
         /* palletIds */
-        if ($request->has('palletIds')) {
+        if ($request->has('pallets')) {
             $query->whereHas('palletBox', function ($query) use ($request) {
-                $query->whereIn('pallet_id', $request->palletIds);
+                $query->whereIn('pallet_id', $request->pallets);
             });
         }
 
