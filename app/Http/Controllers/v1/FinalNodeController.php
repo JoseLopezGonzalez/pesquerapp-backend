@@ -219,7 +219,7 @@ class FinalNodeController extends Controller
             $finalNodes = $production->getFinalNodes(); // Obtiene nodos finales de la producción
 
             foreach ($finalNodes as $node) {
-                if ($node['process_id'] != $finalProcessId) {
+                if ($node['process']['id'] != $finalProcessId) {
                     continue; // Ignorar nodos que no pertenezcan al proceso final especificado
                 }
 
