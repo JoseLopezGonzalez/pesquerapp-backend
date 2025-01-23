@@ -65,7 +65,6 @@ class ProcessNodeController extends Controller
     }
 
     public function getProcessNodesDecreaseStats(Request $request)
-
     {
         // Obtener parámetros de entrada
         $startDate = $request->input('start_date');
@@ -118,6 +117,9 @@ class ProcessNodeController extends Controller
                 $dateWiseData[$date][$processName]['weighted_loss_sum'] += $inputQuantity * $decrease;
             }
         }
+
+        // Ordenar las fechas (claves del array) cronológicamente
+        ksort($dateWiseData);
 
         // Transformar los datos en el formato requerido
         $formattedData = [];
