@@ -10,7 +10,7 @@ class Box extends Model
     use HasFactory;
     //protected $table = 'boxes';
 
-    protected $fillable = ['pallet_id', 'article_id', 'lot', 'gs1_128', 'gross_weight', 'net_weight'];
+    protected $fillable = [ 'article_id', 'lot', 'gs1_128', 'gross_weight', 'net_weight'];
 
     //Alguna parte del codigo usa esto todavia aunque este mal semanticamente
     public function article()
@@ -30,9 +30,8 @@ class Box extends Model
 
     public function getPalletAttribute()
     {
-        /* Find pallet with id like pallet_id or null */
-        $pallet = Pallet::find($this->pallet_id);
-        return $pallet;
+        
+        return $this->palletBox->pallet;
     }
 
     public function toArrayAssoc()
