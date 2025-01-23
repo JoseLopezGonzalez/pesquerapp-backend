@@ -66,6 +66,23 @@ class BoxesController extends Controller
             $query->whereIn('gs1_128', $request->gs1128);
         }
 
+        /* createdAt */
+        if ($request->has('createdAt')) {
+            $createdAt = $request->input('createdAt');
+            /* Check if $createdAt['start'] exists */
+            if (isset($createdAt['start'])) {
+                $startDate = $createdAt['start'];
+                $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
+                $query->where('created_at', '>=', $startDate);
+            }
+            /* Check if $createdAt['end'] exists */
+            if (isset($createdAt['end'])) {
+                $endDate = $createdAt['end'];
+                $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
+                $query->where('created_at', '<=', $endDate);
+            }
+        }
+
 
         /* order by id desc */
         $query->orderBy('id', 'desc');
