@@ -148,6 +148,8 @@ Route::get('v1/rawMaterialReceptions/document', [PDFController::class, 'generate
 
 /* Process Node  */
 Route::get('v1/process-nodes-decrease', [ProcessNodeController::class, 'getProcessNodesDecrease']);
+/* getProcessNodesDecreaseStats */
+Route::get('v1/process-nodes-decrease-stats', [ProcessNodeController::class, 'getProcessNodesDecreaseStats']);
 
 /* Final node */
 Route::get('v1/final-nodes-profit', [FinalNodeController::class, 'getFinalNodesProfit']);
