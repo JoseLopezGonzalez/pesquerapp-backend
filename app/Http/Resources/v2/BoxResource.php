@@ -22,7 +22,6 @@ class BoxResource extends JsonResource
             'gs1128' => $this->gs1_128,
             'grossWeight' => $this->gross_weight,
             'netWeight' => $this->net_weight,
-            'palletId' => $this->pallet->id,
             'createdAt' => $this->created_at, //formatear para mostrar solo fecha
         ];
     }
