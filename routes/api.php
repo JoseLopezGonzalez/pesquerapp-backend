@@ -218,6 +218,17 @@ Route::group(['prefix' => 'v2'], function () {
 
         // Rutas accesibles para múltiples roles
         Route::middleware(['role:superuser,manager,admin'])->group(function () {
+            /* Options */
+            Route::get('/customers/options', [V2CustomerController::class, 'options']);
+            Route::get('/salespeople/options', [V2SalespersonController::class, 'options']);
+            Route::get('/transports/options', [V2TransportController::class, 'options']);
+            Route::get('/incoterms/options', [V2IncotermController::class, 'options']);
+            Route::get('/suppliers/options', [V2SupplierController::class, 'options']);
+            Route::get('/species/options', [V2SpeciesController::class, 'options']);
+            Route::get('/products/options', [V2ProductController::class, 'options']);
+            Route::get('/capture-zones/options', [V2CaptureZoneController::class, 'options']);
+
+            
             Route::apiResource('orders', V2OrderController::class)->only(['index', 'show']);
             Route::apiResource('raw-material-receptions', V2RawMaterialReceptionController::class);
             Route::apiResource('transports', V2TransportController::class);
