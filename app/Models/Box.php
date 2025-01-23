@@ -18,42 +18,21 @@ class Box extends Model
         return $this->belongsTo(Product::class, 'article_id');
     }
 
-
     public function product()
     {
         return $this->belongsTo(Product::class, 'article_id');
     }
 
-    public function palletBox(){
+    public function palletBox()
+    {
         return $this->hasOne(PalletBox::class, 'box_id');
     }
 
-    //para usar como un atributo
-
     public function getPalletAttribute()
     {
-
-        return $this->palletBox ? $this->palletBox->pallet : null;
-        /* return $this->palletBox->pallet; */
-
-        
-       /*  $pallet = PalletBox::where('box_id', $this->id)->first();
-        if($pallet){
-            $pallet_id = $pallet->pallet_id;
-            return $pallet;
-        }else{
-            $pallet_id = null;
-            return null;
-        } */
-
-
-       
-
-    //return $this->belongsTo(Pallet::class, 'pallet_boxes', 'box_id', 'pallet_id')->withTimestamps();
-        //El pallet_id esta en la tabla pallet_boxes y no en la tabla boxes. Ademas solu puede tener un palet
-
-    
-    
+        /* Find pallet with id like pallet_id or null */
+        $pallet = Pallet::find($this->pallet_id);
+        return $pallet;
     }
 
     public function toArrayAssoc()

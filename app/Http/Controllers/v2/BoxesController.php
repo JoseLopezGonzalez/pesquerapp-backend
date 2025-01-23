@@ -44,9 +44,14 @@ class BoxesController extends Controller
             });
         }
 
-        /* lot */
-        if ($request->has('lot')) {
-            $query->where('lot', 'like', '%' . $request->lot . '%');
+        /* lot where in*/
+        if ($request->has('lots')) {
+            $query->whereIn('lot', $request->lots);
+        }
+
+        /* products where in */
+        if ($request->has('products')) {
+            $query->whereIn('article_id', $request->products);
         }
 
         /* order by id desc */
