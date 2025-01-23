@@ -57,8 +57,12 @@ class ProcessController extends Controller
     }
 
     /* Options */
-    public function options()
+    public function options(Request $request)
     {
-        return Process::all();
+        /* Type */
+        if ($request->has('type')) {
+            return Process::where('type', $request->input('type'))->get();
+        }
+        
     }
 }
