@@ -61,6 +61,11 @@ class BoxesController extends Controller
             });
         }
 
+        /* gs1128 like */
+        if ($request->has('gs1128')) {
+            $query->where('gs1_128', 'like', '%' . $request->gs1128 . '%');
+        }
+
 
         /* order by id desc */
         $query->orderBy('id', 'desc');
