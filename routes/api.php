@@ -153,6 +153,8 @@ Route::get('v1/process-nodes-decrease-stats', [ProcessNodeController::class, 'ge
 
 /* Final node */
 Route::get('v1/final-nodes-profit', [FinalNodeController::class, 'getFinalNodesProfit']);
+/* getFinalNodesCostPerKgByDay */
+Route::get('v1/final-nodes-cost-per-kg-by-day', [FinalNodeController::class, 'getFinalNodesCostPerKgByDay']);
 
 
 /* No funciona */
