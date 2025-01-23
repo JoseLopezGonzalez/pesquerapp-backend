@@ -169,7 +169,7 @@ Route::get('v1/total-inventory-by-products', [StoresStatsController::class, 'tot
 Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDispatchesDocument'])->name('generate_cebo_document');
 
 
-Route::get('/process/options', [ProcessController::class, 'options']);
+Route::get('/process-options', [ProcessController::class, 'options']);
 
 
 
