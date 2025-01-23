@@ -199,7 +199,7 @@ class FinalNodeController extends Controller
         $endDate = $request->input('end_date');
         $speciesId = $request->input('species_id');
         $finalProcessId = $request->input('final_process_id');
-    
+
         // Validar los parámetros
         if (!$startDate || !$endDate) {
             return response()->json(['error' => 'Las fechas son requeridas'], 400);
@@ -210,50 +210,52 @@ class FinalNodeController extends Controller
         if (!$finalProcessId) {
             return response()->json(['error' => 'El ID del proceso final es requerido'], 400);
         }
-    
+
         // Filtrar producciones por rango de fechas y especie
         $productions = Production::whereBetween('date', [$startDate, $endDate])
             ->where('species_id', $speciesId)
             ->get();
-    
+
         $dailyData = [];
-    
+
         foreach ($productions as $production) {
             $finalNodes = $production->getFinalNodes()->filter(function ($node) use ($finalProcessId) {
                 return $node['process_id'] == $finalProcessId;
             });
-    
+
             foreach ($finalNodes as $node) {
-                $date = $production->date->format('d/m/Y');
-    
+                // Formatear la fecha correctamente
+                $date = is_string($production->date) ? \Carbon\Carbon::parse($production->date)->format('d/m/Y') : $production->date->format('d/m/Y');
+
+
                 if (!isset($dailyData[$date])) {
                     $dailyData[$date] = ['name' => $date];
                 }
-    
+
                 foreach ($node['products'] as $product) {
                     $productName = $product['product_name'];
                     $inputQuantity = $product['initial_quantity'] ?? 0;
                     $weightedCost = ($product['initial_quantity'] ?? 0) * ($product['cost_per_kg'] ?? 0);
-    
+
                     if (!isset($dailyData[$date][$productName])) {
                         $dailyData[$date][$productName] = [
                             'total_quantity' => 0,
                             'weighted_cost_sum' => 0,
                         ];
                     }
-    
+
                     $dailyData[$date][$productName]['total_quantity'] += $inputQuantity;
                     $dailyData[$date][$productName]['weighted_cost_sum'] += $weightedCost;
                 }
             }
         }
-    
+
         // Calcular la media ponderada por día
         $formattedData = [];
-    
+
         foreach ($dailyData as $date => $data) {
             $formattedEntry = ['name' => $date];
-    
+
             foreach ($data as $key => $value) {
                 if ($key !== 'name') {
                     $totalQuantity = $value['total_quantity'];
@@ -261,10 +263,10 @@ class FinalNodeController extends Controller
                     $formattedEntry[$key] = round($averageCost, 2);
                 }
             }
-    
+
             $formattedData[] = $formattedEntry;
         }
-    
+
         return response()->json($formattedData);
     }
 }
