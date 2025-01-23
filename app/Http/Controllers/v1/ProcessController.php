@@ -55,4 +55,10 @@ class ProcessController extends Controller
 
         return response()->json(['message' => 'Process deleted successfully.']);
     }
+
+    /* Options */
+    public function options()
+    {
+        return Process::all();
+    }
 }
