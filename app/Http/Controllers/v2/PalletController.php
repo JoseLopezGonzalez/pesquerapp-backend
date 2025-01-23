@@ -423,7 +423,7 @@ class PalletController extends Controller
             ['id' => 3, 'name' => 'shipped'],
         ]; */
 
-        $pallets = Pallet::select('id')
+        $pallets = Pallet::select('id', 'id as name')
             ->where('state_id', 2)
             ->orderBy('id')
             ->get();
@@ -440,8 +440,8 @@ class PalletController extends Controller
             ['id' => 2, 'name' => 'stored'],
             ['id' => 3, 'name' => 'shipped'],
         ]; */
-
-        $pallets = Pallet::select('id')
+        /* id as name */
+        $pallets = Pallet::select('id', 'id as name')
             ->where('state_id', 3)
             ->orderBy('id')
             ->get();
@@ -452,7 +452,7 @@ class PalletController extends Controller
     /* options */
     public function options()
     {
-        $pallets = Pallet::select('id')
+        $pallets = Pallet::select('id', 'id as name')
             ->orderBy('id')
             ->get();
 
