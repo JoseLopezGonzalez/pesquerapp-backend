@@ -160,10 +160,10 @@ class PalletController extends Controller
         }
 
 
-/* order by id and show first where state=store */
+        /* order by id and show first where state=store */
         $query->orderBy('id', 'desc');
-        
-        
+
+
 
 
 
@@ -411,5 +411,51 @@ class PalletController extends Controller
         $pallet->delete();
 
         return response()->json(['message' => 'Palet eliminado correctamente'], 200);
+    }
+
+    /* options */
+    public function storedOptions()
+    {
+
+        /* $states = [
+            ['id' => 1, 'name' => 'registered'],
+            ['id' => 2, 'name' => 'stored'],
+            ['id' => 3, 'name' => 'shipped'],
+        ]; */
+
+        $pallets = Pallet::select('id')
+            ->where('state_id', 2)
+            ->orderBy('id')
+            ->get();
+
+        return response()->json($pallets);
+    }
+
+    /* shippedOptions */
+    public function shippedOptions()
+    {
+
+        /* $states = [
+            ['id' => 1, 'name' => 'registered'],
+            ['id' => 2, 'name' => 'stored'],
+            ['id' => 3, 'name' => 'shipped'],
+        ]; */
+
+        $pallets = Pallet::select('id')
+            ->where('state_id', 3)
+            ->orderBy('id')
+            ->get();
+
+        return response()->json($pallets);
+    }
+
+    /* options */
+    public function options()
+    {
+        $pallets = Pallet::select('id')
+            ->orderBy('id')
+            ->get();
+
+        return response()->json($pallets);
     }
 }
