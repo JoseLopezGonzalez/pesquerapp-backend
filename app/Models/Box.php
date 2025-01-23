@@ -30,8 +30,8 @@ class Box extends Model
 
     public function getPalletAttribute()
     {
-        
-        return $this->palletBox->pallet;
+        /* Si no palletBox return null*/
+        return $this->palletBox ? $this->palletBox->pallet : null;
     }
 
     public function toArrayAssoc()
