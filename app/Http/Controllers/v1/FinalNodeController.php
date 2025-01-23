@@ -199,95 +199,72 @@ class FinalNodeController extends Controller
         $endDate = $request->input('end_date');
         $speciesId = $request->input('species_id');
         $finalProcessId = $request->input('final_process_id');
-
+    
         // Validar los parámetros
         if (!$startDate || !$endDate) {
             return response()->json(['error' => 'Las fechas son requeridas'], 400);
         }
-        if (!$speciesId || !$finalProcessId) {
-            return response()->json(['error' => 'El ID de la especie y el proceso final son requeridos'], 400);
+        if (!$speciesId) {
+            return response()->json(['error' => 'El ID de la especie es requerido'], 400);
         }
-
+        if (!$finalProcessId) {
+            return response()->json(['error' => 'El ID del proceso final es requerido'], 400);
+        }
+    
         // Filtrar producciones por rango de fechas y especie
         $productions = Production::whereBetween('date', [$startDate, $endDate])
             ->where('species_id', $speciesId)
             ->get();
-
-        $dataByDay = [];
-
+    
+        $dailyData = [];
+    
         foreach ($productions as $production) {
-            $finalNodes = $production->getFinalNodes(); // Obtiene nodos finales de la producción
-
+            $finalNodes = $production->getFinalNodes()->filter(function ($node) use ($finalProcessId) {
+                return $node['process_id'] == $finalProcessId;
+            });
+    
             foreach ($finalNodes as $node) {
-                if ($node['process_id'] != $finalProcessId) {
-                    continue; // Ignorar nodos que no pertenezcan al proceso final especificado
+                $date = $production->date->format('d/m/Y');
+    
+                if (!isset($dailyData[$date])) {
+                    $dailyData[$date] = ['name' => $date];
                 }
-
-                $date = $production->date; // Fecha de la producción
-                $inputQuantity = $node['input_quantity'] ?? 0; // Cantidad de entrada
-                $costPerKg = $node['cost_per_kg'] ?? 0; // Costo por kg
-
-                if (!isset($dataByDay[$date])) {
-                    $dataByDay[$date] = [
-                        'date' => $date,
-                        'total_weighted_cost_sum' => 0,
-                        'total_input_quantity' => 0,
-                        'products' => []
-                    ];
-                }
-
-                // Agregar a los totales globales por día
-                $dataByDay[$date]['total_weighted_cost_sum'] += $inputQuantity * $costPerKg;
-                $dataByDay[$date]['total_input_quantity'] += $inputQuantity;
-
+    
                 foreach ($node['products'] as $product) {
                     $productName = $product['product_name'];
-                    $productInputQuantity = $product['initial_quantity'] ?? 0;
-                    $productCostPerKg = $product['cost_per_kg'] ?? 0;
-
-                    if (!isset($dataByDay[$date]['products'][$productName])) {
-                        $dataByDay[$date]['products'][$productName] = [
-                            'product_name' => $productName,
-                            'total_input_quantity' => 0,
-                            'weighted_cost_sum' => 0
+                    $inputQuantity = $product['initial_quantity'] ?? 0;
+                    $weightedCost = ($product['initial_quantity'] ?? 0) * ($product['cost_per_kg'] ?? 0);
+    
+                    if (!isset($dailyData[$date][$productName])) {
+                        $dailyData[$date][$productName] = [
+                            'total_quantity' => 0,
+                            'weighted_cost_sum' => 0,
                         ];
                     }
-
-                    // Agregar datos del producto
-                    $dataByDay[$date]['products'][$productName]['total_input_quantity'] += $productInputQuantity;
-                    $dataByDay[$date]['products'][$productName]['weighted_cost_sum'] += $productInputQuantity * $productCostPerKg;
+    
+                    $dailyData[$date][$productName]['total_quantity'] += $inputQuantity;
+                    $dailyData[$date][$productName]['weighted_cost_sum'] += $weightedCost;
                 }
             }
         }
-
-        // Procesar los datos finales agrupados por día
-        $result = [];
-
-        foreach ($dataByDay as $date => $data) {
-            $products = [];
-
-            foreach ($data['products'] as $productName => $productData) {
-                $totalInputQuantity = $productData['total_input_quantity'];
-                $averageCostPerKg = $totalInputQuantity > 0 ? $productData['weighted_cost_sum'] / $totalInputQuantity : 0;
-
-                $products[] = [
-                    'product_name' => $productName,
-                    'total_input_quantity' => $totalInputQuantity,
-                    'average_cost_per_kg' => $averageCostPerKg
-                ];
+    
+        // Calcular la media ponderada por día
+        $formattedData = [];
+    
+        foreach ($dailyData as $date => $data) {
+            $formattedEntry = ['name' => $date];
+    
+            foreach ($data as $key => $value) {
+                if ($key !== 'name') {
+                    $totalQuantity = $value['total_quantity'];
+                    $averageCost = $totalQuantity > 0 ? $value['weighted_cost_sum'] / $totalQuantity : 0;
+                    $formattedEntry[$key] = round($averageCost, 2);
+                }
             }
-
-            $totalInputQuantity = $data['total_input_quantity'];
-            $averageCostPerKg = $totalInputQuantity > 0 ? $data['total_weighted_cost_sum'] / $totalInputQuantity : 0;
-
-            $result[] = [
-                'date' => $date,
-                'average_cost_per_kg' => $averageCostPerKg,
-                'total_input_quantity' => $totalInputQuantity,
-                'products' => $products
-            ];
+    
+            $formattedData[] = $formattedEntry;
         }
-
-        return response()->json($result);
+    
+        return response()->json($formattedData);
     }
 }
