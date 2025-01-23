@@ -116,6 +116,7 @@ class Production extends Model
             return [
                 'node_id' => $node['id'] ?? null,
                 'process_name' => $node['process']['name'] ?? 'Sin nombre',
+                'process_id' => $node['process']['id'] ?? null,
                 /* Cambiar total_quantity por total_output_quantity */
                 'total_output_quantity' => is_numeric($totals['quantity'] ?? null) ? $totals['quantity'] : 0,
                 /* total_input_quantity nuevo */
