@@ -65,12 +65,13 @@ class ProcessNodeController extends Controller
     }
 
     public function getProcessNodesDecreaseStats(Request $request)
+
     {
         // Obtener parámetros de entrada
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
         $speciesId = $request->input('species_id'); // Filtro por especie
-    
+
         // Validar los parámetros
         if (!$startDate || !$endDate) {
             return response()->json(['error' => 'Las fechas son requeridas'], 400);
@@ -78,46 +79,66 @@ class ProcessNodeController extends Controller
         if (!$speciesId) {
             return response()->json(['error' => 'El ID de la especie es requerido'], 400);
         }
-    
+
         // Filtrar producciones por rango de fechas y especie
         $productions = Production::whereBetween('date', [$startDate, $endDate])
             ->where('species_id', $speciesId)
             ->get();
-    
-        // Variable para agrupar por fecha
+
+        // Variable para agrupar por fecha y proceso
         $dateWiseData = [];
-    
+
         foreach ($productions as $production) {
             $date = $production->date; // Fecha de la producción
-    
+
             // Inicializar la fecha si no existe en el agrupamiento
             if (!isset($dateWiseData[$date])) {
                 $dateWiseData[$date] = [
                     'name' => $date,
                 ];
             }
-    
+
             // Obtener nodos `process` de cada producción
             $processNodes = $production->getProcessNodes();
             foreach ($processNodes as $node) {
                 $processName = $node['process_name']; // Nombre del proceso
-    
+                $inputQuantity = $node['input_quantity']; // Cantidad de entrada
+                $decrease = $node['decrease']; // Merma
+
                 // Inicializar el proceso en la fecha si no existe
                 if (!isset($dateWiseData[$date][$processName])) {
-                    $dateWiseData[$date][$processName] = 0;
+                    $dateWiseData[$date][$processName] = [
+                        'total_input_quantity' => 0,
+                        'weighted_loss_sum' => 0,
+                    ];
                 }
-    
-                // Sumar la merma del proceso
-                $dateWiseData[$date][$processName] += $node['decrease'];
+
+                // Sumar la cantidad de entrada y calcular la suma ponderada
+                $dateWiseData[$date][$processName]['total_input_quantity'] += $inputQuantity;
+                $dateWiseData[$date][$processName]['weighted_loss_sum'] += $inputQuantity * $decrease;
             }
         }
-    
-        // Transformar los datos en un array de salida
-        $formattedData = array_values($dateWiseData);
-    
+
+        // Transformar los datos en el formato requerido
+        $formattedData = [];
+
+        foreach ($dateWiseData as $date => $processes) {
+            $entry = ['name' => $date]; // Iniciar la fila con el nombre (fecha)
+
+            foreach ($processes as $processName => $data) {
+                if ($processName !== 'name') {
+                    $totalInput = $data['total_input_quantity'];
+                    $averageDecrease = $totalInput > 0
+                        ? $data['weighted_loss_sum'] / $totalInput // Calcular media ponderada
+                        : 0;
+                    $entry[$processName] = $averageDecrease; // Agregar la merma media
+                }
+            }
+
+            $formattedData[] = $entry; // Agregar la fila a la salida final
+        }
+
         // Retornar la respuesta final
         return response()->json($formattedData);
     }
-    
-
 }
