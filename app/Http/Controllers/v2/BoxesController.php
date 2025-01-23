@@ -54,6 +54,14 @@ class BoxesController extends Controller
             $query->whereIn('article_id', $request->products);
         }
 
+        /* palletIds */
+        if ($request->has('palletIds')) {
+            $query->whereHas('palletBox', function ($query) use ($request) {
+                $query->whereIn('pallet_id', $request->palletIds);
+            });
+        }
+
+
         /* order by id desc */
         $query->orderBy('id', 'desc');
 
