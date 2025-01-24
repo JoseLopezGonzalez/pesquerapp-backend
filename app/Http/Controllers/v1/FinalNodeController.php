@@ -292,6 +292,7 @@ class FinalNodeController extends Controller
         $result = [];
 
         foreach ($productions as $production) {
+            // Obtener la fecha en el formato deseado
             $date = is_string($production->date)
                 ? \Carbon\Carbon::parse($production->date)->format('d/m/Y')
                 : $production->date->format('d/m/Y');
@@ -300,10 +301,11 @@ class FinalNodeController extends Controller
                 $result[$date] = ['name' => $date];
             }
 
+            // Iterar sobre los nodos finales de la producción
             foreach ($production->getFinalNodes() as $node) {
                 $processName = $node['process_name'];
-                $inputQuantity = $node['input_quantity'] ?? 0;
-                $profit = $node['profit'] ?? 0;
+                $inputQuantity = $node['total_input_quantity'] ?? 0;
+                $profitPerInputKg = $node['profit_per_input_kg'] ?? 0;
 
                 if (!isset($result[$date][$processName])) {
                     $result[$date][$processName] = [
@@ -312,8 +314,9 @@ class FinalNodeController extends Controller
                     ];
                 }
 
+                // Sumar las cantidades y el beneficio ponderado
                 $result[$date][$processName]['total_input_quantity'] += $inputQuantity;
-                $result[$date][$processName]['weighted_profit_sum'] += $inputQuantity * $profit;
+                $result[$date][$processName]['weighted_profit_sum'] += $inputQuantity * $profitPerInputKg;
             }
         }
 
