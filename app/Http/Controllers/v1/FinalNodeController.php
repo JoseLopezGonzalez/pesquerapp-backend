@@ -269,4 +269,73 @@ class FinalNodeController extends Controller
 
         return response()->json($formattedData);
     }
+
+    public function getFinalNodesDailyProfit(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $speciesId = $request->input('species_id');
+
+        // Validar los parámetros
+        if (!$startDate || !$endDate) {
+            return response()->json(['error' => 'Las fechas son requeridas'], 400);
+        }
+        if (!$speciesId) {
+            return response()->json(['error' => 'El ID de la especie es requerido'], 400);
+        }
+
+        // Filtrar producciones por rango de fechas y especie
+        $productions = Production::whereBetween('date', [$startDate, $endDate])
+            ->where('species_id', $speciesId)
+            ->get();
+
+        $result = [];
+
+        foreach ($productions as $production) {
+            $date = is_string($production->date)
+                ? \Carbon\Carbon::parse($production->date)->format('d/m/Y')
+                : $production->date->format('d/m/Y');
+
+            if (!isset($result[$date])) {
+                $result[$date] = ['name' => $date];
+            }
+
+            foreach ($production->getFinalNodes() as $node) {
+                $processName = $node['process_name'];
+                $inputQuantity = $node['input_quantity'] ?? 0;
+                $profit = $node['profit'] ?? 0;
+
+                if (!isset($result[$date][$processName])) {
+                    $result[$date][$processName] = [
+                        'total_input_quantity' => 0,
+                        'weighted_profit_sum' => 0,
+                    ];
+                }
+
+                $result[$date][$processName]['total_input_quantity'] += $inputQuantity;
+                $result[$date][$processName]['weighted_profit_sum'] += $inputQuantity * $profit;
+            }
+        }
+
+        // Convertir los datos al formato esperado
+        $finalResult = [];
+        foreach ($result as $date => $data) {
+            $entry = ['name' => $data['name']];
+
+            foreach ($data as $processName => $values) {
+                if ($processName !== 'name') {
+                    $totalInputQuantity = $values['total_input_quantity'];
+                    $averageProfit = $totalInputQuantity > 0
+                        ? $values['weighted_profit_sum'] / $totalInputQuantity
+                        : 0;
+
+                    $entry[$processName] = round($averageProfit, 2);
+                }
+            }
+
+            $finalResult[] = $entry;
+        }
+
+        return response()->json($finalResult);
+    }
 }
