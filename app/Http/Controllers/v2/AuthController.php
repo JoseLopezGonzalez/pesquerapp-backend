@@ -20,21 +20,25 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        // Buscar al usuario por email
         $user = User::where('email', $request->email)->first();
 
+        // Verificar si el usuario existe y si la contraseña es correcta
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'message' => 'Las credenciales proporcionadas son inválidas.',
-            ], 401);
+            ], 401); // Respuesta con código de estado 401 (no autorizado)
         }
+        
 
-        // Crear un token personal con caducidad
-        $token = $user->createToken('auth_token');
+        // Crear un token personal para el usuario
+        $token = $user->createToken('auth_token')->plainTextToken;
         $token->token->expires_at = now()->addDays(7); // El token caduca en 7 días
         $token->token->save();
 
+        // Devolver respuesta exitosa con el token y datos básicos del usuario
         return response()->json([
-            'access_token' => $token->plainTextToken,
+            'access_token' => $token,
             'token_type' => 'Bearer',
             'user' => [
                 'id' => $user->id,
@@ -44,7 +48,6 @@ class AuthController extends Controller
             ],
         ]);
     }
-
 
     // Logout
     public function logout(Request $request)
