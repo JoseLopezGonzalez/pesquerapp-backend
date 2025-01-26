@@ -27,6 +27,32 @@ class CustomerController extends Controller
             $query->whereIn('id', $request->ids);
         }
 
+        /* name like */
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        /* vatNumber */
+        if ($request->has('vatNumber')) {
+            $query->where('vat_number', $request->vatNumber);
+        }
+
+        /* payentTerm where ir*/
+        if ($request->has('paymentTerms')) {
+            $query->whereIn('payment_term_id', $request->paymentTerms);
+        }
+        
+
+        /* salespeople */
+        if ($request->has('salespeople')) {
+            $query->whereIn('salesperson_id', $request->salespeople);
+        }
+
+        /* country */
+        if ($request->has('country')) {
+            $query->where('country', $request->country);
+        }
+
         /* order */
         $query->orderBy('name', 'asc');
 
