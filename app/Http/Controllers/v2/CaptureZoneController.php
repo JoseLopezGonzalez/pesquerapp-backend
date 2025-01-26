@@ -27,8 +27,8 @@ class CaptureZoneController extends Controller
             $query->whereIn('id', $request->ids);
         }
 
-        if ($request->has('names')) {
-            $query->whereIn('name', $request->names);
+        if ($request->has('name')) {
+            $query->whereIn('name', $request->name);
         }
 
         /* order by name */
