@@ -28,8 +28,9 @@ class FishingGearController extends Controller
             $query->whereIn('id', $request->ids);
         }
 
-        if ($request->has('names')) {
-            $query->whereIn('name', $request->names);
+        /* Name like */
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
         }
 
 
@@ -38,7 +39,6 @@ class FishingGearController extends Controller
 
         $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
         return FishingGearResource::collection($query->paginate($perPage));
-
     }
 
     /**
@@ -97,8 +97,8 @@ class FishingGearController extends Controller
     public function options()
     {
         $fishingGear = FishingGear::select('id', 'name') // Selecciona solo los campos necesarios
-                       ->orderBy('name', 'asc') // Ordena por nombre, opcional
-                       ->get();
+            ->orderBy('name', 'asc') // Ordena por nombre, opcional
+            ->get();
 
         return response()->json($fishingGear);
     }
