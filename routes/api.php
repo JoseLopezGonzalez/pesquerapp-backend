@@ -35,6 +35,7 @@ use App\Http\Controllers\v2\ActivityLogController;
 use App\Http\Controllers\v2\AuthController as V2AuthController;
 use App\Http\Controllers\v2\BoxesController;
 use App\Http\Controllers\v2\CaptureZoneController as V2CaptureZoneController;
+use App\Http\Controllers\v2\CeboDispatchController as V2CeboDispatchController;
 use App\Http\Controllers\v2\CountryController;
 use App\Http\Controllers\v2\CustomerController as V2CustomerController;
 use App\Http\Controllers\v2\FishingGearController;
@@ -280,7 +281,7 @@ Route::group(['prefix' => 'v2'], function () {
             /* paymentTerms */
             Route::apiResource('payment-terms', V2PaymentTermController::class);
             /* ceboDispatch */
-            Route::apiResource('cebo-dispatches', CeboDispatchController::class);
+            Route::apiResource('cebo-dispatches', V2CeboDispatchController::class);
             
 
 
