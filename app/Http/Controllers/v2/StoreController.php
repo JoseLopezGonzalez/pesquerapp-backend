@@ -20,7 +20,7 @@ class StoreController extends Controller
         $query = Store::query();
 
        /* filter by id */
-         if ($request->has('id')) {
+        if ($request->has('id')) {
             $query->where('id', $request->id);
         }
 
