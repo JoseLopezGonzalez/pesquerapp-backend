@@ -38,6 +38,16 @@ class SpeciesController extends Controller
             $query->whereIn('fishing_gear_id', request()->fishingGears);
         }
 
+        /* fao like */
+        if (request()->has('fao')) {
+            $query->where('fao', 'like', '%' . request()->fao . '%');
+        }
+
+        /* scientific name like */
+        if (request()->has('scientificName')) {
+            $query->where('scientific_name', 'like', '%' . request()->scientificName . '%');
+        }
+
         /* order by name */
         $query->orderBy('name', 'asc');
 
