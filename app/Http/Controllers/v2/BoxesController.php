@@ -83,18 +83,12 @@ class BoxesController extends Controller
             }
         }
 
-
         /* order by id desc */
         $query->orderBy('id', 'desc');
 
         /* no filter more */
         $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
         return BoxResource::collection($query->paginate($perPage));
-
-
-
-
-       
     }
 
     /**
