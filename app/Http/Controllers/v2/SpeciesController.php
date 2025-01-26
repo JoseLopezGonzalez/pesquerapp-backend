@@ -27,14 +27,15 @@ class SpeciesController extends Controller
             $query->whereIn('id', request()->ids);
         }
 
-        /* names */
-        if (request()->has('names')) {
-            $query->whereIn('name', request()->names);
+        /* name like */
+        if (request()->has('name')) {
+            $query->where('name', 'like', '%' . request()->name . '%');
         }
+        
 
-        /* fishingGear */
-        if (request()->has('fishingGear')) {
-            $query->whereIn('fishing_gear_id', request()->fishingGear);
+        /* fishingGears where ir */
+        if (request()->has('fishingGears')) {
+            $query->whereIn('fishing_gear_id', request()->fishingGears);
         }
 
         /* order by name */
