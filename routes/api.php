@@ -47,6 +47,7 @@ use Illuminate\Support\Facades\App;
 use App\Http\Controllers\v2\OrderController as V2OrderController;
 use App\Http\Controllers\v2\OrdersReportController;
 use App\Http\Controllers\v2\PalletController as V2PalletController;
+use App\Http\Controllers\v2\PaymentTermController as V2PaymentTermController;
 use App\Http\Controllers\v2\ProductController as V2ProductController;
 use App\Http\Controllers\v2\RawMaterialReceptionController as V2RawMaterialReceptionController;
 use App\Http\Controllers\v2\SalespersonController as V2SalespersonController;
@@ -244,7 +245,7 @@ Route::group(['prefix' => 'v2'], function () {
             /* countries */
             Route::get('/countries/options', [CountryController::class, 'options']);
             /* paymentTerms */
-            Route::get('/payment-terms/options', [PaymentTermController::class, 'options']);
+            Route::get('/payment-terms/options', [V2PaymentTermController::class, 'options']);
 
 
 
@@ -277,7 +278,7 @@ Route::group(['prefix' => 'v2'], function () {
             /* countries */
             Route::apiResource('countries', CountryController::class);
             /* paymentTerms */
-            Route::apiResource('payment-terms', PaymentTermController::class);
+            Route::apiResource('payment-terms', V2PaymentTermController::class);
             
 
 
