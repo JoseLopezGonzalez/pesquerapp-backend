@@ -33,7 +33,6 @@ class AuthController extends Controller
 
         // Crear un token personal para el usuario
         $token = $user->createToken('auth_token')->plainTextToken;
-        
 
         // Devolver respuesta exitosa con el token y datos básicos del usuario
         return response()->json([

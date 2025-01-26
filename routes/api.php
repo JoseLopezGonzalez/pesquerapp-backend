@@ -284,7 +284,7 @@ Route::group(['prefix' => 'v2'], function () {
             /* ceboDispatch */
             Route::apiResource('cebo-dispatches', V2CeboDispatchController::class);
             /* sessions */
-            Route::apiResource('sessions', SessionController::class);            
+            Route::apiResource('sessions', SessionController::class)->only(['index', 'destroy']);            
 
 
 
