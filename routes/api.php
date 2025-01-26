@@ -52,6 +52,7 @@ use App\Http\Controllers\v2\PaymentTermController as V2PaymentTermController;
 use App\Http\Controllers\v2\ProductController as V2ProductController;
 use App\Http\Controllers\v2\RawMaterialReceptionController as V2RawMaterialReceptionController;
 use App\Http\Controllers\v2\SalespersonController as V2SalespersonController;
+use App\Http\Controllers\v2\SessionController;
 use App\Http\Controllers\v2\SpeciesController as V2SpeciesController;
 use App\Http\Controllers\v2\StoreController as V2StoreController;
 use App\Http\Controllers\v2\SupplierController as V2SupplierController;
@@ -283,7 +284,7 @@ Route::group(['prefix' => 'v2'], function () {
             /* ceboDispatch */
             Route::apiResource('cebo-dispatches', V2CeboDispatchController::class);
             /* sessions */
-            Route::apiResource('sessions', V2CeboDispatchController::class);            
+            Route::apiResource('sessions', SessionController::class);            
 
 
 
