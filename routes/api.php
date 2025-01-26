@@ -35,6 +35,7 @@ use App\Http\Controllers\v2\ActivityLogController;
 use App\Http\Controllers\v2\AuthController as V2AuthController;
 use App\Http\Controllers\v2\BoxesController;
 use App\Http\Controllers\v2\CaptureZoneController as V2CaptureZoneController;
+use App\Http\Controllers\v2\CountryController;
 use App\Http\Controllers\v2\CustomerController as V2CustomerController;
 use App\Http\Controllers\v2\FishingGearController;
 use App\Http\Controllers\v2\IncotermController as V2IncotermController;
@@ -240,6 +241,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/orders/options', [V2OrderController::class, 'options']);
             /* fishingGear */
             Route::get('/fishing-gears/options', [FishingGearController::class, 'options']);
+            /* countries */
+            Route::get('/countries/options', [CountryController::class, 'options']);
 
 
 
@@ -269,6 +272,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::apiResource('salespeople', V2SalespersonController::class);
             /* FishingGear */
             Route::apiResource('fishing-gears', FishingGearController::class);
+            /* countries */
+            Route::apiResource('countries', CountryController::class);
 
             
 

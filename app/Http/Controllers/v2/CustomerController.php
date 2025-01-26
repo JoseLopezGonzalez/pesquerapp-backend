@@ -48,11 +48,11 @@ class CustomerController extends Controller
             $query->whereIn('salesperson_id', $request->salespeople);
         }
 
-        /* country */
-        if ($request->has('country')) {
-            $query->where('country', $request->country);
+        /* country where ir */
+        if ($request->has('countries')) {
+            $query->whereIn('country_id', $request->countries);
         }
-
+        
         /* order */
         $query->orderBy('name', 'asc');
 
