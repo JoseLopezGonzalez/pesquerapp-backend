@@ -25,7 +25,19 @@ class CeboDispatchController extends Controller
         }
 
         if ($request->has('dates')) {
-            $query->whereBetween('date', [$request->dates['start'], $request->dates['end']]);
+            $dates = $request->input('dates');
+            /* Check if $dates['start'] exists */
+            if (isset($dates['start'])) {
+                $startDate = $dates['start'];
+                $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
+                $query->where('date', '>=', $startDate);
+            }
+            /* Check if $dates['end'] exists */
+            if (isset($dates['end'])) {
+                $endDate = $dates['end'];
+                $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
+                $query->where('date', '<=', $endDate);
+            }
         }
 
 
@@ -64,15 +76,15 @@ class CeboDispatchController extends Controller
         $dispatch = new CeboDispatch();
         $dispatch->supplier_id = $request->supplier['id'];
         $dispatch->date = $request->date;
-        
-        if($request->has('notes')){
+
+        if ($request->has('notes')) {
             $dispatch->notes = $request->notes;
         }
 
         $dispatch->save();
 
-        if($request->has('details')){
-            foreach($request->details as $detail){
+        if ($request->has('details')) {
+            foreach ($request->details as $detail) {
                 $dispatch->products()->create([
                     'product_id' => $detail['product']['id'],
                     'net_weight' => $detail['netWeight']
