@@ -27,19 +27,16 @@ class CaptureZoneController extends Controller
             $query->whereIn('id', $request->ids);
         }
 
+        /* name like */
         if ($request->has('name')) {
-            $query->whereIn('name', $request->name);
+            $query->where('name', 'like', '%' . $request->name . '%');
         }
-
+        
         /* order by name */
         $query->orderBy('name', 'asc');
 
         $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
         return V2TransportResource::collection($query->paginate($perPage));
-        
-
-    
-
     }
 
     /**
