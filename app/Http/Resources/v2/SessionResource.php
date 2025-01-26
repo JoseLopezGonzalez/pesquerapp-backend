@@ -20,11 +20,9 @@ class SessionResource extends JsonResource
             'user_id' => $this->tokenable_id,
             'user_name' => $this->tokenable?->name ?? 'Desconocido',
             'email' => $this->tokenable?->email ?? 'Desconocido',
-            'ip_address' => $this->ip_address,
             'last_used_at' => $this->last_used_at ? $this->last_used_at->format('Y-m-d H:i:s') : null,
-            'platform' => $this->platform ?? 'Desconocido',
-            'browser' => $this->browser ?? 'Desconocido',
             'created_at' => $this->created_at ? $this->created_at->format('Y-m-d H:i:s') : null,
+            'expires_at' => $this->expires_at ? $this->expires_at->format('Y-m-d H:i:s') : 'No especificado',
         ];
     }
 }
