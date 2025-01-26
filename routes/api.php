@@ -279,6 +279,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::apiResource('countries', CountryController::class);
             /* paymentTerms */
             Route::apiResource('payment-terms', V2PaymentTermController::class);
+            /* ceboDispatch */
+            Route::apiResource('cebo-dispatches', CeboDispatchController::class);
             
 
 
