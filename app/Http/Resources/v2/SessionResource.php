@@ -22,7 +22,7 @@ class SessionResource extends JsonResource
             'email' => $this->tokenable?->email ?? 'Desconocido',
             'last_used_at' => $this->last_used_at ? $this->last_used_at->format('Y-m-d H:i:s') : null,
             'created_at' => $this->created_at ? $this->created_at->format('Y-m-d H:i:s') : null,
-            'expires_at' => $this->expires_at ? $this->expires_at->format('Y-m-d H:i:s') : 'No especificado',
+            'expires_at' => $this->expires_at ? $this->expires_at->format('Y-m-d H:i:s') : null,
         ];
     }
 }
