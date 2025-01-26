@@ -27,6 +27,16 @@ class IncotermController extends Controller
             $query->whereIn('id', request()->ids);
         }
 
+        /* code like */
+        if (request()->has('code')) {
+            $query->where('code', 'like', '%' . request()->code . '%');
+        }
+
+        /* description */
+        if (request()->has('description')) {
+            $query->where('description', 'like', '%' . request()->description . '%');
+        }
+
         /* order */
         $query->orderBy('code', 'asc');
 

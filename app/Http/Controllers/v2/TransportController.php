@@ -15,7 +15,6 @@ class TransportController extends Controller
      */
     public function index(Request $request)
     {
-
         $query = Transport::query();
 
         if ($request->has('id')) {
@@ -41,7 +40,6 @@ class TransportController extends Controller
 
         $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
         return V2TransportResource::collection($query->paginate($perPage));
-
     }
 
     /**
