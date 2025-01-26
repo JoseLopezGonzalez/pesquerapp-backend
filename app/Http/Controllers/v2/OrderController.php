@@ -176,4 +176,14 @@ class OrderController extends Controller
         $order->delete();
         return response()->json(['message' => 'Palet eliminado correctamente'], 200);
     }
+
+    /* Options */
+    public function options()
+    {
+        $order = Order::select('id', 'id as name')
+            ->orderBy('id')
+            ->get();
+
+        return response()->json($order);
+    }
 }

@@ -169,6 +169,15 @@ class PalletController extends Controller
             });
         }
 
+        /* ordrs */
+        if ($request->has('orders')) {
+            $orders = $request->input('orders');
+            $query->whereHas('orderPallets', function ($subQuery) use ($orders) {
+                $subQuery->whereIn('order_id', $orders);
+            });
+        }
+
+
 
         /* order by id and show first where state=store */
         $query->orderBy('id', 'desc');

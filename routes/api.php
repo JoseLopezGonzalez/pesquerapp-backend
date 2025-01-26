@@ -237,6 +237,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/pallets/shipped-options', [V2PalletController::class, 'shippedOptions']);
             /* store */
             Route::get('/stores/options', [V2StoreController::class, 'options']);
+            /* order */
+            Route::get('/orders/options', [V2OrderController::class, 'options']);
 
 
 
