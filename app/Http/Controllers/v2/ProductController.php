@@ -47,23 +47,17 @@ class ProductController extends Controller
 
         /* articleGtin */
         if ($request->has('articleGtin')) {
-            $query->whereHas('article', function ($query) use ($request) {
-                $query->where('gtin', $request->articleGtin);
-            });
+                $query->where('article_gtin', $request->articleGtin);
         }
 
         /* boxGtin */
         if ($request->has('boxGtin')) {
-            $query->whereHas('box', function ($query) use ($request) {
-                $query->where('gtin', $request->boxGtin);
-            });
+            $query->where('box_gtin', $request->articleGtin);
         }
 
         /* palletGtin */
         if ($request->has('palletGtin')) {
-            $query->whereHas('pallet', function ($query) use ($request) {
-                $query->where('gtin', $request->palletGtin);
-            });
+                $query->where('pallet_gtin', $request->palletGtin);
         }
         
 
