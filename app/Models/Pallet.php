@@ -192,10 +192,10 @@ class Pallet extends Model
             if (!in_array($lot, $lots)) {
                 $lots[] = $lot;
             }
-
-            
         });
 
         return $lots;
     }
+
+    
 }

@@ -28,6 +28,7 @@ class PalletResource extends JsonResource
             'store' => /* si es null o no */
                 $this->store ? $this->store->name : null,
             'orderId' => $this->order_id,
+            'numberOfBoxes' => $this->numberOfBoxes,
         ];
     }
 }
