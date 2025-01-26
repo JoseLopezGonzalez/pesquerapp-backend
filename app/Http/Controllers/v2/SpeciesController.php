@@ -32,6 +32,11 @@ class SpeciesController extends Controller
             $query->whereIn('name', request()->names);
         }
 
+        /* fishingGear */
+        if (request()->has('fishingGear')) {
+            $query->whereIn('fishing_gear_id', request()->fishingGear);
+        }
+
         /* order by name */
         $query->orderBy('name', 'asc');
 
