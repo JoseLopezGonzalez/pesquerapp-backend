@@ -188,10 +188,12 @@ class Pallet extends Model
         $lots = [];
         $this->boxes->map(function ($box) use (&$lots) {
             $lot = $box->box->lot;
-            if (!isset($lots[$lot])) {
-                /* push lot */
+            /* push lot si no hay igual, almacenar un array de lots sin clave*/
+            if (!in_array($lot, $lots)) {
                 $lots[] = $lot;
             }
+
+            
         });
 
         return $lots;
