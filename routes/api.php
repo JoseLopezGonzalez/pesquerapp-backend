@@ -36,6 +36,7 @@ use App\Http\Controllers\v2\AuthController as V2AuthController;
 use App\Http\Controllers\v2\BoxesController;
 use App\Http\Controllers\v2\CaptureZoneController as V2CaptureZoneController;
 use App\Http\Controllers\v2\CustomerController as V2CustomerController;
+use App\Http\Controllers\v2\FishingGearController;
 use App\Http\Controllers\v2\IncotermController as V2IncotermController;
 use App\Http\Resources\v1\CustomerResource;
 use App\Models\PaymentTerm;
@@ -237,6 +238,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/stores/options', [V2StoreController::class, 'options']);
             /* order inutilizado muchos valores*/
             Route::get('/orders/options', [V2OrderController::class, 'options']);
+            /* fishingGear */
+            Route::get('/fishing-gear/options', [FishingGearController::class, 'options']);
 
 
 
@@ -264,6 +267,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::apiResource('incoterms', V2IncotermController::class);
             /* Salespeople */
             Route::apiResource('salespeople', V2SalespersonController::class);
+            /* FishingGear */
+            Route::apiResource('fishing-gear', FishingGearController::class);
 
             
 
