@@ -239,7 +239,7 @@ Route::group(['prefix' => 'v2'], function () {
             /* order inutilizado muchos valores*/
             Route::get('/orders/options', [V2OrderController::class, 'options']);
             /* fishingGear */
-            Route::get('/fishing-gear/options', [FishingGearController::class, 'options']);
+            Route::get('/fishing-gears/options', [FishingGearController::class, 'options']);
 
 
 
@@ -268,7 +268,7 @@ Route::group(['prefix' => 'v2'], function () {
             /* Salespeople */
             Route::apiResource('salespeople', V2SalespersonController::class);
             /* FishingGear */
-            Route::apiResource('fishing-gear', FishingGearController::class);
+            Route::apiResource('fishing-gears', FishingGearController::class);
 
             
 
