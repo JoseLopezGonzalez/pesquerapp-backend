@@ -227,7 +227,7 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/species/options', [V2SpeciesController::class, 'options']);
             Route::get('/products/options', [V2ProductController::class, 'options']);
             Route::get('/capture-zones/options', [V2CaptureZoneController::class, 'options']);
-            /* pallets options */
+            /* pallets options inutilizado muchos valores*/
             Route::get('/pallets/options', [V2PalletController::class, 'options']);
             /* pàllet storedOptions */
             Route::get('/pallets/stored-options', [V2PalletController::class, 'storedOptions']);
@@ -235,7 +235,7 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/pallets/shipped-options', [V2PalletController::class, 'shippedOptions']);
             /* store */
             Route::get('/stores/options', [V2StoreController::class, 'options']);
-            /* order */
+            /* order inutilizado muchos valores*/
             Route::get('/orders/options', [V2OrderController::class, 'options']);
 
 
