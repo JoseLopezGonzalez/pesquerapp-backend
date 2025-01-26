@@ -32,7 +32,6 @@ class PalletController extends Controller
     public function index(Request $request)
     {
         $query = Pallet::query();
-
         $query->with('storedPallet');
 
         if ($request->has('id')) {
@@ -86,7 +85,6 @@ class PalletController extends Controller
         }
 
         /* Dates */
-
         if ($request->has('dates')) {
             $dates = $request->input('dates');
             if (isset($dates['start'])) {
@@ -125,6 +123,7 @@ class PalletController extends Controller
             });
         }
 
+        /* Por mejorar o implementar, actualmente nulo */
         if ($request->has('weights')) {
             $weights = $request->input('weights');
             if (array_key_exists('netWeight', $weights)) {
@@ -176,8 +175,6 @@ class PalletController extends Controller
                 $subQuery->whereIn('order_id', $orders);
             });
         }
-
-
 
         /* order by id and show first where state=store */
         $query->orderBy('id', 'desc');

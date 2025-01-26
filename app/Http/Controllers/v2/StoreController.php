@@ -15,13 +15,31 @@ class StoreController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $query = Store::query();
 
-        $stores = $query->paginate(10);
+       /* filter by id */
+         if ($request->has('id')) {
+            $query->where('id', $request->id);
+        }
 
-        return V2StoreResource::collection($stores);
+        /* filter by ids */
+        if ($request->has('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
+
+        /* filter by name */
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        /* ORDER */
+        $query->orderBy('name' , 'asc');
+
+        $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
+        return V2StoreResource::collection($query->paginate($perPage));
+
 
     }
 
