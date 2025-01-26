@@ -40,6 +40,12 @@ class PalletController extends Controller
             $query->where('id', 'like', "%{$id}%");
         }
 
+        /* ids */
+        if ($request->has('ids')) {
+            $ids = $request->input('ids');
+            $query->whereIn('id', $ids);
+        }
+
         if ($request->has('state')) {
             if ($request->input('state') == 'stored') {
                 $query->where('state_id', 2);
@@ -66,8 +72,6 @@ class PalletController extends Controller
             }
         }
 
-
-
         /* Position */
         if ($request->has('position')) {
             if ($request->input('position') == 'located') {
@@ -84,9 +88,7 @@ class PalletController extends Controller
         /* Dates */
 
         if ($request->has('dates')) {
-
             $dates = $request->input('dates');
-
             if (isset($dates['start'])) {
                 $startDate = $dates['start'];
                 $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
@@ -159,14 +161,17 @@ class PalletController extends Controller
             }
         }
 
+        /* Stores */
+        if ($request->has('stores')) {
+            $stores = $request->input('stores');
+            $query->whereHas('storedPallet', function ($subQuery) use ($stores) {
+                $subQuery->whereIn('store_id', $stores);
+            });
+        }
+
 
         /* order by id and show first where state=store */
         $query->orderBy('id', 'desc');
-
-
-
-
-
 
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
         return V2PalletResource::collection($query->paginate($perPage));

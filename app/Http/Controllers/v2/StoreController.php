@@ -56,4 +56,14 @@ class StoreController extends Controller
     {
        
     }
+
+    /* Options */
+    public function options()
+    {
+        $store = Store::select('id', 'name')
+        ->orderBy('id')
+        ->get();
+
+        return response()->json($store);
+    }
 }
