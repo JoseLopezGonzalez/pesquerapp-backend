@@ -39,9 +39,9 @@ class Pallet extends Model
         }, $this->articles);
     }
 
-    
 
-   /* public function store()
+
+    /* public function store()
     {
         return $this->belongsTo(Store::class, 'store_id');
     } */
@@ -51,12 +51,14 @@ class Pallet extends Model
         return $this->hasMany(PalletBox::class, 'pallet_id');
     }
 
-    public function order(){
+    public function order()
+    {
         return $this->belongsTo(Order::class);
     }
 
     //Resumen de articulos : devuelve un array de articulos, cajas por articulos y cantidad total por articulos
-    public function getSummaryAttribute(){
+    public function getSummaryAttribute()
+    {
         $summary = [];
         $this->boxes->map(function ($box) use (&$summary) {
             $product = $box->box->product;
@@ -98,14 +100,13 @@ class Pallet extends Model
 
     public function getPositionAttribute()
     {
-       $pallet = StoredPallet::where('pallet_id', $this->id)->first();
+        $pallet = StoredPallet::where('pallet_id', $this->id)->first();
 
-       if($pallet)
-       {
-           return $pallet->position;
-       } else{
-              return null;
-       }
+        if ($pallet) {
+            return $pallet->position;
+        } else {
+            return null;
+        }
     }
 
     public function toArrayAssoc()
@@ -125,26 +126,22 @@ class Pallet extends Model
     public function getStoreIdAttribute()
     {
         $pallet = StoredPallet::where('pallet_id', $this->id)->first();
-        if($pallet)
-        {
+        if ($pallet) {
             return $pallet->store_id;
-        } else{
-            
-               return null;
+        } else {
 
+            return null;
         }
     }
 
     public function getStoreAttribute()
     {
         $pallet = StoredPallet::where('pallet_id', $this->id)->first();
-        if($pallet)
-        {
+        if ($pallet) {
             return $pallet->store;
-        } else{
-            
-               return null;
+        } else {
 
+            return null;
         }
     }
 
@@ -166,12 +163,12 @@ class Pallet extends Model
         });
         return $totals;
     }
-   
 
-    public function unStore(){
+
+    public function unStore()
+    {
         $pallet = StoredPallet::where('pallet_id', $this->id)->first();
-        if($pallet)
-        {
+        if ($pallet) {
             $pallet->delete();
         }
     }
@@ -181,9 +178,8 @@ class Pallet extends Model
         foreach ($this->boxes as $box) {
             $box->delete();
         }
-        
-        parent::delete(); 
-        
+
+        parent::delete();
     }
 
 
@@ -193,11 +189,11 @@ class Pallet extends Model
         $this->boxes->map(function ($box) use (&$lots) {
             $lot = $box->box->lot;
             if (!isset($lots[$lot])) {
-                $lots[$lot] = $lot;
+                /* push lot */
+                $lots[] = $lot;
             }
         });
 
         return $lots;
     }
-    
 }
