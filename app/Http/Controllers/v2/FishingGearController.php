@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\TransportResource;
+use App\Http\Resources\v2\FishingGearResource;
 use App\Http\Resources\v2\TransportResource as V2TransportResource;
 use App\Models\FishingGear;
 use App\Models\Transport;
@@ -17,7 +18,7 @@ class FishingGearController extends Controller
     public function index(Request $request)
     {
 
-        $query = Transport::query();
+        $query = FishingGear::query();
 
         if ($request->has('id')) {
             $query->where('id', $request->id);
@@ -31,16 +32,12 @@ class FishingGearController extends Controller
             $query->whereIn('name', $request->names);
         }
 
-        /* adrdess like*/
-        if ($request->has('address')) {
-            $query->where('address', 'like', '%' . $request->address . '%');
-        }
 
         /* Order by name*/
         $query->orderBy('name', 'asc');
 
         $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
-        return V2TransportResource::collection($query->paginate($perPage));
+        return FishingGearResource::collection($query->paginate($perPage));
 
     }
 
