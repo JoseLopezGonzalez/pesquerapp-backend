@@ -243,6 +243,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/fishing-gears/options', [FishingGearController::class, 'options']);
             /* countries */
             Route::get('/countries/options', [CountryController::class, 'options']);
+            /* paymentTerms */
+            Route::get('/payment-terms/options', [PaymentTermController::class, 'options']);
 
 
 
@@ -274,7 +276,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::apiResource('fishing-gears', FishingGearController::class);
             /* countries */
             Route::apiResource('countries', CountryController::class);
-
+            /* paymentTerms */
+            Route::apiResource('payment-terms', PaymentTermController::class);
             
 
 
