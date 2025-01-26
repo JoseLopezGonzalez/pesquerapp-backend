@@ -30,7 +30,6 @@ class RawMaterialReceptionController extends Controller
             $query->whereIn('supplier_id', $request->suppliers);
         }
 
-
         if ($request->has('dates')) {
             $dates = $request->input('dates');
             /* Check if $dates['start'] exists */

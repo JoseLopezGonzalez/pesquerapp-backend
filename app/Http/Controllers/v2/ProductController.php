@@ -44,6 +44,27 @@ class ProductController extends Controller
         if ($request->has('captureZones')) {
             $query->whereIn('capture_zone_id', $request->captureZones);
         }
+
+        /* articleGtin */
+        if ($request->has('articleGtin')) {
+            $query->whereHas('article', function ($query) use ($request) {
+                $query->where('gtin', $request->articleGtin);
+            });
+        }
+
+        /* boxGtin */
+        if ($request->has('boxGtin')) {
+            $query->whereHas('box', function ($query) use ($request) {
+                $query->where('gtin', $request->boxGtin);
+            });
+        }
+
+        /* palletGtin */
+        if ($request->has('palletGtin')) {
+            $query->whereHas('pallet', function ($query) use ($request) {
+                $query->where('gtin', $request->palletGtin);
+            });
+        }
         
 
         /* Always order by article.name */
