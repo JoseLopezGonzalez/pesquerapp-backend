@@ -209,12 +209,10 @@ Route::group(['prefix' => 'v2'], function () {
 
         // Rutas para Gerencia
         Route::middleware(['role:manager'])->group(function () {
-            Route::apiResource('orders', V2OrderController::class)->only(['index', 'show']);
         });
 
         // Rutas para Administración
         Route::middleware(['role:admin'])->group(function () {
-            Route::apiResource('orders', V2OrderController::class)->except(['destroy']);
             Route::apiResource('raw-material-receptions', V2RawMaterialReceptionController::class);
         });
 
@@ -239,7 +237,7 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/stores/options', [V2StoreController::class, 'options']);
             /* order */
             Route::get('/orders/options', [V2OrderController::class, 'options']);
-            
+
 
 
 
