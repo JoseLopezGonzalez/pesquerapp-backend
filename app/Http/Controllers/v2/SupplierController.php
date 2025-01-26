@@ -22,9 +22,11 @@ class SupplierController extends Controller
             $query->whereIn('id', $request->ids);
         }
 
-        if ($request->has('names')) {
-            $query->whereIn('name', $request->names);
+       /* name like */
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
         }
+
 
         $query->orderBy('name', 'asc');
 
