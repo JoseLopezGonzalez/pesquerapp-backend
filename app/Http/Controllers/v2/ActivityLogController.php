@@ -35,6 +35,8 @@ class ActivityLogController extends Controller
             $query->where('city', 'like', '%' . $request->city . '%');
         }
 
+        /* order by created_at */
+        $query->orderBy('created_at', 'desc');
 
         $perPage = $request->input('per_page', 10);
         $activityLogs = $query->paginate($perPage);
