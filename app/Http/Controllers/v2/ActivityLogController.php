@@ -40,6 +40,23 @@ class ActivityLogController extends Controller
             $query->where('path', 'like', '%' . $request->path . '%');
         }
 
+        /* createdAt */
+        /* Dates */
+        if ($request->has('dates')) {
+            $dates = $request->input('dates');
+            if (isset($dates['start'])) {
+                $startDate = $dates['start'];
+                $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
+                $query->where('created_at', '>=', $startDate);
+            }
+
+            if (isset($dates['end'])) {
+                $endDate = $dates['end'];
+                $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
+                $query->where('created_at', '<=', $endDate);
+            }
+        }
+
         /* order by created_at */
         $query->orderBy('created_at', 'desc');
 
