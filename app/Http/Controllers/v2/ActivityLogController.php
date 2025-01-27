@@ -35,6 +35,11 @@ class ActivityLogController extends Controller
             $query->where('city', 'like', '%' . $request->city . '%');
         }
 
+        /* path like */
+        if ($request->has('path')) {
+            $query->where('path', 'like', '%' . $request->path . '%');
+        }
+
         /* order by created_at */
         $query->orderBy('created_at', 'desc');
 
