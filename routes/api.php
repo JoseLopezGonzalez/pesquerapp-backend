@@ -208,9 +208,10 @@ Route::group(['prefix' => 'v2'], function () {
         Route::middleware(['role:superuser'])->group(function () {
             Route::apiResource('sessions', SessionController::class)->only(['index', 'destroy']);     
             Route::get('orders_report', [OrdersReportController::class, 'exportToExcel'])->name('v2.export.orders');
-            Route::get('activity-log', [ActivityLogController::class, 'index'])->name('v2.activity.log');
             /* Users */
             Route::apiResource('users', UserController::class);
+            /* Activity logs */
+            Route::apiResource('activity-logs', ActivityLogController::class);
         });
 
         // Rutas para Gerencia
@@ -285,6 +286,7 @@ Route::group(['prefix' => 'v2'], function () {
             /* ceboDispatch */
             Route::apiResource('cebo-dispatches', V2CeboDispatchController::class);
             /* sessions */
+
                   
 
 

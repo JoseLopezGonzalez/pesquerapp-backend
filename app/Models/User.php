@@ -103,4 +103,25 @@ class User extends Authenticatable
     {
         return $this->roles()->whereIn('name', $roles)->exists();
     }
+
+    /* toasocArray */
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
+
+    /* toArrayAssoc */
+    public function toArrayAssoc()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'emailVerifiedAt' => $this->email_verified_at,
+            'createdAt' => $this->created_at,
+            'updatedAt' => $this->updated_at,
+        ];
+    }
+
+    
 }
