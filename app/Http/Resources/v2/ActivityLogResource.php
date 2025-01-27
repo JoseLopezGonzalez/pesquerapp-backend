@@ -32,6 +32,7 @@ class ActivityLogResource extends JsonResource
 	14	method */
             'user' => $this->user->toArrayAssoc(),
             'ipAddress' => $this->ip_address,
+            'tokenId' => $this->token_id,
             'device' => $this->device,
             'browser' => $this->browser,
             'location' => $this->location,
