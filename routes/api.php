@@ -207,12 +207,12 @@ Route::group(['prefix' => 'v2'], function () {
         // Rutas para Superusuario (Técnico)
         Route::middleware(['role:superuser'])->group(function () {
             Route::apiResource('sessions', SessionController::class)->only(['index', 'destroy']);     
+            Route::get('users/options', [UserController::class, 'options']);
             /* Users */
             Route::apiResource('users', UserController::class);
             /* Activity logs */
             Route::apiResource('activity-logs', ActivityLogController::class);
             /* user options */
-            Route::get('users/options', [UserController::class, 'options']);
         });
 
         // Rutas para Gerencia
