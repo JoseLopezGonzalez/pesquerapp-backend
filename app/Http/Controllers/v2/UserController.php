@@ -137,4 +137,11 @@ class UserController extends Controller
         $user->delete();
         return response()->json(['message' => 'Usuario eliminado correctamente.']);
     }
+
+    /* options */
+    public function options()
+    {
+        $users = User::select('id', 'name')->get();
+        return response()->json($users);
+    }
 }
