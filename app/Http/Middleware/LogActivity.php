@@ -16,12 +16,6 @@ class LogActivity
         $response = $next($request);
 
         try {
-            // Verificar si la solicitud proviene de Vercel mediante la cabecera 'x-vercel-forwarded-for'
-            if ($request->header('x-vercel-forwarded-for')) {
-                Log::info("Actividad ignorada: Solicitud desde Vercel.");
-                return $response;
-            }
-
             // Obtener IP del cliente
             $ip = $request->ip();
 
@@ -56,7 +50,9 @@ class LogActivity
                     'device' => $agent->device() ?? 'Desconocido',
                     'path' => $request->path(),
                     'method' => $request->method(),
-                    'location' => "{$location?->countryName}, {$location?->cityName}",
+                    /* 'action' => 'default_action', // Ejemplo */
+                    'location' => "{$location?->countryName}, {$location?->cityName}", // Ejemplo de formato de ubicación
+                    /* 'details' => $userAgentHeader ?? 'Desconocido', // Guardar el User-Agent completo */
                 ]);
             } else {
                 Log::info("Usuario no autenticado, actividad no registrada.");
