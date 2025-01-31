@@ -206,6 +206,8 @@ Route::group(['prefix' => 'v2'], function () {
     Route::middleware(['auth:sanctum'])->group(function () {
         // Rutas para Superusuario (Técnico)
         Route::middleware(['role:superuser'])->group(function () {
+            /* orders_report */
+            Route::get('orders_report', [OrdersReportController::class, 'exportToExcel'])->name('export.orders');
             Route::apiResource('sessions', SessionController::class)->only(['index', 'destroy']);     
             Route::get('users/options', [UserController::class, 'options']);
             /* Users */
