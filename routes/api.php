@@ -51,6 +51,7 @@ use App\Http\Controllers\v2\PalletController as V2PalletController;
 use App\Http\Controllers\v2\PaymentTermController as V2PaymentTermController;
 use App\Http\Controllers\v2\ProductController as V2ProductController;
 use App\Http\Controllers\v2\RawMaterialReceptionController as V2RawMaterialReceptionController;
+use App\Http\Controllers\v2\RoleController;
 use App\Http\Controllers\v2\SalespersonController as V2SalespersonController;
 use App\Http\Controllers\v2\SessionController;
 use App\Http\Controllers\v2\SpeciesController as V2SpeciesController;
@@ -214,12 +215,10 @@ Route::group(['prefix' => 'v2'], function () {
             Route::apiResource('users', UserController::class);
             /* Activity logs */
             Route::apiResource('activity-logs', ActivityLogController::class);
-            /* user options */
             /* roles options */
-            Route::get('roles/options', [UserController::class, 'rolesOptions']);
+            Route::get('roles/options', [RoleController::class, 'rolesOptions']);
             /* roles */
-            Route::apiResource('roles', UserController::class)->only(['index', 'show']);
-        });
+            Route::apiResource('roles', RoleController::class);
 
         // Rutas para Gerencia
         Route::middleware(['role:manager'])->group(function () {
