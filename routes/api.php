@@ -219,6 +219,7 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('roles/options', [RoleController::class, 'rolesOptions']);
             /* roles */
             Route::apiResource('roles', RoleController::class);
+        });
 
         // Rutas para Gerencia
         Route::middleware(['role:manager'])->group(function () {
@@ -299,7 +300,7 @@ Route::group(['prefix' => 'v2'], function () {
 
 
 
-        });
+        
 
 
 
