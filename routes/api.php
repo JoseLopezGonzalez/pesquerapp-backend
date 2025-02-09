@@ -215,6 +215,10 @@ Route::group(['prefix' => 'v2'], function () {
             /* Activity logs */
             Route::apiResource('activity-logs', ActivityLogController::class);
             /* user options */
+            /* roles options */
+            Route::get('roles/options', [UserController::class, 'rolesOptions']);
+            /* roles */
+            Route::apiResource('roles', UserController::class)->only(['index', 'show']);
         });
 
         // Rutas para Gerencia
