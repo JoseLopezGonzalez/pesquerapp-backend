@@ -88,7 +88,8 @@ class UserController extends Controller
             $user->roles()->sync($validated['roles']);
         }
 
-        return response()->json($user, 201);
+        return UserResource::make($user);
+        
     }
 
     /**
