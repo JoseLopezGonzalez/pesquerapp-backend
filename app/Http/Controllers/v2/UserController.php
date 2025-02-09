@@ -70,7 +70,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        /* $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
@@ -88,7 +88,7 @@ class UserController extends Controller
             $user->roles()->sync($validated['roles']);
         }
 
-        return response()->json($user, 201);
+        return response()->json($user, 201); */
     }
 
     /**
