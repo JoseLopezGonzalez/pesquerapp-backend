@@ -88,8 +88,11 @@ class UserController extends Controller
             $user->roles()->sync($validated['roles']);
         }
 
-        return UserResource::make($user);
-        
+        return response()->json([
+            'message' => 'Producción creada correctamente.',
+            'data' => UserResource::make($user),
+        ]);
+
     }
 
     /**
