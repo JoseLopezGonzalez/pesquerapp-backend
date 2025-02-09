@@ -15,12 +15,36 @@ class Cors
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request)
-        ->header("Access-Control-Allow-Origin", "http://api.congeladosbrisamar.es")
-        //->header("Access-Control-Allow-Origin", "http://apì.congeladosbrisamar.es")
-        //Métodos que a los que se da acceso
-        ->header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-        //Headers de la petición
-        ->header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization"); 
+        $response = $next($request);
+
+        // Permitir cualquier dominio solo si no se requieren credenciales
+        $allowedOrigins = [
+            'http://localhost:3000', // Puerto de localhost para desarrollo
+            'http://api.congeladosbrisamar.es', // Dominio específico en producción
+            'https://nextjs.congeladosbrisamar.es', // Otro dominio permitido
+        ];
+
+        $origin = $request->headers->get('Origin');
+
+        // Verificar si el origen de la solicitud está permitido
+        if (in_array($origin, $allowedOrigins)) {
+            $response->header("Access-Control-Allow-Origin", $origin);
+        }
+
+        // Permitir el envío de credenciales (cookies, etc.)
+        $response->header("Access-Control-Allow-Credentials", "true");
+
+        // Métodos permitidos
+        $response->header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
+        // Cabeceras permitidas en la solicitud
+        $response->header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization");
+
+        // Responder correctamente a las solicitudes OPTIONS (Preflight)
+        if ($request->getMethod() == "OPTIONS") {
+            return $response->setStatusCode(200);
+        }
+
+        return $response;
     }
 }
