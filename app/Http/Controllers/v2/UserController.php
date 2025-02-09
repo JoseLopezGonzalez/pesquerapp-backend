@@ -90,7 +90,7 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'Producción creada correctamente.',
-            'data' => UserResource::make($user),
+            'user_id' => $user->id,
         ]);
 
     }
