@@ -216,7 +216,7 @@ Route::group(['prefix' => 'v2'], function () {
             /* Activity logs */
             Route::apiResource('activity-logs', ActivityLogController::class);
             /* roles options */
-            Route::get('roles/options', [RoleController::class, 'rolesOptions']);
+            Route::get('roles/options', [RoleController::class, 'options']);
             /* roles */
             Route::apiResource('roles', RoleController::class);
         });
