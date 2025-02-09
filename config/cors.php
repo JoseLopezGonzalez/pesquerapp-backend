@@ -16,7 +16,7 @@ return [
     |
     */
 
-    /* 'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
@@ -31,24 +31,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true,  */
-
-
-
-        'paths' => ['api/*', 'sanctum/csrf-cookie'],
-    
-        'allowed_methods' => ['*'],
-    
-        'allowed_origins' => ['https://app.congeladosbrisamar.es' , 'https://nextjs.congeladosbrisamar.es' , 'http://localhost:3000/'], // Especificar el origen
-        'allowed_origins_patterns' => [],
-    
-        'allowed_headers' => ['*'], // Permitir todos los encabezados
-        'exposed_headers' => [],
-    
-        'max_age' => 0,
-    
-        'supports_credentials' => true, // Habilitar si necesitas credenciales como cookies o headers de autenticación
-    
-    
+    'supports_credentials' => true, 
 
 ];
