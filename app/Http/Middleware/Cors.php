@@ -17,7 +17,7 @@ class Cors
     {
         return $next($request)
             ->header('Access-Control-Allow-Origin', '
-                http://localhost:3000,
+                http://localhost:3000/,
                 https://*.congeladosbrisamar.es/
             ')
             ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
