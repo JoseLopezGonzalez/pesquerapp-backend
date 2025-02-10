@@ -23,8 +23,8 @@ return [
 
     // Permitir varios orígenes (especifica los dominios)
     'allowed_origins' => [
-        'http://localhost:3000/', // Origen local (por ejemplo, frontend en desarrollo)
-        'https://*.congeladosbrisamar.es/', // Origen de producción
+        'http://localhost:3000', // Origen local (por ejemplo, frontend en desarrollo)
+        'https://*.congeladosbrisamar.es', // Origen de producción
     ],
 
 
