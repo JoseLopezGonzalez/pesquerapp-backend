@@ -179,6 +179,14 @@ Route::get('v1/ceboDispatches/document', [PDFController::class, 'generateCeboDis
 
 Route::get('v1/process-options', [ProcessController::class, 'options']);
 
+Route::get('/test-cors', function (Request $request) {
+    return response()->json(['message' => 'CORS funciona correctamente!'], 200)
+        ->header('Access-Control-Allow-Origin', $request->header('Origin'))
+        ->header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
+        ->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Authorization')
+        ->header('Access-Control-Allow-Credentials', 'true');
+});
+
 
 
 
