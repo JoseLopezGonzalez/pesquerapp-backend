@@ -203,6 +203,10 @@ Route::get('/test-cors', function (Request $request) {
     Route::get('v2/orders_report', [OrdersReportController::class, 'exportToExcel'])->name('export.orders');
 }); */
 
+Route::options('{any}', function () {
+    return response()->json([], 204);
+})->where('any', '.*');
+
 Route::group(['prefix' => 'v2'], function () {
     // Rutas públicas (sin autenticación)
     Route::post('login', [V2AuthController::class, 'login'])->name('v2.login');
