@@ -203,9 +203,6 @@ Route::get('/test-cors', function (Request $request) {
     Route::get('v2/orders_report', [OrdersReportController::class, 'exportToExcel'])->name('export.orders');
 }); */
 
-Route::options('{any}', function () {
-    return response()->json([], 204);
-})->where('any', '.*');
 
 Route::group(['prefix' => 'v2'], function () {
     // Rutas públicas (sin autenticación)
@@ -216,7 +213,7 @@ Route::group(['prefix' => 'v2'], function () {
 
 
     // Rutas protegidas por Sanctum
-    Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware(['cors','auth:sanctum'])->group(function () {
         // Rutas para Superusuario (Técnico)
         Route::middleware(['role:superuser'])->group(function () {
             /* orders_report */
