@@ -70,11 +70,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
+        
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
-            'roles' => 'array|exists:roles,id', // Validar roles si se envían
+            'role' => 'required|exists:roles,id', // Validar que el rol exista
         ]);
 
         $user = User::create([
@@ -83,10 +85,8 @@ class UserController extends Controller
             'password' => bcrypt($validated['password']),
         ]);
 
-        // Asignar roles
-        if (!empty($validated['roles'])) {
-            $user->roles()->sync($validated['roles']);
-        }
+        // Asignar role
+        $user->roles()->attach($validated['role']);
 
         return response()->json([
             'message' => 'Producción creada correctamente.',
