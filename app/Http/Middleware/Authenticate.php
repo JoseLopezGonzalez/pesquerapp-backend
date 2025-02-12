@@ -4,26 +4,22 @@ namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
-use Illuminate\Auth\AuthenticationException;
 
 class Authenticate extends Middleware
 {
     /**
      * Evitar redirección a login, devolviendo null siempre.
      */
-    protected function redirectTo(Request $request): ?string
+    protected function redirectTo($request): ?string
     {
-        return null; // Nunca redirige a login
-    }
+        // Si la solicitud espera JSON (API), devolver un error JSON en lugar de redirigir
+        if ($request->expectsJson() || $request->is('api/*')) {
+            abort(response()->json([
+                'message' => 'No autenticado. Necesitas iniciar sesión para acceder a esta ruta.'
+            ], 401));
+        }
 
-    /**
-     * Devolver respuesta JSON para solicitudes no autenticadas.
-     */
-    protected function unauthenticated(Request $request, AuthenticationException $exception)
-    {
-        return response()->json([
-            'error' => 'No autorizado',
-            'message' => 'Token inválido o no proporcionado.',
-        ], 401);
+        // Para solicitudes normales (web), redirigir a la página de login como siempre
+        return route('login');
     }
 }
