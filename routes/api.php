@@ -213,7 +213,7 @@ Route::group(['prefix' => 'v2'], function () {
 
 
     // Rutas protegidas por Sanctum
-    Route::middleware(['cors','auth:sanctum'])->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
         // Rutas para Superusuario (Técnico)
         Route::middleware(['role:superuser'])->group(function () {
             /* orders_report */
