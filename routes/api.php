@@ -123,6 +123,8 @@ Route::apiResource('v1/processes', ProcessController::class);
 
 
 
+
+
 /* Incorterm */
 Route::apiResource('v1/incoterms', IncotermController::class);
 Route::get('v1/boxes_report', [BoxesReportController::class, 'exportToExcel'])->name('export.boxes');
