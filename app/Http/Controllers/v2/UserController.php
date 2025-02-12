@@ -8,6 +8,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Exception;
+
 class UserController extends Controller
 {
     /**
@@ -62,7 +66,7 @@ class UserController extends Controller
         // Paginación
         $perPage = $request->input('perPage', 10);
 
-         return UserResource::collection($query->paginate($perPage));
+        return UserResource::collection($query->paginate($perPage));
     }
 
     /**
@@ -70,29 +74,46 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
-        
+        // Validar la solicitud
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
-            'role' => 'required|exists:roles,id', // Validar que el rol exista
+            'role.id' => 'required|exists:roles,id',
         ]);
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => bcrypt($validated['password']),
-        ]);
+        // Usar una transacción para asegurar que ambas operaciones se completen exitosamente
+        DB::beginTransaction();
 
-        // Asignar role
-        $user->roles()->attach($validated['role']);
+        try {
+            // Crear el usuario
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),  // Usar Hash::make para mayor flexibilidad
+            ]);
 
-        return response()->json([
-            'message' => 'Producción creada correctamente.',
-            'user_id' => $user->id,
-        ]);
+            // Asignar rol al usuario
+            $user->roles()->attach($validated['role']);
 
+            // Confirmar la transacción
+            DB::commit();
+
+            // Responder con éxito y código 201 (Created)
+            return response()->json([
+                'message' => 'Usuario creado correctamente.',
+                'user_id' => $user->id,
+            ], 201);
+        } catch (Exception $e) {
+            // Revertir la transacción en caso de error
+            DB::rollBack();
+
+            // Devolver un error interno del servidor
+            return response()->json([
+                'message' => 'Error al crear el usuario.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
