@@ -70,8 +70,15 @@ class CustomerController extends Controller
     /* Devolver todos los clientes solo id y name cuyo salesperson tenga id:8 y id:9 */
     public function autoSalesCustomers()
     {
-        return CustomerResource::collection(Customer::whereHas('salesperson', function ($query) {
+        /* return CustomerResource::collection(Customer::whereHas('salesperson', function ($query){
             $query->whereIn('id', [8, 9]);
-        })->select('id', 'name')->get());
+        })->select('id', 'name')->get()); */
+
+        /* Where salesperson_id in (8,9) */
+        $users = Customer::select('id', 'name')
+            ->whereIn('salesperson_id', [8, 9])
+            ->get();
+
+        return response()->json($users);
     }
 }
