@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\CustomerResource;
 use App\Models\Customer;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -81,4 +82,40 @@ class CustomerController extends Controller
 
         return response()->json($users);
     }
+
+
+
+
+    /* inser autosalescustomer */
+    public function insertAutoSalesCustomers(Request $request)
+    {
+        /* $request->validate([
+            
+        ]); */
+
+        $order = Order::create([
+            'name' => $request->name,
+            'vat_number' => '',
+            'payment_term_id' => 9,
+            'billing_address' => '',
+            'shipping_address' => '',
+            'transportation_notes' => '',
+            'production_notes' => '',
+            'accounting_notes' => '',
+            'salesperson_id' => $request->id,
+            'emails' => '',
+            'contact_info' => '',
+            'country_id' => 1,
+            'transport_id' => 5,
+        ]);
+
+        return response()->json($order);
+        
+
+
+    }
+
+
+
+
 }

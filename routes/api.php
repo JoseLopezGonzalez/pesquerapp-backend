@@ -196,6 +196,12 @@ Route::get('v1/auto-sales-customers', [CustomerController::class, 'autoSalesCust
 /* autoSalesController store*/
 Route::apiResource('v1/auto-sales', AutoSalesController::class);
 
+/* metodo autoSalesCustomer de customerController */
+Route::get('v1/inser-auto-sales-customers', [CustomerController::class, 'insertAutoSalesCustomers']);
+
+
+
+
 
 
 

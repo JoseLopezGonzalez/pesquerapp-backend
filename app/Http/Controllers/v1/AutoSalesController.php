@@ -74,7 +74,7 @@ class AutoSalesController extends Controller
 
             $pallet = $order->pallets()->create([
                 'observations' => 'Autoventa',
-                'state_id' => 1,
+                'state_id' => 3,
             ]);
 
             foreach ($request->pallet['boxes'] as $box) {
@@ -103,6 +103,9 @@ class AutoSalesController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+
+
 
 
 
