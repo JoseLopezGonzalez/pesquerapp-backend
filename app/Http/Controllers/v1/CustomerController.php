@@ -93,7 +93,7 @@ class CustomerController extends Controller
             
         ]); */
 
-        $order = Order::create([
+        $customer = Customer::create([
             'name' => $request->name,
             'vat_number' => '',
             'payment_term_id' => 9,
@@ -109,7 +109,7 @@ class CustomerController extends Controller
             'transport_id' => 5,
         ]);
 
-        return response()->json($order);
+        return response()->json($customer);
         
 
 
