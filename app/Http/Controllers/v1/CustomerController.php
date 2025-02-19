@@ -89,9 +89,10 @@ class CustomerController extends Controller
     /* inser autosalescustomer */
     public function insertAutoSalesCustomers(Request $request)
     {
-        /* $request->validate([
-            
-        ]); */
+        $request->validate([
+            'name'=> 'required|string',
+            'salesperson' => 'required|exists:salespeople,id',
+        ]);
 
         $customer = Customer::create([
             'name' => $request->name,
@@ -102,7 +103,7 @@ class CustomerController extends Controller
             'transportation_notes' => '',
             'production_notes' => '',
             'accounting_notes' => '',
-            'salesperson_id' => $request->id,
+            'salesperson_id' => $request->salesperson,
             'emails' => '',
             'contact_info' => '',
             'country_id' => 1,
