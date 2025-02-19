@@ -289,4 +289,6 @@ class OrderController extends Controller
         $order->delete();
         return response()->json(['message' => 'Palet eliminado correctamente'], 200);
     }
+
+   
 }

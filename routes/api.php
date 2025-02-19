@@ -189,6 +189,9 @@ Route::get('/test-cors', function (Request $request) {
         ->header('Access-Control-Allow-Credentials', 'true');
 });
 
+/* autoSalesCustomers */
+Route::get('v1/auto-sales-customers', [CustomerController::class, 'autoSalesCustomers']);
+
 
 
 
