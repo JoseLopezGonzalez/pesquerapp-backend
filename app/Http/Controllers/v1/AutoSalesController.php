@@ -81,14 +81,19 @@ class AutoSalesController extends Controller
                 $article = Product::find($box['product']['id']);
                 $gs1_128 = $this->generateGs1128($article->article_gtin, $box['lot'], $box['netWeight']);
 
-                $pallet->boxes()->create([
+                $newBox = Box::create([
                     'article_id' => $article->id,
                     'lot' => $box['lot'],
                     'gross_weight' => $box['netWeight'],
                     'net_weight' => $box['netWeight'],
                     'gs1_128' => $gs1_128,
                 ]);
+
+                $pallet->palletBoxes()->create([
+                    'box_id' => $newBox->id,
+                ]);
             }
+
 
             DB::commit();
 

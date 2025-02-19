@@ -12,6 +12,11 @@ class Pallet extends Model
 
     protected $fillable = ['observations', 'state_id', 'store_id'];
 
+    public function palletBoxes()
+    {
+        return $this->hasMany(PalletBox::class);
+    }
+
 
     public function palletState()
     {
@@ -197,5 +202,5 @@ class Pallet extends Model
         return $lots;
     }
 
-    
+
 }

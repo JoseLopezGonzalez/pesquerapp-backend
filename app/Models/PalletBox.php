@@ -9,6 +9,17 @@ class PalletBox extends Model
 {
     use HasFactory;
 
+    /* Fillable */
+    protected $fillable = [
+        'box_id',
+        'pallet_id',
+        'lot',
+        'net_weight',
+        'article_id'
+    ];
+
+
+
     public function box()
     {
         return $this->belongsTo(Box::class, 'box_id');
@@ -31,9 +42,9 @@ class PalletBox extends Model
 
     public function delete()
     {
-       
+
         $this->box->delete();
-        
-       parent::delete();
+
+        parent::delete();
     }
 }
