@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\v1\AuthController;
+use App\Http\Controllers\v1\AutoSalesController;
 use App\Http\Controllers\v1\OrderDocumentMailerController;
 use App\Http\Controllers\v1\BoxesReportController;
 use App\Http\Controllers\v1\CaptureZoneController;
@@ -191,6 +192,9 @@ Route::get('/test-cors', function (Request $request) {
 
 /* autoSalesCustomers */
 Route::get('v1/auto-sales-customers', [CustomerController::class, 'autoSalesCustomers']);
+
+/* autoSalesController store*/
+Route::get('v1/auto-sales', [AutoSalesController::class, 'store']);
 
 
 
