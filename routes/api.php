@@ -194,7 +194,7 @@ Route::get('/test-cors', function (Request $request) {
 Route::get('v1/auto-sales-customers', [CustomerController::class, 'autoSalesCustomers']);
 
 /* autoSalesController store*/
-Route::get('v1/auto-sales', [AutoSalesController::class, 'store']);
+Route::get('v1/auto-sales', AutoSalesController::class);
 
 
 
