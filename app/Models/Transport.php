@@ -25,7 +25,9 @@ class Transport extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'vatNumber' => $this->vat_number,
             'address' => $this->address,
+            'emails' => $this->emails,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];
