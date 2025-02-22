@@ -34,6 +34,9 @@ class OrderDetailsResource extends JsonResource
                 return $pallet->toArrayAssoc();
             }),
             'incoterm' => $this->incoterm->toArrayAssoc(),
+            'totalNetWeight' => $this->totalNetWeight,
+            'numberOfPallets' => $this->numberOfPallets,
+            'totalBoxes' => $this->totalBoxes,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];
