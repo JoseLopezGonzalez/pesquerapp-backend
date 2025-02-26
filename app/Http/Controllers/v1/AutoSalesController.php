@@ -79,7 +79,7 @@ class AutoSalesController extends Controller
 
             foreach ($request->pallet['boxes'] as $box) {
                 $article = Product::find($box['product']['id']);
-                $gs1_128 = $this->generateGs1128($article->article_gtin, $box['lot'], $box['netWeight']);
+                $gs1_128 = $this->generateGs1128($article->box_gtin, $box['lot'], $box['netWeight']);
 
                 $newBox = Box::create([
                     'article_id' => $article->id,
