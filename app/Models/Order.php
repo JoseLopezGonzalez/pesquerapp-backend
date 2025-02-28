@@ -213,25 +213,6 @@ class Order extends Model
 
 
 
-    /* Atributo: Desglose de lotes por productos */
-    public function getLotsByProductAttribute()
-    {
-        /* Extraer y desglosar todos los lotes con sus cajas y pesosNetos de cada productos */
-        return $this->pallets->sum(function ($pallet) {
-            return $pallet->boxes->sum(function ($box) {
-                return [
-                    'product' => $box->box->product,
-                    'lots' => $box->lots->map(function ($lot) {
-                        return [
-                            'lot' => $lot->lot,
-                            'boxes' => $lot->pivot->boxes,
-                            'netWeight' => $lot->pivot->netWeight,
-                        ];
-                    }),
-                ];
-            });
-        });
-    }
 
     /*return [
         [
@@ -283,9 +264,8 @@ class Order extends Model
                 $product = $box->box->product;
                 $species = $product->species;
                 $captureZone = $product->captureZone;
-                $fishingGear = $product->fishingGear;
-                $productionMethod = $product->productionMethod;
-                $lot = $box->lot; // Suponiendo que cada caja tiene un lote asociado
+                $fishingGear = $species->fishingGear;
+                $lot = $box->box->lot; // Suponiendo que cada caja tiene un lote asociado
 
                 $key = $species->id . '-' . $captureZone->id;
 
@@ -298,7 +278,6 @@ class Order extends Model
                         ],
                         'captureZone'      => $captureZone->name,
                         'fishingGear'      => $fishingGear->name,
-                        'productionMethod' => $productionMethod->name,
                         'products'         => []
                     ];
                 }
@@ -307,8 +286,11 @@ class Order extends Model
                 if (!isset($summary[$key]['products'][$productKey])) {
                     $summary[$key]['products'][$productKey] = [
                         'product' => [
-                            'name'      => $product->name,
-                            'boxGtin'   => $product->gtin,
+                            'article'      => [
+                                'id'  => $product->article->id,
+                                'name' => $product->article->name,
+                            ],
+                            'boxGtin'   => $product->box_gtin,
                             'boxes'     => 0,
                             'netWeight' => 0,
                         ],
@@ -320,12 +302,12 @@ class Order extends Model
                 $summary[$key]['products'][$productKey]['lots'][] = [
                     'lot'       => $lot->lot_number, // Suponiendo que `lot_number` es el identificador del lote
                     'boxes'     => 1, // Contamos cada caja como una unidad en el lote
-                    'netWeight' => $box->netWeight,
+                    'netWeight' => $box->box->netWeight,
                 ];
 
                 // Sumar totales al producto
                 $summary[$key]['products'][$productKey]['product']['boxes']++;
-                $summary[$key]['products'][$productKey]['product']['netWeight'] += $box->netWeight;
+                $summary[$key]['products'][$productKey]['product']['netWeight'] += $box->$box->netWeight;
             });
         });
 
