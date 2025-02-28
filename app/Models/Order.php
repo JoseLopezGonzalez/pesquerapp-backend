@@ -307,7 +307,7 @@ class Order extends Model
 
                 // Sumar totales al producto
                 $summary[$key]['products'][$productKey]['product']['boxes']++;
-                $summary[$key]['products'][$productKey]['product']['netWeight'] += $box->$box->netWeight;
+                $summary[$key]['products'][$productKey]['product']['netWeight'] += $box->$box->net_weight;
             });
         });
 
