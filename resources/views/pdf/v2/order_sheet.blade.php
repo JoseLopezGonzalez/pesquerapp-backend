@@ -108,7 +108,7 @@
                         @foreach ($order->productsWithLotsDetailsBySpeciesAndCaptureZone as $group)
                             @foreach ($group['products'] as $product)
                                 <tr>
-                                    {{-- <td class=" p-1">{{ $product['product']['article']['name'] }}</td> --}}
+                                    
                                     <td class=" p-1">{{ $product['product']['boxGtin'] }}</td>
                                     <td class=" p-1"></td>
                                     <td class=" p-1">{{ $product['product']['boxes'] }}</td>
