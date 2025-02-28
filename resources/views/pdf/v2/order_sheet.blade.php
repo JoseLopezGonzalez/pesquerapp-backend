@@ -102,17 +102,7 @@
                             <th class="border p-2 font-medium">Peso Bruto (kg)</th>
                         </tr>
                     </thead>
-                    <!-- <tbody>
-                        @foreach($productos as $producto)
-                            <tr class="bg-white border-t">
-                                <td class="border p-2">{{ $producto['nombre'] }}</td>
-                                <td class="border p-2">{{ $producto['codigo'] }}</td>
-                                <td class="border p-2">{{ $producto['lote'] }}</td>
-                                <td class="border p-2">{{ number_format($producto['pesoNeto'], 2) }}</td>
-                                <td class="border p-2">{{ number_format($producto['pesoBruto'], 2) }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody> -->
+                   
                 </table>
             </div>
         </div>
