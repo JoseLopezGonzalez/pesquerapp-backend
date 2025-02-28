@@ -114,19 +114,6 @@ class Pallet extends Model
         }
     }
 
-    public function toArrayAssoc()
-    {
-
-        return [
-            'id' => $this->id,
-            'observations' => $this->observations,
-            'state' => $this->palletState->toArrayAssoc(),
-            'boxes' => $this->boxes->map(function ($box) {
-                return $box->toArrayAssoc();
-            }),
-            'netWeight' => $this->netWeight,
-        ];
-    }
 
     public function getStoreIdAttribute()
     {
@@ -200,6 +187,44 @@ class Pallet extends Model
         });
 
         return $lots;
+    }
+
+    /* Nuevo V2 */
+
+    /* Products names list array*/
+    public function getProductsNamesAttribute()
+    {
+        return array_map(function ($products) {
+            return $products->name;
+        }, $this->products);
+    }
+
+    public function getProductsAttribute()
+    {
+        $articles = [];
+        $this->boxes->map(function ($box) use (&$articles) {
+            $article = $box->box->article->article;
+            if (!isset($articles[$article->id])) {
+                $articles[$article->id] = $article;
+            }
+        });
+        return $articles;
+    }
+
+    public function toArrayAssoc()
+    {
+        return [
+            'id' => $this->id,
+            'observations' => $this->observations,
+            'state' => $this->palletState->toArrayAssoc(),
+            'boxes' => $this->boxes->map(function ($box) {
+                return $box->toArrayAssoc();
+            }),
+            'netWeight' => $this->netWeight,
+            'productsNames' => $this->productsNames,
+            'lots' => $this->lots,
+            'numberOfBoxes' => $this->numberOfBoxes,
+        ];
     }
 
 
