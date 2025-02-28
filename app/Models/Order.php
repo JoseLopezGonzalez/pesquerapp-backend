@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_id', 'payment_term_id', 'billing_address', 'shipping_address', 'transportation_notes', 'production_notes', 'accounting_notes', 'salesperson_id', 'emails', 'transport_id', 'entry_date', 'load_date', 'status' , 'buyer_reference', 'incoterm_id'];
+    protected $fillable = ['customer_id', 'payment_term_id', 'billing_address', 'shipping_address', 'transportation_notes', 'production_notes', 'accounting_notes', 'salesperson_id', 'emails', 'transport_id', 'entry_date', 'load_date', 'status', 'buyer_reference', 'incoterm_id'];
 
     /* Id formateado #00_ _ _ , rellenar con 0 a la izquierda si no tiene 5 digitos y añadir un # al principio */
     public function getFormattedIdAttribute()
@@ -209,5 +209,126 @@ class Order extends Model
         return $this->pallets->sum(function ($pallet) {
             return $pallet->boxes->count();
         });
+    }
+
+
+
+    /* Atributo: Desglose de lotes por productos */
+    public function getLotsByProductAttribute()
+    {
+        /* Extraer y desglosar todos los lotes con sus cajas y pesosNetos de cada productos */
+        return $this->pallets->sum(function ($pallet) {
+            return $pallet->boxes->sum(function ($box) {
+                return [
+                    'product' => $box->box->product,
+                    'lots' => $box->lots->map(function ($lot) {
+                        return [
+                            'lot' => $lot->lot,
+                            'boxes' => $lot->pivot->boxes,
+                            'netWeight' => $lot->pivot->netWeight,
+                        ];
+                    }),
+                ];
+            });
+        });
+    }
+
+    /*return [
+        [
+            'species' => [
+                'name'            => 'Pulpo Común',
+                'scientificName'  => 'Octopus vulgaris',
+                'code'            => 'OCC',
+            ],
+            'captureZone'      => 'Fao 27 IX.a Atlantico Nordeste',
+            'fishingGear'      => 'Nasas y trampas',
+            'productionMethod' => 'Capturado',
+            'products'         => [
+                [
+                    'product' => [
+                        'name'      => 'Langostinos 20/30',
+                        'boxGtin'   => '1234567890123',
+                        'boxes'     => 56,
+                        'netWeight' => 27.50,
+                        ],
+                    'lots'      => [
+                        [
+                            'lot'       => '020325OCC01001',
+                            'boxes'     => 2,
+                            'netWeight' => 10.50,
+                        ],
+                        [
+                            'lot'       => '020325OCC01001',
+                            'boxes'     => 2,
+                            'netWeight' => 10.50,
+                        ],
+                        [
+                            'lot'       => '020325OCC01001',
+                            'boxes'     => 2,
+                            'netWeight' => 10.50,
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ];  */
+
+
+    public function getProductsWithLotsDetailsBySpeciesAndCaptureZoneAttribute()
+    {
+        $summary = [];
+
+        $this->pallets->map(function ($pallet) use (&$summary) {
+            $pallet->boxes->map(function ($box) use (&$summary) {
+                $product = $box->box->product;
+                $species = $product->species;
+                $captureZone = $product->captureZone;
+                $fishingGear = $product->fishingGear;
+                $productionMethod = $product->productionMethod;
+                $lot = $box->lot; // Suponiendo que cada caja tiene un lote asociado
+
+                $key = $species->id . '-' . $captureZone->id;
+
+                if (!isset($summary[$key])) {
+                    $summary[$key] = [
+                        'species' => [
+                            'name'           => $species->name,
+                            'scientificName' => $species->scientific_name,
+                            'code'           => $species->code,
+                        ],
+                        'captureZone'      => $captureZone->name,
+                        'fishingGear'      => $fishingGear->name,
+                        'productionMethod' => $productionMethod->name,
+                        'products'         => []
+                    ];
+                }
+
+                $productKey = $product->id;
+                if (!isset($summary[$key]['products'][$productKey])) {
+                    $summary[$key]['products'][$productKey] = [
+                        'product' => [
+                            'name'      => $product->name,
+                            'boxGtin'   => $product->gtin,
+                            'boxes'     => 0,
+                            'netWeight' => 0,
+                        ],
+                        'lots' => []
+                    ];
+                }
+
+                // Agregar detalles del lote
+                $summary[$key]['products'][$productKey]['lots'][] = [
+                    'lot'       => $lot->lot_number, // Suponiendo que `lot_number` es el identificador del lote
+                    'boxes'     => 1, // Contamos cada caja como una unidad en el lote
+                    'netWeight' => $box->netWeight,
+                ];
+
+                // Sumar totales al producto
+                $summary[$key]['products'][$productKey]['product']['boxes']++;
+                $summary[$key]['products'][$productKey]['product']['netWeight'] += $box->netWeight;
+            });
+        });
+
+        return array_values($summary);
     }
 }
