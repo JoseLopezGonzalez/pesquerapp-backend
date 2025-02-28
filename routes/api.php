@@ -320,7 +320,7 @@ Route::group(['prefix' => 'v2'], function () {
             Route::apiResource('cebo-dispatches', V2CeboDispatchController::class);
             /* sessions */
 
-            Route::get('v1/orders/{orderId}/order_sheet', [PDFController::class, 'generateOrderSheet'])->name('generate_order_sheet');
+            Route::get('orders/{orderId}/order_sheet', [PDFController::class, 'generateOrderSheet'])->name('generate_order_sheet');
 
 
 
