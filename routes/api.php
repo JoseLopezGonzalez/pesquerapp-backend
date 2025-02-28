@@ -235,7 +235,7 @@ Route::group(['prefix' => 'v2'], function () {
         Route::middleware(['role:superuser'])->group(function () {
             /* orders_report */
             Route::get('orders_report', [OrdersReportController::class, 'exportToExcel'])->name('export.orders');
-            Route::apiResource('sessions', SessionController::class)->only(['index', 'destroy']);     
+            Route::apiResource('sessions', SessionController::class)->only(['index', 'destroy']);
             Route::get('users/options', [UserController::class, 'options']);
             /* Users */
             Route::apiResource('users', UserController::class);
@@ -319,6 +319,9 @@ Route::group(['prefix' => 'v2'], function () {
             /* ceboDispatch */
             Route::apiResource('cebo-dispatches', V2CeboDispatchController::class);
             /* sessions */
+
+            Route::get('v1/orders/{orderId}/order_sheet', [PDFController::class, 'generateOrderSheet'])->name('generate_order_sheet');
+
 
 
 
