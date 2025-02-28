@@ -102,7 +102,6 @@
                             <th class="border p-2 font-medium">Peso Bruto (kg)</th>
                         </tr>
                     </thead>
-                   
                 </table>
             </div>
         </div>
@@ -111,12 +110,12 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div class="border rounded p-4 flex justify-between">
                 <h3 class="font-bold text-slate-800">TOTAL PALETS:</h3>
-               <!--  <span class="text-xl">{{ $totalPalets }}</span> -->
+               <!--  <span class="text-xl"></span> -->
             </div>
 
             <div class="border rounded p-4 flex justify-between">
                 <h3 class="font-bold text-slate-800">TOTAL CAJAS:</h3>
-                <!-- <span class="text-xl">{{ $totalCajas }}</span> -->
+                <!-- <span class="text-xl"></span> -->
             </div>
 
             <div class="border rounded p-4 flex justify-between bg-slate-50 border-2 border-slate-300">
@@ -130,7 +129,7 @@
         <div class="flex justify-between items-end">
             <div class="text-xs text-slate-500">
                 <p>Documento generado electrónicamente. No requiere firma.</p>
-                <!-- <p>Ref: {{ $numeroPedido }} - {{ $fecha }}</p> -->
+                <!-- <p>Ref: </p> -->
             </div>
 
             <div class="flex flex-col items-center">
