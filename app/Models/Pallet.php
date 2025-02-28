@@ -194,10 +194,9 @@ class Pallet extends Model
     /* Products names list array*/
     public function getProductsNamesAttribute()
     {
-        return array_map(function ($products) {
-            return $products->name;
-        }, $this->products);
+        return array_values(array_map(fn($product) => $product->name ?? null, $this->products));
     }
+
 
     public function getProductsAttribute()
     {
