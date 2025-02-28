@@ -300,7 +300,7 @@ class Order extends Model
 
                 // Agregar detalles del lote
                 $summary[$key]['products'][$productKey]['lots'][] = [
-                    'lot'       => $lot->lot_number, // Suponiendo que `lot_number` es el identificador del lote
+                    'lot'       => $lot, // Suponiendo que `lot_number` es el identificador del lote
                     'boxes'     => 1, // Contamos cada caja como una unidad en el lote
                     'netWeight' => $box->box->netWeight,
                 ];
