@@ -108,7 +108,7 @@
                         @foreach ($order->productsWithLotsDetailsBySpeciesAndCaptureZone as $group)
                             @foreach ($group['products'] as $product)
                                 <tr>
-                                    
+                                    <td class=" p-1">{{ $product['product']['article']['name'] }}</td>
                                     <td class=" p-1">{{ $product['product']['boxGtin'] }}</td>
                                     <td class=" p-1"></td>
                                     <td class=" p-1">{{ $product['product']['boxes'] }}</td>
@@ -127,9 +127,9 @@
                             <tr>
                                 <td class="pl-5 p-1 text-[10px]" colspan="5">
                                     <i>
-                                        {{ $product['article']['species']['name'] }} `{{ $product['article']['species']['code'] }}`
-                                        - {{ $product['article']['captureMethod']['name'] }} /
-                                        {{ $product['article']['fishingZone']['name'] }}
+                                        {{ $group['species']['name'] }} `{{ $group['species']['code'] }}`
+                                        - {{ $group['fishingGear']['name'] }} /
+                                        {{ $group['captureZone']['name'] }}
                                     </i>
                                 </td>
                             </tr>
