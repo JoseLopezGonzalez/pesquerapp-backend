@@ -28,10 +28,10 @@
 <body class="h-full ">
 
     <div class="flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs min-h-screen ">
-        <div class="flex justify-between items-start mb-6 ">
+        <div class="flex justify-between items-end mb-6 ">
             <div class="flex items-center gap-2">
                 <div>
-                    <h1 class="text-lg font-bold ">Congelados Brisamar S.L.</h1>
+                    <h1 class="text-md font-bold">Congelados Brisamar S.L.</h1>
                     <p class=" ">C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
                     <p class=" ">Tel: +34 613 09 14 94 </p>
                     <p class=" ">administracion@congeladosbrisamar.es</p>
