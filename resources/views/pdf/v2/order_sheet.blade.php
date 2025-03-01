@@ -20,7 +20,7 @@
     {{-- getProductsWithLotsDetailsBySpeciesAndCaptureZoneAttribute --}}
 </head>
 
-<body>
+<body class="h-full">
 
     <div class="flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs h-full">
         <div class="flex justify-between items-start mb-6 ">
