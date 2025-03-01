@@ -58,9 +58,7 @@
                 <div class="flex flex-col items-center">
                     <div class="p-1 border rounded flex items-center justify-center bg-white">
                         <img alt='Barcode Generator TEC-IT'
-                            src='https://barcode.tec-it.com/barcode.ashx?data=Pedido%
-                            {{$order->id}}
-                            &code=QRCode&eclevel=L'
+                            src='https://barcode.tec-it.com/barcode.ashx?data=Pedido%{{$order->id}}&code=QRCode&eclevel=L'
                             class="w-[4rem] h-[4rem]" />
                     </div>
                 </div>
