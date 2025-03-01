@@ -61,11 +61,11 @@
             @foreach ($order->pallets as $pallet)
                 <div class="mb-8">
                     <div class="bg-gray-800 text-white p-2 flex justify-between items-center rounded-t-lg">
-                        <h3 class="font-bold text-lg">PALET {{ $pallet->id }}</h3>
-                        <div class="text-sm">
+                        <h3 class="font-medium text-lg">Palet {{ $pallet->id }}</h3>
+                       {{--  <div class="text-sm">
                             <span class="mr-4">Peso Neto: {{ $pallet->netWeight }} kg</span>
                             <span>Cajas: {{ $pallet->numberOfBoxes }} </span>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="border border-gray-300 border-t-0 p-2 mb-2 bg-gray-50 rounded-b-lg">
@@ -112,7 +112,7 @@
 
                     <div class="grid grid-cols-2 gap-4 mt-2 mb-4">
                         @foreach ($pallet->summary as $productDetail)
-                            <div class="border border-gray-300 p-2 bg-white">
+                            <div class="border border-gray-300 p-2 bg-white rounded-lg">
                                 <p class="text-xs mb-1 font-semibold">
                                     {{ $productDetail['product']->article->name }}
                                 </p>
@@ -130,8 +130,8 @@
                     </div>
 
                     {{--  NUEVO: Listado detallado de cajas  --}}
-                    <div class="mt-4 mb-4">
-                        <h4 class="font-bold text-sm bg-gray-200 p-2 border-t border-l border-r border-gray-300">
+                    <div class="mt-4 mb-4 border rounded-lg">
+                        <h4 class="font-bold text-sm bg-gray-200 p-2 border-b border-gray-300">
                             LISTADO DETALLADO DE CAJAS - PALET #{{ $pallet->id }}
                         </h4>
                         <div class="border border-gray-300 p-2 ">
