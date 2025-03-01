@@ -57,9 +57,9 @@
         </div>
         <div class="grid grid-cols-2 gap-4 mb-6 text-xs">
             <div class="space-y-4">
-                <div class="border rounded-lg overflow-hidden ">
+                <div class="border rounded-lg overflow-hidden border-gray-300">
                     <div class="font-bold  mb-2 w-full p-2 bg-gray-800 border-b text-white">DATOS DEL CLIENTE</div>
-                    <div class=" space-y-1 p-4">
+                    <div class=" space-y-1 p-4 pt-0">
                         <p><span class="font-medium">Nombre:</span> {{ $order->customer->name }}</p>
                         <p><span class="font-medium">NIF/CIF:</span>{{ $order->customer->vat_number }}</p>
 
@@ -76,7 +76,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="border rounded-lg overflow-hidden ">
+                <div class="border rounded-lg overflow-hidden border-gray-300">
                     <div class="font-bold  mb-2 w-full p-2 bg-gray-800 border-b text-white">DATOS DE TRANSPORTE</div>
                     <div class=" space-y-1 p-4">
                         <p><span class="font-medium">Empresa:</span> {{ $order->transport->name }}</p>
