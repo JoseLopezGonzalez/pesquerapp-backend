@@ -7,7 +7,7 @@
     {{-- Tailwind no funciona, lo cojo todo directamente de un cdn --}}
 
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
 
 
 
@@ -51,17 +51,26 @@
             <div class='grid grid-cols-2 w-full gap-2'>
                 <div class="space-y-2 border rounded-lg p-2">
                     <div class="text-md font-semibold ">Expedidor:</div>
-                    <div class="text-2xl font-semibold ">Ejemplo S.L.</div>
-                    <p class="text-gray-600">
-                        Polígono Industrial Las Atalayas, Calle del Mar 15, 03114 Alicante
-                    </p>
+                    <div class="text-2xl font-semibold ">Congelados Brisamar S.L.</div>
+                    <p>Poligono Vista Hermosa, Nave 11A<br>21410 ISLA CRISTINA<br>HUELVA – ESPAÑA</p>
                 </div>
 
                 <div class="space-y-2 border rounded-lg p-2">
                     <div class="text-md font-semibold ">Consignatario:</div>
-                    <div class="text-2xl font-semibold ">Ejemplo S.L.</div>
-                    <p class="text-gray-600">
-                        Polígono Industrial Las Atalayas, Calle del Mar 15, 03114 Alicante
+                    <div class="text-2xl font-semibold ">{{ $order->customer->alias }}</div>
+                    <p class="">
+                        {{-- Delete first line of Text of shipping Address y respetar los saltos de lineas del texto original con nl2br --}}
+
+                        @php
+                            // Separamos el texto en líneas
+                            $addressLines = explode("\n", $order->shipping_address);
+                            // Quitamos la primera línea
+                            array_shift($addressLines);
+                            // Unimos nuevamente el texto, excluyendo la primera línea
+                            $modifiedAddress = implode("\n", $addressLines);
+                        @endphp
+
+                        {!! nl2br(e($modifiedAddress)) !!}
                     </p>
                 </div>
             </div>
@@ -77,7 +86,9 @@
                     <div class="text-sm font-medium ">CAJAS</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-3xl font-bold ">1.090,00</div>
+                    <div class="text-3xl font-bold ">
+                        {{ number_format($pallet->netWeight, 2, ',', '.') }}
+                    </div>
                     <div class="text-sm font-medium ">PESO NETO</div>
                 </div>
             </div>
@@ -100,7 +111,7 @@
             </div>
 
             <div class="text-3xl font-semibold  border-l-4 border-gray-300 pl-3">
-                Transportes Narval S.L.
+                {{ $order->transport->name }}
             </div>
 
 
