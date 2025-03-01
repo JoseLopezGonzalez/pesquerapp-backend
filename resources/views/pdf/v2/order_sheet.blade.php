@@ -106,8 +106,8 @@
         </div>
         <div class="flex-1 mb-6 flex flex-col h-full">
             <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
-            <div class="border rounded overflow-hidden  flex-grow">
-                <table class="w-full text-xs h-full table-fixed">
+            <div class="border rounded overflow-hidden p-4 flex-grow">
+                <table class="w-full text-xs h-full ">
                     <thead class="border-b ">
                         <tr>
                             <th class="p-1 font-medium text-start">Producto</th>
