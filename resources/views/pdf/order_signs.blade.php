@@ -106,8 +106,8 @@
                     </div>
                 </div> --}}
                 <div class="flex flex-col items-center justify-center border rounded-lg h-full p-10 gap-2">
-                    <span class="text-xs">Pedido</span>
-                    <h1 class="text-3xl font-semibold ">#9087</h1>
+                    <h1 class="text-4xl font-semibold ">#9087</h1>
+                    <span class="text-md">Pedido</span>
                 </div>
                 <div class="flex flex-col items-center justify-center border rounded-lg h-full p-10 gap-2">
                     <img alt='Barcode Generator TEC-IT'
