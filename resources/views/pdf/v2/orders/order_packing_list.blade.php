@@ -107,7 +107,7 @@
                                 </p>
 
                                 <div class="h-10 bg-gray-800 relative flex items-center justify-center">
-                                    <div class="absolute inset-0 flex items-center">
+                                    <div class="absolute inset-0 flex items-center pb-2">
                                         <img alt='Barcode Generator TEC-IT'
                                             src={{'https://barcode.tec-it.com/barcode.ashx?data=(01)'.$productDetail['product']->box_gtin.'&code=Code128&translate-esc=on'}} 
                                             class="h-full"
