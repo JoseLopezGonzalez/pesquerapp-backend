@@ -107,7 +107,7 @@
                     <tbody>
                         @foreach ($order->productsWithLotsDetailsBySpeciesAndCaptureZone as $group)
                             @foreach ($group['products'] as $product)
-                                @if ($product['lots']->count() == 1)
+                                @if (count($product['lots']) == 1)
                                     <tr>
                                         <td class=" p-1">{{ $product['product']['article']['name'] }}</td>
                                         <td class=" p-1">{{ $product['product']['boxGtin'] }}</td>
