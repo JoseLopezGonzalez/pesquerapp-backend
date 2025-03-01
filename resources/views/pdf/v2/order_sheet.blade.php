@@ -137,9 +137,9 @@
                                 <tr>
                                     <td class="pl-5 p-1 text-[10px]" colspan="5">
                                         <i>
-                                            {{ $group['species']['name'] }} `{{ $group['species']['fao'] }}`
-                                        - {{ $group['fishingGear']['name'] }} /
-                                        {{ $group['captureZone']['name'] }}
+                                            {{ $group['species']['name'] }} `{{ $group['species']['scientificName'] }} - {{ $group['species']['fao'] }}`
+                                        - {{ $group['fishingGear'] }} /
+                                        {{ $group['captureZone'] }}
                                         </i>
                                     </td>
                                 </tr>
