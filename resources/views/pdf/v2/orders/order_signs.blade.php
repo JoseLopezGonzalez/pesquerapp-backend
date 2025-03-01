@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Delivery Note </title>
+    <title>Letreros Transporte</title>
     {{-- Tailwind no funciona, lo cojo todo directamente de un cdn --}}
 
     <script src="https://cdn.tailwindcss.com"></script>
