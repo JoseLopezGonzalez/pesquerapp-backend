@@ -61,7 +61,7 @@
             @foreach ($order->pallets as $pallet)
                 <div class="mb-8 break-after-page">
                     <div class="bg-gray-800 text-white p-2 flex justify-between items-center rounded-t-lg">
-                        <h3 class="font-medium text-lg">Palet #{{ $pallet->id }}</h3>
+                        <h3 class="font-bold">Palet #{{ $pallet->id }}</h3>
                         {{--  <div class="text-sm">
                             <span class="mr-4">Peso Neto: {{ $pallet->netWeight }} kg</span>
                             <span>Cajas: {{ $pallet->numberOfBoxes }} </span>
