@@ -56,6 +56,27 @@
             </div>
         </div>
 
+        <div className="mb-6 bg-gray-50 p-3 border border-gray-200 text-sm rounded-lg">
+            <h3 className="font-bold mb-1">Formato de Código de Lote:</h3>
+            <p className="grid grid-cols-4 gap-2">
+                <span>
+                    <b>1.</b> Fecha de captura o producción (DDMMAA)
+                </span>
+                <span>
+                    <b>2.</b> Código FAO de la especie
+                </span>
+                <span>
+                    <b>3.</b> Código de zona de captura
+                </span>
+                <span>
+                    <b>4.</b> Código interno de producción
+                </span>
+            </p>
+            <p className="mt-1 text-xs italic">
+                Ejemplo: 150523HKE01002 = Capturado el 15/05/23, Merluza (HKE), Zona 01, Producción 002
+            </p>
+        </div>
+
 
         <div class="mb-6">
             @foreach ($order->pallets as $pallet)
