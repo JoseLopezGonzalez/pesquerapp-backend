@@ -185,17 +185,7 @@
             @endforeach
         </div>
 
-        <div className="flex justify-between mt-8">
-            <div className="border-t border-gray-400 pt-1 w-64">
-                <p className="text-center text-sm">Firma y Sello</p>
-            </div>
-            <div className="text-xs text-gray-500 text-right">
-                <p>Documento generado el {{ date('d/m/Y H:i') }}
-
-                </p>
-                <p>Página 1 de 1</p>
-            </div>
-        </div>
+       
 
 
     </div>
