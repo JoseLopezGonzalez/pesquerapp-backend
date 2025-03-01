@@ -92,6 +92,7 @@
                                     <td className="border border-gray-300 p-2 text-center">{{ $productDetail['boxes'] }}</td>
                                     <td className="border border-gray-300 p-2 text-center">{{ $productDetail['netWeight'] }}</td>
                                 </tr>
+                            @endforeach
                         </tbody>
                     </table>
 
