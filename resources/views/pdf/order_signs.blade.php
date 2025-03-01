@@ -76,7 +76,7 @@
             </div>
 
 
-            <div class="grid grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg border w-full">
+            <div class="grid grid-cols-3 gap-4 bg-gray-50 p-4 py-8 rounded-lg border w-full">
                 <div class="text-center">
                     <div class="text-3xl font-bold ">#9087</div>
                     <div class="text-sm font-medium ">Nº PALET</div>
