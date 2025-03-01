@@ -60,15 +60,15 @@
         <div class="mb-6">
             @foreach ($order->pallets as $pallet)
                 <div class="mb-8">
-                    <div class="bg-gray-800 text-white p-2 flex justify-between items-center rounded-lg">
-                        <h3 class="font-bold text-lg">PALET {{ $pallet->number }}</h3>
+                    <div class="bg-gray-800 text-white p-2 flex justify-between items-center rounded-t-lg">
+                        <h3 class="font-bold text-lg">PALET {{ $pallet->id }}</h3>
                         <div class="text-sm">
                             <span class="mr-4">Peso Neto: {{ $pallet->netWeight }} kg</span>
                             <span>Cajas: {{ $pallet->numberOfBoxes }} </span>
                         </div>
                     </div>
 
-                    <div class="border border-gray-300 border-t-0 p-2 mb-2 bg-gray-50">
+                    <div class="border border-gray-300 border-t-0 p-2 mb-2 bg-gray-50 rounded-b-lg">
                         <span class="font-semibold">Lotes en este palet: </span>
                         @foreach ($pallet->lots as $lot)
                             <span class="inline-block bg-gray-200 px-2 py-1 text-sm mr-2 mb-1">
