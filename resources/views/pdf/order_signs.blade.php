@@ -34,28 +34,14 @@
 <body>
     @foreach ($order->pallets as $pallet)
         <div class="w-full p-4 text-black h-svh flex flex-col gap-3 bg-white border-black rounded-lg">
-
-            {{-- <div class="flex items-center justify-between mb-4">
-                <div class="text-start">
-                    <div class="text-3xl font-bold  tracking-tight">#4369</div>
-                    <div class="text-sm ">Nº Pedido</div>
-                </div>
-                <div class="flex flex-col items-center w-96 justify-center">
-                    <img alt='Barcode Generator TEC-IT'
-                        src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
-                        class='h-14' />
-                </div>
-            </div> --}}
-
-
             <div class='grid grid-cols-2 w-full gap-3'>
-                <div class="space-y-2 border rounded-lg p-4 py-8">
+                <div class="space-y-2 border rounded-lg p-8">
                     <div class="text-md font-semibold ">Expedidor:</div>
                     <div class="text-2xl font-semibold ">Congelados Brisamar S.L.</div>
-                    <p>Poligono Vista Hermosa, Nave 11A<br>21410 ISLA CRISTINA<br>HUELVA – ESPAÑA</p>
+                    <p>Poligono Vista Hermosa, Nave 11A<br>21410 Isla Cristina (Huelva)<br>España</p>
                 </div>
 
-                <div class="space-y-2 border rounded-lg p-4 py-8">
+                <div class="space-y-2 border rounded-lg p-8">
                     <div class="text-md font-semibold ">Consignatario:</div>
                     <div class="text-2xl font-semibold ">{{ $order->customer->alias }}</div>
                     <p class="">
@@ -78,11 +64,11 @@
 
             <div class="grid grid-cols-3 gap-4 bg-gray-50 p-4 py-8 rounded-lg border w-full">
                 <div class="text-center">
-                    <div class="text-3xl font-bold ">#9087</div>
+                    <div class="text-3xl font-bold ">{{ $pallet->id }}</div>
                     <div class="text-sm font-medium ">Nº PALET</div>
                 </div>
                 <div class="text-center border-r border-l">
-                    <div class="text-3xl font-bold ">56</div>
+                    <div class="text-3xl font-bold ">{{ $pallet->numberOfBoxes }}</div>
                     <div class="text-sm font-medium ">CAJAS</div>
                 </div>
                 <div class="text-center">
@@ -106,20 +92,20 @@
                     </div>
                 </div> --}}
                 <div class="flex flex-col items-center justify-center border rounded-lg h-full gap-2">
-                    <h1 class="text-4xl font-semibold ">#9087</h1>
+                    <h1 class="text-4xl font-semibold ">{{ $order->formattedId }}</h1>
                     <span class="text-md">Pedido</span>
                 </div>
                 <div class="flex flex-col items-center justify-center border rounded-lg h-full p-14 gap-2">
                     <img alt='Barcode Generator TEC-IT'
-                        src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
+                        src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $pallet->id . '&code=QRCode&eclevel=L' }}"
                         class='h-full' />
-                    <span class="text-xs">Palet: 09390</span>
+                    <span class="text-xs">Palet: {{ $pallet->id }}</span>
                 </div>
                 <div class="flex flex-col items-center justify-center border rounded-lg h-full p-14 gap-2">
                     <img alt='Barcode Generator TEC-IT'
-                        src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
+                        src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $order->id . '&code=QRCode&eclevel=L' }}"
                         class='h-full' />
-                    <span class="text-xs">Pedido: 87321</span>
+                    <span class="text-xs">Pedido: {{ $order->id }}</span>
                 </div>
 
 
