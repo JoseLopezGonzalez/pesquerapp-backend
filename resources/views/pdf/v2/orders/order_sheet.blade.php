@@ -108,10 +108,10 @@
         </div>
         <div class=" mb-6 ">
             <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
-            <div class="border rounded  p-4 ">
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
                 <table class="w-full text-xs h-full ">
-                    <thead class="border-b ">
-                        <tr>
+                    <thead class="border-b bg-white ">
+                        <tr class="bg-gray-100">
                             <th class="p-1 font-medium text-start">Producto</th>
                             <th class="p-1 font-medium text-start">Código GTIN</th>
                             <th class="p-1 font-medium text-start">Lote</th>
@@ -122,16 +122,15 @@
                     <tbody>
                         @foreach ($order->productsWithLotsDetails as $productLine)
                             @if (count($productLine['lots']) == 1)
-                                <tr>
+                                <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
                                     <td class=" p-1">{{ $productLine['product']['article']['name'] }}</td>
                                     <td class=" p-1">{{ $productLine['product']['boxGtin'] }}</td>
                                     <td class=" p-1">{{ $productLine['lots'][0]['lot'] }}</td>
                                     <td class=" p-1">{{ $productLine['product']['boxes'] }}</td>
                                     <td class=" p-1">{{ $productLine['product']['netWeight'] }} kg</td>
                                 </tr>
-                                <tr>
+                                <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
                                     <td class="pl-5 p-1 text-[10px]" colspan="5">
-                                        hola
                                         <i>
                                             {{ $productLine['product']['species']['name'] }}
                                             `{{ $productLine['product']['species']['scientificName'] }} -
