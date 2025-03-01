@@ -25,9 +25,6 @@
     <div class="flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs">
         <div class="flex justify-between items-start mb-6 ">
             <div class="flex items-center gap-2">
-                {/* <div class="w-16 h-16 bg-slate-100 flex items-center justify-center rounded border">
-                    <img src={NAVBAR_LOGO} alt="Logo de la empresa" class="object-contain w-16 h-16" />
-                </div> */}
                 <div>
                     <h1 class="text-lg font-bold ">Congelados Brisamar S.L.</h1>
                     <p class=" ">C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
@@ -37,9 +34,8 @@
             <div class="flex items-start gap-4">
                 <div class="  rounded  text-end">
                     <h2 class="text-lg font-bold ">PEDIDO</h2>
-                    <p class=" font-medium">#1528 <span class="">{/* {{ $order->formattedId }} */}</span></p>
-                    <p class=" font-medium">Fecha: 02/02/2025 <span class="">{/* {{ $order->load_date }}
-                            */}</span></p>
+                    <p class=" font-medium"><span class="">{{ $order->formattedId }}</span></p>
+                    <p class=" font-medium">Fecha: 02/02/2025 <span class="">{{ $order->load_date }}</span></p>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="p-1 border rounded flex items-center justify-center bg-white">
@@ -136,7 +132,6 @@
                                 </tr>
                                 <tr>
                                     <td class="pl-5 p-1 text-[10px]" colspan="5">
-                                        hola
                                         <i>
                                             {{ $productLine['product']['species']['name'] }}
                                             `{{ $productLine['product']['species']['scientificName'] }} -
