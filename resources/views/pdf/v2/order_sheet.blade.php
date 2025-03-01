@@ -94,7 +94,7 @@
         <div class=" mb-6 flex flex-col h-full">
             <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
             <div class="border rounded p-4 ">
-                <table class="w-full text-xs h-full table-fixed">
+                <table class="w-full text-xs h-full">
                     <thead class="border-b ">
                         <tr>
                             <th class="p-1 font-medium text-start">Producto</th>
