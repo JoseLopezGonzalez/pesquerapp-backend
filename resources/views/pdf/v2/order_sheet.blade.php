@@ -22,7 +22,7 @@
 
 <body>
 
-    <div class="flex flex-col max-w-[210mm] h-[290mm] mx-auto p-6 bg-white shadow-md rounded text-black text-xs">
+    <div class="flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs">
         <div class="flex justify-between items-start mb-6 ">
             <div class="flex items-center gap-2">
                 {/* <div class="w-16 h-16 bg-slate-100 flex items-center justify-center rounded border">
@@ -136,6 +136,7 @@
                             @endforeach
                             <tr>
                                 <td class="pl-5 p-1 text-[10px]" colspan="5">
+                                    hola
                                     <i>
                                         {{ $group['species']['name'] }} `{{ $group['species']['scientificName'] }} -
                                         {{ $group['species']['fao'] }}`
@@ -151,8 +152,8 @@
                             <td class="p-1 "></td>
                             <td class="p-1"></td>
                             <td class="p-1"></td>
-                            <td class="p-1 ">59</td>
-                            <td class="p-1 ">59,50 kg</td>
+                            <td class="p-1 ">{{ $order->numberOfBoxes }} </td>
+                            <td class="p-1 "> {{ $order->totalNetWeight }} kg</td>
                         </tr>
                     </tfoot>
                 </table>
