@@ -151,10 +151,10 @@
                                     </tr>
                                 @endforeach
                             @endif
-                            <tr className='font-bold border-t py-2'>
-                                <td class="p-1 ">Total</td>
-                                <td class="p-1">-</td>
-                                <td class="p-1">-</td>
+                            <tr className='font-bold border py-2'>
+                                <td class="p-1 "></td>
+                                <td class="p-1"></td>
+                                <td class="p-1">Total</td>
                                 <td class="p-1 ">{{ $order->totalBoxes }} </td>
                                 <td class="p-1 "> {{ $order->totalNetWeight }} kg</td>
                             </tr>
