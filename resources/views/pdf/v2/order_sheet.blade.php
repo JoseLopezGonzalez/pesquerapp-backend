@@ -50,10 +50,10 @@
                 <div class="  rounded  text-end">
                     <h2 class="text-lg font-bold ">PEDIDO</h2>
                     <p class=" font-medium"><span class="">{{ $order->formattedId }}</span></p>
-                    <p class=" font-medium">Fecha: 02/02/2025 <span class="">
+                    <p class=" font-medium">Fecha:<span class="">
                             {{ date('d/m/Y', strtotime($order->load_date)) }}
                         </span></p>
-                    <p class=" font-medium">{{ $order->buyer_reference }}</p>
+                    <p class=" font-medium">Buyer Reference:{{ $order->buyer_reference }}</p>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="p-1 border rounded flex items-center justify-center bg-white">
