@@ -87,10 +87,10 @@
                 <p class="">España</p>
             </div>
         </div>
-        <div class="flex-1 mb-6 flex flex-col">
+        <div class="flex-1 mb-6 flex flex-col h-full">
             <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
-            <div class="border rounded overflow-hidden p-4 h-full">
-                <table class="w-full  text-xs">
+            <div class="border rounded overflow-hidden p-4 flex-1">
+                <table class="w-full  text-xs h-full">
                     <thead class=" border-b ">
                         <tr>
                             <th class="p-1 font-medium text-start">Producto</th>
@@ -100,7 +100,7 @@
                             <th class="p-1 font-medium text-start">Peso Neto</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="h-full align-top">
                         @foreach ($order->productsWithLotsDetails as $productLine)
                             @if (count($productLine['lots']) == 1)
                                 <tr>
@@ -151,7 +151,7 @@
                                     </tr>
                                 @endforeach
                             @endif
-                            <tr className='font-bold border py-2'>
+                            <tr className='font-bold py-2'>
                                 <td class="p-1 "></td>
                                 <td class="p-1"></td>
                                 <td class="p-1">Total</td>
