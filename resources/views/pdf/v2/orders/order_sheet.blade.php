@@ -94,8 +94,8 @@
                     </div>
                 </div>
             </div>
-            <div class="border rounded p-4">
-                <h3 class="font-bold  mb-2">DIRECCIÓN DE FACTURACIÓN</h3>
+            <div class="border rounded-lg p-4 overflow-hidden">
+                <div class="font-bold w-full bg-gray-800 mb-2 border-b">DIRECCIÓN DE FACTURACIÓN</div>
                 <p class="">
                     {!! nl2br($order->billing_address) !!}
                 </p>
