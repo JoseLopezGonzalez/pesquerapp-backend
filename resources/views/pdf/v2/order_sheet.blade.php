@@ -74,9 +74,10 @@
                         
                         <p class="font-medium mt-2">Correos electrónicos:</p>
                         <ul class="list-disc pl-5">
-                            <li>pedidos@distribuciones-maritimas.com</li>
-                            <li>logistica@distribuciones-maritimas.com</li>
-                            <li>facturacion@distribuciones-maritimas.com</li>
+                            {{-- $order->emailsArray --}}
+                            @foreach ($order->emailsArray as $email)
+                                <li>{{ $email }}</li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
