@@ -17,7 +17,20 @@
             font-weight: bold;
         }
 
-        
+        @page {
+            size: A4 portrait;
+           /*  margin: 20mm; */
+        }
+
+        .page {
+            page-break-after: always;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            min-height: 100vh;
+            /* Ocupa toda la página */
+        }
 
         
     </style>
@@ -26,7 +39,7 @@
 
 <body class="h-full">
 
-    <div class=" flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs h-full ">
+    <div class="page flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs min-h-screen ">
         <div class="flex justify-between items-start mb-6 ">
             <div class="flex items-center gap-2">
                 <div>
@@ -91,10 +104,10 @@
                 <p class="">España</p>
             </div>
         </div>
-        <div class=" mb-6 flex flex-col h-full">
+        <div class="flex-1 mb-6 flex flex-col h-full">
             <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
-            <div class="border rounded p-4 h-fit">
-                <table class="w-full text-xs h-full">
+            <div class="border rounded overflow-hidden p-4 flex-grow">
+                <table class="w-full text-xs h-full table-fixed">
                     <thead class="border-b ">
                         <tr>
                             <th class="p-1 font-medium text-start">Producto</th>
@@ -104,7 +117,7 @@
                             <th class="p-1 font-medium text-start">Peso Neto</th>
                         </tr>
                     </thead>
-                    <tbody >
+                    <tbody class="h-full align-top">
                         @foreach ($order->productsWithLotsDetails as $productLine)
                             @if (count($productLine['lots']) == 1)
                                 <tr>
