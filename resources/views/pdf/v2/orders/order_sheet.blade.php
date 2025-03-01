@@ -163,13 +163,6 @@
                                     </td>
                                 </tr>
                                 @foreach ($productLine['lots'] as $lot)
-                                    <tr class="text-[10px]">
-                                        <td class=" p-1"></td>
-                                        <td class=" text-md text-end">↪︎</td>
-                                        <td class=" p-1">{{ $lot['lot'] }}</td>
-                                        <td class=" p-1">{{ $lot['boxes'] }}</td>
-                                        <td class=" p-1">{{ $lot['netWeight'] }} kg</td>
-                                    </tr>
                                 @endforeach
                             @endif
                             <tr className='font-bold'>
