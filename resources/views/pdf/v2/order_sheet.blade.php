@@ -22,22 +22,14 @@
             /*  margin: 20mm; */
         }
 
-        .page {
-            page-break-after: always;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            min-height: 100vh;
-            /* Ocupa toda la página */
-        }
+        
     </style>
     {{-- getProductsWithLotsDetailsBySpeciesAndCaptureZoneAttribute --}}
 </head>
 
 <body class="h-full">
 
-    <div class="page flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs min-h-screen ">
+    <div class="flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs min-h-screen ">
         <div class="flex justify-between items-start mb-6 ">
             <div class="flex items-center gap-2">
                 <div>
