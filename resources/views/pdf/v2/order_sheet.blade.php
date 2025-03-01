@@ -35,7 +35,8 @@
                 <div>
                     <h1 class="text-lg font-bold ">Congelados Brisamar S.L.</h1>
                     <p class=" ">C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
-                    <p class=" ">Tel: +34 613 09 14 94 - administracion@congeladosbrisamar.es</p>
+                    <p class=" ">Tel: +34 613 09 14 94 </p>
+                    <p class=" ">NIF: administracion@congeladosbrisamar.es</p>
                 </div>
             </div>
             <div class="flex items-start gap-4">
