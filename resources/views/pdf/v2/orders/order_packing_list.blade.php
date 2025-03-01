@@ -109,7 +109,7 @@
                                 <div class="h-10 bg-gray-800 relative flex items-center justify-center">
                                     <div class="absolute inset-0 flex items-center">
                                         <img alt='Barcode Generator TEC-IT'
-                                            src='https://barcode.tec-it.com/barcode.ashx?data=(10)87643218790325355325&code=Code128&translate-esc=on' />
+                                            src={{'https://barcode.tec-it.com/barcode.ashx?data=(01)'.$productDetail['product']->box_gtin.'&code=Code128&translate-esc=on'}} />
                                     </div>
                                     <span class="text-xs text-white z-10 bg-gray-800 px-1">GS1-128</span>
                                 </div>
