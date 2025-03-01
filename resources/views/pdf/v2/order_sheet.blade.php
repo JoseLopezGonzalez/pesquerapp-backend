@@ -83,7 +83,7 @@
                 <div class="border rounded p-4">
                     <h3 class="font-bold  mb-2">DATOS DE TRANSPORTE</h3>
                     <div class=" space-y-1">
-                        <p><span class="font-medium">Empresa:</span> {{ $ordre->transport->name }}</p>
+                        <p><span class="font-medium">Empresa:</span> {{ $order->transport->name }}</p>
                         <p class="font-medium mt-2">Correos electrónicos:</p>
                         <ul class="list-disc pl-5">
                             <li>pedidos@distribuciones-maritimas.com</li>
