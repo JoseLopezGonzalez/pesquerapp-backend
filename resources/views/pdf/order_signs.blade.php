@@ -105,17 +105,17 @@
                         </div>
                     </div>
                 </div> --}}
-                <div class="flex flex-col items-center justify-center border rounded-lg h-full p-10 gap-2">
+                <div class="flex flex-col items-center justify-center border rounded-lg h-full gap-2">
                     <h1 class="text-4xl font-semibold ">#9087</h1>
                     <span class="text-md">Pedido</span>
                 </div>
-                <div class="flex flex-col items-center justify-center border rounded-lg h-full p-10 gap-2">
+                <div class="flex flex-col items-center justify-center border rounded-lg h-full p-14 gap-2">
                     <img alt='Barcode Generator TEC-IT'
                         src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
                         class='h-full' />
                     <span class="text-xs">Palet: 09390</span>
                 </div>
-                <div class="flex flex-col items-center justify-center border rounded-lg h-full p-10 gap-2">
+                <div class="flex flex-col items-center justify-center border rounded-lg h-full p-14 gap-2">
                     <img alt='Barcode Generator TEC-IT'
                         src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
                         class='h-full' />
