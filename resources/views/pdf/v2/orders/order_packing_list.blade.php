@@ -59,7 +59,7 @@
 
         <div class="mb-6">
             @foreach ($order->pallets as $pallet)
-                <div class="mb-8">
+                <div class="mb-8 break-before-page">
                     <div class="bg-gray-800 text-white p-2 flex justify-between items-center rounded-t-lg">
                         <h3 class="font-medium text-lg">Palet #{{ $pallet->id }}</h3>
                         {{--  <div class="text-sm">
@@ -95,7 +95,8 @@
                                             {{ $productDetail['boxes'] }}
                                         </td>
                                         <td class=" p-2 text-center">
-                                            {{ $productDetail['netWeight'] }}</td>
+                                            {{ $productDetail['netWeight'] }} kg
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -135,7 +136,7 @@
                         <table class="w-full border-collapse text-xs">
                             <thead class=" bg-white border-b">
                                 <tr class="bg-gray-100">
-                                    <th class=" p-1 text-left">ID</th>
+                                    <th class=" p-1 text-center">ID</th>
                                     <th class=" p-1 text-left">Producto</th>
                                     <th class=" p-1 text-center">Lote</th>
                                     <th class=" p-1 text-center">Peso Neto</th>
@@ -149,8 +150,8 @@
                                             {{ $box->box->product->article->name }}</td>
                                         <td class=" p-1 text-center font-mono text-xs">
                                             {{ $box->box->lot }}</td>
-                                        <td class=" p-1 text-center">
-                                            {{ $box->box->net_weight }}</td>
+                                        <td class=" p-1 text-center font-mono text-xs">
+                                            {{ $box->box->net_weight }} kg</td>
                                     </tr>
                                 @endforeach
                             </tbody>
