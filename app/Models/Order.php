@@ -265,7 +265,8 @@ class Order extends Model
                 $species = $product->species;
                 $captureZone = $product->captureZone;
                 $fishingGear = $species->fishingGear;
-                $lot = $box->box->lot; // Suponiendo que cada caja tiene un lote asociado
+                $lot = $box->box->lot; // Lote de la caja
+                $netWeight = $box->box->net_weight; // Peso neto de la caja
 
                 $key = $species->id . '-' . $captureZone->id;
 
@@ -274,11 +275,11 @@ class Order extends Model
                         'species' => [
                             'name'           => $species->name,
                             'scientificName' => $species->scientific_name,
-                            'fao'           => $species->fao,
+                            'fao'            => $species->fao,
                         ],
-                        'captureZone'      => $captureZone->name,
-                        'fishingGear'      => $fishingGear->name,
-                        'products'         => []
+                        'captureZone' => $captureZone->name,
+                        'fishingGear' => $fishingGear->name,
+                        'products'    => []
                     ];
                 }
 
@@ -286,8 +287,8 @@ class Order extends Model
                 if (!isset($summary[$key]['products'][$productKey])) {
                     $summary[$key]['products'][$productKey] = [
                         'product' => [
-                            'article'      => [
-                                'id'  => $product->article->id,
+                            'article' => [
+                                'id'   => $product->article->id,
                                 'name' => $product->article->name,
                             ],
                             'boxGtin'   => $product->box_gtin,
@@ -298,16 +299,25 @@ class Order extends Model
                     ];
                 }
 
-                // Agregar detalles del lote
-                $summary[$key]['products'][$productKey]['lots'][] = [
-                    'lot'       => $lot, // Suponiendo que `lot_number` es el identificador del lote
-                    'boxes'     => 1, // Contamos cada caja como una unidad en el lote
-                    'netWeight' => $box->box->netWeight,
-                ];
+                // Agrupar lotes únicos y sumar pesos y cajas
+                $lotIndex = array_search($lot, array_column($summary[$key]['products'][$productKey]['lots'], 'lot'));
+
+                if ($lotIndex === false) {
+                    // Si el lote no existe, lo añadimos
+                    $summary[$key]['products'][$productKey]['lots'][] = [
+                        'lot'       => $lot,
+                        'boxes'     => 1,
+                        'netWeight' => $netWeight,
+                    ];
+                } else {
+                    // Si ya existe, sumamos los valores
+                    $summary[$key]['products'][$productKey]['lots'][$lotIndex]['boxes']++;
+                    $summary[$key]['products'][$productKey]['lots'][$lotIndex]['netWeight'] += $netWeight;
+                }
 
                 // Sumar totales al producto
                 $summary[$key]['products'][$productKey]['product']['boxes']++;
-                $summary[$key]['products'][$productKey]['product']['netWeight'] += $box->box->net_weight;
+                $summary[$key]['products'][$productKey]['product']['netWeight'] += $netWeight;
             });
         });
 
