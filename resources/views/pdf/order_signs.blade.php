@@ -93,7 +93,7 @@
                 </div>
             </div>
 
-            <div class='w-full flex flex-col items-center flex-1'>
+            <div class='w-full grid grid-cols-3 items-center flex-1'>
                 <div class="">
                     <div class="flex items-center gap-1 p-2 bg-white">
                         <div class='flex flex-col items-start '>
@@ -105,7 +105,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-1">
                     <div class="flex flex-col items-center justify-center border rounded-lg ">
                         <img alt='Barcode Generator TEC-IT'
                             src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
@@ -118,7 +117,6 @@
                             class='h-14' />
                         Pañet: 09390
                     </div>
-                </div>
 
 
 
