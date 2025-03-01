@@ -19,7 +19,7 @@
 
         @page {
             size: A4 portrait;
-           /*  margin: 20mm; */
+            /*  margin: 20mm; */
         }
 
         .page {
@@ -31,8 +31,6 @@
             min-height: 100vh;
             /* Ocupa toda la página */
         }
-
-        
     </style>
     {{-- getProductsWithLotsDetailsBySpeciesAndCaptureZoneAttribute --}}
 </head>
@@ -52,7 +50,10 @@
                 <div class="  rounded  text-end">
                     <h2 class="text-lg font-bold ">PEDIDO</h2>
                     <p class=" font-medium"><span class="">{{ $order->formattedId }}</span></p>
-                    <p class=" font-medium">Fecha: 02/02/2025 <span class="">{{ $order->load_date }}</span></p>
+                    <p class=" font-medium">Fecha: 02/02/2025 <span class="">
+                            {{ date('d/m/Y', strtotime($order->load_date)) }}
+                        </span></p>
+                    <p class=" font-medium">{{ $order->buyer_reference }}</p>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="p-1 border rounded flex items-center justify-center bg-white">
@@ -68,9 +69,9 @@
                 <div class="border rounded p-4">
                     <h3 class="font-bold  mb-2">DATOS DEL CLIENTE</h3>
                     <div class=" space-y-1">
-                        <p><span class="font-medium">Nombre:</span> Distribuciones Marítimas S.A.</p>
-                        <p><span class="font-medium">NIF/CIF:</span> B-12345678</p>
-                        <p><span class="font-medium">Buyer Reference:</span> BUY-2025-0789</p>
+                        <p><span class="font-medium">Nombre:</span> {{ $order->customer->name }}</p>
+                        <p><span class="font-medium">NIF/CIF:</span>{{ $order->customer->vat_number }}</p>
+                        
                         <p class="font-medium mt-2">Correos electrónicos:</p>
                         <ul class="list-disc pl-5">
                             <li>pedidos@distribuciones-maritimas.com</li>
@@ -82,7 +83,7 @@
                 <div class="border rounded p-4">
                     <h3 class="font-bold  mb-2">DATOS DE TRANSPORTE</h3>
                     <div class=" space-y-1">
-                        <p><span class="font-medium">Empresa:</span> Transportes Rápidos del Norte S.L.</p>
+                        <p><span class="font-medium">Empresa:</span> {{ $ordre->transport->name }}</p>
                         <p class="font-medium mt-2">Correos electrónicos:</p>
                         <ul class="list-disc pl-5">
                             <li>pedidos@distribuciones-maritimas.com</li>
@@ -93,15 +94,14 @@
             </div>
             <div class="border rounded p-4">
                 <h3 class="font-bold  mb-2">DIRECCIÓN DE FACTURACIÓN</h3>
-                <p class="">Polígono Industrial La Marina, Nave 12</p>
-                <p class="">48950 Erandio, Vizcaya</p>
-                <p class="">España</p>
+                <p class="">
+                    {!! nl2br($order->billing_address) !!}
+                </p>
                 <hr class="my-4 border-dashed border-slate-300" />
                 <h3 class="font-bold  mb-2">DIRECCIÓN DE ENVÍO</h3>
-                <p class="">Mercado Central de Abastos</p>
-                <p class="">Puesto 45-48</p>
-                <p class="">48002 Bilbao, Vizcaya</p>
-                <p class="">España</p>
+                <p class="">
+                    {!! nl2br($order->shipping_address) !!}
+                </p>
             </div>
         </div>
         <div class=" mb-6 ">
@@ -117,7 +117,7 @@
                             <th class="p-1 font-medium text-start">Peso Neto</th>
                         </tr>
                     </thead>
-                    <tbody >
+                    <tbody>
                         @foreach ($order->productsWithLotsDetails as $productLine)
                             @if (count($productLine['lots']) == 1)
                                 <tr>
