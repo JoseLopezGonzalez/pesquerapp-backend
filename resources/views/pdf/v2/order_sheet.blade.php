@@ -17,20 +17,7 @@
             font-weight: bold;
         }
 
-        @page {
-            size: A4 portrait;
-           /*  margin: 20mm; */
-        }
-
-        .page {
-            page-break-after: always;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            min-height: 100vh;
-            /* Ocupa toda la página */
-        }
+        
 
         
     </style>
@@ -106,7 +93,7 @@
         </div>
         <div class="flex-1 mb-6 flex flex-col h-full">
             <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
-            <div class="border rounded p-4 flex-grow">
+            <div class="border rounded p-4 ">
                 <table class="w-full text-xs h-full table-fixed">
                     <thead class="border-b ">
                         <tr>
