@@ -145,7 +145,8 @@
                                             <td className="border border-gray-300 p-1">{{ $box->box->product->article->name }}</td>
                                             <td className="border border-gray-300 p-1 text-center">{{ $box->box->net_weight }}</td>
                                             <td className="border border-gray-300 p-1 text-center font-mono text-xs">{{ $box->box->lot }}</td>
-                                    
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
