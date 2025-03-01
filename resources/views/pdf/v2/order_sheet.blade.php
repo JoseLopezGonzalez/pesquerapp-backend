@@ -151,18 +151,16 @@
                                     </tr>
                                 @endforeach
                             @endif
-
+                            <tr className='font-medium border-t py-2'>
+                                <td class="p-1 "></td>
+                                <td class="p-1"></td>
+                                <td class="p-1"></td>
+                                <td class="p-1 ">{{ $order->totalBoxes }} </td>
+                                <td class="p-1 "> {{ $order->totalNetWeight }} kg</td>
+                            </tr>
                         @endforeach
                     </tbody>
-                    <tfoot className='font-medium'>
-                        <tr>
-                            <td class="p-1 "></td>
-                            <td class="p-1"></td>
-                            <td class="p-1"></td>
-                            <td class="p-1 ">{{ $order->numberOfBoxes }} </td>
-                            <td class="p-1 "> {{ $order->totalNetWeight }} kg</td>
-                        </tr>
-                    </tfoot>
+                    
                 </table>
             </div>
         </div>
