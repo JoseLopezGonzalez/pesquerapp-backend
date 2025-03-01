@@ -137,7 +137,7 @@
                                 <td class="p-2 py-1">
                                     {{ count($productLine['lots']) === 1 ? $productLine['lots'][0]['lot'] : '' }}</td>
                                 <td class="p-2 py-1">{{ $productLine['product']['boxes'] }}</td>
-                                <td class="p-2 py-1">{{ $productLine['product']['netWeight'] }} kg</td>
+                                <td class="p-2 py-1">{{ number_format($productLine['product']['netWeight'], 2, ',', '.') }} kg</td>
                             </tr>
 
                             <!-- Fila con información de la especie -->
@@ -169,7 +169,7 @@
                                         <td class="text-md text-end">↪︎</td>
                                         <td class="p-2 py-1">{{ $lot['lot'] }}</td>
                                         <td class="p-2 py-1">{{ $lot['boxes'] }}</td>
-                                        <td class="p-2 py-1">{{ $lot['netWeight'] }} kg</td>
+                                        <td class="p-2 py-1">{{ number_format($lot['netWeight'], 2, ',', '.') }} kg</td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -180,7 +180,7 @@
                             <td class="p-2 py-1 border-t bg-gray-100"></td>
                             <td class="p-2 py-1 border-t bg-gray-100">Total</td>
                             <td class="p-2 py-1 border-t bg-gray-100">{{ $order->totalBoxes }} </td>
-                            <td class="p-2 py-1 border-t bg-gray-100"> {{ $order->totalNetWeight }} kg</td>
+                            <td class="p-2 py-1 border-t bg-gray-100">{{ number_format($order->totalNetWeight, 2, ',', '.') }} kg</td>
                         </tr>
                     </tbody>
                 </table>
