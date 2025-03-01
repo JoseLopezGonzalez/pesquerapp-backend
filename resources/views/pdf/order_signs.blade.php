@@ -32,69 +32,79 @@
 
 <body>
     @foreach ($order->pallets as $pallet)
-        <div class="flex flex-col h-svh border-2 border-black">
-            <div class="w-full text-center p-5 border-2 border-black">
-                <h1 class="font-bold text-5xl">{{ $order->customer->alias }}</h1>
-                <h3 class="font-medium text-3xl">{{ $order->formattedId }} - Pallet Nº {{ $pallet->id }}</h3>
-            </div>
-            <div class="grid grid-cols-2 text-lg">
-                <div class="border-2 border-black p-5">
-                    <p class="font-bold"><u>Expedidor:</u></p>
-                    <p>Congelados Brisamar S.L.</p>
-                    <p>Poligono Vista Hermosa, Nave 11A<br>21410 ISLA CRISTINA<br>HUELVA – ESPAÑA</p>
+        <div className="w-full p-4 text-black h-svh flex flex-col gap-3 bg-white border-black rounded-lg">
+            <div className="flex items-center justify-between mb-4">
+                <div className="text-start">
+                    <div className="text-3xl font-bold  tracking-tight">#4369</div>
+                    <div className="text-sm ">Nº Pedido</div>
                 </div>
-                <div class="border-2 border-black p-5">
-                    <p class="font-bold"><u>Lugar de entrega:</u></p>
-                    <p class="preserve-line-breaks">
-                        <b>
-                        {{ $order->customer->alias }}
-                        </b>
-                            <br />
-                            {{-- Delete first line of Text of shipping Address y respetar los saltos de lineas del texto original con nl2br --}}
+                <div className="flex flex-col items-center w-96 justify-center">
+                    <img alt='Barcode Generator TEC-IT'
+                        src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
+                        className='h-14' />
+                </div>
 
-                            @php
-                                // Separamos el texto en líneas
-                                $addressLines = explode("\n", $order->shipping_address);
-                                // Quitamos la primera línea
-                                array_shift($addressLines);
-                                // Unimos nuevamente el texto, excluyendo la primera línea
-                                $modifiedAddress = implode("\n", $addressLines);
-                            @endphp
-
-                            {!! nl2br(e($modifiedAddress)) !!}
+            </div>
 
 
+            <div className='grid grid-cols-2 w-full gap-2'>
+                <div className="space-y-2 border rounded-lg p-2">
+                    <div className="text-md font-semibold ">Expedidor:</div>
+                    <div className="text-2xl font-semibold ">Ejemplo S.L.</div>
+                    <p className="text-gray-600">
+                        Polígono Industrial Las Atalayas, Calle del Mar 15, 03114 Alicante
+                    </p>
+                </div>
+
+                <div className="space-y-2 border rounded-lg p-2">
+                    <div className="text-md font-semibold ">Consignatario:</div>
+                    <div className="text-2xl font-semibold ">Ejemplo S.L.</div>
+                    <p className="text-gray-600">
+                        Polígono Industrial Las Atalayas, Calle del Mar 15, 03114 Alicante
                     </p>
                 </div>
             </div>
-            <div class="p-3 grow flex items-center border-2 border-black">
-                <div class="w-full" style="line-height: 100%;">
-                    <table class="w-full text-sm">
-                        <tbody>
-                            <tr class="text-2xl">
-                                <th class="text-start font-medium p-1.5">Productos de la pesca</th>
-                                <td class="text-center">{{ $pallet->totals['boxes'] }} /cajas</td>
-                                <td class="text-center">{{ number_format($pallet->totals['netWeight'], 2, ',', '.') }}
-                                    kg</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+
+            <div className="grid grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg border w-full">
+                <div className="text-center">
+                    <div className="text-3xl font-bold ">#9087</div>
+                    <div className="text-sm font-medium ">Nº PALET</div>
+                </div>
+                <div className="text-center border-r border-l">
+                    <div className="text-3xl font-bold ">56</div>
+                    <div className="text-sm font-medium ">CAJAS</div>
+                </div>
+                <div className="text-center">
+                    <div className="text-3xl font-bold ">1.090,00</div>
+                    <div className="text-sm font-medium ">PESO NETO</div>
                 </div>
             </div>
 
-            <div class="text-center p-4 border-2 border-black">
-                {{-- Mostrar solo la ultima linea de Shipping adress --}}
+            <div className='w-full flex items-center flex-1'>
+                <div className="flex-1">
+                    <div className="flex items-center gap-1 p-2 bg-white">
+                        <div className='flex flex-col items-start '>
+                            <div className="font-semibold">Gamba Argentina</div>
+                            <div className="flex items-center justify-start gap-2 text-sm">
+                                <div>- 10 cajas</div>
+                                <div>- GTIN: 32456436435</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                @php
-                    // Separamos el texto en líneas
-                    $addressLines = explode("\n", $order->shipping_address);
-                    // Obtenemos la última línea
-                    $lastLine = end($addressLines);
-                @endphp
-                <h1 class="font-bold text-7xl">{{ strtoupper($lastLine) }}</h1>
-                {{-- <h1 class="font-bold text-8xl p-4">{{ strtoupper($oder->shipping_address)) }}</h1> --}}
-                <h1 class="font-bold text-7xl">{{ $order->transport->name }}</h1>
+
+
             </div>
+
+            <div className="text-3xl font-semibold  border-l-4 border-gray-300 pl-3">
+                Transportes Narval S.L.
+            </div>
+
+
+
+
         </div>
     @endforeach
 
