@@ -79,11 +79,11 @@
 
                     <div class="w-full mb-2 rounded-lg overflow-hidden border">
                         <table class="w-full ">
-                            <thead>
+                            <thead class="border-b">
                                 <tr class="bg-gray-100">
-                                    <th class="border border-gray-300 p-2 text-left">Producto</th>
-                                    <th class="border border-gray-300 p-2 text-center">Cajas</th>
-                                    <th class="border border-gray-300 p-2 text-center">Peso Neto</th>
+                                    <th class="p-2 text-left">Producto</th>
+                                    <th class="p-2 text-center">Cajas</th>
+                                    <th class="p-2 text-center">Peso Neto</th>
                                 </tr>
                             </thead>
                             <tbody>
