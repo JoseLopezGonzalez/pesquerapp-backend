@@ -48,7 +48,7 @@
             </div> --}}
 
 
-            <div class='grid grid-cols-2 w-full gap-2'>
+            <div class='grid grid-cols-2 w-full gap-3'>
                 <div class="space-y-2 border rounded-lg p-4 py-8">
                     <div class="text-md font-semibold ">Expedidor:</div>
                     <div class="text-2xl font-semibold ">Congelados Brisamar S.L.</div>
@@ -93,7 +93,7 @@
                 </div>
             </div>
 
-            <div class='w-full grid grid-cols-3 items-center flex-1'>
+            <div class='w-full grid grid-cols-3 items-center flex-1 gap-3'>
                 {{-- <div class="border rounded-lg h-full p-4">
                     <div class="flex items-center gap-1 p-2 bg-white">
                         <div class='flex flex-col items-start '>
