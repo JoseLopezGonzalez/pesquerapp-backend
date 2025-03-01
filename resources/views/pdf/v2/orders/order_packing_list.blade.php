@@ -25,7 +25,7 @@
     {{-- getProductsWithLotsDetailsBySpeciesAndCaptureZoneAttribute --}}
 </head>
 
-<body class="h-full">
+<body class="h-full ">
 
     <div class="flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs min-h-screen ">
         <div class="flex justify-between items-start mb-6 ">
@@ -71,40 +71,44 @@
                     <div class="border border-gray-300 border-t-0 p-2 mb-2 bg-gray-50 rounded-b-lg">
                         <span class="font-semibold">Lotes en este palet: </span>
                         @foreach ($pallet->lots as $lot)
-                            <span class="inline-block bg-gray-200 px-2 py-1 text-sm mr-2 mb-1 rounded-full">
+                            <span class="inline-block bg-gray-200 px-2 py-1 mr-2 mb-1 rounded-full text-xs">
                                 {{ $lot }}
                             </span>
                         @endforeach
                     </div>
 
-                    <table class="w-full border-collapse mb-2 rounded-lg overflow-hidden">
-                        <thead>
-                            <tr class="bg-gray-100">
-                                <th class="border border-gray-300 p-2 text-left">Producto</th>
-                                <th class="border border-gray-300 p-2 text-center">Cajas</th>
-                                <th class="border border-gray-300 p-2 text-center">Peso Total (kg)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($pallet->summary as $productDetail)
-                                <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
-                                    <td class="border border-gray-300 p-2 font-semibold">
-                                        {{ $productDetail['product']->article->name }}</td>
-                                    <td class="border border-gray-300 p-2 text-center">{{ $productDetail['boxes'] }}
-                                    </td>
-                                    <td class="border border-gray-300 p-2 text-center">
-                                        {{ $productDetail['netWeight'] }}</td>
+                    <div class="w-full mb-2 rounded-lg overflow-hidden border">
+                        <table class="w-full ">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border border-gray-300 p-2 text-left">Producto</th>
+                                    <th class="border border-gray-300 p-2 text-center">Cajas</th>
+                                    <th class="border border-gray-300 p-2 text-center">Peso Neto</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                            <tr class="bg-gray-100">
-                                <td class="border border-gray-300 p-2 font-semibold">Total</td>
-                                <td class="border border-gray-300 p-2 text-center">{{ $pallet->numberOfBoxes }}</td>
-                                <td class="border border-gray-300 p-2 text-center">{{ $pallet->netWeight }}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($pallet->summary as $productDetail)
+                                    <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
+                                        <td class="border border-gray-300 p-2 font-semibold">
+                                            {{ $productDetail['product']->article->name }}</td>
+                                        <td class="border border-gray-300 p-2 text-center">
+                                            {{ $productDetail['boxes'] }}
+                                        </td>
+                                        <td class="border border-gray-300 p-2 text-center">
+                                            {{ $productDetail['netWeight'] }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-gray-100">
+                                    <td class="border border-gray-300 p-2 font-semibold">Total</td>
+                                    <td class="border border-gray-300 p-2 text-center">{{ $pallet->numberOfBoxes }}
+                                    </td>
+                                    <td class="border border-gray-300 p-2 text-center">{{ $pallet->netWeight }}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
 
                     <div class="grid grid-cols-2 gap-4 mt-2 mb-4">
                         @foreach ($pallet->summary as $productDetail)
@@ -116,9 +120,8 @@
                                 <div class="h-10 bg-gray-800 relative flex items-center justify-center">
                                     <div class="absolute inset-0 flex items-center">
                                         <img alt='Barcode Generator TEC-IT'
-                                            src={{'https://barcode.tec-it.com/barcode.ashx?data=(01)'.$productDetail['product']->box_gtin.'&code=Code128&translate-esc=on'}} 
-                                            class="h-full"
-                                            />
+                                            src={{ 'https://barcode.tec-it.com/barcode.ashx?data=(01)' . $productDetail['product']->box_gtin . '&code=Code128&translate-esc=on' }}
+                                            class="h-full" />
                                     </div>
                                     <span class="text-xs text-white z-10 bg-gray-800 px-1">GS1-128</span>
                                 </div>
@@ -158,7 +161,6 @@
                         </div>
                     </div>
                 </div>
-
             @endforeach
         </div>
 
