@@ -323,4 +323,63 @@ class Order extends Model
 
         return array_values($summary);
     }
+
+    public function getProductsWithLotsDetailsAttribute()
+    {
+        $summary = [];
+
+        $this->pallets->map(function ($pallet) use (&$summary) {
+            $pallet->boxes->map(function ($box) use (&$summary) {
+                $product = $box->box->product;
+                $lot = $box->box->lot; // Lote de la caja
+                $netWeight = $box->box->net_weight; // Peso neto de la caja
+
+                $productKey = $product->id;
+
+                if (!isset($summary[$productKey])) {
+                    $summary[$productKey] = [
+                        'product' => [
+                            'article' => [
+                                'id'   => $product->article->id,
+                                'name' => $product->article->name,
+                            ],
+                            'boxGtin'   => $product->box_gtin,
+                            'boxes'     => 0,
+                            'netWeight' => 0,
+                            'species'   => [
+                                'name'           => $product->species->name,
+                                'scientificName' => $product->species->scientific_name,
+                                'fao'            => $product->species->fao,
+                            ],
+                            'captureZone' => $product->captureZone->name,
+                            'fishingGear' => $product->species->fishingGear->name,
+                        ],
+                        'lots' => []
+                    ];
+                }
+
+                // Agrupar lotes únicos y sumar pesos y cajas
+                $lotIndex = array_search($lot, array_column($summary[$productKey]['lots'], 'lot'));
+
+                if ($lotIndex === false) {
+                    // Si el lote no existe, lo añadimos
+                    $summary[$productKey]['lots'][] = [
+                        'lot'       => $lot,
+                        'boxes'     => 1,
+                        'netWeight' => $netWeight,
+                    ];
+                } else {
+                    // Si ya existe, sumamos los valores
+                    $summary[$productKey]['lots'][$lotIndex]['boxes']++;
+                    $summary[$productKey]['lots'][$lotIndex]['netWeight'] += $netWeight;
+                }
+
+                // Sumar totales al producto
+                $summary[$productKey]['product']['boxes']++;
+                $summary[$productKey]['product']['netWeight'] += $netWeight;
+            });
+        });
+
+        return array_values($summary);
+    }
 }

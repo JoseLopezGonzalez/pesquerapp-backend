@@ -105,46 +105,59 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($order->productsWithLotsDetailsBySpeciesAndCaptureZone as $group)
-                            @foreach ($group['products'] as $product)
-                                @if (count($product['lots']) == 1)
-                                    <tr>
-                                        <td class=" p-1">{{ $product['product']['article']['name'] }}</td>
-                                        <td class=" p-1">{{ $product['product']['boxGtin'] }}</td>
-                                        <td class=" p-1">{{ $product['lots'][0]['lot'] }}</td>
-                                        <td class=" p-1">{{ $product['product']['boxes'] }}</td>
-                                        <td class=" p-1">{{ $product['product']['netWeight'] }} kg</td>
-                                    </tr>
-                                @else
-                                    <tr>
-                                        <td class=" p-1">{{ $product['product']['article']['name'] }}</td>
-                                        <td class=" p-1">{{ $product['product']['boxGtin'] }}</td>
+                        @foreach ($order->productsWithLotsDetails as $productLine)
+                            @if (count($productLine['lots']) == 1)
+                                <tr>
+                                    <td class=" p-1">{{ $productLine['product']['article']['name'] }}</td>
+                                    <td class=" p-1">{{ $productLine['product']['boxGtin'] }}</td>
+                                    <td class=" p-1">{{ $productLine['lots'][0]['lot'] }}</td>
+                                    <td class=" p-1">{{ $productLine['product']['boxes'] }}</td>
+                                    <td class=" p-1">{{ $productLine['product']['netWeight'] }} kg</td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-5 p-1 text-[10px]" colspan="5">
+                                        hola
+                                        <i>
+                                            {{ $productLine['product']['species']['name'] }}
+                                            `{{ $productLine['product']['species']['scientificName'] }} -
+                                            {{ $productLine['product']['species']['fao'] }}`
+                                            - {{ $productLine['product']['fishingGear'] }} /
+                                            {{ $productLine['product']['captureZone'] }}
+                                        </i>
+                                    </td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td class=" p-1">{{ $productLine['product']['article']['name'] }}</td>
+                                    <td class=" p-1">{{ $productLine['product']['boxGtin'] }}</td>
+                                    <td class=" p-1"></td>
+                                    <td class=" p-1">{{ $productLine['product']['boxes'] }}</td>
+                                    <td class=" p-1">{{ $productLine['product']['netWeight'] }} kg</td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-5 p-1 text-[10px]" colspan="5">
+                                        hola
+                                        <i>
+                                            {{ $productLine['product']['species']['name'] }}
+                                            `{{ $productLine['product']['species']['scientificName'] }} -
+                                            {{ $productLine['product']['species']['fao'] }}`
+                                            - {{ $productLine['product']['fishingGear'] }} /
+                                            {{ $productLine['product']['captureZone'] }}
+                                        </i>
+                                    </td>
+                                </tr>
+                                @foreach ($productLine['lots'] as $lot)
+                                    <tr class="text-[10px]">
                                         <td class=" p-1"></td>
-                                        <td class=" p-1">{{ $product['product']['boxes'] }}</td>
-                                        <td class=" p-1">{{ $product['product']['netWeight'] }} kg</td>
+                                        <td class=" text-md text-end">↪︎</td>
+                                        <td class=" p-1">{{ $lot['lot'] }}</td>
+                                        <td class=" p-1">{{ $lot['boxes'] }}</td>
+                                        <td class=" p-1">{{ $lot['netWeight'] }} kg</td>
                                     </tr>
-                                    @foreach ($product['lots'] as $lot)
-                                        <tr class="text-[10px]">
-                                            <td class=" p-1"></td>
-                                            <td class=" text-md text-end">↪︎</td>
-                                            <td class=" p-1">{{ $lot['lot'] }}</td>
-                                            <td class=" p-1">{{ $lot['boxes'] }}</td>
-                                            <td class=" p-1">{{ $lot['netWeight'] }} kg</td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                            @endforeach
-                            <tr>
-                                <td class="pl-5 p-1 text-[10px]" colspan="5">
-                                    hola
-                                    <i>
-                                        {{ $group['species']['name'] }} `{{ $group['species']['scientificName'] }} -
-                                        {{ $group['species']['fao'] }}`
-                                        - {{ $group['fishingGear'] }} /
-                                        {{ $group['captureZone'] }}
-                                    </i>
-                                </td>
-                            </tr>
+                                @endforeach
+                            @endif
+                        @endforeach
+
                         @endforeach
                     </tbody>
                     <tfoot className='font-medium'>
