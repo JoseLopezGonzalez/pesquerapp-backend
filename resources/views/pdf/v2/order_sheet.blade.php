@@ -26,7 +26,7 @@
 
 <body class="h-full">
 
-    <div class="page flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs h-full ">
+    <div class=" flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs h-full ">
         <div class="flex justify-between items-start mb-6 ">
             <div class="flex items-center gap-2">
                 <div>
@@ -91,7 +91,7 @@
                 <p class="">España</p>
             </div>
         </div>
-        <div class="flex-1 mb-6 flex flex-col h-full">
+        <div class=" mb-6 flex flex-col h-full">
             <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
             <div class="border rounded p-4 ">
                 <table class="w-full text-xs h-full table-fixed">
