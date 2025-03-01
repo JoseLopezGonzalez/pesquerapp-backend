@@ -71,13 +71,13 @@
                     <div class="border border-gray-300 border-t-0 p-2 mb-2 bg-gray-50 rounded-b-lg">
                         <span class="font-semibold">Lotes en este palet: </span>
                         @foreach ($pallet->lots as $lot)
-                            <span class="inline-block bg-gray-200 px-2 py-1 text-sm mr-2 mb-1">
+                            <span class="inline-block bg-gray-200 px-2 py-1 text-sm mr-2 mb-1 rounded-full">
                                 {{ $lot }}
                             </span>
                         @endforeach
                     </div>
 
-                    <table class="w-full border-collapse mb-2">
+                    <table class="w-full border-collapse mb-2 rounded-lg">
                         <thead>
                             <tr class="bg-gray-100">
                                 <th class="border border-gray-300 p-2 text-left">Producto</th>
@@ -97,6 +97,13 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr class="bg-gray-100">
+                                <td class="border border-gray-300 p-2 font-semibold">Total</td>
+                                <td class="border border-gray-300 p-2 text-center">{{ $pallet->numberOfBoxes }}</td>
+                                <td class="border border-gray-300 p-2 text-center">{{ $pallet->netWeight }}</td>
+                            </tr>
+                        </tfoot>
                     </table>
 
                     <div class="grid grid-cols-2 gap-4 mt-2 mb-4">
