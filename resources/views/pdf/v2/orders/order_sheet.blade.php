@@ -94,16 +94,19 @@
                     </div>
                 </div>
             </div>
-            <div class="border rounded-lg p-4 overflow-hidden">
-                <h3 class="font-bold  mb-2">DIRECCIÓN DE FACTURACIÓN</h3>
-                <p class="">
-                    {!! nl2br($order->billing_address) !!}
-                </p>
-                <hr class="my-4 border-dashed border-slate-300" />
-                <h3 class="font-bold  mb-2">DIRECCIÓN DE ENVÍO</h3>
-                <p class="">
-                    {!! nl2br($order->shipping_address) !!}
-                </p>
+            <div class="border rounded-lg overflow-hidden bg-gray-50">
+                <div class="font-bold  mb-2 w-full p-2 bg-gray-800 border-b text-white">DIRECCIONES</div>
+                <div class=" space-y-1 p-4 pt-0">
+                    <h3 class="font-bold  mb-2">DIRECCIÓN DE FACTURACIÓN</h3>
+                    <p class="">
+                        {!! nl2br($order->billing_address) !!}
+                    </p>
+                    <hr class="my-4 border-dashed border-slate-300" />
+                    <h3 class="font-bold  mb-2">DIRECCIÓN DE ENVÍO</h3>
+                    <p class="">
+                        {!! nl2br($order->shipping_address) !!}
+                    </p>
+                </div>
             </div>
         </div>
         <div class=" mb-6 ">
@@ -137,7 +140,8 @@
                                 <td class="p-2 py-1">
                                     {{ count($productLine['lots']) === 1 ? $productLine['lots'][0]['lot'] : '' }}</td>
                                 <td class="p-2 py-1">{{ $productLine['product']['boxes'] }}</td>
-                                <td class="p-2 py-1">{{ number_format($productLine['product']['netWeight'], 2, ',', '.') }} kg</td>
+                                <td class="p-2 py-1">
+                                    {{ number_format($productLine['product']['netWeight'], 2, ',', '.') }} kg</td>
                             </tr>
 
                             <!-- Fila con información de la especie -->
@@ -169,7 +173,8 @@
                                         <td class="text-md text-end">↪︎</td>
                                         <td class="p-2 py-1">{{ $lot['lot'] }}</td>
                                         <td class="p-2 py-1">{{ $lot['boxes'] }}</td>
-                                        <td class="p-2 py-1">{{ number_format($lot['netWeight'], 2, ',', '.') }} kg</td>
+                                        <td class="p-2 py-1">{{ number_format($lot['netWeight'], 2, ',', '.') }} kg
+                                        </td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -180,7 +185,8 @@
                             <td class="p-2 py-1 border-t bg-gray-100"></td>
                             <td class="p-2 py-1 border-t bg-gray-100">Total</td>
                             <td class="p-2 py-1 border-t bg-gray-100">{{ $order->totalBoxes }} </td>
-                            <td class="p-2 py-1 border-t bg-gray-100">{{ number_format($order->totalNetWeight, 2, ',', '.') }} kg</td>
+                            <td class="p-2 py-1 border-t bg-gray-100">
+                                {{ number_format($order->totalNetWeight, 2, ',', '.') }} kg</td>
                         </tr>
                     </tbody>
                 </table>
