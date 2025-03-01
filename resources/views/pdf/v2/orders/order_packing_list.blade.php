@@ -95,7 +95,7 @@
                                             {{ $productDetail['boxes'] }}
                                         </td>
                                         <td class=" p-2 text-center">
-                                            {{ $productDetail['netWeight'] }} kg
+                                            {{ number_format($productDetail['netWeight'], 2, ',', '.') }} kg
                                         </td>
                                     </tr>
                                 @endforeach
@@ -105,7 +105,8 @@
                                     <td class=" p-2 font-semibold">Total</td>
                                     <td class=" p-2 text-center">{{ $pallet->numberOfBoxes }}
                                     </td>
-                                    <td class=" p-2 text-center">{{ $pallet->netWeight }}</td>
+                                    <td class=" p-2 text-center">{{ number_format($pallet->netWeight, 2, ',', '.') }}
+                                        kg</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -151,7 +152,8 @@
                                         <td class=" p-1 text-center font-mono text-xs">
                                             {{ $box->box->lot }}</td>
                                         <td class=" p-1 text-center font-mono text-xs">
-                                            {{ $box->box->net_weight }} kg</td>
+                                            {{ number_format($box->box->net_weight, 2, ',', '.') }} kg
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
