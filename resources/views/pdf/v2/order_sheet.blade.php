@@ -156,7 +156,6 @@
                                     </tr>
                                 @endforeach
                             @endif
-                        @endforeach
 
                         @endforeach
                     </tbody>
