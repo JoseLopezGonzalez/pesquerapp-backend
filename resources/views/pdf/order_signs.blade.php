@@ -34,7 +34,8 @@
 <body>
     @foreach ($order->pallets as $pallet)
         <div class="w-full p-4 text-black h-svh flex flex-col gap-3 bg-white border-black rounded-lg">
-            <div class="flex items-center justify-between mb-4">
+
+            {{-- <div class="flex items-center justify-between mb-4">
                 <div class="text-start">
                     <div class="text-3xl font-bold  tracking-tight">#4369</div>
                     <div class="text-sm ">Nº Pedido</div>
@@ -44,18 +45,17 @@
                         src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
                         class='h-14' />
                 </div>
-
-            </div>
+            </div> --}}
 
 
             <div class='grid grid-cols-2 w-full gap-2'>
-                <div class="space-y-2 border rounded-lg p-4">
+                <div class="space-y-2 border rounded-lg p-4 py-8">
                     <div class="text-md font-semibold ">Expedidor:</div>
                     <div class="text-2xl font-semibold ">Congelados Brisamar S.L.</div>
                     <p>Poligono Vista Hermosa, Nave 11A<br>21410 ISLA CRISTINA<br>HUELVA – ESPAÑA</p>
                 </div>
 
-                <div class="space-y-2 border rounded-lg p-4">
+                <div class="space-y-2 border rounded-lg p-4 py-8">
                     <div class="text-md font-semibold ">Consignatario:</div>
                     <div class="text-2xl font-semibold ">{{ $order->customer->alias }}</div>
                     <p class="">
