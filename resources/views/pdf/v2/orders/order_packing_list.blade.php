@@ -77,7 +77,7 @@
                         @endforeach
                     </div>
 
-                    <table class="w-full border-collapse mb-2 rounded-lg">
+                    <table class="w-full border-collapse mb-2 rounded-lg overflow-hidden">
                         <thead>
                             <tr class="bg-gray-100">
                                 <th class="border border-gray-300 p-2 text-left">Producto</th>
