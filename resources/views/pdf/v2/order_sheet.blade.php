@@ -117,7 +117,7 @@
                             <th class="p-1 font-medium text-start">Peso Neto</th>
                         </tr>
                     </thead>
-                    <tbody class="h-full align-top">
+                    <tbody >
                         @foreach ($order->productsWithLotsDetails as $productLine)
                             @if (count($productLine['lots']) == 1)
                                 <tr>
