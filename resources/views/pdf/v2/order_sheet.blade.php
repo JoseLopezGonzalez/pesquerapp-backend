@@ -22,7 +22,7 @@
 
 <body>
 
-    <div class="flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs min-h-[297mm] max-h-[297mm] h-full">
+    <div class="flex flex-col max-w-[210mm]  mx-auto p-6 bg-white rounded text-black text-xs h-full">
         <div class="flex justify-between items-start mb-6 ">
             <div class="flex items-center gap-2">
                 <div>
