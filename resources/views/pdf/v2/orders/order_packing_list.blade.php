@@ -89,22 +89,22 @@
                             <tbody>
                                 @foreach ($pallet->summary as $productDetail)
                                     <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
-                                        <td class="border border-gray-300 p-2 font-semibold">
+                                        <td class=" p-2 font-semibold">
                                             {{ $productDetail['product']->article->name }}</td>
-                                        <td class="border border-gray-300 p-2 text-center">
+                                        <td class=" p-2 text-center">
                                             {{ $productDetail['boxes'] }}
                                         </td>
-                                        <td class="border border-gray-300 p-2 text-center">
+                                        <td class=" p-2 text-center">
                                             {{ $productDetail['netWeight'] }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
-                            <tfoot>
+                            <tfoot class="border-t">
                                 <tr class="bg-gray-100">
-                                    <td class="border border-gray-300 p-2 font-semibold">Total</td>
-                                    <td class="border border-gray-300 p-2 text-center">{{ $pallet->numberOfBoxes }}
+                                    <td class=" p-2 font-semibold">Total</td>
+                                    <td class=" p-2 text-center">{{ $pallet->numberOfBoxes }}
                                     </td>
-                                    <td class="border border-gray-300 p-2 text-center">{{ $pallet->netWeight }}</td>
+                                    <td class=" p-2 text-center">{{ $pallet->netWeight }}</td>
                                 </tr>
                             </tfoot>
                         </table>
