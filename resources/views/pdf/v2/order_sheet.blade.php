@@ -133,39 +133,18 @@
                                         </tr>
                                     @endforeach
                                 @endif
-                                @endforeach
-                                <tr>
-                                    <td class="pl-5 p-1 text-[10px]" colspan="5">
-                                        <i>
-                                            {{ $group['species']['name'] }} `{{ $group['species']['scientificName'] }} - {{ $group['species']['fao'] }}`
-                                        - {{ $group['fishingGear'] }} /
-                                        {{ $group['captureZone'] }}
-                                        </i>
-                                    </td>
-                                </tr>
                             @endforeach
                             <tr>
-                                <td class=" p-1">Langostinos 20/30</td>
-                                <td class=" p-1">1234567890123</td>
-                                <td class=" p-1">L-2025-123</td>
-                                <td class=" p-1">56</td>
-                                <td class=" p-1">27,50 kg</td>
-                            </tr>
-                            <tr>
-                                <td class=" p-1">Langostinos 30/40</td>
-                                <td class=" p-1">1234567890124</td>
-                                <td class=" p-1">L-2025-124</td>
-                                <td class=" p-1">3</td>
-                                <td class=" p-1">32,00 kg</td>
-                            </tr>
-                            <tr>
-
                                 <td class="pl-5 p-1 text-[10px]" colspan="5">
                                     <i>
-                                        Octopus vulgaris `OCC` - Capturado / Nasas y trampas
+                                        {{ $group['species']['name'] }} `{{ $group['species']['scientificName'] }} -
+                                        {{ $group['species']['fao'] }}`
+                                        - {{ $group['fishingGear'] }} /
+                                        {{ $group['captureZone'] }}
                                     </i>
                                 </td>
                             </tr>
+                        @endforeach
                     </tbody>
                     <tfoot className='font-medium'>
                         <tr>
