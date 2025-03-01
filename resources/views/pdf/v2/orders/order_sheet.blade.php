@@ -95,12 +95,12 @@
                 </div>
             </div>
             <div class="border rounded-lg p-4 overflow-hidden">
-                <div class="font-bold w-full bg-gray-800 mb-2 border-b">DIRECCIÓN DE FACTURACIÓN</div>
+                <div class="font-bold w-full bg-gray-800 text-white mb-2 border-b rounded-lg">DIRECCIÓN DE FACTURACIÓN</div>
                 <p class="">
                     {!! nl2br($order->billing_address) !!}
                 </p>
                 <hr class="my-4 border-dashed border-slate-300" />
-                <h3 class="font-bold  mb-2">DIRECCIÓN DE ENVÍO</h3>
+                <div class="ont-bold w-full bg-gray-800 text-white mb-2 border-b rounded-lg">DIRECCIÓN DE ENVÍO</div>
                 <p class="">
                     {!! nl2br($order->shipping_address) !!}
                 </p>
