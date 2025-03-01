@@ -76,9 +76,9 @@
                         </ul>
                     </div>
                 </div>
-                <div class="border rounded p-4">
+                <div class="border rounded ">
                     <div class="font-bold  mb-2 w-full p-2 bg-gray-800 border-b text-white">DATOS DE TRANSPORTE</div>
-                    <div class=" space-y-1">
+                    <div class=" space-y-1 p-4">
                         <p><span class="font-medium">Empresa:</span> {{ $order->transport->name }}</p>
                         <p class="font-medium mt-2">Correos electrónicos:</p>
                         <ul class="list-disc pl-5">
