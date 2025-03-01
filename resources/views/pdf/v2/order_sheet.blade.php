@@ -58,7 +58,7 @@
                 <div class="flex flex-col items-center">
                     <div class="p-1 border rounded flex items-center justify-center bg-white">
                         <img alt='Barcode Generator TEC-IT'
-                            src='https://barcode.tec-it.com/barcode.ashx?data=Pedido%{{$order->id}}&code=QRCode&eclevel=L'
+                            src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $order->id . '&code=QRCode&eclevel=L' }}"
                             class="w-[4rem] h-[4rem]" />
                     </div>
                 </div>
@@ -194,7 +194,7 @@
         <hr class="my-4" />
         <div class="flex justify-between items-end">
             <p>Documento generado electrónicamente. No requiere firma.</p>
-            <p>Ref: {{$order->id}} </p>
+            <p>Ref: {{ $order->id }} </p>
         </div>
     </div>
 </body>
