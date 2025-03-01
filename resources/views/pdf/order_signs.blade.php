@@ -105,18 +105,18 @@
                         </div>
                     </div>
                 </div>
-                    <div class="flex flex-col items-center justify-center border rounded-lg ">
-                        <img alt='Barcode Generator TEC-IT'
-                            src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
-                            class='h-14' />
-                        Pedido: 09390
-                    </div>
-                    <div class="flex flex-col items-center justify-center border rounded-lg ">
-                        <img alt='Barcode Generator TEC-IT'
-                            src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
-                            class='h-14' />
-                        Pañet: 09390
-                    </div>
+                <div class="flex flex-col items-center justify-center border rounded-lg h-full ">
+                    <img alt='Barcode Generator TEC-IT'
+                        src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
+                        class='h-14' />
+                    Pedido: 09390
+                </div>
+                <div class="flex flex-col items-center justify-center border rounded-lg h-full ">
+                    <img alt='Barcode Generator TEC-IT'
+                        src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
+                        class='h-14' />
+                    Pañet: 09390
+                </div>
 
 
 
