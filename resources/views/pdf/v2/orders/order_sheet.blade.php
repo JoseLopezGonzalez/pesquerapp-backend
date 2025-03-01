@@ -132,12 +132,12 @@
 
                             <!-- Fila principal del producto -->
                             <tr class="{{ $rowClass }}">
-                                <td class="p-2">{{ $productLine['product']['article']['name'] }}</td>
-                                <td class="p-2">{{ $productLine['product']['boxGtin'] }}</td>
-                                <td class="p-2">
+                                <td class="p-2 py-1">{{ $productLine['product']['article']['name'] }}</td>
+                                <td class="p-2 py-1">{{ $productLine['product']['boxGtin'] }}</td>
+                                <td class="p-2 py-1">
                                     {{ count($productLine['lots']) === 1 ? $productLine['lots'][0]['lot'] : '' }}</td>
-                                <td class="p-2">{{ $productLine['product']['boxes'] }}</td>
-                                <td class="p-2">{{ $productLine['product']['netWeight'] }} kg</td>
+                                <td class="p-2 py-1">{{ $productLine['product']['boxes'] }}</td>
+                                <td class="p-2 py-1">{{ $productLine['product']['netWeight'] }} kg</td>
                             </tr>
 
                             <!-- Fila con información de la especie -->
@@ -146,7 +146,7 @@
                                 $rowIndex++;
                             @endphp
                             <tr class="{{ $rowClass }}">
-                                <td class="pl-5 p-2 text-[10px]" colspan="5">
+                                <td class="pl-5 p-2 py-1 text-[10px]" colspan="5">
                                     <i>
                                         {{ $productLine['product']['species']['name'] }}
                                         `{{ $productLine['product']['species']['scientificName'] }} -
@@ -165,22 +165,22 @@
                                         $rowIndex++;
                                     @endphp
                                     <tr class="{{ $rowClass }} text-[10px]">
-                                        <td class="p-2"></td>
+                                        <td class="p-2 py-1"></td>
                                         <td class="text-md text-end">↪︎</td>
-                                        <td class="p-2">{{ $lot['lot'] }}</td>
-                                        <td class="p-2">{{ $lot['boxes'] }}</td>
-                                        <td class="p-2">{{ $lot['netWeight'] }} kg</td>
+                                        <td class="p-2 py-1">{{ $lot['lot'] }}</td>
+                                        <td class="p-2 py-1">{{ $lot['boxes'] }}</td>
+                                        <td class="p-2 py-1">{{ $lot['netWeight'] }} kg</td>
                                     </tr>
                                 @endforeach
                             @endif
                         @endforeach
 
                         <tr className='font-bold '>
-                            <td class="p-2 border-t bg-gray-100"></td>
-                            <td class="p-2 border-t bg-gray-100"></td>
-                            <td class="p-2 border-t bg-gray-100">Total</td>
-                            <td class="p-2 border-t bg-gray-100">{{ $order->totalBoxes }} </td>
-                            <td class="p-2 border-t bg-gray-100"> {{ $order->totalNetWeight }} kg</td>
+                            <td class="p-2 py-1 border-t bg-gray-100"></td>
+                            <td class="p-2 py-1 border-t bg-gray-100"></td>
+                            <td class="p-2 py-1 border-t bg-gray-100">Total</td>
+                            <td class="p-2 py-1 border-t bg-gray-100">{{ $order->totalBoxes }} </td>
+                            <td class="p-2 py-1 border-t bg-gray-100"> {{ $order->totalNetWeight }} kg</td>
                         </tr>
                     </tbody>
                 </table>
