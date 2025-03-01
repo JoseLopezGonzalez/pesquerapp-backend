@@ -104,9 +104,9 @@
                 <p class="">España</p>
             </div>
         </div>
-        <div class="flex-1 mb-6 flex flex-col h-full">
+        <div class=" mb-6 ">
             <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
-            <div class="border rounded overflow-hidden p-4 flex-grow">
+            <div class="border rounded  p-4 ">
                 <table class="w-full text-xs h-full ">
                     <thead class="border-b ">
                         <tr>
