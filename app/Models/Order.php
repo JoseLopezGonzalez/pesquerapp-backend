@@ -274,7 +274,7 @@ class Order extends Model
                         'species' => [
                             'name'           => $species->name,
                             'scientificName' => $species->scientific_name,
-                            'code'           => $species->code,
+                            'fao'           => $species->fao,
                         ],
                         'captureZone'      => $captureZone->name,
                         'fishingGear'      => $fishingGear->name,

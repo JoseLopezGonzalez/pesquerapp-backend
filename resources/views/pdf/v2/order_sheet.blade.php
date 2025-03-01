@@ -107,92 +107,65 @@
                     <tbody>
                         @foreach ($order->productsWithLotsDetailsBySpeciesAndCaptureZone as $group)
                             @foreach ($group['products'] as $product)
-                                <tr>
-                                    <td class=" p-1">{{ $product['product']['article']['name'] }}</td>
-                                    <td class=" p-1">{{ $product['product']['boxGtin'] }}</td>
-                                    <td class=" p-1"></td>
-                                    <td class=" p-1">{{ $product['product']['boxes'] }}</td>
-                                    <td class=" p-1">{{ $product['product']['netWeight'] }} kg</td>
-                                </tr>
-                                @foreach ($product['lots'] as $lot)
-                                    <tr class="text-[10px]">
-                                        <td class=" p-1"></td>
-                                        <td class=" text-md text-end">↪︎</td>
-                                        <td class=" p-1">{{ $lot['lot'] }}</td>
-                                        <td class=" p-1">{{ $lot['boxes'] }}</td>
-                                        <td class=" p-1">{{ $lot['netWeight'] }} kg</td>
+                                @if ($product['lots']->count() == 1)
+                                    <tr>
+                                        <td class=" p-1">{{ $product['product']['article']['name'] }}</td>
+                                        <td class=" p-1">{{ $product['product']['boxGtin'] }}</td>
+                                        <td class=" p-1">{{ $product['lots'][0]['lot'] }}</td>
+                                        <td class=" p-1">{{ $product['product']['boxes'] }}</td>
+                                        <td class=" p-1">{{ $product['product']['netWeight'] }} kg</td>
                                     </tr>
+                                @else
+                                    <tr>
+                                        <td class=" p-1">{{ $product['product']['article']['name'] }}</td>
+                                        <td class=" p-1">{{ $product['product']['boxGtin'] }}</td>
+                                        <td class=" p-1"></td>
+                                        <td class=" p-1">{{ $product['product']['boxes'] }}</td>
+                                        <td class=" p-1">{{ $product['product']['netWeight'] }} kg</td>
+                                    </tr>
+                                    @foreach ($product['lots'] as $lot)
+                                        <tr class="text-[10px]">
+                                            <td class=" p-1"></td>
+                                            <td class=" text-md text-end">↪︎</td>
+                                            <td class=" p-1">{{ $lot['lot'] }}</td>
+                                            <td class=" p-1">{{ $lot['boxes'] }}</td>
+                                            <td class=" p-1">{{ $lot['netWeight'] }} kg</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                                 @endforeach
+                                <tr>
+                                    <td class="pl-5 p-1 text-[10px]" colspan="5">
+                                        <i>
+                                            {{ $group['species']['name'] }} `{{ $group['species']['fao'] }}`
+                                        - {{ $group['fishingGear']['name'] }} /
+                                        {{ $group['captureZone']['name'] }}
+                                        </i>
+                                    </td>
+                                </tr>
                             @endforeach
                             <tr>
+                                <td class=" p-1">Langostinos 20/30</td>
+                                <td class=" p-1">1234567890123</td>
+                                <td class=" p-1">L-2025-123</td>
+                                <td class=" p-1">56</td>
+                                <td class=" p-1">27,50 kg</td>
+                            </tr>
+                            <tr>
+                                <td class=" p-1">Langostinos 30/40</td>
+                                <td class=" p-1">1234567890124</td>
+                                <td class=" p-1">L-2025-124</td>
+                                <td class=" p-1">3</td>
+                                <td class=" p-1">32,00 kg</td>
+                            </tr>
+                            <tr>
+
                                 <td class="pl-5 p-1 text-[10px]" colspan="5">
                                     <i>
-                                        {{-- {{ $group['species']['name'] }} `{{ $group['species']['code'] }}`
-                                        - {{ $group['fishingGear']['name'] }} /
-                                        {{ $group['captureZone']['name'] }} --}}
+                                        Octopus vulgaris `OCC` - Capturado / Nasas y trampas
                                     </i>
                                 </td>
                             </tr>
-                        @endforeach
-
-                        {{-- <tr>
-                            <td class=" p-1">Langostinos 20/30</td>
-                            <td class=" p-1">1234567890123</td>
-                            <td class=" p-1"></td>
-                            <td class=" p-1">56</td>
-                            <td class=" p-1">27,50 kg</td>
-                        </tr>
-                        <tr className='text-[10px]'>
-                            <td class=" p-1"></td>
-                            <td class=" text-md text-end">↪︎</td>
-                            <td class=" p-1">020325OCC01001</td>
-                            <td class=" p-1">2</td>
-                            <td class=" p-1">10,50 kg</td>
-                        </tr>
-                        <tr className='text-[10px]'>
-                            <td class=" p-1"></td>
-                            <td class=" text-md text-end">↪︎</td>
-                            <td class=" p-1">020325OCC01001</td>
-                            <td class=" p-1">2</td>
-                            <td class=" p-1">10,50 kg</td>
-                        </tr>
-                        <tr className='text-[10px]'>
-                            <td class=" p-1"></td>
-                            <td class=" text-md text-end">↪︎</td>
-                            <td class=" p-1">020325OCC01001</td>
-                            <td class=" p-1">2</td>
-                            <td class=" p-1">10,50 kg</td>
-                        </tr>
-                        <tr>
-                            <td class=" p-1">Langostinos 30/40</td>
-                            <td class=" p-1">1234567890124</td>
-                            <td class=" p-1">L-2025-124</td>
-                            <td class=" p-1">3</td>
-                            <td class=" p-1">32,00 kg</td>
-                        </tr> --}}
-
-                        <tr>
-                            <td class=" p-1">Langostinos 20/30</td>
-                            <td class=" p-1">1234567890123</td>
-                            <td class=" p-1">L-2025-123</td>
-                            <td class=" p-1">56</td>
-                            <td class=" p-1">27,50 kg</td>
-                        </tr>
-                        <tr>
-                            <td class=" p-1">Langostinos 30/40</td>
-                            <td class=" p-1">1234567890124</td>
-                            <td class=" p-1">L-2025-124</td>
-                            <td class=" p-1">3</td>
-                            <td class=" p-1">32,00 kg</td>
-                        </tr>
-                        <tr>
-
-                            <td class="pl-5 p-1 text-[10px]" colspan="5">
-                                <i>
-                                    Octopus vulgaris `OCC` - Capturado / Nasas y trampas
-                                </i>
-                            </td>
-                        </tr>
                     </tbody>
                     <tfoot className='font-medium'>
                         <tr>
