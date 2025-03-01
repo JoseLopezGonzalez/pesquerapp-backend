@@ -58,7 +58,9 @@
                 <div class="flex flex-col items-center">
                     <div class="p-1 border rounded flex items-center justify-center bg-white">
                         <img alt='Barcode Generator TEC-IT'
-                            src='https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A123654&code=QRCode&eclevel=L'
+                            src='https://barcode.tec-it.com/barcode.ashx?data=Pedido%
+                            {{$order->id}}
+                            &code=QRCode&eclevel=L'
                             class="w-[3.5rem] h-[3.5rem]" />
                     </div>
                 </div>
@@ -71,11 +73,15 @@
                     <div class=" space-y-1">
                         <p><span class="font-medium">Nombre:</span> {{ $order->customer->name }}</p>
                         <p><span class="font-medium">NIF/CIF:</span>{{ $order->customer->vat_number }}</p>
-                        
+
                         <p class="font-medium mt-2">Correos electrónicos:</p>
                         <ul class="list-disc pl-5">
                             {{-- $order->emailsArray --}}
                             @foreach ($order->emailsArray as $email)
+                                <li>{{ $email }}</li>
+                            @endforeach
+                            {{-- $order->ccEmailsArray --}}
+                            @foreach ($order->ccEmailsArray as $email)
                                 <li>{{ $email }}</li>
                             @endforeach
                         </ul>
@@ -94,7 +100,7 @@
                             @foreach ($order->ccEmailsArray as $email)
                                 <li>{{ $email }}</li>
                             @endforeach
-                           
+
                         </ul>
                     </div>
                 </div>
@@ -190,7 +196,7 @@
         <hr class="my-4" />
         <div class="flex justify-between items-end">
             <p>Documento generado electrónicamente. No requiere firma.</p>
-            <p>Ref: 2341434-231143 </p>
+            <p>Ref: {{$order->formattedId}} </p>
         </div>
     </div>
 </body>
