@@ -49,13 +49,13 @@
 
 
             <div class='grid grid-cols-2 w-full gap-2'>
-                <div class="space-y-2 border rounded-lg p-2">
+                <div class="space-y-2 border rounded-lg p-4">
                     <div class="text-md font-semibold ">Expedidor:</div>
                     <div class="text-2xl font-semibold ">Congelados Brisamar S.L.</div>
                     <p>Poligono Vista Hermosa, Nave 11A<br>21410 ISLA CRISTINA<br>HUELVA – ESPAÑA</p>
                 </div>
 
-                <div class="space-y-2 border rounded-lg p-2">
+                <div class="space-y-2 border rounded-lg p-4">
                     <div class="text-md font-semibold ">Consignatario:</div>
                     <div class="text-2xl font-semibold ">{{ $order->customer->alias }}</div>
                     <p class="">
@@ -87,13 +87,13 @@
                 </div>
                 <div class="text-center">
                     <div class="text-3xl font-bold ">
-                        {{ number_format($pallet->netWeight, 2, ',', '.') }}
+                        {{ number_format($pallet->netWeight, 2, ',', '.') }} kg
                     </div>
                     <div class="text-sm font-medium ">PESO NETO</div>
                 </div>
             </div>
 
-            <div class='w-full flex items-center flex-1'>
+            <div class='w-full grid grid-col-3 items-center flex-1'>
                 <div class="flex-1">
                     <div class="flex items-center gap-1 p-2 bg-white">
                         <div class='flex flex-col items-start '>
@@ -104,6 +104,18 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="flex flex-col items-center justify-center border rounded-lg ">
+                    <img alt='Barcode Generator TEC-IT'
+                    src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
+                    class='h-14' />
+                    Pedido: 09390
+                </div>
+                <div class="flex flex-col items-center justify-center border rounded-lg ">
+                    <img alt='Barcode Generator TEC-IT'
+                    src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
+                    class='h-14' />
+                    Pañet: 09390
                 </div>
 
 
