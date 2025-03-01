@@ -196,7 +196,7 @@
         <hr class="my-4" />
         <div class="flex justify-between items-end">
             <p>Documento generado electrónicamente. No requiere firma.</p>
-            <p>Ref: {{$order->formattedId}} </p>
+            <p>Ref: {{$order->id}} </p>
         </div>
     </div>
 </body>
