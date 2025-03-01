@@ -170,12 +170,12 @@
                                 @endforeach
                             @endif
                         @endforeach
-                        <tr className='font-bold bg-gray-100 border-t'>
-                            <td class="p-1 "></td>
-                            <td class="p-1"></td>
-                            <td class="p-1">Total</td>
-                            <td class="p-1 ">{{ $order->totalBoxes }} </td>
-                            <td class="p-1 "> {{ $order->totalNetWeight }} kg</td>
+                        <tr className='font-bold '>
+                            <td class="p-1 border-t bg-gray-100"></td>
+                            <td class="p-1 border-t bg-gray-100"></td>
+                            <td class="p-1 border-t bg-gray-100">Total</td>
+                            <td class="p-1 border-t bg-gray-100">{{ $order->totalBoxes }} </td>
+                            <td class="p-1 border-t bg-gray-100"> {{ $order->totalNetWeight }} kg</td>
                         </tr>
                     </tbody>
                 </table>
