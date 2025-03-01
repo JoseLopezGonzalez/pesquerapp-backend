@@ -59,7 +59,7 @@
             <div class="space-y-4">
                 <div class="border rounded-lg overflow-hidden ">
                     <div class="font-bold  mb-2 w-full p-2 bg-gray-800 border-b text-white">DATOS DEL CLIENTE</div>
-                    <div class=" space-y-1">
+                    <div class=" space-y-1 p-4">
                         <p><span class="font-medium">Nombre:</span> {{ $order->customer->name }}</p>
                         <p><span class="font-medium">NIF/CIF:</span>{{ $order->customer->vat_number }}</p>
 
