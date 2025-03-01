@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="border rounded p-4">
-                    <h3 class="font-bold  mb-2">DATOS DE TRANSPORTE</h3>
+                    <div class="font-bold  mb-2 w-full p-2 bg-gray-800 border-b text-white">DATOS DE TRANSPORTE</div>
                     <div class=" space-y-1">
                         <p><span class="font-medium">Empresa:</span> {{ $order->transport->name }}</p>
                         <p class="font-medium mt-2">Correos electrónicos:</p>
@@ -95,12 +95,12 @@
                 </div>
             </div>
             <div class="border rounded-lg p-4 overflow-hidden">
-                <div class="font-bold w-full bg-gray-800 text-white mb-2 border-b rounded-lg">DIRECCIÓN DE FACTURACIÓN</div>
+                <h3 class="font-bold  mb-2">DIRECCIÓN DE FACTURACIÓN</h3>
                 <p class="">
                     {!! nl2br($order->billing_address) !!}
                 </p>
                 <hr class="my-4 border-dashed border-slate-300" />
-                <div class="ont-bold w-full bg-gray-800 text-white mb-2 border-b rounded-lg">DIRECCIÓN DE ENVÍO</div>
+                <h3 class="font-bold  mb-2">DIRECCIÓN DE ENVÍO</h3>
                 <p class="">
                     {!! nl2br($order->shipping_address) !!}
                 </p>
