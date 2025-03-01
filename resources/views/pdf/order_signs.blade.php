@@ -94,7 +94,7 @@
             </div>
 
             <div class='w-full grid grid-cols-3 items-center flex-1'>
-                <div class="">
+                {{-- <div class="border rounded-lg h-full p-4">
                     <div class="flex items-center gap-1 p-2 bg-white">
                         <div class='flex flex-col items-start '>
                             <div class="font-semibold">Gamba Argentina</div>
@@ -104,18 +104,22 @@
                             </div>
                         </div>
                     </div>
+                </div> --}}
+                <div class="flex flex-col items-center justify-center border rounded-lg h-full p-10 gap-2">
+                    <span class="text-xs">Pedido</span>
+                    <h1 class="text-3xl font-semibold ">#9087</h1>
                 </div>
                 <div class="flex flex-col items-center justify-center border rounded-lg h-full p-10 gap-2">
                     <img alt='Barcode Generator TEC-IT'
                         src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
                         class='h-full' />
-                        <span class="text-sm">Palet: 09390</span>
+                    <span class="text-xs">Palet: 09390</span>
                 </div>
                 <div class="flex flex-col items-center justify-center border rounded-lg h-full p-10 gap-2">
                     <img alt='Barcode Generator TEC-IT'
                         src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
                         class='h-full' />
-                        <span class="text-sm">Pedido: 87321/span>
+                    <span class="text-xs">Pedido: 87321</span>
                 </div>
 
 
