@@ -72,7 +72,7 @@
                     <b>4.</b> Código interno de producción
                 </span>
             </p>
-            <p class="mt-1 text-xs italic">
+            <p class="mt-2 text-[10px] italic">
                 Ejemplo: 150523HKE01002 = Capturado el 15/05/23, Merluza (HKE), Zona 01, Producción 002
             </p>
         </div>
