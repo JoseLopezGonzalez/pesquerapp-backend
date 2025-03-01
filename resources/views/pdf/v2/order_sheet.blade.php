@@ -19,7 +19,7 @@
 
         @page {
             size: A4 portrait;
-            margin: 20mm;
+           /*  margin: 20mm; */
         }
 
         .page {
