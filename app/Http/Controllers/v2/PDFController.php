@@ -500,12 +500,14 @@ class PDFController extends Controller
     }
 
 
+    /* v2 */
+    
     public function generateOrderSheet($orderId)
     {
         $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
 
         $snappdf = new Snappdf();
-        $html = view('pdf.v2.order_sheet', ['order' => $order])->render();
+        $html = view('pdf.v2.orders.order_sheet', ['order' => $order])->render();
         $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Asegúrate de cambiar esto por tu ruta específica
 
         /* Personalizando el PDF */
