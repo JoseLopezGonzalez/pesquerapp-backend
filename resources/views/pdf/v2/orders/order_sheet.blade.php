@@ -39,7 +39,7 @@
             </div>
             <div class="flex items-start gap-4">
                 <div class="  rounded  text-end">
-                    <h2 class="text-lg font-bold ">PEDIDO</h2>
+                    <h2 class="text-lg font-bold ">Pedido</h2>
                     <p class=" font-medium"><span class="">{{ $order->formattedId }}</span></p>
                     <p class=" font-medium">Fecha:<span class="">
                             {{ date('d/m/Y', strtotime($order->load_date)) }}
@@ -120,56 +120,61 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $rowIndex = 0; // Controlador manual para alternar colores
+                        @endphp
+
                         @foreach ($order->productsWithLotsDetails as $productLine)
-                            @if (count($productLine['lots']) == 1)
-                                <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
-                                    <td class=" p-1">{{ $productLine['product']['article']['name'] }}</td>
-                                    <td class=" p-1">{{ $productLine['product']['boxGtin'] }}</td>
-                                    <td class=" p-1">{{ $productLine['lots'][0]['lot'] }}</td>
-                                    <td class=" p-1">{{ $productLine['product']['boxes'] }}</td>
-                                    <td class=" p-1">{{ $productLine['product']['netWeight'] }} kg</td>
-                                </tr>
-                                <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
-                                    <td class="pl-5 p-1 text-[10px]" colspan="5">
-                                        <i>
-                                            {{ $productLine['product']['species']['name'] }}
-                                            `{{ $productLine['product']['species']['scientificName'] }} -
-                                            {{ $productLine['product']['species']['fao'] }}`
-                                            - {{ $productLine['product']['fishingGear'] }} /
-                                            {{ $productLine['product']['captureZone'] }}
-                                        </i>
-                                    </td>
-                                </tr>
-                            @else
-                                <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
-                                    <td class=" p-1">{{ $productLine['product']['article']['name'] }}</td>
-                                    <td class=" p-1">{{ $productLine['product']['boxGtin'] }}</td>
-                                    <td class=" p-1"></td>
-                                    <td class=" p-1">{{ $productLine['product']['boxes'] }}</td>
-                                    <td class=" p-1">{{ $productLine['product']['netWeight'] }} kg</td>
-                                </tr>
-                                <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
-                                    <td class="pl-5 p-1 text-[10px]" colspan="5">
-                                        <i>
-                                            {{ $productLine['product']['species']['name'] }}
-                                            `{{ $productLine['product']['species']['scientificName'] }} -
-                                            {{ $productLine['product']['species']['fao'] }}`
-                                            - {{ $productLine['product']['fishingGear'] }} /
-                                            {{ $productLine['product']['captureZone'] }}
-                                        </i>
-                                    </td>
-                                </tr>
+                            @php
+                                $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                                $rowIndex++; // Incrementamos el contador de filas
+                            @endphp
+
+                            <!-- Fila principal del producto -->
+                            <tr class="{{ $rowClass }}">
+                                <td class="p-1">{{ $productLine['product']['article']['name'] }}</td>
+                                <td class="p-1">{{ $productLine['product']['boxGtin'] }}</td>
+                                <td class="p-1">
+                                    {{ count($productLine['lots']) === 1 ? $productLine['lots'][0]['lot'] : '' }}</td>
+                                <td class="p-1">{{ $productLine['product']['boxes'] }}</td>
+                                <td class="p-1">{{ $productLine['product']['netWeight'] }} kg</td>
+                            </tr>
+
+                            <!-- Fila con información de la especie -->
+                            @php
+                                $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                                $rowIndex++;
+                            @endphp
+                            <tr class="{{ $rowClass }}">
+                                <td class="pl-5 p-1 text-[10px]" colspan="5">
+                                    <i>
+                                        {{ $productLine['product']['species']['name'] }}
+                                        `{{ $productLine['product']['species']['scientificName'] }} -
+                                        {{ $productLine['product']['species']['fao'] }}`
+                                        - {{ $productLine['product']['fishingGear'] }} /
+                                        {{ $productLine['product']['captureZone'] }}
+                                    </i>
+                                </td>
+                            </tr>
+
+                            <!-- Si hay más de un lote, se imprimen en filas separadas -->
+                            @if (count($productLine['lots']) > 1)
                                 @foreach ($productLine['lots'] as $lot)
-                                    <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}text-[10px]">
-                                        <td class=" p-1"></td>
-                                        <td class=" text-md text-end">↪︎</td>
-                                        <td class=" p-1">{{ $lot['lot'] }}</td>
-                                        <td class=" p-1">{{ $lot['boxes'] }}</td>
-                                        <td class=" p-1">{{ $lot['netWeight'] }} kg</td>
+                                    @php
+                                        $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                                        $rowIndex++;
+                                    @endphp
+                                    <tr class="{{ $rowClass }} text-[10px]">
+                                        <td class="p-1"></td>
+                                        <td class="text-md text-end">↪︎</td>
+                                        <td class="p-1">{{ $lot['lot'] }}</td>
+                                        <td class="p-1">{{ $lot['boxes'] }}</td>
+                                        <td class="p-1">{{ $lot['netWeight'] }} kg</td>
                                     </tr>
                                 @endforeach
                             @endif
                         @endforeach
+
                         <tr className='font-bold '>
                             <td class="p-1 border-t bg-gray-100"></td>
                             <td class="p-1 border-t bg-gray-100"></td>
@@ -181,11 +186,7 @@
                 </table>
             </div>
         </div>
-        <hr class="my-4" />
-        <div class="flex justify-between items-end">
-            <p>Documento generado electrónicamente. No requiere firma.</p>
-            <p>Ref: {{ $order->id }} </p>
-        </div>
+
     </div>
 </body>
 

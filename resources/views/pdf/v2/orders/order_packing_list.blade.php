@@ -39,7 +39,7 @@
             </div>
             <div class="flex items-start gap-4">
                 <div class="  rounded  text-end">
-                    <h2 class="text-lg font-bold ">PEDIDO</h2>
+                    <h2 class="text-lg font-bold ">Packing List</h2>
                     <p class=" font-medium"><span class="">{{ $order->formattedId }}</span></p>
                     <p class=" font-medium">Fecha:<span class="">
                             {{ date('d/m/Y', strtotime($order->load_date)) }}
