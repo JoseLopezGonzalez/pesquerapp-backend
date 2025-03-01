@@ -112,11 +112,11 @@
                 <table class="w-full text-xs h-full ">
                     <thead class="border-b bg-white ">
                         <tr class="bg-gray-100">
-                            <th class="p-1 font-medium text-start">Producto</th>
-                            <th class="p-1 font-medium text-start">Código GTIN</th>
-                            <th class="p-1 font-medium text-start">Lote</th>
-                            <th class="p-1 font-medium text-start">Cajas</th>
-                            <th class="p-1 font-medium text-start">Peso Neto</th>
+                            <th class="p-1 font-bold text-start">Producto</th>
+                            <th class="p-1 font-bold text-start">Código GTIN</th>
+                            <th class="p-1 font-bold text-start">Lote</th>
+                            <th class="p-1 font-bold text-start">Cajas</th>
+                            <th class="p-1 font-bold text-start">Peso Neto</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -141,14 +141,14 @@
                                     </td>
                                 </tr>
                             @else
-                                <tr>
+                                <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
                                     <td class=" p-1">{{ $productLine['product']['article']['name'] }}</td>
                                     <td class=" p-1">{{ $productLine['product']['boxGtin'] }}</td>
                                     <td class=" p-1"></td>
                                     <td class=" p-1">{{ $productLine['product']['boxes'] }}</td>
                                     <td class=" p-1">{{ $productLine['product']['netWeight'] }} kg</td>
                                 </tr>
-                                <tr>
+                                <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
                                     <td class="pl-5 p-1 text-[10px]" colspan="5">
                                         <i>
                                             {{ $productLine['product']['species']['name'] }}
@@ -160,7 +160,7 @@
                                     </td>
                                 </tr>
                                 @foreach ($productLine['lots'] as $lot)
-                                    <tr class="text-[10px]">
+                                    <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}text-[10px]">
                                         <td class=" p-1"></td>
                                         <td class=" text-md text-end">↪︎</td>
                                         <td class=" p-1">{{ $lot['lot'] }}</td>
@@ -170,7 +170,7 @@
                                 @endforeach
                             @endif
                         @endforeach
-                        <tr className='font-bold'>
+                        <tr className='font-bold bg-gray-100 border-t'>
                             <td class="p-1 "></td>
                             <td class="p-1"></td>
                             <td class="p-1">Total</td>
