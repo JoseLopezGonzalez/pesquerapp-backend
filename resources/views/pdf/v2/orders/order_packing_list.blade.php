@@ -131,7 +131,7 @@
 
                     {{--  NUEVO: Listado detallado de cajas  --}}
 
-                    <div class="border border-gray-300 p-2 rounded-lg overflow-hidden">
+                    <div class="border border-gray-300 rounded-lg overflow-hidden">
                         <table class="w-full border-collapse text-xs">
                             <thead class=" bg-white border-b">
                                 <tr class="bg-gray-100">
