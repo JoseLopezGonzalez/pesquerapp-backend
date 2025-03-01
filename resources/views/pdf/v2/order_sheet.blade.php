@@ -61,7 +61,7 @@
                             src='https://barcode.tec-it.com/barcode.ashx?data=Pedido%
                             {{$order->id}}
                             &code=QRCode&eclevel=L'
-                            class="w-[3.5rem] h-[3.5rem]" />
+                            class="w-[4rem] h-[4rem]" />
                     </div>
                 </div>
             </div>
