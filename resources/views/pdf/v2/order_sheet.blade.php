@@ -93,7 +93,7 @@
         </div>
         <div class=" mb-6 flex flex-col h-full">
             <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
-            <div class="border rounded p-4 ">
+            <div class="border rounded p-4 h-fit">
                 <table class="w-full text-xs h-full">
                     <thead class="border-b ">
                         <tr>
