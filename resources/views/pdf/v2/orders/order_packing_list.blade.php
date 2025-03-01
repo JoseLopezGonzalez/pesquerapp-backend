@@ -56,8 +56,8 @@
             </div>
         </div>
 
-        <div class="mb-6 bg-gray-50 p-3 border border-gray-200 text-sm rounded-lg">
-            <h3 class="font-bold mb-1">Formato de Código de Lote:</h3>
+        <div class="mb-6 bg-gray-50 p-3 border border-gray-200 rounded-lg text-xs">
+            <h3 class="font-bold mb-1">Interpretación de Lote</h3>
             <p class="grid grid-cols-4 gap-2">
                 <span>
                     <b>1.</b> Fecha de captura o producción (DDMMAA)
