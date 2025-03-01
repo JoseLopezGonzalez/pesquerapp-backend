@@ -105,24 +105,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col items-center justify-center border rounded-lg h-full ">
+                <div class="flex flex-col items-center justify-center border rounded-lg h-full p-10 gap-2">
                     <img alt='Barcode Generator TEC-IT'
                         src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
                         class='h-full' />
-                    Pedido: 09390
+                        <span class="text-sm">Palet: 09390</span>
                 </div>
-                <div class="flex flex-col items-center justify-center border rounded-lg h-full p-8">
+                <div class="flex flex-col items-center justify-center border rounded-lg h-full p-10 gap-2">
                     <img alt='Barcode Generator TEC-IT'
                         src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
                         class='h-full' />
-                    Pañet: 09390
+                        <span class="text-sm">Pedido: 87321/span>
                 </div>
 
 
 
             </div>
 
-            <div class="text-3xl font-semibold  border-l-4 border-gray-300 pl-3">
+            <div class="text-3xl font-semibold  border-l-4 border-gray-300 pl-3 mt-3">
                 {{ $order->transport->name }}
             </div>
 
