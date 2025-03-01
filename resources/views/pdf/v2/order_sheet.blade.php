@@ -87,8 +87,14 @@
                         <p><span class="font-medium">Empresa:</span> {{ $order->transport->name }}</p>
                         <p class="font-medium mt-2">Correos electrónicos:</p>
                         <ul class="list-disc pl-5">
-                            <li>pedidos@distribuciones-maritimas.com</li>
-                            <li>logistica@distribuciones-maritimas.com</li>
+                            {{-- $order->transport->emailsArray y $order->ccEmailsArray --}}
+                            @foreach ($order->transport->emailsArray as $email)
+                                <li>{{ $email }}</li>
+                            @endforeach
+                            @foreach ($order->ccEmailsArray as $email)
+                                <li>{{ $email }}</li>
+                            @endforeach
+                           
                         </ul>
                     </div>
                 </div>
