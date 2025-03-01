@@ -168,7 +168,7 @@
                                     </tr>
                                 @endforeach
                             @endif
-                            <tr className='font-bold py-2'>
+                            <tr className='font-bold'>
                                 <td class="p-1 "></td>
                                 <td class="p-1"></td>
                                 <td class="p-1">Total</td>
@@ -178,7 +178,7 @@
                         @endforeach
                     </tbody>
                     <tfoot>
-                        <tr className='font-bold py-2'>
+                        <tr className='font-bold '>
                             <td class="p-1 "></td>
                             <td class="p-1"></td>
                             <td class="p-1">Total</td>
