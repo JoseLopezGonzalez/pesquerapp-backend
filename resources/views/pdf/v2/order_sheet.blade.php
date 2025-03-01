@@ -177,16 +177,6 @@
                             </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
-                        <tr className='font-bold '>
-                            <td class="p-1 "></td>
-                            <td class="p-1"></td>
-                            <td class="p-1">Total</td>
-                            <td class="p-1 ">{{ $order->totalBoxes }} </td>
-                            <td class="p-1 "> {{ $order->totalNetWeight }} kg</td>
-                        </tr>
-                    </tfoot>
-
                 </table>
             </div>
         </div>
