@@ -93,8 +93,8 @@
                 </div>
             </div>
 
-            <div class='w-full grid grid-col-3 items-center flex-1'>
-                <div class="flex-1">
+            <div class='w-full flex flex-col items-center flex-1'>
+                <div class="">
                     <div class="flex items-center gap-1 p-2 bg-white">
                         <div class='flex flex-col items-start '>
                             <div class="font-semibold">Gamba Argentina</div>
@@ -105,17 +105,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col items-center justify-center border rounded-lg ">
-                    <img alt='Barcode Generator TEC-IT'
-                    src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
-                    class='h-14' />
-                    Pedido: 09390
-                </div>
-                <div class="flex flex-col items-center justify-center border rounded-lg ">
-                    <img alt='Barcode Generator TEC-IT'
-                    src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
-                    class='h-14' />
-                    Pañet: 09390
+                <div class="flex flex-1">
+                    <div class="flex flex-col items-center justify-center border rounded-lg ">
+                        <img alt='Barcode Generator TEC-IT'
+                            src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
+                            class='h-14' />
+                        Pedido: 09390
+                    </div>
+                    <div class="flex flex-col items-center justify-center border rounded-lg ">
+                        <img alt='Barcode Generator TEC-IT'
+                            src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+QR+Code+by+TEC-IT&code=QRCode&eclevel=L'
+                            class='h-14' />
+                        Pañet: 09390
+                    </div>
                 </div>
 
 
