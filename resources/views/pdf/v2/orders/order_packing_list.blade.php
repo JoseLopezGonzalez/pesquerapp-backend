@@ -61,8 +61,8 @@
             @foreach ($order->pallets as $pallet)
                 <div class="mb-8">
                     <div class="bg-gray-800 text-white p-2 flex justify-between items-center rounded-t-lg">
-                        <h3 class="font-medium text-lg">Palet {{ $pallet->id }}</h3>
-                       {{--  <div class="text-sm">
+                        <h3 class="font-medium text-lg">Palet #{{ $pallet->id }}</h3>
+                        {{--  <div class="text-sm">
                             <span class="mr-4">Peso Neto: {{ $pallet->netWeight }} kg</span>
                             <span>Cajas: {{ $pallet->numberOfBoxes }} </span>
                         </div> --}}
@@ -130,36 +130,33 @@
                     </div>
 
                     {{--  NUEVO: Listado detallado de cajas  --}}
-                    <div class="mt-4 mb-4 border rounded-lg">
-                        <h4 class="font-bold text-sm bg-gray-200 p-2 border-b border-gray-300">
-                            LISTADO DETALLADO DE CAJAS - PALET #{{ $pallet->id }}
-                        </h4>
-                        <div class="border border-gray-300 p-2 ">
-                            <table class="w-full border-collapse text-sm">
-                                <thead class="sticky top-0 bg-white">
-                                    <tr class="bg-gray-100">
-                                        <th class="border border-gray-300 p-1 text-left">ID Caja</th>
-                                        <th class="border border-gray-300 p-1 text-left">Producto</th>
-                                        <th class="border border-gray-300 p-1 text-center">Peso (kg)</th>
-                                        <th class="border border-gray-300 p-1 text-center">Lote</th>
+
+                    <div class="border border-gray-300 p-2 rounded-lg overflow-hidden">
+                        <table class="w-full border-collapse text-xs">
+                            <thead class=" bg-white border-b">
+                                <tr class="bg-gray-100">
+                                    <th class=" p-1 text-left">ID</th>
+                                    <th class=" p-1 text-left">Producto</th>
+                                    <th class=" p-1 text-center">Lote</th>
+                                    <th class=" p-1 text-center">Peso Neto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pallet->boxes as $box)
+                                    <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
+                                        <td class=" p-1 font-mono">{{ $box->box->id }}</td>
+                                        <td class=" p-1">
+                                            {{ $box->box->product->article->name }}</td>
+                                        <td class=" p-1 text-center font-mono text-xs">
+                                            {{ $box->box->lot }}</td>
+                                        <td class=" p-1 text-center">
+                                            {{ $box->box->net_weight }}</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($pallet->boxes as $box)
-                                        <tr class="{{ $loop->even ? 'bg-white' : 'bg-gray-50' }}">
-                                            <td class="border border-gray-300 p-1 font-mono">{{ $box->box->id }}</td>
-                                            <td class="border border-gray-300 p-1">
-                                                {{ $box->box->product->article->name }}</td>
-                                            <td class="border border-gray-300 p-1 text-center">
-                                                {{ $box->box->net_weight }}</td>
-                                            <td class="border border-gray-300 p-1 text-center font-mono text-xs">
-                                                {{ $box->box->lot }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
+
                 </div>
             @endforeach
         </div>
