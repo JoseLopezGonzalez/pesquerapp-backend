@@ -51,36 +51,41 @@
             </div>
         </div>
 
-        <!-- DIRECCIONES -->
+        <!-- INFORMACIÓN DEL CLIENTE (FORMATO SOBRE) -->
         <div class="grid grid-cols-2 gap-4 mb-6">
             <div class="border rounded-lg overflow-hidden bg-gray-50 p-4">
                 <h3 class="font-bold mb-2">DATOS DEL CLIENTE</h3>
                 <p><span class="font-medium">Nombre:</span> {{ $order->customer->name }}</p>
                 <p><span class="font-medium">NIF/CIF:</span> {{ $order->customer->vat_number }}</p>
-                <p class="font-medium mt-2">Correos electrónicos:</p>
-                <ul class="list-disc pl-5">
-                    @foreach ($order->emailsArray as $email)
-                        <li>{{ $email }}</li>
-                    @endforeach
-                    @foreach ($order->ccEmailsArray as $email)
-                        <li>{{ $email }}</li>
-                    @endforeach
-                </ul>
             </div>
 
-            <div class="border rounded-lg overflow-hidden bg-gray-50 p-4">
-                <h3 class="font-bold mb-2">DIRECCIÓN DE ENTREGA</h3>
-                <p>{!! nl2br(e($order->shipping_address)) !!}</p>
+            <div class="border rounded-lg overflow-hidden bg-gray-50 p-4 text-right">
+                <h3 class="font-bold mb-2">FACTURACIÓN (FORMATO SOBRE)</h3>
+                <p>{!! nl2br(e($order->billing_address)) !!}</p>
             </div>
         </div>
 
-        <!-- DETALLE DE PRODUCTOS -->
+        <!-- SECCIÓN DE EMAILS -->
+        <div class="mb-6">
+            <h3 class="font-bold mb-2">Correos electrónicos del Cliente</h3>
+            <ul class="list-disc pl-5 text-xs">
+                @foreach ($order->emailsArray as $email)
+                    <li>{{ $email }}</li>
+                @endforeach
+                @foreach ($order->ccEmailsArray as $email)
+                    <li>{{ $email }}</li>
+                @endforeach
+            </ul>
+        </div>
+
+        <!-- DETALLE DE PRODUCTOS CON LOTES -->
         <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
         <div class="border rounded-lg overflow-hidden">
             <table class="w-full text-xs">
                 <thead class="border-b bg-gray-100">
                     <tr>
                         <th class="p-2 text-left">Producto</th>
+                        <th class="p-2 text-center">Lote</th>
                         <th class="p-2 text-center">Cajas</th>
                         <th class="p-2 text-center">Peso Neto</th>
                     </tr>
@@ -90,27 +95,19 @@
                         $rowIndex = 0;
                     @endphp
 
-                    @foreach ($order->productsBySpeciesAndCaptureZone as $productsBySpeciesAndCaptureZone)
-                        @foreach ($productsBySpeciesAndCaptureZone['products'] as $product)
+                    @foreach ($order->productsWithLotsDetails as $productLine)
+                        @foreach ($productLine['lots'] as $lot)
                             @php
                                 $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
                                 $rowIndex++;
                             @endphp
                             <tr class="{{ $rowClass }}">
-                                <td class="p-2">{{ $product['product']->article->name }}</td>
-                                <td class="p-2 text-center">{{ $product['boxes'] }}</td>
-                                <td class="p-2 text-center">{{ number_format($product['netWeight'], 2, ',', '.') }} kg</td>
+                                <td class="p-2">{{ $productLine['product']['article']['name'] }}</td>
+                                <td class="p-2 text-center">{{ $lot['lot'] }}</td>
+                                <td class="p-2 text-center">{{ $lot['boxes'] }}</td>
+                                <td class="p-2 text-center">{{ number_format($lot['netWeight'], 2, ',', '.') }} kg</td>
                             </tr>
                         @endforeach
-
-                        <tr class="bg-gray-50 text-[10px] italic">
-                            <td class="p-2" colspan="3">
-                                {{ $productsBySpeciesAndCaptureZone['species']->scientific_name }}
-                                ({{ $productsBySpeciesAndCaptureZone['species']->fao }}) -
-                                {{ $productsBySpeciesAndCaptureZone['captureZone']->name }} -
-                                Caught with: {{ $productsBySpeciesAndCaptureZone['species']->fishingGear->name }}
-                            </td>
-                        </tr>
                     @endforeach
                 </tbody>
 
@@ -118,8 +115,9 @@
                 <tfoot class="border-t bg-gray-100">
                     <tr>
                         <td class="p-2 font-semibold">Total</td>
-                        <td class="p-2 text-center">{{ $order->totals['boxes'] }}</td>
-                        <td class="p-2 text-center">{{ number_format($order->totals['netWeight'], 2, ',', '.') }} kg</td>
+                        <td class="p-2 text-center"></td>
+                        <td class="p-2 text-center">{{ $order->totalBoxes }}</td>
+                        <td class="p-2 text-center">{{ number_format($order->totalNetWeight, 2, ',', '.') }} kg</td>
                     </tr>
                 </tfoot>
             </table>
