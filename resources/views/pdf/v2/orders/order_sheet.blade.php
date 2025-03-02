@@ -111,8 +111,8 @@
         </div>
 
         <!-- SECCIÓN COMPACTADA: INCOTERM, FORMA DE PAGO Y PALETS -->
-        <div class="border p-4 rounded-lg bg-gray-50 mb-3 text-[10px]">
-            <div class="grid grid-cols-3 gap-4">
+        <div class="border p-4 py-2 rounded-lg bg-gray-50 mb-3 text-[10px]">
+            <div class="grid grid-cols-3 gap-4 divide-x-gray-800">
                 <div>
                     <p class="font-bold">FORMA DE PAGO</p>
                     <p>{{ $order->payment_term->name }}</p>
@@ -130,7 +130,7 @@
         </div>
 
         <!-- OBSERVACIONES DIVIDIDAS EN TARJETAS -->
-        <div class="grid grid-cols-3 gap-4 text-[10px]">
+        <div class="grid grid-cols-3 gap-4 text-[10px] mb-6">
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h3 class="font-bold mb-2">OBSERVACIONES PRODUCCIÓN</h3>
                 <p>{{ $order->production_notes }}</p>
