@@ -140,7 +140,7 @@
                         style="font-size:5pt; text-align: left; font-size: 9pt; left: 380px; top: 450px; position: absolute;">
                         produtos de <br /> la pesca
                     </p>
-                    <p style="text-align: right; font-size: 9pt; right: 160px; top: 450px; position: absolute;">
+                    <p style="text-align: right; font-size: 9pt; right: 165px; top: 450px; position: absolute;">
                         {{ number_format($order->totals['netWeight'], 2, ',', '.') }} kg
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 190px; top: 680px; position: absolute;">
