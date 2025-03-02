@@ -59,14 +59,14 @@
         <div class="grid grid-cols-2 gap-4 mb-6">
             <div class="border rounded-lg overflow-hidden bg-gray-50 ">
                 <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE ENVÍO</div>
-                <div class="p-4 py-2">
+                <div class="p-4 ">
                     <p>{!! nl2br(e($order->shipping_address)) !!}</p>
                 </div>
             </div>
 
-            <div class="border rounded-lg overflow-hidden bg-gray-50 p-4 text-right">
+            <div class="border rounded-lg overflow-hidden bg-gray-50 text-right">
                 <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE FACTURACIÓN</div>
-                <div class="p-4 py-2">
+                <div class="p-4 ">
                     <p>{!! nl2br(e($order->billing_address)) !!}</p>
                 </div>
             </div>
@@ -159,7 +159,7 @@
         </div>
 
         <!-- INFORMACIÓN ADICIONAL -->
-        <div class="grid grid-cols-2 gap-4 mt-6">
+        <div class="grid grid-cols-2 gap-4 mt-6 break-inside-avoid">
             <div class="border rounded-lg p-4 bg-gray-50">
                 <h3 class="font-bold mb-2">INCOTERM</h3>
                 <p><strong>{{ $order->incoterm->code }}</strong> ({{ $order->incoterm->description }})</p>
