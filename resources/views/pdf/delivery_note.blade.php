@@ -27,26 +27,30 @@
 <body class="bg-white text-black text-xs">
     <div class="max-w-[210mm] mx-auto p-6 bg-white rounded min-h-screen">
         <!-- ENCABEZADO -->
-        <div class="flex justify-between items-end mb-6">
-            <div>
-                <h1 class="text-lg font-bold">Congelados Brisamar S.L.</h1>
-                <p>C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
-                <p>Tel: +34 613 09 14 94 </p>
-                <p>administracion@congeladosbrisamar.es</p>
+        <div class="flex justify-between items-end mb-6 ">
+            <div class="flex items-center gap-2">
+                <div>
+                    <h1 class="text-md font-bold">Congelados Brisamar S.L.</h1>
+                    <p class=" ">C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
+                    <p class=" ">Tel: +34 613 09 14 94 </p>
+                    <p class=" ">administracion@congeladosbrisamar.es</p>
+                </div>
             </div>
-
-            <div class="text-right">
-                <h2 class="text-lg font-bold">Delivery Note</h2>
-                <p class="font-medium">Pedido #: <span>{{ $order->formattedId }}</span></p>
-                <p class="font-medium">Fecha: <span>{{ date('d/m/Y', strtotime($order->load_date)) }}</span></p>
-                <p class="font-medium">Buyer Reference: {{ $order->buyer_reference }}</p>
-            </div>
-
-            <div class="flex flex-col items-center">
-                <div class="p-1 border rounded bg-white">
-                    <img alt="QR Code"
-                        src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $order->id . '&code=QRCode&eclevel=L' }}"
-                        class="w-16 h-16" />
+            <div class="flex items-start gap-4">
+                <div class="  rounded  text-end">
+                    <h2 class="text-lg font-bold ">Delivery Note</h2>
+                    <p class=" font-medium"><span class="">{{ $order->formattedId }}</span></p>
+                    <p class=" font-medium">Fecha:<span class="">
+                            {{ date('d/m/Y', strtotime($order->load_date)) }}
+                        </span></p>
+                    <p class=" font-medium">Buyer Reference:{{ $order->buyer_reference }}</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="p-1 border rounded flex items-center justify-center bg-white">
+                        <img alt='Barcode Generator TEC-IT'
+                            src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $order->id . '&code=QRCode&eclevel=L' }}"
+                            class="w-[4.1rem] h-[4.1rem]" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,15 +58,17 @@
         <!-- DIRECCIONES (ENVÍO A LA IZQUIERDA, FACTURACIÓN A LA DERECHA) -->
         <div class="grid grid-cols-2 gap-4 mb-6">
             <div class="border rounded-lg overflow-hidden bg-gray-50 ">
-                <div class="font-bold py-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE ENVÍO</div>
-                <div class="p-4">
+                <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE ENVÍO</div>
+                <div class="p-4 py-2">
                     <p>{!! nl2br(e($order->shipping_address)) !!}</p>
                 </div>
             </div>
 
             <div class="border rounded-lg overflow-hidden bg-gray-50 p-4 text-right">
-                <h3 class="font-bold mb-2">DIRECCIÓN DE FACTURACIÓN</h3>
-                <p>{!! nl2br(e($order->billing_address)) !!}</p>
+                <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE FACTURACIÓN</div>
+                <div class="p-4 py-2">
+                    <p>{!! nl2br(e($order->billing_address)) !!}</p>
+                </div>
             </div>
         </div>
 
@@ -165,10 +171,7 @@
             </div>
         </div>
 
-        <!-- NOTAS FINALES -->
-        <div class="mt-6 text-center text-xs text-gray-600 italic">
-            <p>Este documento ha sido generado electrónicamente y no requiere firma.</p>
-        </div>
+
     </div>
 </body>
 
