@@ -160,14 +160,14 @@
 
         <!-- INFORMACIÓN ADICIONAL -->
         <div class="grid grid-cols-2 gap-4 mt-6 break-inside-avoid">
-            <div class="border rounded-lg p-4 bg-gray-50">
+            <div class="border rounded-lg p-4 py-2 bg-gray-50">
                 <h3 class="font-bold mb-2">INCOTERM</h3>
                 <p><strong>{{ $order->incoterm->code }}</strong> ({{ $order->incoterm->description }})</p>
             </div>
 
-            <div class="border rounded-lg p-4 bg-gray-50">
+            <div class="border rounded-lg p-4 py-2 bg-gray-50">
                 <h3 class="font-bold mb-2">NÚMERO DE PALETS</h3>
-                <p class="text-lg font-bold">{{ $order->numberOfPallets }}</p>
+                <p class="">{{ $order->numberOfPallets }}</p>
             </div>
         </div>
 
