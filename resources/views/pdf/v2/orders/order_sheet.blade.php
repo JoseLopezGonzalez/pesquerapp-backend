@@ -55,8 +55,8 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-3 mb-3 text-xs">
-            <div class="space-y-3">
+        <div class="grid grid-cols-2 gap-2 mb-3 text-xs">
+            <div class="space-y-2">
                 <div class="border rounded-lg overflow-hidden bg-gray-50">
                     <div class="font-bold  mb-2 w-full p-2 bg-gray-800 border-b text-white">DATOS DEL CLIENTE</div>
                     <div class=" space-y-1 p-4 pt-0">
@@ -111,7 +111,7 @@
         </div>
 
         <!-- SECCIÓN COMPACTADA: INCOTERM, FORMA DE PAGO Y PALETS -->
-        <div class="border p-4 py-2 rounded-lg bg-gray-50 mb-3 text-[10px]">
+        <div class="border p-4 py-2 rounded-lg bg-gray-50 mb-2 text-[10px]">
             <div class="grid grid-cols-3 gap-4 divide-x-gray-800">
                 <div>
                     <p class="font-bold">FORMA DE PAGO</p>
@@ -130,7 +130,7 @@
         </div>
 
         <!-- OBSERVACIONES DIVIDIDAS EN TARJETAS -->
-        <div class="grid grid-cols-3 gap-4 text-[10px] mb-6">
+        <div class="grid grid-cols-3 gap-2 text-[10px] mb-6">
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h3 class="font-bold mb-2">OBSERVACIONES PRODUCCIÓN</h3>
                 <p>{{ $order->production_notes }}</p>
