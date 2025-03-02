@@ -140,13 +140,13 @@
                         style="font-size:5pt; text-align: left; font-size: 9pt; left: 380px; top: 450px; position: absolute;">
                         produtos de <br /> la pesca
                     </p>
-                    <p style="text-align: right; font-size: 9pt; right: 250px; top: 450px; position: absolute;">
+                    <p style="text-align: right; font-size: 9pt; right: 200px; top: 450px; position: absolute;">
                         {{ number_format($order->totals['netWeight'], 2, ',', '.') }} kg
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 190px; top: 680px; position: absolute;">
                         0 ºC
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 160px; top: 815px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 90px; top: 815px; position: absolute;">
                         {{ $order->incoterm->code }} - {{ $order->incoterm->description }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 160px; top: 855px; position: absolute;">
