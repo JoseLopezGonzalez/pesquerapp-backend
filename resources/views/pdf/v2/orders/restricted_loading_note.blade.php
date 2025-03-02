@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Nota de Carga</title>
+    <title>Nota de Carga (Restringida)</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
@@ -38,7 +38,7 @@
             </div>
             <div class="flex items-start gap-4">
                 <div class="  rounded  text-end">
-                    <h2 class="text-lg font-bold ">Nota de Carga</h2>
+                    <h2 class="text-lg font-bold ">Nota de Carga*</h2>
                     <p class=" font-medium"><span class="">{{ $order->formattedId }}</span></p>
                     <p class=" font-medium">Fecha:<span class="">
                             {{ date('d/m/Y', strtotime($order->load_date)) }}
@@ -67,7 +67,19 @@
             <div class="border rounded-lg overflow-hidden bg-gray-50 text-right">
                 <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE FACTURACIÓN</div>
                 <div class="p-4 ">
-                    <p>{!! nl2br(e($order->billing_address)) !!}</p>
+                    <p>
+                        @php
+                            // Separamos el texto en líneas
+                            $addressLines = explode("\n", $order->billing_address);
+                            // Quitamos la primera línea
+                            array_shift($addressLines);
+                            // Unimos nuevamente el texto, excluyendo la primera línea
+                            $modifiedAddress = implode("\n", $addressLines);
+                        @endphp
+
+                        {!! nl2br(e($modifiedAddress)) !!}
+
+                    </p>
                 </div>
             </div>
         </div>

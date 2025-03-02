@@ -324,6 +324,9 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('orders/{orderId}/pdf/order-packing-list', [\App\Http\Controllers\v2\PDFController::class, 'generateOrderPackingList'])->name('generate_order_packing_list');
             /* Loading note */
             Route::get('orders/{orderId}/pdf/loading-note', [\App\Http\Controllers\v2\PDFController::class, 'generateLoadingNote'])->name('generate_loading_note');
+            /* Restricted Loaging Note */
+            Route::get('orders/{orderId}/pdf/restricted-loading-note', [\App\Http\Controllers\v2\PDFController::class, 'generateRestrictedLoadingNote'])->name('generate_restricted_loading_note');
+        
         });
     });
 });
