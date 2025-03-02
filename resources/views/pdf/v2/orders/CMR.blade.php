@@ -121,7 +121,9 @@
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 330px; position: absolute;">
                         ISLA CRISTINA - HUELVA
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 320px; top: 302px; position: absolute;">
+                    <p style=" font-size: 9pt; right: 120px; top: 302px; position: absolute;"
+                    class="text-right"
+                    >
                         {{ date('d/m/Y', strtotime($order->load_date)) }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 390px; position: absolute;">
@@ -146,7 +148,7 @@
                     <p style="text-align: left; font-size: 9pt; left: 190px; top: 680px; position: absolute;">
                         0 ºC
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 160px; top: 840px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 160px; top: 825px; position: absolute;">
                         {{ $order->incoterm->code }} - {{ $order->incoterm->description }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 160px; top: 855px; position: absolute;">
