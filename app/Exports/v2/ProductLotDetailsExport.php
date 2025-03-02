@@ -26,14 +26,13 @@ class ProductLotDetailsExport implements FromCollection, WithHeadings, WithMappi
         foreach ($this->order->productsWithLotsDetails as $productDetail) {
             foreach ($productDetail['lots'] as $lot) {
                 $rows[] = [
-                    'Pedido' => $this->order->formattedId,
+                    'Pedido' => $this->order->id,
                     'Cliente' => $this->order->customer->name,
                     'Producto' => $productDetail['product']['article']['name'],
+                    'GTIN Caja' => $productDetail['product']['boxGtin'] ?? 'N/A',
                     'Lote' => $lot['lot'],
                     'Cajas' => $lot['boxes'],
                     'Peso Neto' => number_format($lot['netWeight'], 2, ',', '.') . ' kg',
-                    'GS1-128' => $productDetail['product']['gs1128'] ?? 'N/A',
-                    'GTIN Caja' => $productDetail['product']['boxGtin'] ?? 'N/A',
                 ];
             }
         }
@@ -47,11 +46,10 @@ class ProductLotDetailsExport implements FromCollection, WithHeadings, WithMappi
             'Pedido',
             'Cliente',
             'Producto',
+            'GTIN Caja',
             'Lote',
             'Cajas',
-            'Peso Neto',
-            'GS1-128',
-            'GTIN Caja'
+            'Peso Neto'
         ];
     }
 
@@ -61,11 +59,10 @@ class ProductLotDetailsExport implements FromCollection, WithHeadings, WithMappi
             $row['Pedido'],
             $row['Cliente'],
             $row['Producto'],
+            $row['GTIN Caja'],
             $row['Lote'],
             $row['Cajas'],
             $row['Peso Neto'],
-            $row['GS1-128'],
-            $row['GTIN Caja'],
         ];
     }
 }
