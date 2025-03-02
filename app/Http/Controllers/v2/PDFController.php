@@ -549,12 +549,12 @@ class PDFController extends Controller
         }, 'Packing_list_' . $order->formattedId . '.pdf', ['Content-Type' => 'application/pdf']);
     }
 
-    public function generateDeliveryNote($orderId)
+    public function generateLoadingNote($orderId)
     {
         $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
 
         $snappdf = new Snappdf();
-        $html = view('pdf.v2.orders.delivery_note', ['order' => $order])->render();
+        $html = view('pdf.v2.orders.loading_note', ['order' => $order])->render();
         $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Asegúrate de cambiar esto por tu ruta específica
 
         /* Personalizando el PDF */
@@ -589,6 +589,6 @@ class PDFController extends Controller
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;
-        }, 'Nota_de_entrega_' . $order->formattedId . '.pdf', ['Content-Type' => 'application/pdf']);
+        }, 'Nota_de_carga_' . $order->formattedId . '.pdf', ['Content-Type' => 'application/pdf']);
     }
 }
