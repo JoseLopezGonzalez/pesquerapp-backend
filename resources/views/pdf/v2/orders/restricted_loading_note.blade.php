@@ -68,6 +68,7 @@
                 <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE FACTURACIÓN</div>
                 <div class="p-4 ">
                     <p>
+                        <b>{{ $order->customer->alias }} </b> <br />
                         @php
                             // Separamos el texto en líneas
                             $addressLines = explode("\n", $order->billing_address);
