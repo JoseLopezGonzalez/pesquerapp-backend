@@ -58,11 +58,11 @@
                     </p>
                     <p
                         style="font-weight: bold; text-align: left; font-size: 9pt; left: 655px; top: 50px; position: absolute;">
-                        {{ $order->formattedId }}
+                        {{ $entity->formattedId }}
                     </p>
 
 
-                    @if ($order->customer->country->name === 'España')
+                    @if ($entity->customer->country->name === 'España')
                         <p
                             style="font-weight: bold; text-align: left; font-size: 9pt; left: 563px; top: 24px; position: absolute;">
                             X
@@ -84,16 +84,16 @@
 
                     <p class="preserve-line-breaks"
                         style="text-align: left; font-size: 8pt; left: 420px; top: 168px; position: absolute;">
-                        {{ $order->transport->name }} <br />
-                        {!! nl2br(e($order->transport->address)) !!}
+                        {{ $entity->transport->name }} <br />
+                        {!! nl2br(e($entity->transport->address)) !!}
 
                     </p>
                     <p class="preserve-line-breaks"
                         style="text-align: left; font-size: 7pt; left: 90px; top: 163px; position: absolute;">
-                        {{ $order->customer->alias }} <br />
+                        {{ $entity->customer->alias }} <br />
                         @php
                             // Separamos el texto en líneas
-                            $addressLines = explode("\n", $order->billing_address);
+                            $addressLines = explode("\n", $entity->billing_address);
                             // Quitamos la primera línea
                             array_shift($addressLines);
                             // Unimos nuevamente el texto, excluyendo la primera línea
@@ -105,11 +105,11 @@
                     </p>
                     <p class="preserve-line-breaks"
                         style="text-align: left; font-size: 6pt; left: 90px; top: 253px; position: absolute;">
-                        {{-- {{ $order->customer->alias }} <br/> --}}
+                        {{-- {{ $entity->customer->alias }} <br/> --}}
 
                         @php
                             // Separamos el texto en líneas
-                            $addressLines = explode("\n", $order->shipping_address);
+                            $addressLines = explode("\n", $entity->shipping_address);
                             // Quitamos la primera línea
                             array_shift($addressLines);
                             // Unimos nuevamente el texto, excluyendo la primera línea
@@ -122,16 +122,16 @@
                         ISLA CRISTINA - HUELVA
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 320px; top: 302px; position: absolute;">
-                        {{ date('d/m/Y', strtotime($order->load_date)) }}
+                        {{ date('d/m/Y', strtotime($entity->load_date)) }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 390px; position: absolute;">
-                        Nota de carga {{ $order->formattedId }}
+                        Nota de carga {{ $entity->formattedId }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 450px; position: absolute;">
-                        {{ $order->numberOfPallets }} palets
+                        {{ $entity->numberOfPallets }} palets
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 200px; top: 450px; position: absolute;">
-                        {{ $order->totals['boxes'] }}
+                        {{ $entity->totals['boxes'] }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 280px; top: 450px; position: absolute;">
                         cajas
@@ -141,19 +141,19 @@
                         produtos de <br /> la pesca
                     </p>
                     <p style="text-align: right; font-size: 9pt; right: 165px; top: 450px; position: absolute;">
-                        {{ number_format($order->totals['netWeight'], 2, ',', '.') }} kg
+                        {{ number_format($entity->totals['netWeight'], 2, ',', '.') }} kg
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 190px; top: 680px; position: absolute;">
                         0 ºC
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 815px; position: absolute;">
-                        {{ $order->incoterm->code }} - {{ $order->incoterm->description }}
+                        {{ $entity->incoterm->code }} - {{ $entity->incoterm->description }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 160px; top: 855px; position: absolute;">
                         ISLA CRISTINA
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 290px; top: 855px; position: absolute;">
-                        {{ date('d/m/Y', strtotime($order->load_date)) }}
+                        {{ date('d/m/Y', strtotime($entity->load_date)) }}
                     </p>
                 </div>
             </div>

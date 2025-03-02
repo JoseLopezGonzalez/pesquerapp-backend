@@ -79,216 +79,50 @@ class PDFController extends Controller
 
     public function generateOrderSigns($orderId)
     {
-        $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
-
-        $snappdf = new Snappdf();
-        $html = view('pdf.v2.orders.order_signs', ['order' => $order])->render();
-        $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Asegúrate de cambiar esto por tu ruta específica
-
-        /* Personalizando el PDF */
-        $snappdf->addChromiumArguments('--margin-top=10mm');
-        $snappdf->addChromiumArguments('--margin-right=30mm');
-        $snappdf->addChromiumArguments('--margin-bottom=10mm');
-        $snappdf->addChromiumArguments('--margin-left=10mm');
-
-
-        // Agrega argumentos de Chromium uno por uno
-        // Configuración para que el servidor no de errores y pueda trabajar bien con el PDF
-        $snappdf->addChromiumArguments('--no-sandbox');
-        $snappdf->addChromiumArguments('disable-gpu');
-        $snappdf->addChromiumArguments('disable-translate');
-        $snappdf->addChromiumArguments('disable-extensions');
-        $snappdf->addChromiumArguments('disable-sync');
-        $snappdf->addChromiumArguments('disable-background-networking');
-        $snappdf->addChromiumArguments('disable-software-rasterizer');
-        $snappdf->addChromiumArguments('disable-default-apps');
-        $snappdf->addChromiumArguments('disable-dev-shm-usage');
-        $snappdf->addChromiumArguments('safebrowsing-disable-auto-update');
-        $snappdf->addChromiumArguments('run-all-compositor-stages-before-draw');
-        $snappdf->addChromiumArguments('no-first-run');
-        $snappdf->addChromiumArguments('no-margins');
-        $snappdf->addChromiumArguments('print-to-pdf-no-header');
-        $snappdf->addChromiumArguments('no-pdf-header-footer');
-        $snappdf->addChromiumArguments('hide-scrollbars');
-        $snappdf->addChromiumArguments('ignore-certificate-errors');
-
-        $pdf = $snappdf->setHtml($html)
-            ->generate();
-
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf;
-        }, 'Letreros_transporte_' . $order->formattedId . '.pdf', ['Content-Type' => 'application/pdf']);
+        $order = Order::findOrFail($orderId);
+        $fileName = 'Letreros_transporte_' . $order->formattedId;
+        return $this->generatePdf($order, 'pdf.v2.orders.order_signs', $fileName);
     }
 
     public function generateOrderPackingList($orderId)
     {
-        $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
-
-        $snappdf = new Snappdf();
-        $html = view('pdf.v2.orders.order_packing_list', ['order' => $order])->render();
-        $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Asegúrate de cambiar esto por tu ruta específica
-
-        /* Personalizando el PDF */
-        $snappdf->addChromiumArguments('--margin-top=10mm');
-        $snappdf->addChromiumArguments('--margin-right=30mm');
-        $snappdf->addChromiumArguments('--margin-bottom=10mm');
-        $snappdf->addChromiumArguments('--margin-left=10mm');
-
-
-        // Agrega argumentos de Chromium uno por uno
-        // Configuración para que el servidor no de errores y pueda trabajar bien con el PDF
-        $snappdf->addChromiumArguments('--no-sandbox');
-        $snappdf->addChromiumArguments('disable-gpu');
-        $snappdf->addChromiumArguments('disable-translate');
-        $snappdf->addChromiumArguments('disable-extensions');
-        $snappdf->addChromiumArguments('disable-sync');
-        $snappdf->addChromiumArguments('disable-background-networking');
-        $snappdf->addChromiumArguments('disable-software-rasterizer');
-        $snappdf->addChromiumArguments('disable-default-apps');
-        $snappdf->addChromiumArguments('disable-dev-shm-usage');
-        $snappdf->addChromiumArguments('safebrowsing-disable-auto-update');
-        $snappdf->addChromiumArguments('run-all-compositor-stages-before-draw');
-        $snappdf->addChromiumArguments('no-first-run');
-        $snappdf->addChromiumArguments('no-margins');
-        $snappdf->addChromiumArguments('print-to-pdf-no-header');
-        $snappdf->addChromiumArguments('no-pdf-header-footer');
-        $snappdf->addChromiumArguments('hide-scrollbars');
-        $snappdf->addChromiumArguments('ignore-certificate-errors');
-
-        $pdf = $snappdf->setHtml($html)
-            ->generate();
-
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf;
-        }, 'Packing_list_' . $order->formattedId . '.pdf', ['Content-Type' => 'application/pdf']);
+        $order = Order::findOrFail($orderId);
+        $fileName = 'Packing_list_' . $order->formattedId;
+        return $this->generatePdf($order, 'pdf.v2.orders.order_packing_list', $fileName);
     }
 
     public function generateLoadingNote($orderId)
     {
-        $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
-
-        $snappdf = new Snappdf();
-        $html = view('pdf.v2.orders.loading_note', ['order' => $order])->render();
-        $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Asegúrate de cambiar esto por tu ruta específica
-
-        /* Personalizando el PDF */
-        $snappdf->addChromiumArguments('--margin-top=10mm');
-        $snappdf->addChromiumArguments('--margin-right=30mm');
-        $snappdf->addChromiumArguments('--margin-bottom=10mm');
-        $snappdf->addChromiumArguments('--margin-left=10mm');
-
-
-        // Agrega argumentos de Chromium uno por uno
-        // Configuración para que el servidor no de errores y pueda trabajar bien con el PDF
-        $snappdf->addChromiumArguments('--no-sandbox');
-        $snappdf->addChromiumArguments('disable-gpu');
-        $snappdf->addChromiumArguments('disable-translate');
-        $snappdf->addChromiumArguments('disable-extensions');
-        $snappdf->addChromiumArguments('disable-sync');
-        $snappdf->addChromiumArguments('disable-background-networking');
-        $snappdf->addChromiumArguments('disable-software-rasterizer');
-        $snappdf->addChromiumArguments('disable-default-apps');
-        $snappdf->addChromiumArguments('disable-dev-shm-usage');
-        $snappdf->addChromiumArguments('safebrowsing-disable-auto-update');
-        $snappdf->addChromiumArguments('run-all-compositor-stages-before-draw');
-        $snappdf->addChromiumArguments('no-first-run');
-        $snappdf->addChromiumArguments('no-margins');
-        $snappdf->addChromiumArguments('print-to-pdf-no-header');
-        $snappdf->addChromiumArguments('no-pdf-header-footer');
-        $snappdf->addChromiumArguments('hide-scrollbars');
-        $snappdf->addChromiumArguments('ignore-certificate-errors');
-
-        $pdf = $snappdf->setHtml($html)
-            ->generate();
-
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf;
-        }, 'Nota_de_carga_' . $order->formattedId . '.pdf', ['Content-Type' => 'application/pdf']);
+        $order = Order::findOrFail($orderId);
+        $fileName = 'Nota_de_carga_' . $order->formattedId;
+        return $this->generatePdf($order, 'pdf.v2.orders.loading_note', $fileName);
     }
 
     public function generateRestrictedLoadingNote($orderId)
     {
-        $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
-
-        $snappdf = new Snappdf();
-        $html = view('pdf.v2.orders.restricted_loading_note', ['order' => $order])->render();
-        $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Asegúrate de cambiar esto por tu ruta específica
-
-        /* Personalizando el PDF */
-        $snappdf->addChromiumArguments('--margin-top=10mm');
-        $snappdf->addChromiumArguments('--margin-right=30mm');
-        $snappdf->addChromiumArguments('--margin-bottom=10mm');
-        $snappdf->addChromiumArguments('--margin-left=10mm');
-
-
-        // Agrega argumentos de Chromium uno por uno
-        // Configuración para que el servidor no de errores y pueda trabajar bien con el PDF
-        $snappdf->addChromiumArguments('--no-sandbox');
-        $snappdf->addChromiumArguments('disable-gpu');
-        $snappdf->addChromiumArguments('disable-translate');
-        $snappdf->addChromiumArguments('disable-extensions');
-        $snappdf->addChromiumArguments('disable-sync');
-        $snappdf->addChromiumArguments('disable-background-networking');
-        $snappdf->addChromiumArguments('disable-software-rasterizer');
-        $snappdf->addChromiumArguments('disable-default-apps');
-        $snappdf->addChromiumArguments('disable-dev-shm-usage');
-        $snappdf->addChromiumArguments('safebrowsing-disable-auto-update');
-        $snappdf->addChromiumArguments('run-all-compositor-stages-before-draw');
-        $snappdf->addChromiumArguments('no-first-run');
-        $snappdf->addChromiumArguments('no-margins');
-        $snappdf->addChromiumArguments('print-to-pdf-no-header');
-        $snappdf->addChromiumArguments('no-pdf-header-footer');
-        $snappdf->addChromiumArguments('hide-scrollbars');
-        $snappdf->addChromiumArguments('ignore-certificate-errors');
-
-        $pdf = $snappdf->setHtml($html)
-            ->generate();
-
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf;
-        }, 'Nota_de_carga_restringida_' . $order->formattedId . '.pdf', ['Content-Type' => 'application/pdf']);
+        $order = Order::findOrFail($orderId);
+        $fileName = 'Nota_de_carga_restringida_' . $order->formattedId;
+        return $this->generatePdf($order, 'pdf.v2.orders.restricted_loading_note', $fileName);
     }
 
     public function generateOrderCMR($orderId)
     {
-        $order = Order::findOrFail($orderId); // Asegúrate de cargar el pedido correctamente
+        $order = Order::findOrFail($orderId);
+        $fileName = 'CMR_' . $order->formattedId;
+        return $this->generatePdf($order, 'pdf.v2.orders.CMR', $fileName);
+    }
 
-        $snappdf = new Snappdf();
-        $html = view('pdf.v2.orders.CMR', ['order' => $order])->render();
-        $snappdf->setChromiumPath('/usr/bin/google-chrome'); // Asegúrate de cambiar esto por tu ruta específica
+    public function generateDeliveryNote($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        $fileName = 'Nota_de_entrega_' . $order->formattedId;
+        return $this->generatePdf($order, 'pdf.v2.orders.delivery_note', $fileName);
+    }
 
-        /* Personalizando el PDF */
-        $snappdf->addChromiumArguments('--margin-top=10mm');
-        $snappdf->addChromiumArguments('--margin-right=30mm');
-        $snappdf->addChromiumArguments('--margin-bottom=10mm');
-        $snappdf->addChromiumArguments('--margin-left=10mm');
-
-
-        // Agrega argumentos de Chromium uno por uno
-        // Configuración para que el servidor no de errores y pueda trabajar bien con el PDF
-        $snappdf->addChromiumArguments('--no-sandbox');
-        $snappdf->addChromiumArguments('disable-gpu');
-        $snappdf->addChromiumArguments('disable-translate');
-        $snappdf->addChromiumArguments('disable-extensions');
-        $snappdf->addChromiumArguments('disable-sync');
-        $snappdf->addChromiumArguments('disable-background-networking');
-        $snappdf->addChromiumArguments('disable-software-rasterizer');
-        $snappdf->addChromiumArguments('disable-default-apps');
-        $snappdf->addChromiumArguments('disable-dev-shm-usage');
-        $snappdf->addChromiumArguments('safebrowsing-disable-auto-update');
-        $snappdf->addChromiumArguments('run-all-compositor-stages-before-draw');
-        $snappdf->addChromiumArguments('no-first-run');
-        $snappdf->addChromiumArguments('no-margins');
-        $snappdf->addChromiumArguments('print-to-pdf-no-header');
-        $snappdf->addChromiumArguments('no-pdf-header-footer');
-        $snappdf->addChromiumArguments('hide-scrollbars');
-        $snappdf->addChromiumArguments('ignore-certificate-errors');
-
-        $pdf = $snappdf->setHtml($html)
-            ->generate();
-
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf;
-        }, 'CMR_' . $order->formattedId . '.pdf', ['Content-Type' => 'application/pdf']);
+    public function generateInvoice($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        $fileName = 'Factura_' . $order->formattedId;
+        return $this->generatePdf($order, 'pdf.v2.orders.invoice', $fileName);
     }
 }

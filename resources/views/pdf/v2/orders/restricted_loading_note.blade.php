@@ -39,16 +39,16 @@
             <div class="flex items-start gap-4">
                 <div class="  rounded  text-end">
                     <h2 class="text-lg font-bold ">Nota de Carga*</h2>
-                    <p class=" font-medium"><span class="">{{ $order->formattedId }}</span></p>
+                    <p class=" font-medium"><span class="">{{ $entity->formattedId }}</span></p>
                     <p class=" font-medium">Fecha:<span class="">
-                            {{ date('d/m/Y', strtotime($order->load_date)) }}
+                            {{ date('d/m/Y', strtotime($entity->load_date)) }}
                         </span></p>
-                    <p class=" font-medium">Buyer Reference:{{ $order->buyer_reference }}</p>
+                    <p class=" font-medium">Buyer Reference:{{ $entity->buyer_reference }}</p>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="p-1 border rounded flex items-center justify-center bg-white">
                         <img alt='Barcode Generator TEC-IT'
-                            src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $order->id . '&code=QRCode&eclevel=L' }}"
+                            src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $entity->id . '&code=QRCode&eclevel=L' }}"
                             class="w-[4.1rem] h-[4.1rem]" />
                     </div>
                 </div>
@@ -60,7 +60,7 @@
             <div class="border rounded-lg overflow-hidden bg-gray-50 ">
                 <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE ENVÍO</div>
                 <div class="p-4 ">
-                    <p>{!! nl2br(e($order->shipping_address)) !!}</p>
+                    <p>{!! nl2br(e($entity->shipping_address)) !!}</p>
                 </div>
             </div>
 
@@ -68,10 +68,10 @@
                 <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE FACTURACIÓN</div>
                 <div class="p-4 ">
                     <p>
-                        <b>{{ $order->customer->alias }} </b> <br />
+                        <b>{{ $entity->customer->alias }} </b> <br />
                         @php
                             // Separamos el texto en líneas
-                            $addressLines = explode("\n", $order->billing_address);
+                            $addressLines = explode("\n", $entity->billing_address);
                             // Quitamos la primera línea
                             array_shift($addressLines);
                             // Unimos nuevamente el texto, excluyendo la primera línea
@@ -103,7 +103,7 @@
                         $rowIndex = 0; // Controlador manual para alternar colores
                     @endphp
 
-                    @foreach ($order->productsWithLotsDetails as $productLine)
+                    @foreach ($entity->productsWithLotsDetails as $productLine)
                         @php
                             $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
                             $rowIndex++; // Incrementamos el contador de filas
@@ -164,8 +164,8 @@
                         <td class="p-2 font-semibold">Total</td>
                         <td class="p-2 text-center"></td>
                         <td class="p-2 text-center"></td>
-                        <td class="p-2 text-center">{{ $order->totalBoxes }}</td>
-                        <td class="p-2 text-center">{{ number_format($order->totalNetWeight, 2, ',', '.') }} kg</td>
+                        <td class="p-2 text-center">{{ $entity->totalBoxes }}</td>
+                        <td class="p-2 text-center">{{ number_format($entity->totalNetWeight, 2, ',', '.') }} kg</td>
                     </tr>
                 </tfoot>
             </table>
@@ -175,12 +175,12 @@
         <div class="grid grid-cols-2 gap-4 mt-4 break-inside-avoid">
             <div class="border rounded-lg p-4 py-2 bg-gray-50">
                 <h3 class="font-bold mb-2">INCOTERM</h3>
-                <p><strong>{{ $order->incoterm->code }}</strong> ({{ $order->incoterm->description }})</p>
+                <p><strong>{{ $entity->incoterm->code }}</strong> ({{ $entity->incoterm->description }})</p>
             </div>
 
             <div class="border rounded-lg p-4 py-2 bg-gray-50">
                 <h3 class="font-bold mb-2">NÚMERO DE PALETS</h3>
-                <p class="">{{ $order->numberOfPallets }}</p>
+                <p class="">{{ $entity->numberOfPallets }}</p>
             </div>
         </div>
 

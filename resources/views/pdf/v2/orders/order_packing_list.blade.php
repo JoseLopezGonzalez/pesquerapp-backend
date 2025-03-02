@@ -40,16 +40,16 @@
             <div class="flex items-start gap-4">
                 <div class="  rounded  text-end">
                     <h2 class="text-lg font-bold ">Packing List</h2>
-                    <p class=" font-medium"><span class="">{{ $order->formattedId }}</span></p>
+                    <p class=" font-medium"><span class="">{{ $entity->formattedId }}</span></p>
                     <p class=" font-medium">Fecha:<span class="">
-                            {{ date('d/m/Y', strtotime($order->load_date)) }}
+                            {{ date('d/m/Y', strtotime($entity->load_date)) }}
                         </span></p>
-                    <p class=" font-medium">Buyer Reference:{{ $order->buyer_reference }}</p>
+                    <p class=" font-medium">Buyer Reference:{{ $entity->buyer_reference }}</p>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="p-1 border rounded flex items-center justify-center bg-white">
                         <img alt='Barcode Generator TEC-IT'
-                            src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $order->id . '&code=QRCode&eclevel=L' }}"
+                            src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $entity->id . '&code=QRCode&eclevel=L' }}"
                             class="w-[4.1rem] h-[4.1rem]" />
                     </div>
                 </div>
@@ -79,7 +79,7 @@
 
 
         <div class="mb-6">
-            @foreach ($order->pallets as $pallet)
+            @foreach ($entity->pallets as $pallet)
                 <div class="mb-8 break-after-page">
                     <div class="bg-gray-800 text-white p-2 flex justify-between items-center rounded-t-lg">
                         <h3 class="font-bold">Palet #{{ $pallet->id }}</h3>

@@ -32,7 +32,7 @@
 </head>
 
 <body>
-    @foreach ($order->pallets as $pallet)
+    @foreach ($entity->pallets as $pallet)
         <div class="w-full p-4 text-black h-svh flex flex-col gap-3 bg-white border-black rounded-lg">
             <div class='grid grid-cols-2 w-full gap-3'>
                 <div class="space-y-2 border rounded-lg p-8">
@@ -43,13 +43,13 @@
 
                 <div class="space-y-2 border rounded-lg p-8">
                     <div class="text-md font-semibold ">Consignatario:</div>
-                    <div class="text-2xl font-semibold ">{{ $order->customer->alias }}</div>
+                    <div class="text-2xl font-semibold ">{{ $entity->customer->alias }}</div>
                     <p class="">
                         {{-- Delete first line of Text of shipping Address y respetar los saltos de lineas del texto original con nl2br --}}
 
                         @php
                             // Separamos el texto en líneas
-                            $addressLines = explode("\n", $order->shipping_address);
+                            $addressLines = explode("\n", $entity->shipping_address);
                             // Quitamos la primera línea
                             array_shift($addressLines);
                             // Unimos nuevamente el texto, excluyendo la primera línea
@@ -92,7 +92,7 @@
                     </div>
                 </div> --}}
                 <div class="flex flex-col items-center justify-center border rounded-lg h-full gap-2">
-                    <h1 class="text-4xl font-semibold ">{{ $order->formattedId }}</h1>
+                    <h1 class="text-4xl font-semibold ">{{ $entity->formattedId }}</h1>
                     <span class="text-md">Pedido</span>
                 </div>
                 <div class="flex flex-col items-center justify-center border rounded-lg h-full p-14 gap-2">
@@ -103,9 +103,9 @@
                 </div>
                 <div class="flex flex-col items-center justify-center border rounded-lg h-full p-14 gap-2">
                     <img alt='Barcode Generator TEC-IT'
-                        src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $order->id . '&code=QRCode&eclevel=L' }}"
+                        src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $entity->id . '&code=QRCode&eclevel=L' }}"
                         class='h-full' />
-                    <span class="text-xs">Pedido: {{ $order->id }}</span>
+                    <span class="text-xs">Pedido: {{ $entity->id }}</span>
                 </div>
 
 
@@ -113,7 +113,7 @@
             </div>
 
             <div class="text-3xl font-semibold  border-l-4 border-gray-300 pl-3 mt-3">
-                {{ $order->transport->name }}
+                {{ $entity->transport->name }}
             </div>
 
 
