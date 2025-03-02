@@ -40,16 +40,16 @@
             <div class="flex items-start gap-4">
                 <div class="  rounded  text-end">
                     <h2 class="text-lg font-bold ">Hoja de pedido</h2>
-                    <p class=" font-medium"><span class="">{{ $order->formattedId }}</span></p>
+                    <p class=" font-medium"><span class="">{{ $entity->formattedId }}</span></p>
                     <p class=" font-medium">Fecha:<span class="">
-                            {{ date('d/m/Y', strtotime($order->load_date)) }}
+                            {{ date('d/m/Y', strtotime($entity->load_date)) }}
                         </span></p>
-                    <p class=" font-medium">Buyer Reference:{{ $order->buyer_reference }}</p>
+                    <p class=" font-medium">Buyer Reference:{{ $entity->buyer_reference }}</p>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="p-1 border rounded flex items-center justify-center bg-white">
                         <img alt='Barcode Generator TEC-IT'
-                            src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $order->id . '&code=QRCode&eclevel=L' }}"
+                            src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $entity->id . '&code=QRCode&eclevel=L' }}"
                             class="w-[4.1rem] h-[4.1rem]" />
                     </div>
                 </div>
@@ -60,17 +60,17 @@
                 <div class="border rounded-lg overflow-hidden bg-gray-50">
                     <div class="font-bold  mb-2 w-full p-2 bg-gray-800 border-b text-white">DATOS DEL CLIENTE</div>
                     <div class=" space-y-1 p-4 pt-0">
-                        <p><span class="font-medium">Nombre:</span> {{ $order->customer->name }}</p>
-                        <p><span class="font-medium">NIF/CIF:</span>{{ $order->customer->vat_number }}</p>
+                        <p><span class="font-medium">Nombre:</span> {{ $entity->customer->name }}</p>
+                        <p><span class="font-medium">NIF/CIF:</span>{{ $entity->customer->vat_number }}</p>
 
                         <p class="font-medium mt-2">Correos electrónicos:</p>
                         <ul class="list-disc pl-5">
-                            {{-- $order->emailsArray --}}
-                            @foreach ($order->emailsArray as $email)
+                            {{-- $entity->emailsArray --}}
+                            @foreach ($entity->emailsArray as $email)
                             <li>{{ $email }}</li>
                             @endforeach
-                            {{-- $order->ccEmailsArray --}}
-                            @foreach ($order->ccEmailsArray as $email)
+                            {{-- $entity->ccEmailsArray --}}
+                            @foreach ($entity->ccEmailsArray as $email)
                             <li>{{ $email }}</li>
                             @endforeach
                         </ul>
@@ -79,14 +79,14 @@
                 <div class="border rounded-lg overflow-hidden bg-gray-50">
                     <div class="font-bold  mb-2 w-full p-2 bg-gray-800 border-b text-white">DATOS DE TRANSPORTE</div>
                     <div class=" space-y-1 p-4 pt-0">
-                        <p><span class="font-medium">Empresa:</span> {{ $order->transport->name }}</p>
+                        <p><span class="font-medium">Empresa:</span> {{ $entity->transport->name }}</p>
                         <p class="font-medium mt-2">Correos electrónicos:</p>
                         <ul class="list-disc pl-5">
-                            {{-- $order->transport->emailsArray y $order->ccEmailsArray --}}
-                            @foreach ($order->transport->emailsArray as $email)
+                            {{-- $entity->transport->emailsArray y $entity->ccEmailsArray --}}
+                            @foreach ($entity->transport->emailsArray as $email)
                             <li>{{ $email }}</li>
                             @endforeach
-                            @foreach ($order->ccEmailsArray as $email)
+                            @foreach ($entity->ccEmailsArray as $email)
                             <li>{{ $email }}</li>
                             @endforeach
 
@@ -99,12 +99,12 @@
                 <div class=" space-y-1 p-4 pt-0">
                     <h3 class="font-bold  mb-2">DIRECCIÓN DE FACTURACIÓN</h3>
                     <p class="">
-                        {!! nl2br($order->billing_address) !!}
+                        {!! nl2br($entity->billing_address) !!}
                     </p>
                     <hr class="my-4 border-dashed border-slate-300" />
                     <h3 class="font-bold  mb-2">DIRECCIÓN DE ENVÍO</h3>
                     <p class="">
-                        {!! nl2br($order->shipping_address) !!}
+                        {!! nl2br($entity->shipping_address) !!}
                     </p>
                 </div>
             </div>
@@ -115,16 +115,16 @@
             <div class="grid grid-cols-3 gap-4 divide-x-gray-800">
                 <div>
                     <p class="font-bold">FORMA DE PAGO</p>
-                    <p>{{ $order->payment_term->name }}</p>
+                    <p>{{ $entity->payment_term->name }}</p>
                 </div>
                 <div>
                     <p class="font-bold">INCOTERM</p>
-                    <p>{{ $order->incoterm->code }} - {{ $order->incoterm->description }}</p>
+                    <p>{{ $entity->incoterm->code }} - {{ $entity->incoterm->description }}</p>
                 </div>
 
                 <div>
                     <p class="font-bold">NÚMERO DE PALETS</p>
-                    <p>{{ $order->numberOfPallets }}</p>
+                    <p>{{ $entity->numberOfPallets }}</p>
                 </div>
             </div>
         </div>
@@ -134,19 +134,19 @@
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h3 class="font-bold mb-2">OBSERVACIONES PRODUCCIÓN</h3>
                 <p>
-                    {!! nl2br(e($order->production_notes)) !!}
+                    {!! nl2br(e($entity->production_notes)) !!}
                 </p>
             </div>
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h3 class="font-bold mb-2">OBSERVACIONES CONTABILIDAD</h3>
                 <p>
-                    {!! nl2br(e($order->accounting_notes)) !!}
+                    {!! nl2br(e($entity->accounting_notes)) !!}
                 </p>
             </div>
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h3 class="font-bold mb-2">OBSERVACIONES TRANSPORTE</h3>
                 <p>
-                    {!! nl2br(e($order->transportation_notes)) !!}
+                    {!! nl2br(e($entity->transportation_notes)) !!}
                 </p>
             </div>
         </div>
@@ -169,7 +169,7 @@
                         $rowIndex = 0; // Controlador manual para alternar colores
                         @endphp
 
-                        @foreach ($order->productsWithLotsDetails as $productLine)
+                        @foreach ($entity->productsWithLotsDetails as $productLine)
                         @php
                         $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
                         $rowIndex++; // Incrementamos el contador de filas
@@ -228,9 +228,9 @@
                             <td class="p-2 py-1 border-t bg-gray-100"></td>
                             <td class="p-2 py-1 border-t bg-gray-100"></td>
                             <td class="p-2 py-1 border-t bg-gray-100">Total</td>
-                            <td class="p-2 py-1 border-t bg-gray-100">{{ $order->totalBoxes }} </td>
+                            <td class="p-2 py-1 border-t bg-gray-100">{{ $entity->totalBoxes }} </td>
                             <td class="p-2 py-1 border-t bg-gray-100">
-                                {{ number_format($order->totalNetWeight, 2, ',', '.') }} kg
+                                {{ number_format($entity->totalNetWeight, 2, ',', '.') }} kg
                             </td>
                         </tr>
                     </tbody>
