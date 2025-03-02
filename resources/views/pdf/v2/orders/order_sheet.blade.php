@@ -119,7 +119,7 @@
             </div>
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h3 class="font-bold mb-1">FORMA DE PAGO</h3>
-                <p>{{ $order->paymentTerm->name }}</p>
+                <p>{{ $order->payment_term->name }}</p>
             </div>
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h3 class="font-bold mb-1">NÚMERO DE PALETS</h3>
