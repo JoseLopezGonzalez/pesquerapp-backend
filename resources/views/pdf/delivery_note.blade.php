@@ -44,7 +44,7 @@
 
             <div class="flex flex-col items-center">
                 <div class="p-1 border rounded bg-white">
-                    <img alt="QR Code" 
+                    <img alt="QR Code"
                         src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $order->id . '&code=QRCode&eclevel=L' }}"
                         class="w-16 h-16" />
                 </div>
@@ -53,9 +53,11 @@
 
         <!-- DIRECCIONES (ENVÍO A LA IZQUIERDA, FACTURACIÓN A LA DERECHA) -->
         <div class="grid grid-cols-2 gap-4 mb-6">
-            <div class="border rounded-lg overflow-hidden bg-gray-50 p-4">
-                <h3 class="font-bold mb-2">DIRECCIÓN DE ENVÍO</h3>
-                <p>{!! nl2br(e($order->shipping_address)) !!}</p>
+            <div class="border rounded-lg overflow-hidden bg-gray-50 ">
+                <div class="font-bold py-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE ENVÍO</div>
+                <div class="p-4">
+                    <p>{!! nl2br(e($order->shipping_address)) !!}</p>
+                </div>
             </div>
 
             <div class="border rounded-lg overflow-hidden bg-gray-50 p-4 text-right">
@@ -169,4 +171,5 @@
         </div>
     </div>
 </body>
+
 </html>
