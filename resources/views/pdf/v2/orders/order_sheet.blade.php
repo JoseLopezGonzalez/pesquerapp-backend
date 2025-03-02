@@ -23,7 +23,7 @@
 
 <body class="h-full">
     <div class="flex flex-col max-w-[210mm] mx-auto p-6 bg-white rounded text-black text-xs min-h-screen">
-
+        
         <!-- ENCABEZADO -->
         <div class="flex justify-between items-end mb-6">
             <div class="flex items-center gap-2">
@@ -100,8 +100,7 @@
                                         <td class="text-md text-end">↪︎</td>
                                         <td class="p-2 py-1">{{ $lot['lot'] }}</td>
                                         <td class="p-2 py-1">{{ $lot['boxes'] }}</td>
-                                        <td class="p-2 py-1">{{ number_format($lot['netWeight'], 2, ',', '.') }} kg
-                                        </td>
+                                        <td class="p-2 py-1">{{ number_format($lot['netWeight'], 2, ',', '.') }} kg</td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -111,31 +110,41 @@
             </div>
         </div>
 
-        <!-- SECCIÓN DE DATOS ADICIONALES -->
-        <div class="grid grid-cols-3 gap-4 mb-6">
-            <div class="border p-4 rounded-lg bg-gray-50">
-                <h3 class="font-bold mb-1">INCOTERM</h3>
-                <p>{{ $order->incoterm->code }} - {{ $order->incoterm->description }}</p>
-            </div>
-            <div class="border p-4 rounded-lg bg-gray-50">
-                <h3 class="font-bold mb-1">FORMA DE PAGO</h3>
-                <p>{{ $order->payment_term->name }}</p>
-            </div>
-            <div class="border p-4 rounded-lg bg-gray-50">
-                <h3 class="font-bold mb-1">NÚMERO DE PALETS</h3>
-                <p>{{ $order->numberOfPallets }}</p>
+        <!-- SECCIÓN COMPACTADA: INCOTERM, FORMA DE PAGO Y PALETS -->
+        <div class="border p-4 rounded-lg bg-gray-50 mb-6">
+            <h3 class="font-bold mb-2">DATOS DE ENVÍO</h3>
+            <div class="grid grid-cols-3 gap-4">
+                <div>
+                    <p class="font-bold">INCOTERM</p>
+                    <p>{{ $order->incoterm->code }} - {{ $order->incoterm->description }}</p>
+                </div>
+                <div>
+                    <p class="font-bold">FORMA DE PAGO</p>
+                    <p>{{ $order->payment_term->name }}</p>
+                </div>
+                <div>
+                    <p class="font-bold">NÚMERO DE PALETS</p>
+                    <p>{{ $order->numberOfPallets }}</p>
+                </div>
             </div>
         </div>
 
-        <!-- OBSERVACIONES -->
-        <div class="border p-4 rounded-lg bg-gray-50">
-            <h3 class="font-bold mb-2">OBSERVACIONES</h3>
-            <p><strong>Producción:</strong> {{ $order->production_notes }}</p>
-            <p><strong>Contabilidad:</strong> {{ $order->accounting_notes }}</p>
-            <p><strong>Transporte:</strong> {{ $order->transportation_notes }}</p>
+        <!-- OBSERVACIONES DIVIDIDAS EN TARJETAS -->
+        <div class="grid grid-cols-3 gap-4">
+            <div class="border p-4 rounded-lg bg-gray-50">
+                <h3 class="font-bold mb-2">OBSERVACIONES PRODUCCIÓN</h3>
+                <p>{{ $order->production_notes }}</p>
+            </div>
+            <div class="border p-4 rounded-lg bg-gray-50">
+                <h3 class="font-bold mb-2">OBSERVACIONES CONTABILIDAD</h3>
+                <p>{{ $order->accounting_notes }}</p>
+            </div>
+            <div class="border p-4 rounded-lg bg-gray-50">
+                <h3 class="font-bold mb-2">OBSERVACIONES TRANSPORTE</h3>
+                <p>{{ $order->transportation_notes }}</p>
+            </div>
         </div>
 
     </div>
 </body>
-
 </html>
