@@ -159,7 +159,7 @@
         </div>
 
         <!-- INFORMACIÓN ADICIONAL -->
-        <div class="grid grid-cols-2 gap-4 mt-6 break-inside-avoid">
+        <div class="grid grid-cols-2 gap-4 mt-3 break-inside-avoid">
             <div class="border rounded-lg p-4 py-2 bg-gray-50">
                 <h3 class="font-bold mb-2">INCOTERM</h3>
                 <p><strong>{{ $order->incoterm->code }}</strong> ({{ $order->incoterm->description }})</p>
