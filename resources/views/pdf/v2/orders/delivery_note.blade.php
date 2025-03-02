@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Delivery Note</title>
+    <title>Nota de Entrega</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
@@ -38,7 +38,7 @@
             </div>
             <div class="flex items-start gap-4">
                 <div class="  rounded  text-end">
-                    <h2 class="text-lg font-bold ">Delivery Note</h2>
+                    <h2 class="text-lg font-bold ">Nota de Entrega</h2>
                     <p class=" font-medium"><span class="">{{ $order->formattedId }}</span></p>
                     <p class=" font-medium">Fecha:<span class="">
                             {{ date('d/m/Y', strtotime($order->load_date)) }}
