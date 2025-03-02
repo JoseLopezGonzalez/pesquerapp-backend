@@ -121,9 +121,7 @@
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 330px; position: absolute;">
                         ISLA CRISTINA - HUELVA
                     </p>
-                    <p style=" font-size: 9pt; right: 120px; top: 302px; position: absolute;"
-                    class="text-right"
-                    >
+                    <p style="text-align: left; font-size: 9pt; left: 320px; top: 302px; position: absolute;">
                         {{ date('d/m/Y', strtotime($order->load_date)) }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 390px; position: absolute;">
@@ -142,13 +140,13 @@
                         style="font-size:5pt; text-align: left; font-size: 9pt; left: 380px; top: 450px; position: absolute;">
                         produtos de <br /> la pesca
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 580px; top: 450px; position: absolute;">
+                    <p style="text-align: right; font-size: 9pt; right: 250px; top: 450px; position: absolute;">
                         {{ number_format($order->totals['netWeight'], 2, ',', '.') }} kg
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 190px; top: 680px; position: absolute;">
                         0 ºC
                     </p>
-                    <p style="text-align: left; font-size: 9pt; left: 160px; top: 825px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 160px; top: 815px; position: absolute;">
                         {{ $order->incoterm->code }} - {{ $order->incoterm->description }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 160px; top: 855px; position: absolute;">
