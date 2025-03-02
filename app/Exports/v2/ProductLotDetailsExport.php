@@ -23,18 +23,17 @@ class ProductLotDetailsExport implements FromCollection, WithHeadings, WithMappi
     {
         $rows = [];
 
-        foreach ($this->order->pallets as $pallet) {
-            foreach ($pallet->boxes as $box) {
-                $product = $box->box->product;
+        foreach ($this->order->productsWithLotsDetails as $productDetail) {
+            foreach ($productDetail['lots'] as $lot) {
                 $rows[] = [
                     'Pedido' => $this->order->formattedId,
                     'Cliente' => $this->order->customer->name,
-                    'Producto' => $product->article->name,
-                    'Lote' => $box->box->lot,
-                    'Cajas' => 1, // Cada fila representa una caja
-                    'Peso Neto' => number_format($box->box->net_weight, 2, ',', '.') . ' kg',
-                    'GS1-128' => $product->gs1128 ?? 'N/A',
-                    'GTIN Caja' => $product->box_gtin,
+                    'Producto' => $productDetail['product']['article']['name'],
+                    'Lote' => $lot['lot'],
+                    'Cajas' => $lot['boxes'],
+                    'Peso Neto' => number_format($lot['netWeight'], 2, ',', '.') . ' kg',
+                    'GS1-128' => $productDetail['product']['gs1128'] ?? 'N/A',
+                    'GTIN Caja' => $productDetail['product']['boxGtin'] ?? 'N/A',
                 ];
             }
         }
