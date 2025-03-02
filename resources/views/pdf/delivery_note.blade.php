@@ -1,178 +1,167 @@
+<!-- resources/views/pdf/delivery_note.blade.php -->
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Delivery Note</title>
+    <title>Delivery Note </title>
+    {{-- Tailwind no funciona, lo cojo todo directamente de un cdn --}}
+
     <script src="https://cdn.tailwindcss.com"></script>
 
+   
+
     <style>
-        body {
-            font-family: 'DejaVu Sans';
-        }
-
-        @page {
-            size: A4 portrait;
-        }
-
+        body { font-family: 'DejaVu Sans'; }
         .bold-first-line::first-line {
             font-weight: bold;
         }
-
-        .break-before-page {
-            page-break-before: always;
-        }
+       /*  table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; } */
+        
     </style>
 </head>
-
-<body class="bg-white text-black text-xs">
-    <div class="max-w-[210mm] mx-auto p-6 bg-white rounded min-h-screen">
-        <!-- ENCABEZADO -->
-        <div class="flex justify-between items-end mb-6 ">
-            <div class="flex items-center gap-2">
-                <div>
-                    <h1 class="text-md font-bold">Congelados Brisamar S.L.</h1>
-                    <p class=" ">C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
-                    <p class=" ">Tel: +34 613 09 14 94 </p>
-                    <p class=" ">administracion@congeladosbrisamar.es</p>
-                </div>
+<body>
+    <div class="pt-4 pl-2 pr-7">
+        <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
+            <div class="col-span-4  ">
+                <img src="{{ asset(env('DELIVERY_NOTE_LOGO_PATH')) }}" class="h-24" alt="Logo" >
             </div>
-            <div class="flex items-start gap-4">
-                <div class="  rounded  text-end">
-                    <h2 class="text-lg font-bold ">Delivery Note</h2>
-                    <p class=" font-medium"><span class="">{{ $order->formattedId }}</span></p>
-                    <p class=" font-medium">Fecha:<span class="">
-                            {{ date('d/m/Y', strtotime($order->load_date)) }}
-                        </span></p>
-                    <p class=" font-medium">Buyer Reference:{{ $order->buyer_reference }}</p>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="p-1 border rounded flex items-center justify-center bg-white">
-                        <img alt='Barcode Generator TEC-IT'
-                            src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $order->id . '&code=QRCode&eclevel=L' }}"
-                            class="w-[4.1rem] h-[4.1rem]" />
-                    </div>
-                </div>
+            <div class="col-span-8" style="line-height: 122%; text-align: right; color: #1E79BB;">
+                <p style="font-size: 10pt;">
+                    <strong>CONGELADOS BRISAMAR S.L.</strong><br>
+                    C.I.F.: B-215 732 82<br>
+                    Poligono vista hermosa, nave 11A<br>
+                    21410 Isla Cristina Huelva
+                </p>
             </div>
         </div>
-
-        <!-- DIRECCIONES (ENVÍO A LA IZQUIERDA, FACTURACIÓN A LA DERECHA) -->
-        <div class="grid grid-cols-2 gap-4 mb-6">
-            <div class="border rounded-lg overflow-hidden bg-gray-50 ">
-                <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE ENVÍO</div>
-                <div class="p-4 ">
-                    <p>{!! nl2br(e($order->shipping_address)) !!}</p>
-                </div>
+        <div class="grid grid-cols-12" style=" margin-bottom: 1rem;">
+            <!-- Color bars across the top -->
+            <div class="col-span-3" style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #06d6ff;"></div>
+            <div class="col-span-3" style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #079def;"></div>
+            <div class="col-span-3" style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #d1d1d1;"></div>
+            <div class="col-span-3" style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: black;"></div>
+        </div>
+        <div class="grid grid-cols-12 mt-2 mb-4">
+            <div class="col-span-12">
+                <p style="margin-top: 1.2rem; font-size: 1.5rem;"><strong>DELIVERY NOTE</strong></p>
             </div>
-
-            <div class="border rounded-lg overflow-hidden bg-gray-50 text-right">
-                <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE FACTURACIÓN</div>
-                <div class="p-4 ">
-                    <p>{!! nl2br(e($order->billing_address)) !!}</p>
-                </div>
+            <div class="col-span-5 mt-3">
+                <table class="w-full  border-none">
+                    <tbody>
+                        <tr class="border-b-2 border-gray-200 ">
+                            <th class="text-left font-medium text-sm p-2">Number</th>
+                            <td class="text-left text-sm">{{ $order->formattedId }}</td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left font-medium text-sm p-2">Date</th>
+                            <td class="text-left text-sm"> {{ date('d/m/Y', strtotime($order->load_date)) }} </td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left font-medium text-sm p-2">Buyer Reference</th>
+                            <td class="text-left text-sm">{{ $order->buyer_reference }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-span-7 text-right mt-2" style="line-height: 100%;">
+                <p class="cliente preserve-line-breaks bold-first-line" style="font-size: 0.9rem;">
+                    {!! nl2br($order->billing_address) !!}
+                </p>
             </div>
         </div>
-
-        <!-- DETALLE DE PRODUCTOS -->
-        <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
-        <div class="border rounded-lg overflow-hidden">
-            <table class="w-full text-xs">
-                <thead class="border-b bg-gray-100">
+        <div class="w-full mt-12">
+            <table class="w-full text-sm">
+                <thead class="border-b-2 border-black">
                     <tr>
-                        <th class="p-2 text-left">Producto</th>
-                        <th class="p-2 text-center">Código GTIN</th>
-                        <th class="p-2 text-center">Lote</th>
-                        <th class="p-2 text-center">Cajas</th>
-                        <th class="p-2 text-center">Peso Neto</th>
+                        <th class="text-left p-1.5">Item</th>
+                        <th class="text-center">Boxes</th>
+                        <th class="text-center">Weight</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @php
-                        $rowIndex = 0; // Controlador manual para alternar colores
-                    @endphp
+                <tbody class="border-b-2 border-black">
+                    @foreach($order->productsBySpeciesAndCaptureZone as $productsBySpeciesAndCaptureZone)
+                        @foreach($productsBySpeciesAndCaptureZone['products'] as $product)
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left font-medium p-1.5">{{ $product['product']->article->name}}</th>
+                                <td class="text-center">{{ $product['boxes'] }}</td>
+                                <td class="text-center">{{ number_format($product['netWeight'], 2,',', '.') }} kg</td>
+                            </tr>
+                            
 
-                    @foreach ($order->productsWithLotsDetails as $productLine)
-                        @php
-                            $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
-                            $rowIndex++; // Incrementamos el contador de filas
-                        @endphp
+                        @endforeach
 
-                        <!-- Fila principal del producto -->
-                        <tr class="{{ $rowClass }}">
-                            <td class="p-2 py-1">{{ $productLine['product']['article']['name'] }}</td>
-                            <td class="p-2 py-1">{{ $productLine['product']['boxGtin'] }}</td>
-                            <td class="p-2 py-1">
-                                {{ count($productLine['lots']) === 1 ? $productLine['lots'][0]['lot'] : '' }}
-                            </td>
-                            <td class="p-2 py-1">{{ $productLine['product']['boxes'] }}</td>
-                            <td class="p-2 py-1">
-                                {{ number_format($productLine['product']['netWeight'], 2, ',', '.') }} kg
-                            </td>
+                        <tr class="border-b border-gray-200" >
+                           {{-- {{dd($order)}}
+                            {{dd($productsBySpeciesAndCaptureZone['species'])}} --}}
+                            <th class="text-left font-light italic  p-1.5" style="font-size:0.60rem; line-height:100%" >{{ $productsBySpeciesAndCaptureZone['species']->scientific_name.'('. $productsBySpeciesAndCaptureZone['species']->fao.')'.' - '.$productsBySpeciesAndCaptureZone['captureZone']->name .' - Caught with: '.$productsBySpeciesAndCaptureZone['species']->fishingGear->name }}</th>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
                         </tr>
-
-                        <!-- Fila con información de la especie -->
-                        @php
-                            $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
-                            $rowIndex++;
-                        @endphp
-                        <tr class="{{ $rowClass }}">
-                            <td class="pl-5 p-2 py-1 text-[10px]" colspan="5">
-                                <i>
-                                    {{ $productLine['product']['species']['name'] }}
-                                    `{{ $productLine['product']['species']['scientificName'] }} -
-                                    {{ $productLine['product']['species']['fao'] }}`
-                                    - {{ $productLine['product']['fishingGear'] }} /
-                                    {{ $productLine['product']['captureZone'] }}
-                                </i>
-                            </td>
-                        </tr>
-
-                        <!-- Si hay más de un lote, se imprimen en filas separadas -->
-                        @if (count($productLine['lots']) > 1)
-                            @foreach ($productLine['lots'] as $lot)
-                                @php
-                                    $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
-                                    $rowIndex++;
-                                @endphp
-                                <tr class="{{ $rowClass }} text-[10px]">
-                                    <td class="p-2 py-1"></td>
-                                    <td class="text-md text-end">↪︎</td>
-                                    <td class="p-2 py-1">{{ $lot['lot'] }}</td>
-                                    <td class="p-2 py-1">{{ $lot['boxes'] }}</td>
-                                    <td class="p-2 py-1">{{ number_format($lot['netWeight'], 2, ',', '.') }} kg</td>
-                                </tr>
-                            @endforeach
-                        @endif
                     @endforeach
+                    {{-- <tr class="border-b border-gray-200">
+                        <th class="italic text-left p-1.5 font-normal">Lots: 
+                          
+                            {{ implode(', ', $order->lots)}}
+                        </th>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="border-b border-black">
+                        <th class="text-left p-1.5 font-normal">Pallets: {{ $order->numberOfPallets}}</th>
+                        <td></td>
+                        <td></td>
+                    </tr> --}}
+                    
                 </tbody>
-
-                <!-- TOTALES -->
-                <tfoot class="border-t bg-gray-100">
-                    <tr>
-                        <td class="p-2 font-semibold">Total</td>
-                        <td class="p-2 text-center"></td>
-                        <td class="p-2 text-center"></td>
-                        <td class="p-2 text-center">{{ $order->totalBoxes }}</td>
-                        <td class="p-2 text-center">{{ number_format($order->totalNetWeight, 2, ',', '.') }} kg</td>
+                <tfoot>
+                    <tr class="">
+                        <th class="text-left font-medium p-1.5">Total</th>
+                        <td class="text-center">{{ $order->totals['boxes'] }}</td>
+                        <td class="text-center">{{ number_format($order->totals['netWeight'], 2,',', '.') }} kg</td>
                     </tr>
                 </tfoot>
             </table>
         </div>
+        <div class="grid grid-cols-2">
 
-        <!-- INFORMACIÓN ADICIONAL -->
-        <div class="grid grid-cols-2 gap-4 mt-3 break-inside-avoid">
-            <div class="border rounded-lg p-4 py-2 bg-gray-50">
-                <h3 class="font-bold mb-2">INCOTERM</h3>
-                <p><strong>{{ $order->incoterm->code }}</strong> ({{ $order->incoterm->description }})</p>
+            
+    
+            <div class="grid grid-cols-12 mt-8">
+                <div class="col-span-10">
+                   
+
+                    <div class="col-span-10">
+                        <p style="font-size: 1.2rem;"><strong>Delivery Address:</strong></p>
+                        <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
+                            {!! nl2br($order->shipping_address) !!}
+                        </p>
+                        
+                    </div>
+
+                    <p style="font-size: 1.2rem; margin-top: 1.5rem;"><strong>Terms & Conditions:</strong></p>
+                    <p class="mt-3 text-sm">
+                        <strong class="mr-1">INCOTERM:</strong> {{ $order->incoterm->code}} ({{$order->incoterm->description}})
+                    </p>
+
+
+                </div>
             </div>
 
-            <div class="border rounded-lg p-4 py-2 bg-gray-50">
-                <h3 class="font-bold mb-2">NÚMERO DE PALETS</h3>
-                <p class="">{{ $order->numberOfPallets }}</p>
+            <div class="grid grid-cols-12 mt-8">
+                <div class="col-span-10">
+                    <p class="text-sm mt-1 preserve-line-breaks bold-first-line">
+                        <strong>Lots:</strong> {{ implode(', ', $order->lots)}}
+                    </p>
+                    <p class="mt-1 text-sm">
+                        <strong>Pallets:</strong> {{ $order->numberOfPallets}}
+                    </p>
+                    
+                </div>
             </div>
+
         </div>
-
-
+        
     </div>
+    
 </body>
-
 </html>
