@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-2 mb-3 text-xs">
+        <div class="grid grid-cols-2 gap-2 mb-2 text-xs">
             <div class="space-y-2">
                 <div class="border rounded-lg overflow-hidden bg-gray-50">
                     <div class="font-bold  mb-2 w-full p-2 bg-gray-800 border-b text-white">DATOS DEL CLIENTE</div>
@@ -133,15 +133,21 @@
         <div class="grid grid-cols-3 gap-2 text-[10px] mb-6">
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h3 class="font-bold mb-2">OBSERVACIONES PRODUCCIÓN</h3>
-                <p>{{ $order->production_notes }}</p>
+                <p>
+                    {!! nl2br(e($order->production_notes)) !!}
+                </p>
             </div>
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h3 class="font-bold mb-2">OBSERVACIONES CONTABILIDAD</h3>
-                <p>{{ $order->accounting_notes }}</p>
+                <p>
+                    {!! nl2br(e($order->accounting_notes)) !!}
+                </p>
             </div>
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h3 class="font-bold mb-2">OBSERVACIONES TRANSPORTE</h3>
-                <p>{{ $order->transportation_notes }}</p>
+                <p>
+                    {!! nl2br(e($order->transportation_notes)) !!}
+                </p>
             </div>
         </div>
 
