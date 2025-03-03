@@ -32,7 +32,7 @@ class ProductLotDetailsExport implements FromCollection, WithHeadings, WithMappi
                     'GTIN Caja' => $productDetail['product']['boxGtin'] ?? 'N/A',
                     'Lote' => $lot['lot'],
                     'Cajas' => $lot['boxes'],
-                    'Peso Neto' => number_format($lot['netWeight'], 2, ','),
+                    'Peso Neto' => number_format($lot['netWeight'], 2, ',', '.'),
                 ];
             }
         }
