@@ -98,7 +98,7 @@ class OrderExport implements FromQuery, WithHeadings, WithMapping
             'Palets'       => $order->numberOfPallets ?? 'N/A',
             'Cajas'        => $order->totalBoxes ?? 'N/A',
             'Incoterm'     => $order->incoterm->code ?? 'N/A',
-            'Peso Total'   => number_format($order->totalNetWeight, 2, ','),
+            'Peso Total'   => number_format($order->totalNetWeight, 2, ',', '.'),
         ];
     }
 
