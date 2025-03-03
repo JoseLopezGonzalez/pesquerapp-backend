@@ -64,8 +64,8 @@
                 </div>
             </div>
 
-            <div class="border rounded-lg overflow-hidden bg-gray-50 text-right">
-                <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE FACTURACIÓN</div>
+            <div class="border rounded-lg overflow-hidden bg-gray-50 text-right mr-2">
+                <div class="font-bold p-2  w-full  text-white"></div>
                 <div class="p-4 ">
                     <p>{!! nl2br(e($entity->billing_address)) !!}</p>
                 </div>
