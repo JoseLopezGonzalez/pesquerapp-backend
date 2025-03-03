@@ -64,7 +64,7 @@
                 </div>
             </div>
 
-            <div class="border rounded-lg overflow-hidden bg-gray-50 text-right w-[600px]">
+            <div class="border rounded-lg overflow-hidden bg-gray-50 text-right w-[300px]">
                 <div class="font-bold p-2  w-full  text-white"></div>
                 <div class="p-4 ">
                     <p>{!! nl2br(e($entity->billing_address)) !!}</p>
