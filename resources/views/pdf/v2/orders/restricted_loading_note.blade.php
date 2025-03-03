@@ -56,7 +56,7 @@
         </div>
 
         <!-- DIRECCIONES (ENVÍO A LA IZQUIERDA, FACTURACIÓN A LA DERECHA) -->
-        <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="flex gap-6 mb-6">
             <div class="border rounded-lg overflow-hidden bg-gray-50 ">
                 <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE ENVÍO</div>
                 <div class="p-4 ">
@@ -64,7 +64,7 @@
                 </div>
             </div>
 
-            <div class="border rounded-lg overflow-hidden bg-gray-50 text-right">
+            <div class="border rounded-lg overflow-hidden bg-gray-50 text-right w-[340px]">
                 <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE FACTURACIÓN</div>
                 <div class="p-4 ">
                     <p>

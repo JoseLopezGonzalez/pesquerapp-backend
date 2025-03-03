@@ -56,7 +56,7 @@
         </div>
 
         <!-- DIRECCIONES (ENVÍO A LA IZQUIERDA, FACTURACIÓN A LA DERECHA) -->
-        <div class="flex gap-6 mb-3 w-full">
+        <div class="flex gap-6 mb-6 w-full">
             <div class="border rounded-lg overflow-hidden bg-gray-50 flex-1 ">
                 <div class="font-bold p-2 bg-gray-800 w-full border-b text-white">DIRECCIÓN DE ENVÍO</div>
                 <div class="p-4 ">
