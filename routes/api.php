@@ -330,6 +330,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('orders/{orderId}/pdf/order-cmr', [\App\Http\Controllers\v2\PDFController::class, 'generateOrderCMR'])->name('generate_order_cmr');
             /* Excel Controller - productLotDetailsExport */
             Route::get('orders/{orderId}/xlsx/lots-report', [\App\Http\Controllers\v2\ExcelController::class, 'exportProductLotDetails'])->name('export_product_lot_details');
+            /* Excel Controller - boxListExport */
+            Route::get('orders/{orderId}/xlsx/boxes-report', [\App\Http\Controllers\v2\ExcelController::class, 'exportBoxList'])->name('export_box_list');
         });
     });
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v2;
 
+use App\Exports\v2\BoxListExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -32,4 +33,12 @@ class ExcelController extends Controller
         $order = Order::findOrFail($orderId);
         return Excel::download(new ProductLotDetailsExport($order), "product_lot_details_{$order->formattedId}.xlsx");
     }
+
+    public function exportBoxList($orderId)
+    {
+        ini_set('memory_limit', '1024M');
+        $order = Order::findOrFail($orderId);
+        return Excel::download(new BoxListExport($order), "box_list_{$order->formattedId}.xlsx");
+    }
+
 }
