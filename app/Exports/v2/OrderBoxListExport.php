@@ -29,10 +29,10 @@ class OrderBoxListExport implements FromCollection, WithHeadings, WithMapping
                     'Pedido' => $this->order->id,
                     'Cliente' => $this->order->customer->name,
                     'Palet ID' => $pallet->id,
-                    'Código de Caja' => $box->code, 
-                    'Producto' => $box->product->article->name ?? 'N/A',
-                    'GTIN Caja' => $box->product->boxGtin ?? 'N/A',
-                    'Peso Neto' => number_format($box->netWeight, 2, ',', '.'),
+                    'Código de Caja' => $box->box->id, 
+                    'Producto' => $box->box->product->article->name ?? '',
+                    'GTIN Caja' => $box->box->product->boxGtin ?? '',
+                    'Peso Neto' => number_format($box->box->netWeight, 2, ',', '.'),
                 ];
             }
         }
