@@ -32,7 +32,7 @@ class OrderBoxListExport implements FromCollection, WithHeadings, WithMapping
                     'Código de Caja' => $box->box->id, 
                     'Producto' => $box->box->product->article->name ?? '',
                     'GTIN Caja' => $box->box->product->boxGtin ?? '',
-                    'Peso Neto' => number_format($box->box->netWeight, 2, ',', '.'),
+                    'Peso Neto' => number_format($box->box->net_weight, 2, ',', '.'),
                 ];
             }
         }
