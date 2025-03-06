@@ -23,7 +23,8 @@ class AutoSalesController extends Controller
     private function generateGs1128($gtin, $lot, $netWeight)
     {
         $gs1128_01 = '(01)' . $gtin;
-        $gs1128_3100 = '(3100)' . str_pad(number_format($netWeight * 100, 2, '.', ''), 6, '0', STR_PAD_LEFT);
+        $gs1128_3100 = '(3100)' . str_pad((int) round($netWeight * 100), 6, '0', STR_PAD_LEFT);
+
        /*  $gs1128_3100 = '(3100)' . str_pad($netWeight * 1000, 6, '0', STR_PAD_LEFT);  */// netWeight en kg → gramos
         $gs1128_10 = '(10)' . $lot;
 
