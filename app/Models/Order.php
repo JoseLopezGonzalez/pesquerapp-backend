@@ -391,7 +391,7 @@ class Order extends Model
     }
 
     /* obtener un listado de productos con cantidades y numero de cajas de todos los palets vinculados */
-    public function getRealDetails()
+    public function getRealDetailsAttribute()
     {
         $details = [];
         $this->pallets->map(function ($pallet) use (&$details) {
