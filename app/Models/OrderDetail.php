@@ -42,6 +42,7 @@ class OrderDetail extends Model
         return [
             'order_id' => $this->order_id,
             'product_id' => $this->product_id,
+            'product_name' => $this->product->name,
             'tax_id' => $this->tax_id,
             'quantity' => $this->quantity,
             'pallets' => $this->pallets,
