@@ -39,8 +39,7 @@ class OrderDetailsResource extends JsonResource
             'totalBoxes' => $this->totalBoxes,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
-
-            'details' => /* Si no es null */ $this->details
+            'details' => $this->details
                 ? $this->details->map(function ($detail) {
                     return $detail->toArrayAssoc();
                 })
