@@ -402,7 +402,8 @@ class Order extends Model
                     $details[$productKey] = [
                         'product' => $product,
                         'boxes' => 0,
-                        'netWeight' => 0
+                        'netWeight' => 0,
+                        'product_name' => $product->article->name,
                     ];
                 }
 
