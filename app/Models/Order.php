@@ -389,4 +389,28 @@ class Order extends Model
 
         return array_values($summary);
     }
+
+    /* obtener un listado de productos con cantidades y numero de cajas de todos los palets vinculados */
+    public function getRealDetails()
+    {
+        $details = [];
+        $this->pallets->map(function ($pallet) use (&$details) {
+            $pallet->boxes->map(function ($box) use (&$details) {
+                $product = $box->box->product;
+                $productKey = $product->id;
+                if (!isset($details[$productKey])) {
+                    $details[$productKey] = [
+                        'product' => $product,
+                        'boxes' => 0,
+                        'netWeight' => 0
+                    ];
+                }
+
+                $details[$productKey]['boxes']++;
+                $details[$productKey]['netWeight'] += $box->netWeight;
+            });
+        });
+
+        return array_values($details);
+    }
 }
