@@ -11,6 +11,11 @@ class Order extends Model
 
     protected $fillable = ['customer_id', 'payment_term_id', 'billing_address', 'shipping_address', 'transportation_notes', 'production_notes', 'accounting_notes', 'salesperson_id', 'emails', 'transport_id', 'entry_date', 'load_date', 'status', 'buyer_reference', 'incoterm_id'];
 
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+
     /* Id formateado #00_ _ _ , rellenar con 0 a la izquierda si no tiene 5 digitos y añadir un # al principio */
     public function getFormattedIdAttribute()
     {
@@ -46,7 +51,9 @@ class Order extends Model
     //Resumen productos pedido
 
 
-    public function getSummaryAttribute() {}
+    public function getSummaryAttribute()
+    {
+    }
 
     public function payment_term()
     {
@@ -273,13 +280,13 @@ class Order extends Model
                 if (!isset($summary[$key])) {
                     $summary[$key] = [
                         'species' => [
-                            'name'           => $species->name,
+                            'name' => $species->name,
                             'scientificName' => $species->scientific_name,
-                            'fao'            => $species->fao,
+                            'fao' => $species->fao,
                         ],
                         'captureZone' => $captureZone->name,
                         'fishingGear' => $fishingGear->name,
-                        'products'    => []
+                        'products' => []
                     ];
                 }
 
@@ -288,11 +295,11 @@ class Order extends Model
                     $summary[$key]['products'][$productKey] = [
                         'product' => [
                             'article' => [
-                                'id'   => $product->article->id,
+                                'id' => $product->article->id,
                                 'name' => $product->article->name,
                             ],
-                            'boxGtin'   => $product->box_gtin,
-                            'boxes'     => 0,
+                            'boxGtin' => $product->box_gtin,
+                            'boxes' => 0,
                             'netWeight' => 0,
                         ],
                         'lots' => []
@@ -305,8 +312,8 @@ class Order extends Model
                 if ($lotIndex === false) {
                     // Si el lote no existe, lo añadimos
                     $summary[$key]['products'][$productKey]['lots'][] = [
-                        'lot'       => $lot,
-                        'boxes'     => 1,
+                        'lot' => $lot,
+                        'boxes' => 1,
                         'netWeight' => $netWeight,
                     ];
                 } else {
@@ -340,16 +347,16 @@ class Order extends Model
                     $summary[$productKey] = [
                         'product' => [
                             'article' => [
-                                'id'   => $product->article->id,
+                                'id' => $product->article->id,
                                 'name' => $product->article->name,
                             ],
-                            'boxGtin'   => $product->box_gtin,
-                            'boxes'     => 0,
+                            'boxGtin' => $product->box_gtin,
+                            'boxes' => 0,
                             'netWeight' => 0,
-                            'species'   => [
-                                'name'           => $product->species->name,
+                            'species' => [
+                                'name' => $product->species->name,
                                 'scientificName' => $product->species->scientific_name,
-                                'fao'            => $product->species->fao,
+                                'fao' => $product->species->fao,
                             ],
                             'captureZone' => $product->captureZone->name,
                             'fishingGear' => $product->species->fishingGear->name,
@@ -364,8 +371,8 @@ class Order extends Model
                 if ($lotIndex === false) {
                     // Si el lote no existe, lo añadimos
                     $summary[$productKey]['lots'][] = [
-                        'lot'       => $lot,
-                        'boxes'     => 1,
+                        'lot' => $lot,
+                        'boxes' => 1,
                         'netWeight' => $netWeight,
                     ];
                 } else {

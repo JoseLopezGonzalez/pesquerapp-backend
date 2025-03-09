@@ -39,7 +39,9 @@ class OrderDetailsResource extends JsonResource
             'totalBoxes' => $this->totalBoxes,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
-            'test' => $this->productsWithLotsDetailsBySpeciesAndCaptureZone,
+            'details' => $this->details->map(function ($detail) {
+                return $detail->toArrayAssoc();
+            }),
         ];
     }
 }
