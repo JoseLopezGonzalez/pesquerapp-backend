@@ -37,7 +37,7 @@ class OrderDetail extends Model
     }
 
     /* To array Assoc */
-    public function getToArrayAssocAttribute()
+    public function toArrayAssoc()
     {
         return [
             'order_id' => $this->order_id,
