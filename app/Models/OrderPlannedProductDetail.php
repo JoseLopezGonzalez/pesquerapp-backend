@@ -36,13 +36,18 @@ class OrderPlannedProductDetail  extends Model
         return $this->belongsTo(Product::class);
     }
 
+    public function tax()
+    {
+        return $this->belongsTo(Tax::class);
+    }
+
     /* To array Assoc */
     public function toArrayAssoc()
     {
         return [
             'order_id' => $this->order_id,
-            /* 'product' => $this->product->toArrayAssoc(),
-            'tax' => $this->tax->toArrayAssoc(), */
+            'product' => $this->product->toArrayAssoc(),
+            'tax' => $this->tax->toArrayAssoc(),
             'quantity' => $this->quantity,
             'boxes' => $this->boxes,
             'unitPrice' => $this->unit_price,
