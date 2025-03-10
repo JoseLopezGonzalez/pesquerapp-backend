@@ -41,8 +41,8 @@ class OrderPlannedProductDetail  extends Model
     {
         return [
             'order_id' => $this->order_id,
-            'product' => $this->product->toArrayAssoc(),
-            'tax' => $this->tax->toArrayAssoc(),
+            /* 'product' => $this->product->toArrayAssoc(),
+            'tax' => $this->tax->toArrayAssoc(), */
             'quantity' => $this->quantity,
             'boxes' => $this->boxes,
             'unitPrice' => $this->unit_price,
