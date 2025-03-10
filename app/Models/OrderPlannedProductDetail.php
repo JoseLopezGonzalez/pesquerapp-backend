@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderDetail extends Model
+class OrderPlannedProductDetail  extends Model
 {
     use HasFactory;
 
@@ -14,13 +14,13 @@ class OrderDetail extends Model
         'product_id',
         'tax_id',
         'quantity',
-        'pallets',
         'boxes',
         'unit_price',
-        'discount_type',
-        'discount_value',
         'line_base',
         'line_total',
+        /* 'pallets', */
+        /* 'discount_type', */
+        /* 'discount_value', */
     ];
 
     /**
@@ -41,17 +41,16 @@ class OrderDetail extends Model
     {
         return [
             'order_id' => $this->order_id,
-            'product_id' => $this->product_id,
-            'product_name' => $this->product->article->name,
-            'tax_id' => $this->tax_id,
+            'product' => $this->product->toArrayAssoc(),
+            'tax' => $this->tax->toArrayAssoc(),
             'quantity' => $this->quantity,
-            'pallets' => $this->pallets,
             'boxes' => $this->boxes,
-            'unit_price' => $this->unit_price,
-            'discount_type' => $this->discount_type,
-            'discount_value' => $this->discount_value,
-            'line_base' => $this->line_base,
-            'line_total' => $this->line_total,
+            'unitPrice' => $this->unit_price,
+            'subTotal' => $this->line_base,
+            'total' => $this->line_total,
+            /* 'pallets' => $this->pallets, */
+            /* 'discount_type' => $this->discount_type,
+            'discount_value' => $this->discount_value, */
         ];
     }
 

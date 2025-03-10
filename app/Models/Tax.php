@@ -15,7 +15,7 @@ class Tax extends Model
     ];
 
     /* To array Assoc */
-    public function getToArrayAssocAttribute()
+    public function toArrayAssoc()
     {
         return [
             'name' => $this->name,
@@ -26,9 +26,9 @@ class Tax extends Model
     /**
      * Relación inversa: cada Tax pertenece a muchos OrderDetail.
      */
-    public function orderDetails()
+    public function orderPlannedProductDetails()
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderPlannedProductDetail::class);
     }
 
 }

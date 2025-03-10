@@ -25,15 +25,15 @@ return new class extends Migration
             $table->decimal('quantity', 10, 3)->default(0);
 
             // Palets y cajas
-            $table->decimal('pallets', 10, 2)->default(0);
+            /* $table->decimal('pallets', 10, 2)->default(0); */
             $table->decimal('boxes', 10, 2)->default(0);
 
             // Precio unitario
             $table->decimal('unit_price', 10, 2)->default(0);
 
             // Descuento
-            $table->string('discount_type')->default('fixed'); // 'fixed', 'percentage', 'none'
-            $table->decimal('discount_value', 10, 2)->nullable();
+            /* $table->string('discount_type')->default('fixed'); */ // 'fixed', 'percentage', 'none'
+            /* $table->decimal('discount_value', 10, 2)->nullable(); */
 
             // Total de la línea
             $table->decimal('line_base', 10, 2)->nullable();

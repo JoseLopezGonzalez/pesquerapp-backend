@@ -11,9 +11,9 @@ class Order extends Model
 
     protected $fillable = ['customer_id', 'payment_term_id', 'billing_address', 'shipping_address', 'transportation_notes', 'production_notes', 'accounting_notes', 'salesperson_id', 'emails', 'transport_id', 'entry_date', 'load_date', 'status', 'buyer_reference', 'incoterm_id'];
 
-    public function details()
+    public function plannedProductDetails()
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderPlannedProductDetail::class);
     }
 
     /* Id formateado #00_ _ _ , rellenar con 0 a la izquierda si no tiene 5 digitos y añadir un # al principio */
