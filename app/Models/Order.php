@@ -428,7 +428,8 @@ class Order extends Model
 
             $product = $productionProductDetail['product'];
             $productKey = $product->id;
-            $details[$productKey]['product'] = $product->toArrayAssoc();
+            $details[$productKey]['product']['id'] = $product->id;
+            $details[$productKey]['product']['name'] = $product->name;
             $details[$productKey]['boxes'] = $productionProductDetail['boxes'];
             $details[$productKey]['netWeight'] = $productionProductDetail['netWeight'];
 
