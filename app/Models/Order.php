@@ -427,7 +427,7 @@ class Order extends Model
         foreach ($productionProductDetails as $productionProductDetail) {
             $product = $productionProductDetail['product'];
             $productKey = $product->id;
-            $details[$productKey] = $product;
+            /* $details[$productKey] = $product; */
             $details[$productKey]['product'] = $product;
             $details[$productKey]['productionBoxes'] = $productionProductDetail['boxes'];
             $details[$productKey]['productionNetWeight'] = $productionProductDetail['netWeight'];
@@ -443,7 +443,7 @@ class Order extends Model
             $product = $plannedProductDetail->product;
             $productKey = $product->id;
             if (!isset($details[$productKey])) {
-                $details[$productKey] = $product;
+                /* $details[$productKey] = $product; */
                 $details[$productKey]['productionBoxes'] = 0;
                 $details[$productKey]['productionNetWeight'] = 0;
             }
