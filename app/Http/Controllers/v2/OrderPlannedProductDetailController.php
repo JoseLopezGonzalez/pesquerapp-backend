@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v2\OrderDetailsResource;
 use App\Http\Resources\v2\OrderPLannedProductDetailResource;
 use App\Models\OrderPlannedProductDetail;
 use Illuminate\Http\Request;
@@ -69,6 +68,8 @@ class OrderPlannedProductDetailController extends Controller
             'quantity' => $request->quantity,
             'boxes' => $request->boxes,
             'unit_price' => $request->unitPrice,
+            'line_base' => $request->unitPrice * $request->quantity,
+            'line_total' => $request->unitPrice * $request->quantity,
         ]);
 
         return new OrderPLannedProductDetailResource($orderPlannedProductDetail);

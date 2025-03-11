@@ -45,7 +45,8 @@ class OrderPlannedProductDetail  extends Model
     public function toArrayAssoc()
     {
         return [
-            'order_id' => $this->order_id,
+            'id' => $this->id,
+            'orderId' => $this->order_id,
             'product' => $this->product->toArrayAssoc(),
             'tax' => $this->tax->toArrayAssoc(),
             'quantity' => $this->quantity,
