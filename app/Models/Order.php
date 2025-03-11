@@ -433,14 +433,14 @@ class Order extends Model
             $details[$productKey]['netWeight'] = $productionProductDetail['netWeight'];
 
             /* buscar este producto en plannedProductDetails*/
-           /*  $plannedProductDetail = $plannedProductDetails->firstWhere('product_id', $product->id);
+            $plannedProductDetail = $plannedProductDetails->firstWhere('product_id', $product->id);
             if ($plannedProductDetail) {
                 $details[$productKey]['price'] = $plannedProductDetail->price;
                 $details[$productKey]['tax'] = $plannedProductDetail->tax;
             } else {
                 $details[$productKey]['price'] = 0;
                 $details[$productKey]['tax'] = 0;
-            } */
+            }
 
             /* $details[$productKey]['subtotal'] = $details[$productKey]['price'] * $details[$productKey]['netWeight'];
             $details[$productKey]['total'] = $details[$productKey]['subtotal'] + ($details[$productKey]['subtotal'] * $details[$productKey]['tax'] / 100);
