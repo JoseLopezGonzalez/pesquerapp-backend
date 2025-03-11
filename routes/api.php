@@ -48,6 +48,7 @@ use Illuminate\Support\Facades\App;
 
 /* API V2 */
 use App\Http\Controllers\v2\OrderController as V2OrderController;
+use App\Http\Controllers\v2\OrderPlannedProductDetailController;
 use App\Http\Controllers\v2\OrdersReportController;
 use App\Http\Controllers\v2\PalletController as V2PalletController;
 use App\Http\Controllers\v2\PaymentTermController as V2PaymentTermController;
@@ -291,7 +292,7 @@ Route::group(['prefix' => 'v2'], function () {
 
             Route::apiResource('orders', V2OrderController::class);
             /* OrderPlannedProductDetail */
-            Route::apiResource('order-planned-product-details', V2OrderController::class);
+            Route::apiResource('order-planned-product-details', OrderPlannedProductDetailController::class);
             Route::apiResource('raw-material-receptions', V2RawMaterialReceptionController::class);
             Route::apiResource('transports', V2TransportController::class);
             /* Products */
