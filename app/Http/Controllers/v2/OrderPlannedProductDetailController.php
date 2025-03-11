@@ -21,7 +21,8 @@ class OrderPlannedProductDetailController extends Controller
      */
     public function create()
     {
-        //
+
+
     }
 
     /**
@@ -29,6 +30,28 @@ class OrderPlannedProductDetailController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            "orderId" => 'required|integer|exists:orders,id',
+            "boxes" => 'required|integer',
+            "product.id" => 'required|integer|exists:products,id',
+            "quantity" => 'required|numeric',
+            "tax.id" => 'required|integer|exists:taxes,id',
+            'unitPrice' => 'required|numeric',
+        ]);
+
+        $orderPlannedProductDetail = OrderPlannedProductDetail::create([
+            'order_id' => $request->orderId,
+            'product_id' => $request->product['id'],
+            'tax_id' => $request->tax['id'],
+            'quantity' => $request->quantity,
+            'boxes' => $request->boxes,
+            'unit_price' => $request->unitPrice,
+            'line_base' => $request->unitPrice * $request->quantity,
+            'line_total' => $request->unitPrice * $request->quantity,
+        ]);
+
+        return new OrderPlannedProductDetailResource($orderPlannedProductDetail);
+
     }
 
     /**
