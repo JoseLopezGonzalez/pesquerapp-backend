@@ -441,7 +441,7 @@ class Order extends Model
                 $details[$productKey]['total'] = $details[$productKey]['subtotal'] + ($details[$productKey]['subtotal'] * $details[$productKey]['tax']->rate / 100);
             } else {
                 $details[$productKey]['unitPrice'] = 0;
-                $details[$productKey]['tax'] = 0;
+                $details[$productKey]['tax']['rate'] = 0;
                 $details[$productKey]['subtotal'] = 0;
                 $details[$productKey]['total'] = 0;
             }
