@@ -290,6 +290,8 @@ Route::group(['prefix' => 'v2'], function () {
 
 
             Route::apiResource('orders', V2OrderController::class);
+            /* OrderPlannedProductDetail */
+            Route::apiResource('order-planned-product-details', V2OrderController::class);
             Route::apiResource('raw-material-receptions', V2RawMaterialReceptionController::class);
             Route::apiResource('transports', V2TransportController::class);
             /* Products */
