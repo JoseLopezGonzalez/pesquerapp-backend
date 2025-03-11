@@ -46,6 +46,8 @@ class OrderDetailsResource extends JsonResource
                 : null,
             'productionProductDetails' => $this->productionProductDetails,
             'productDetails' => $this->productDetails,
+            'subTotalAmount' => $this->subTotalAmount,
+            'totalAmount' => $this->totalAmount,
         ];
     }
 }

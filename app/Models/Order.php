@@ -454,5 +454,17 @@ class Order extends Model
         return array_values($details);
     }
 
+    /* Subtotal Atribute */
+    public function getSubtotalAmountAttribute()
+    {
+        return collect($this->productDetails)->sum('subtotal');
+    }
+
+    /* Total Atribute */
+    public function getTotalAmountAttribute()
+    {
+        return collect($this->productDetails)->sum('total');
+    }
+
 
 }
