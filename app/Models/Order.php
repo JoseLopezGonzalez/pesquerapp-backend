@@ -442,9 +442,9 @@ class Order extends Model
                 $details[$productKey]['tax'] = 0;
             }
 
-            /* $details[$productKey]['subtotal'] = $details[$productKey]['price'] * $details[$productKey]['netWeight'];
+            $details[$productKey]['subtotal'] = $details[$productKey]['price'] * $details[$productKey]['netWeight'];
             $details[$productKey]['total'] = $details[$productKey]['subtotal'] + ($details[$productKey]['subtotal'] * $details[$productKey]['tax'] / 100);
- */
+
         }
 
 
