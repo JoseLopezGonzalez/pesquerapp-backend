@@ -428,6 +428,7 @@ class Order extends Model
             $product = $productionProductDetail['product'];
             $productKey = $product->id;
             $details[$productKey] = $product;
+            $details[$productKey]['product'] = $product;
             $details[$productKey]['productionBoxes'] = $productionProductDetail['boxes'];
             $details[$productKey]['productionNetWeight'] = $productionProductDetail['netWeight'];
             $details[$productKey]['plannedBoxes'] = 0;
