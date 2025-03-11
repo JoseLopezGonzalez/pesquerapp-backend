@@ -43,6 +43,12 @@ class Product extends Model
 
     }
 
+    /* name attribute */
+    public function getNameAttribute()
+    {
+        return $this->article->name;
+    }
+
     public function productionNodes()
     {
         return $this->belongsToMany(ProductionNode::class, 'production_node_product')->withPivot('quantity');
