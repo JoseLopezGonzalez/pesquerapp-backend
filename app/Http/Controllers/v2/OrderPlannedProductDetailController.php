@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v2\OrderPLannedProductDetailResource;
+use App\Http\Resources\v2\OrderPlannedProductDetailResource;
 use App\Models\OrderPlannedProductDetail;
 use Illuminate\Http\Request;
 
@@ -72,7 +72,7 @@ class OrderPlannedProductDetailController extends Controller
             'line_total' => $request->unitPrice * $request->quantity,
         ]);
 
-        return new OrderPLannedProductDetailResource($orderPlannedProductDetail);
+        return new OrderPlannedProductDetailResource($orderPlannedProductDetail);
     }
 
     /**
