@@ -425,35 +425,28 @@ class Order extends Model
 
         $details = [];
         foreach ($productionProductDetails as $productionProductDetail) {
+
             $product = $productionProductDetail['product'];
             $productKey = $product->id;
-            /* $details[$productKey] = $product; */
             $details[$productKey]['product'] = $product;
-            $details[$productKey]['productionBoxes'] = $productionProductDetail['boxes'];
-            $details[$productKey]['productionNetWeight'] = $productionProductDetail['netWeight'];
-            $details[$productKey]['plannedBoxes'] = 0;
-            $details[$productKey]['plannedNetWeight'] = 0;
-            $details[$productKey]['price'] = 0;
-            $details[$productKey]['tax'] = 0;
-            $details[$productKey]['subtotal'] = 0;
-            $details[$productKey]['total'] = 0;
+            $details[$productKey]['boxes'] = $productionProductDetail['boxes'];
+            $details[$productKey]['netWeight'] = $productionProductDetail['netWeight'];
+
+            /* buscar este producto en plannedProductDetails*/
+            $plannedProductDetail = $plannedProductDetails->firstWhere('product_id', $product->id);
+            if ($plannedProductDetail) {
+                $details[$productKey]['price'] = $plannedProductDetail->price;
+                $details[$productKey]['tax'] = $plannedProductDetail->tax;
+            } else {
+                $details[$productKey]['price'] = 0;
+                $details[$productKey]['tax'] = 0;
+            }
+
+            $details[$productKey]['subtotal'] = $details[$productKey]['price'] * $details[$productKey]['netWeight'];
+            $details[$productKey]['total'] = $details[$productKey]['subtotal'] + ($details[$productKey]['subtotal'] * $details[$productKey]['tax'] / 100);
+
         }
 
-        foreach ($plannedProductDetails as $plannedProductDetail) {
-            $product = $plannedProductDetail->product;
-            $productKey = $product->id;
-            if (!isset($details[$productKey])) {
-                /* $details[$productKey] = $product; */
-                $details[$productKey]['productionBoxes'] = 0;
-                $details[$productKey]['productionNetWeight'] = 0;
-            }
-            $details[$productKey]['plannedBoxes'] += $plannedProductDetail->boxes;
-            $details[$productKey]['plannedNetWeight'] += $plannedProductDetail->net_weight;
-            $details[$productKey]['price'] = $plannedProductDetail->price;
-            $details[$productKey]['tax'] = $plannedProductDetail->tax;
-            $details[$productKey]['subtotal'] = $plannedProductDetail->subtotal;
-            $details[$productKey]['total'] = $plannedProductDetail->total;
-        }
 
         return array_values($details);
     }
