@@ -44,7 +44,7 @@ class OrderDetailsResource extends JsonResource
                     return $detail->toArrayAssoc();
                 })
                 : null,
-            'realDetails' => $this->realDetails 
+            'productionProductDetails' => $this->productionProductDetails 
 
         ];
     }

@@ -262,7 +262,7 @@ class Order extends Model
     ];  */
 
 
-    public function getProductsWithLotsDetailsBySpeciesAndCaptureZoneAttribute()
+    /* public function getProductsWithLotsDetailsBySpeciesAndCaptureZoneAttribute()
     {
         $summary = [];
 
@@ -329,7 +329,7 @@ class Order extends Model
         });
 
         return array_values($summary);
-    }
+    } */
 
     public function getProductsWithLotsDetailsAttribute()
     {
@@ -391,7 +391,7 @@ class Order extends Model
     }
 
     /* obtener un listado de productos con cantidades y numero de cajas de todos los palets vinculados */
-    public function getRealDetailsAttribute()
+    public function getProductionProductDetailsAttribute()
     {
         $details = [];
         $this->pallets->map(function ($pallet) use (&$details) {
@@ -403,7 +403,6 @@ class Order extends Model
                         'product' => $product,
                         'boxes' => 0,
                         'netWeight' => 0,
-                        'product_name' => $product->article->name,
                     ];
                 }
 
