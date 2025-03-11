@@ -18,6 +18,7 @@ class Tax extends Model
     public function toArrayAssoc()
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'rate' => $this->rate,
         ];
