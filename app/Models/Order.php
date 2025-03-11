@@ -413,4 +413,49 @@ class Order extends Model
 
         return array_values($details);
     }
+
+
+    /* Confrontar en un mismo array productionProductDetails añadiendo el precio y tax sacado de plannedProductDetail y calculando
+    el subtotal (base sin tax) y total (base + tax) */
+
+    public function getProductDetailsAttribute()
+    {
+        $productionProductDetails = $this->productionProductDetails;
+        $plannedProductDetails = $this->plannedProductDetails;
+
+        $details = [];
+        foreach ($productionProductDetails as $productionProductDetail) {
+            $product = $productionProductDetail['product'];
+            $productKey = $product->id;
+            $details[$productKey] = $product;
+            $details[$productKey]['productionBoxes'] = $productionProductDetail['boxes'];
+            $details[$productKey]['productionNetWeight'] = $productionProductDetail['netWeight'];
+            $details[$productKey]['plannedBoxes'] = 0;
+            $details[$productKey]['plannedNetWeight'] = 0;
+            $details[$productKey]['price'] = 0;
+            $details[$productKey]['tax'] = 0;
+            $details[$productKey]['subtotal'] = 0;
+            $details[$productKey]['total'] = 0;
+        }
+
+        foreach ($plannedProductDetails as $plannedProductDetail) {
+            $product = $plannedProductDetail->product;
+            $productKey = $product->id;
+            if (!isset($details[$productKey])) {
+                $details[$productKey] = $product;
+                $details[$productKey]['productionBoxes'] = 0;
+                $details[$productKey]['productionNetWeight'] = 0;
+            }
+            $details[$productKey]['plannedBoxes'] += $plannedProductDetail->boxes;
+            $details[$productKey]['plannedNetWeight'] += $plannedProductDetail->net_weight;
+            $details[$productKey]['price'] = $plannedProductDetail->price;
+            $details[$productKey]['tax'] = $plannedProductDetail->tax;
+            $details[$productKey]['subtotal'] = $plannedProductDetail->subtotal;
+            $details[$productKey]['total'] = $plannedProductDetail->total;
+        }
+
+        return array_values($details);
+    }
+
+
 }
