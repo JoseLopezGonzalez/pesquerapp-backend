@@ -24,6 +24,7 @@ use App\Http\Controllers\v1\SalespersonController;
 use App\Http\Controllers\v1\SpeciesController;
 use App\Http\Controllers\v1\ProcessNodeController;
 use App\Http\Controllers\v1\FinalNodeController;
+use App\Http\Controllers\v2\TaxController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -248,7 +249,7 @@ Route::group(['prefix' => 'v2'], function () {
         });
 
         // Rutas para Gerencia
-        Route::middleware(['role:manager'])->group(function () {});
+        Route::middleware(['role:manager'])->group(function () { });
 
         // Rutas para Administración
         Route::middleware(['role:admin'])->group(function () {
@@ -265,6 +266,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/suppliers/options', [V2SupplierController::class, 'options']);
             Route::get('/species/options', [V2SpeciesController::class, 'options']);
             Route::get('/products/options', [V2ProductController::class, 'options']);
+            /* Taxes options */
+            Route::get('/taxes/options', [TaxController::class, 'options']);
             Route::get('/capture-zones/options', [V2CaptureZoneController::class, 'options']);
             /* pallets options inutilizado muchos valores*/
             Route::get('/pallets/options', [V2PalletController::class, 'options']);
