@@ -39,6 +39,7 @@ class Product extends Model
             'boxGtin' => $this->box_gtin,
             'palletGtin' => $this->pallet_gtin,
             'fixedWeight' => $this->fixed_weight,
+            'name' => $this->name,
         ]);
 
     }
