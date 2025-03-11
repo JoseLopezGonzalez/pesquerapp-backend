@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v2\OrderDetailsResource;
+use App\Http\Resources\v2\OrderPLannedProductDetailResource;
 use App\Models\OrderPlannedProductDetail;
 use Illuminate\Http\Request;
 
@@ -70,7 +71,7 @@ class OrderPlannedProductDetailController extends Controller
             'unit_price' => $request->unitPrice,
         ]);
 
-        return new OrderDetailsResource($orderPlannedProductDetail);
+        return new OrderPLannedProductDetailResource($orderPlannedProductDetail);
     }
 
     /**
