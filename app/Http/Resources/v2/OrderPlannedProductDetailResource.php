@@ -22,8 +22,6 @@ class OrderPlannedProductDetailResource extends JsonResource
             'tax' => $this->tax->toArrayAssoc(),
             'orderId' => $this->order_id,
             'unitPrice' => $this->unit_price,
-            'subTotal' => $this->line_base,
-            'total' => $this->line_total,
         ];
     }
 }

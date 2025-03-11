@@ -16,8 +16,8 @@ class OrderPlannedProductDetail  extends Model
         'quantity',
         'boxes',
         'unit_price',
-        'line_base',
-        'line_total',
+      /*   'line_base',
+        'line_total', */
         /* 'pallets', */
         /* 'discount_type', */
         /* 'discount_value', */
@@ -52,8 +52,8 @@ class OrderPlannedProductDetail  extends Model
             'quantity' => $this->quantity,
             'boxes' => $this->boxes,
             'unitPrice' => $this->unit_price,
-            'subTotal' => $this->line_base,
-            'total' => $this->line_total,
+           /*  'subTotal' => $this->line_base,
+            'total' => $this->line_total, */
             /* 'pallets' => $this->pallets, */
             /* 'discount_type' => $this->discount_type,
             'discount_value' => $this->discount_value, */

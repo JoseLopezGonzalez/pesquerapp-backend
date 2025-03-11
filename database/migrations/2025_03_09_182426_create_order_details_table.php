@@ -1,4 +1,4 @@
-<?<?php
+<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -36,9 +36,9 @@ return new class extends Migration
             /* $table->decimal('discount_value', 10, 2)->nullable(); */
 
             // Total de la línea
-            $table->decimal('line_base', 10, 2)->nullable();
+           /*  $table->decimal('line_base', 10, 2)->nullable();
             $table->decimal('line_total', 10, 2)->nullable();
-
+ */
             $table->timestamps();
         });
     }
