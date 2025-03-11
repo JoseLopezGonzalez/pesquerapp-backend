@@ -443,7 +443,7 @@ class Order extends Model
             }
 
             $details[$productKey]['subtotal'] = $details[$productKey]['unitPrice'] * $details[$productKey]['netWeight'];
-            //$details[$productKey]['total'] = $details[$productKey]['subtotal'] + ($details[$productKey]['subtotal'] * $details[$productKey]['tax'] / 100);
+            $details[$productKey]['total'] = $details[$productKey]['subtotal'] + ($details[$productKey]['subtotal'] * $details[$productKey]['tax']->rate / 100);
 
         }
 
