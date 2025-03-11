@@ -82,7 +82,7 @@ class OrderPlannedProductDetailController extends Controller
     {
         $orderPlannedProductDetail = OrderPlannedProductDetail::findOrFail($id);
         $orderPlannedProductDetail->delete();
-        return response()->json(['message' => 'Palet eliminado correctamente'], 200);
+        return response()->json(['message' => 'Linea eliminada correctamente'], 200);
     }
 
 
