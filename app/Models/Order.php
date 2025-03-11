@@ -436,7 +436,7 @@ class Order extends Model
             $details[$productKey]['netWeight'] = $productionProductDetail['netWeight'];
 
             /* buscar este producto en plannedProductDetails*/
-            $plannedProductDetail = $plannedProductDetails->firstWhere('product_id', $product->id);
+            $plannedProductDetail = $plannedProductDetails->firstWhere('product_id', $product['id']);
             if ($plannedProductDetail) {
                 $details[$productKey]['unitPrice'] = $plannedProductDetail->unit_price;
                 $details[$productKey]['tax'] = $plannedProductDetail->tax;
