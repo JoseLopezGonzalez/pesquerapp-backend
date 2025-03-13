@@ -339,8 +339,8 @@ Route::group(['prefix' => 'v2'], function () {
             /* Excel Controller - boxListExport */
             Route::get('orders/{orderId}/xlsx/boxes-report', [\App\Http\Controllers\v2\ExcelController::class, 'exportBoxList'])->name('export_box_list');
             /* exportOrderSalesDeliveryNote */
-            Route::get('orders/{orderId}/xlsx/sales-delivery-note', [\App\Http\Controllers\v2\ExcelController::class, 'exportOrderSalesDeliveryNote'])->name('export_sales_delivery_note');
-            
+            Route::get('orders/{orderId}/xlsx/A3ERP-sales-delivery-note', [\App\Http\Controllers\v2\ExcelController::class, 'exportA3ERPOrderSalesDeliveryNote'])->name('export_A3ERP_sales_delivery_note');
+
         
         });
 
