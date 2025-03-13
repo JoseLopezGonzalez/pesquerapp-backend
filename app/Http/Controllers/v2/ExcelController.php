@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v2;
 
 use App\Exports\v2\OrderBoxListExport;
+use App\Exports\v2\OrderSalesDeliveryNoteExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -40,5 +41,14 @@ class ExcelController extends Controller
         $order = Order::findOrFail($orderId);
         return Excel::download(new OrderBoxListExport($order), "box_list_{$order->formattedId}.xlsx");
     }
+
+
+    public function exportOrderSalesDeliveryNote($orderId)
+    {
+        ini_set('memory_limit', '1024M');
+        $order = Order::findOrFail($orderId);
+        return Excel::download(new OrderSalesDeliveryNoteExport($order), "albaran_venta_{$order->formattedId}.xlsx");
+    }
+
 
 }
