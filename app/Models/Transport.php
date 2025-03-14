@@ -21,7 +21,8 @@ class Transport extends Model
         return $this->hasMany(Customer::class);
     }
 
-    public function toArrayAssoc(){
+    public function toArrayAssoc()
+    {
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -43,10 +44,7 @@ class Transport extends Model
         return $this->extractEmails('regular');
     }
 
-    public function getEmailsAttribute()
-    {
-        return $this->extractEmails('regular');
-    }
+
 
     /**
      * Get the array of CC emails.
@@ -58,10 +56,7 @@ class Transport extends Model
         return $this->extractEmails('cc');
     }
 
-    public function getCcEmailsAttribute()
-    {
-        return $this->extractEmails('cc');
-    }
+
 
     /**
      * Helper method to extract emails based on type.

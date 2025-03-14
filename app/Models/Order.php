@@ -11,20 +11,21 @@ class Order extends Model
 
     protected $fillable = [
         'customer_id',
-         'payment_term_id',
-          'billing_address',
-           'shipping_address',
-            'transportation_notes',
-             'production_notes',
-              'accounting_notes',
-               'salesperson_id',
-                'emails',
-                 'transport_id',
-                  'entry_date',
-                   'load_date',
-                    'status',
-                     'buyer_reference',
-                      'incoterm_id'];
+        'payment_term_id',
+        'billing_address',
+        'shipping_address',
+        'transportation_notes',
+        'production_notes',
+        'accounting_notes',
+        'salesperson_id',
+        'emails',
+        'transport_id',
+        'entry_date',
+        'load_date',
+        'status',
+        'buyer_reference',
+        'incoterm_id'
+    ];
 
     public function plannedProductDetails()
     {
@@ -179,10 +180,6 @@ class Order extends Model
         return $this->extractEmails('regular');
     }
 
-    public function getEmailsAttribute()
-    {
-        return $this->extractEmails('regular');
-    }
 
     /**
      * Get the array of CC emails.
@@ -194,10 +191,7 @@ class Order extends Model
         return $this->extractEmails('cc');
     }
 
-    public function getCcEmailsAttribute()
-    {
-        return $this->extractEmails('cc');
-    }
+
 
     /**
      * Helper method to extract emails based on type.
