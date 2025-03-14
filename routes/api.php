@@ -312,8 +312,8 @@ Route::group(['prefix' => 'v2'], function () {
 
 
             /* Envio de documentos */
-            Route::post('{orderId}/send-custom-documents', [OrderDocumentController::class, 'sendCustomDocumentation']);
-            Route::post('{orderId}/send-standard-documents', [OrderDocumentController::class, 'sendStandardDocumentation']);
+            Route::post('orders/{orderId}/send-custom-documents', [OrderDocumentController::class, 'sendCustomDocumentation']);
+            Route::post('orders/{orderId}/send-standard-documents', [OrderDocumentController::class, 'sendStandardDocumentation']);
         });
 
     });
