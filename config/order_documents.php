@@ -24,8 +24,8 @@ return [
 
     'standard_recipients' => [
         'cliente' => ['nota_carga', 'packing_list'],
-        /* 'comercial' => ['nota_carga', 'packing_list'],
-        'transporte' => ['cmr', 'packing_list'], */
+        'comercial' => ['nota_carga', 'packing_list'],
+        'transporte' => ['cmr', 'packing_list'],
     ],
 
 

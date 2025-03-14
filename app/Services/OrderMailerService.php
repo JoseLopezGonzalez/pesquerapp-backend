@@ -97,6 +97,8 @@ class OrderMailerService
 
             $mailable = new \App\Mail\GenericOrderDocument($order, $bodyTemplate, $subject, $documentName);
 
+            /* DCetener ejecucion y mostrar emails */
+            dd($mainEmails, $ccEmails);
             Mail::to((array) $mainEmails)
                 ->cc((array) $ccEmails)
                 ->send($mailable);
