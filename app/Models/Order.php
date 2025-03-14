@@ -9,7 +9,23 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_id', 'payment_term_id', 'billing_address', 'shipping_address', 'transportation_notes', 'production_notes', 'accounting_notes', 'salesperson_id', 'emails', 'transport_id', 'entry_date', 'load_date', 'status', 'buyer_reference', 'incoterm_id'];
+    protected $fillable = [
+        'customer_id',
+        'payment_term_id',
+        'billing_address',
+        'shipping_address',
+        'transportation_notes',
+        'production_notes',
+        'accounting_notes',
+        'salesperson_id',
+        'emails',
+        'transport_id',
+        'entry_date',
+        'load_date',
+        'status',
+        'buyer_reference',
+        'incoterm_id'
+    ];
 
     public function plannedProductDetails()
     {

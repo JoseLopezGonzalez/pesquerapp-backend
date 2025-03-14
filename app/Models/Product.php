@@ -14,6 +14,18 @@ class Product extends Model
     use HasFactory;
 
     //protected $table = 'products';
+    /* fillable */
+    protected $fillable = [
+        'article_id',
+        'species_id',
+        'capture_zone_id',
+        'article_gtin',
+        'box_gtin',
+        'pallet_gtin',
+        'fixed_weight',
+        'name',
+        'a3erp_code',
+    ];
 
     public function article()
     {
