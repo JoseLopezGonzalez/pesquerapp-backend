@@ -1,33 +1,30 @@
-
-
 <x-mail::message>
 
-    # {{ $order->customer->name }}
+# {{ $order->customer->name }}
 
-    <br>
+<br>
 
-    **ES -** Su pedido con número **{{$order->formattedId}}** ha sido enviado. En breve recibirá su factura.
-
-
-
-    **IT -** Il suo ordine con il numero **{{$order->formattedId}}** è stato spedito. Riceverà presto la sua fattura.
+**ES -** Su pedido con número **{{$order->formattedId}}** ha sido enviado. En breve recibirá su factura.
 
 
 
-    **EN -** Your order with number **{{$order->formattedId}}** has been shipped. You will receive your invoice shortly.
+**IT -** Il suo ordine con il numero **{{$order->formattedId}}** è stato spedito. Riceverà presto la sua fattura.
 
 
 
-    **FR -** Votre commande avec le numéro **{{$order->formattedId}}** a été expédiée. Vous recevrez bientôt votre
-    facture.
+**EN -** Your order with number **{{$order->formattedId}}** has been shipped. You will receive your invoice shortly.
 
 
 
-    **PT -** Seu pedido com o número **{{$order->formattedId}}** foi enviado. Você receberá sua fatura em breve.
-
-    <br>
+**FR -** Votre commande avec le numéro **{{$order->formattedId}}** a été expédiée. Vous recevrez bientôt votre facture.
 
 
 
-    Saludos / Saluti / Best regards / Cordialement / Atenciosamente.
+**PT -** Seu pedido com o número **{{$order->formattedId}}** foi enviado. Você receberá sua fatura em breve.
+
+<br>
+
+
+
+Saludos / Saluti / Best regards / Cordialement / Atenciosamente.
 </x-mail::message>
