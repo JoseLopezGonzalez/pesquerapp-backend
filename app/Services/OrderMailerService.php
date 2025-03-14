@@ -53,7 +53,7 @@ class OrderMailerService
                     continue;
                 }
 
-                $documentName = ucfirst(str_replace('_', ' ', $docType)) . " - Pedido {$order->id}.pdf";
+                $documentName = ucfirst($docType) . "-pedido_#{$order->id}.pdf";
 
                 $documentsToAttach[] = [
                     'path' => $pdfPath,
