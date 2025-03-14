@@ -28,7 +28,8 @@ class OrderMailerService
 
             // ✅ Obtenemos email desde las entidades dinámicamente
             [$mainEmails, $ccEmails] = $this->getEmailsFromEntities($order, $recipientKey);
-            if (empty($mainEmails)) continue; // Saltamos si no hay email
+            if (empty($mainEmails))
+                continue; // Saltamos si no hay email
 
             $subject = "Documentación del Pedido #{$order->formattedId}";
 
@@ -53,7 +54,8 @@ class OrderMailerService
             }
 
             // Saltamos si no hay documentos
-            if (empty($documentsToAttach)) continue;
+            if (empty($documentsToAttach))
+                continue;
 
             // Definir Markdown según destinatario
             $markdownTemplates = [
@@ -70,6 +72,7 @@ class OrderMailerService
                 $markdownTemplate,
                 $documentsToAttach
             );
+            dd($mainEmails, $ccEmails);
 
             Mail::to((array) $mainEmails)
                 ->cc((array) $ccEmails)
@@ -85,7 +88,8 @@ class OrderMailerService
         $config = config('order_documents');
 
         $documentConfig = $config['documents'][$docType] ?? null;
-        if (!$documentConfig) return;
+        if (!$documentConfig)
+            return;
 
         $subject = str_replace('{order_id}', $order->formattedId, $documentConfig['subject_template']);
         $bodyTemplate = $documentConfig['body_template'];
@@ -93,12 +97,12 @@ class OrderMailerService
 
         foreach ($recipients as $recipientKey) {
             [$mainEmails, $ccEmails] = $this->getEmailsFromEntities($order, $recipientKey);
-            if (empty($mainEmails)) continue;
+            if (empty($mainEmails))
+                continue;
 
             $mailable = new \App\Mail\GenericOrderDocument($order, $bodyTemplate, $subject, $documentName);
 
             /* DCetener ejecucion y mostrar emails */
-            dd($mainEmails, $ccEmails);
             Mail::to((array) $mainEmails)
                 ->cc((array) $ccEmails)
                 ->send($mailable);
