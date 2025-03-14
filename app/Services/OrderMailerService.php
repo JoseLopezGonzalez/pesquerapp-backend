@@ -11,7 +11,7 @@ class OrderMailerService
 
     protected $pdfService;
 
-    public function __construct(PDFService $pdfService)
+    public function __construct(OrderPDFService $pdfService)
     {
         $this->pdfService = $pdfService;
     }
