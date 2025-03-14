@@ -27,16 +27,22 @@ class OrderMailerService
         foreach ($recipientsConfig as $recipientKey => $docTypes) {
 
             // ✅ Obtenemos email desde las entidades dinámicamente
-            [$mainEmail, $ccEmails] = $this->getEmailsFromEntities($order, $recipientKey);
-            if (!$mainEmail)
-                continue; // Saltamos si no hay email
+            [$mainEmails, $ccEmails] = $this->getEmailsFromEntities($order, $recipientKey);
+            if (empty($mainEmails)) continue; // Saltamos si no hay email
 
             $subject = "Documentación del Pedido #{$order->formattedId}";
 
             $documentsToAttach = [];
             foreach ($docTypes as $docType) {
-                // Ruta de los PDFs generados
-                $pdfPath = storage_path("app/public/{$docType}-{$order->id}.pdf");
+                // Quitar "#" del formattedId para el nombre del archivo
+                $formattedId = str_replace('#', '', $order->formattedId);
+                $pdfPath = storage_path("app/public/{$docType}-{$formattedId}.pdf");
+
+                // ✅ Verificar que el archivo exista
+                if (!file_exists($pdfPath)) {
+                    \Log::error("No se encuentra el documento: {$pdfPath}");
+                    continue; // Saltar este documento si no existe
+                }
 
                 $documentName = ucfirst(str_replace('_', ' ', $docType)) . " - Pedido {$order->formattedId}.pdf";
 
@@ -45,6 +51,9 @@ class OrderMailerService
                     'name' => $documentName
                 ];
             }
+
+            // Saltamos si no hay documentos
+            if (empty($documentsToAttach)) continue;
 
             // Definir Markdown según destinatario
             $markdownTemplates = [
@@ -62,8 +71,8 @@ class OrderMailerService
                 $documentsToAttach
             );
 
-            Mail::to($mainEmail)
-                ->cc($ccEmails)
+            Mail::to((array) $mainEmails)
+                ->cc((array) $ccEmails)
                 ->send($mailable);
         }
     }
@@ -76,22 +85,20 @@ class OrderMailerService
         $config = config('order_documents');
 
         $documentConfig = $config['documents'][$docType] ?? null;
-        if (!$documentConfig)
-            return;
+        if (!$documentConfig) return;
 
         $subject = str_replace('{order_id}', $order->formattedId, $documentConfig['subject_template']);
         $bodyTemplate = $documentConfig['body_template'];
         $documentName = ucfirst(str_replace('_', ' ', $docType));
 
         foreach ($recipients as $recipientKey) {
-            [$mainEmail, $ccEmails] = $this->getEmailsFromEntities($order, $recipientKey);
-            if (!$mainEmail)
-                continue;
+            [$mainEmails, $ccEmails] = $this->getEmailsFromEntities($order, $recipientKey);
+            if (empty($mainEmails)) continue;
 
             $mailable = new \App\Mail\GenericOrderDocument($order, $bodyTemplate, $subject, $documentName);
 
-            Mail::to($mainEmail)
-                ->cc($ccEmails)
+            Mail::to((array) $mainEmails)
+                ->cc((array) $ccEmails)
                 ->send($mailable);
         }
     }
@@ -116,14 +123,16 @@ class OrderMailerService
                 break;
 
             case 'comercial':
-
-                $mainEmails = $order->salesperson->emailsArray ?? [];
-                $ccEmails = $order->salesperson->ccEmailsArray ?? [];
-
+                if ($order->salesperson) {
+                    $mainEmails = $order->salesperson->emailsArray ?? [];
+                    $ccEmails = $order->salesperson->ccEmailsArray ?? [];
+                } elseif ($order->comercial) {
+                    $mainEmails = $order->comercial->emailsArray ?? [];
+                    $ccEmails = $order->comercial->ccEmailsArray ?? [];
+                }
                 break;
         }
 
         return [$mainEmails, $ccEmails];
     }
-
 }
