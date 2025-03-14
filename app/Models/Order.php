@@ -403,6 +403,7 @@ class Order extends Model
                         'product' => [
                             'id' => $product->id,
                             'name' => $product->name,
+                            'a3erpCode' => $product->a3erp_code,
                         ],
                         'boxes' => 0,
                         'netWeight' => 0,
