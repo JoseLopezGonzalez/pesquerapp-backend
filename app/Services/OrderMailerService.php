@@ -40,7 +40,7 @@ class OrderMailerService
             if (empty($mainEmails))
                 continue; // Saltamos si no hay email
 
-            $subject = "Documentación del Pedido #{$order->formattedId}";
+            $subject = "Documentación del Pedido #{$order->id}";
 
             $documentsToAttach = [];
             foreach ($docTypes as $docType) {

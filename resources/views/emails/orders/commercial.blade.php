@@ -4,7 +4,7 @@
 
 <br>
 
-**Pedido Nº:** **{{ $order->id }}**
+**Pedido Nº:** **#{{ $order->id }}**
 
 **Fecha de Carga:** {{ date('d/m/Y', strtotime($order->load_date)) }}
 
