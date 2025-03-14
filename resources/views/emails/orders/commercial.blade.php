@@ -4,14 +4,15 @@
 
 <br>
 
-**Pedido Nº:** **{{ $order->formattedId }}**
+**Pedido Nº:** **{{ $order->id }}**
+
 **Fecha de Carga:** {{ date('d/m/Y', strtotime($order->load_date)) }}
 
 <br>
 
-Estimado/a equipo comercial,
+Estimado/a comercial,
 
-Adjuntamos los documentos correspondientes al pedido **#{{ $order->formattedId }}** de
+Adjuntamos los documentos correspondientes al pedido **#{{ $order->id }}** de
 **{{ $order->customer->name }}**.
 
 <br>
@@ -26,11 +27,10 @@ Por favor, revisen la documentación adjunta para asegurarse de que toda la info
 
 <br>
 
-Si necesitan más información, pueden contactar directamente con el equipo de operaciones a [comercial@empresa.com](mailto:comercial@empresa.com).
+Si necesitan más información, pueden contactar directamente con el equipo de operaciones a [jose@congeladosbrisamar.es](mailto:jose@congeladosbrisamar.es).
 
 <br>
 
-Saludos cordiales,
-**Departamento de Operaciones**
+Saludos cordiales
 
 </x-mail::message>
