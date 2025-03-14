@@ -106,8 +106,8 @@ class OrderMailerService
 
         switch ($recipientKey) {
             case 'cliente':
-                $mainEmails = $order->customer->emailsArray ?? [];
-                $ccEmails = $order->customer->ccEmailsArray ?? [];
+                $mainEmails = $order->emailsArray ?? [];
+                $ccEmails = $order->ccEmailsArray ?? [];
                 break;
 
             case 'transporte':
@@ -116,13 +116,10 @@ class OrderMailerService
                 break;
 
             case 'comercial':
-                if ($order->salesperson) {
-                    $mainEmails = $order->salesperson->emailsArray ?? [];
-                    $ccEmails = $order->salesperson->ccEmailsArray ?? [];
-                } elseif ($order->comercial) {
-                    $mainEmails = $order->comercial->emailsArray ?? [];
-                    $ccEmails = $order->comercial->ccEmailsArray ?? [];
-                }
+
+                $mainEmails = $order->salesperson->emailsArray ?? [];
+                $ccEmails = $order->salesperson->ccEmailsArray ?? [];
+
                 break;
         }
 
