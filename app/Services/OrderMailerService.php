@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Mail;
 
 class OrderMailerService
 {
+
+    protected $pdfService;
+
+    public function __construct(PDFService $pdfService)
+    {
+        $this->pdfService = $pdfService;
+    }
+
     /**
      * Envío personalizado de documentos.
      */
@@ -36,23 +44,25 @@ class OrderMailerService
 
             $documentsToAttach = [];
             foreach ($docTypes as $docType) {
-                // Quitar "#" del formattedId para el nombre del archivo
-                $formattedId = str_replace('#', '', $order->formattedId);
-                $pdfPath = storage_path("app/public/{$docType}-{$formattedId}.pdf");
+                // Generar el PDF
+                $pdfPath = $this->pdfService->generateDocument($order, $docType);
 
-                // ✅ Verificar que el archivo exista
+                // Verificar existencia
                 if (!file_exists($pdfPath)) {
                     Log::error("No se encuentra el documento: {$pdfPath}");
-                    continue; // Saltar este documento si no existe
+                    continue;
                 }
 
-                $documentName = ucfirst(str_replace('_', ' ', $docType)) . " - Pedido {$order->formattedId}.pdf";
+                $documentName = ucfirst(str_replace('_', ' ', $docType)) . " - Pedido {$order->id}.pdf";
 
                 $documentsToAttach[] = [
                     'path' => $pdfPath,
                     'name' => $documentName
                 ];
             }
+
+
+
 
             // Saltamos si no hay documentos
             if (empty($documentsToAttach))
