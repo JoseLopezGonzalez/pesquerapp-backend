@@ -43,12 +43,22 @@ class Transport extends Model
         return $this->extractEmails('regular');
     }
 
+    public function getEmailsAttribute()
+    {
+        return $this->extractEmails('regular');
+    }
+
     /**
      * Get the array of CC emails.
      *
      * @return array
      */
     public function getCcEmailsArrayAttribute()
+    {
+        return $this->extractEmails('cc');
+    }
+
+    public function getCcEmailsAttribute()
     {
         return $this->extractEmails('cc');
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\v2\OrderDocumentController;
 use App\Http\Controllers\v1\AuthController;
 use App\Http\Controllers\v1\AutoSalesController;
 use App\Http\Controllers\v1\OrderDocumentMailerController;
@@ -235,17 +236,17 @@ Route::group(['prefix' => 'v2'], function () {
     Route::middleware(['auth:sanctum'])->group(function () {
         // Rutas para Superusuario (Técnico)
         Route::middleware(['role:superuser'])->group(function () {
-            /* orders_report */
-            Route::get('orders_report', [OrdersReportController::class, 'exportToExcel'])->name('export.orders');
-            Route::apiResource('sessions', SessionController::class)->only(['index', 'destroy']);
-            Route::get('users/options', [UserController::class, 'options']);
-            /* Users */
-            Route::apiResource('users', UserController::class);
-            /* Activity logs */
-            Route::apiResource('activity-logs', ActivityLogController::class);
-            /* roles options */
+            /* options */
             Route::get('roles/options', [RoleController::class, 'options']);
-            /* roles */
+            Route::get('users/options', [UserController::class, 'options']);
+
+            /* Descargas */
+            Route::get('orders_report', [OrdersReportController::class, 'exportToExcel'])->name('export.orders');
+
+            /* Controladores */
+            Route::apiResource('sessions', SessionController::class)->only(['index', 'destroy']);
+            Route::apiResource('users', UserController::class);
+            Route::apiResource('activity-logs', ActivityLogController::class);
             Route::apiResource('roles', RoleController::class);
         });
 
@@ -267,81 +268,52 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('/suppliers/options', [V2SupplierController::class, 'options']);
             Route::get('/species/options', [V2SpeciesController::class, 'options']);
             Route::get('/products/options', [V2ProductController::class, 'options']);
-            /* Taxes options */
             Route::get('/taxes/options', [TaxController::class, 'options']);
             Route::get('/capture-zones/options', [V2CaptureZoneController::class, 'options']);
-            /* pallets options inutilizado muchos valores*/
             Route::get('/pallets/options', [V2PalletController::class, 'options']);
-            /* pàllet storedOptions */
             Route::get('/pallets/stored-options', [V2PalletController::class, 'storedOptions']);
-            /* pallet shippedOptions */
             Route::get('/pallets/shipped-options', [V2PalletController::class, 'shippedOptions']);
-            /* store */
             Route::get('/stores/options', [V2StoreController::class, 'options']);
-            /* order inutilizado muchos valores*/
             Route::get('/orders/options', [V2OrderController::class, 'options']);
-            /* fishingGear */
             Route::get('/fishing-gears/options', [FishingGearController::class, 'options']);
-            /* countries */
             Route::get('/countries/options', [CountryController::class, 'options']);
-            /* paymentTerms */
             Route::get('/payment-terms/options', [V2PaymentTermController::class, 'options']);
 
-
-
-
+            /* Controladores Genericos */
             Route::apiResource('orders', V2OrderController::class);
-            /* OrderPlannedProductDetail */
             Route::apiResource('order-planned-product-details', OrderPlannedProductDetailController::class);
             Route::apiResource('raw-material-receptions', V2RawMaterialReceptionController::class);
             Route::apiResource('transports', V2TransportController::class);
-            /* Products */
             Route::apiResource('products', V2ProductController::class);
-            /* stores */
             Route::apiResource('stores', V2StoreController::class);
-            /* boxes */
             Route::apiResource('boxes', BoxesController::class); /* Algo raro en el nombre */
-            /* pallets */
             Route::apiResource('pallets', V2PalletController::class);
-            /* customers */
             Route::apiResource('customers', V2CustomerController::class);
-            /* suppliers */
             Route::apiResource('suppliers', V2SupplierController::class);
-            /* CaptureZones */
             Route::apiResource('capture-zones', V2CaptureZoneController::class);
-            /* Species */
             Route::apiResource('species', V2SpeciesController::class);
-            /* Incoterm */
             Route::apiResource('incoterms', V2IncotermController::class);
-            /* Salespeople */
             Route::apiResource('salespeople', V2SalespersonController::class);
-            /* FishingGear */
             Route::apiResource('fishing-gears', FishingGearController::class);
-            /* countries */
             Route::apiResource('countries', CountryController::class);
-            /* paymentTerms */
             Route::apiResource('payment-terms', V2PaymentTermController::class);
-            /* ceboDispatch */
             Route::apiResource('cebo-dispatches', V2CeboDispatchController::class);
-            /* sessions */
 
+            /* Descargas */
             Route::get('orders/{orderId}/pdf/order-sheet', [\App\Http\Controllers\v2\PDFController::class, 'generateOrderSheet'])->name('generate_order_sheet');
             Route::get('orders/{orderId}/pdf/order-signs', [\App\Http\Controllers\v2\PDFController::class, 'generateOrderSigns'])->name('generate_order_signs');
             Route::get('orders/{orderId}/pdf/order-packing-list', [\App\Http\Controllers\v2\PDFController::class, 'generateOrderPackingList'])->name('generate_order_packing_list');
-            /* Loading note */
             Route::get('orders/{orderId}/pdf/loading-note', [\App\Http\Controllers\v2\PDFController::class, 'generateLoadingNote'])->name('generate_loading_note');
-            /* Restricted Loaging Note */
             Route::get('orders/{orderId}/pdf/restricted-loading-note', [\App\Http\Controllers\v2\PDFController::class, 'generateRestrictedLoadingNote'])->name('generate_restricted_loading_note');
-            /* Order CMR */
             Route::get('orders/{orderId}/pdf/order-cmr', [\App\Http\Controllers\v2\PDFController::class, 'generateOrderCMR'])->name('generate_order_cmr');
-            /* Excel Controller - productLotDetailsExport */
             Route::get('orders/{orderId}/xlsx/lots-report', [\App\Http\Controllers\v2\ExcelController::class, 'exportProductLotDetails'])->name('export_product_lot_details');
-            /* Excel Controller - boxListExport */
             Route::get('orders/{orderId}/xlsx/boxes-report', [\App\Http\Controllers\v2\ExcelController::class, 'exportBoxList'])->name('export_box_list');
-            /* exportOrderSalesDeliveryNote */
             Route::get('orders/{orderId}/xlsx/A3ERP-sales-delivery-note', [\App\Http\Controllers\v2\ExcelController::class, 'exportA3ERPOrderSalesDeliveryNote'])->name('export_A3ERP_sales_delivery_note');
 
-        
+
+            /* Envio de documentos */
+            Route::post('{orderId}/send-custom-documents', [OrderDocumentController::class, 'sendCustomDocumentation']);
+            Route::post('{orderId}/send-standard-documents', [OrderDocumentController::class, 'sendStandardDocumentation']);
         });
 
     });
