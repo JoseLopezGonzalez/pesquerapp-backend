@@ -9,7 +9,22 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'vat_number', 'payment_term_id', 'billing_address', 'shipping_address', 'transportation_notes', 'production_notes', 'accounting_notes', 'salesperson_id', 'emails', 'contact_info', 'country_id', 'transport_id'];
+    protected $fillable = [
+        'name',
+        'vat_number',
+        'payment_term_id',
+        'billing_address',
+        'shipping_address',
+        'transportation_notes',
+        'production_notes',
+        'accounting_notes',
+        'salesperson_id',
+        'emails',
+        'contact_info',
+        'country_id',
+        'transport_id',
+        'a3erp_code'
+    ];
 
     public function orders()
     {
@@ -36,7 +51,8 @@ class Customer extends Model
         return $this->belongsTo(PaymentTerm::class);
     }
 
-    public function toArrayAssoc(){
+    public function toArrayAssoc()
+    {
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -58,7 +74,8 @@ class Customer extends Model
         ];
     }
 
-    public function toArrayAssocShort(){
+    public function toArrayAssocShort()
+    {
         return [
             'id' => $this->id,
             'name' => $this->name,
