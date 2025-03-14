@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Order;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class OrderMailerService
@@ -41,7 +42,7 @@ class OrderMailerService
 
                 // ✅ Verificar que el archivo exista
                 if (!file_exists($pdfPath)) {
-                    \Log::error("No se encuentra el documento: {$pdfPath}");
+                    Log::error("No se encuentra el documento: {$pdfPath}");
                     continue; // Saltar este documento si no existe
                 }
 
@@ -72,7 +73,6 @@ class OrderMailerService
                 $markdownTemplate,
                 $documentsToAttach
             );
-            dd($mainEmails, $ccEmails);
 
             Mail::to((array) $mainEmails)
                 ->cc((array) $ccEmails)
