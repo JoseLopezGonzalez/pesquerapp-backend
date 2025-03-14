@@ -8,22 +8,23 @@ use Beganovich\Snappdf\Snappdf;
 class PDFService
 {
     /**
-     * Generar un documento PDF para un pedido y devolver su ruta.
+     * Generar un documento PDF y devolver su ruta.
      */
     public function generateDocument(Order $order, string $docType): string
     {
         $formattedId = str_replace('#', '', $order->formattedId);
         $pdfPath = storage_path("app/public/{$docType}-{$formattedId}.pdf");
 
-        // Si ya existe, no lo volvemos a crear (opcional, puedes quitar esto si prefieres siempre regenerar)
+        // Si ya existe no lo regeneramos (opcional)
         if (file_exists($pdfPath)) {
             return $pdfPath;
         }
 
+        // ✅ Mapear tipo de documento a vista real
         $viewsMap = [
-            'nota_carga' => 'pdf.v2.orders.loading_note',
-            'packing_list' => 'pdf.v2.orders.order_packing_list',
-            'cmr' => 'pdf.v2.orders.CMR',
+            'nota_carga'    => 'pdf.v2.orders.loading_note',
+            'packing_list'  => 'pdf.v2.orders.order_packing_list',
+            'cmr'           => 'pdf.v2.orders.CMR',
         ];
 
         $viewName = $viewsMap[$docType] ?? null;
@@ -32,13 +33,14 @@ class PDFService
             throw new \Exception("No existe la vista para el tipo de documento: {$docType}");
         }
 
-        $html = view($viewName, ['order' => $order])->render();
+        // ⚠️ Pasar la variable como 'entity', no como 'order'
+        $html = view($viewName, ['entity' => $order])->render();
 
-        // Crear el PDF
+        // Crear PDF con Snappdf
         $snappdf = new Snappdf();
         $snappdf->setChromiumPath('/usr/bin/google-chrome');
 
-        // Opciones de Snappdf (las que ya usas)
+        // Opciones Chromium
         $snappdf->addChromiumArguments('--no-sandbox');
         $snappdf->addChromiumArguments('--margin-top=10mm');
         $snappdf->addChromiumArguments('--margin-right=30mm');
@@ -60,8 +62,10 @@ class PDFService
         $snappdf->addChromiumArguments('--hide-scrollbars');
         $snappdf->addChromiumArguments('--ignore-certificate-errors');
 
-        // Generar y guardar el PDF
+        // Generar contenido
         $pdfContent = $snappdf->setHtml($html)->generate();
+
+        // Guardar el archivo
         file_put_contents($pdfPath, $pdfContent);
 
         return $pdfPath;
