@@ -36,7 +36,7 @@ class OrderMailerService
             $documentsToAttach = [];
             foreach ($docTypes as $docType) {
                 // Ruta de los PDFs generados
-                $pdfPath = storage_path("app/public/{$docType}-{$order->formattedId}.pdf");
+                $pdfPath = storage_path("app/public/{$docType}-{$order->id}.pdf");
 
                 $documentName = ucfirst(str_replace('_', ' ', $docType)) . " - Pedido {$order->formattedId}.pdf";
 
