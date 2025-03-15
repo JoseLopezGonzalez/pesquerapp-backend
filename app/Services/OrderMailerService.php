@@ -98,26 +98,45 @@ class OrderMailerService
         $config = config('order_documents');
 
         $documentConfig = $config['documents'][$docType] ?? null;
-        if (!$documentConfig)
+        if (!$documentConfig) {
+            Log::error("No se encuentra configuración para el documento: {$docType}");
             return;
+        }
 
         $subject = str_replace('{order_id}', $order->formattedId, $documentConfig['subject_template']);
         $bodyTemplate = $documentConfig['body_template'];
         $documentName = ucfirst(str_replace('_', ' ', $docType));
 
+        // ✅ Generar el PDF
+        $pdfPath = $this->pdfService->generateDocument($order, $docType);
+
+        // ✅ Comprobar existencia del PDF
+        if (!file_exists($pdfPath)) {
+            Log::error("No se encuentra el documento generado: {$pdfPath}");
+            return;
+        }
+
         foreach ($recipients as $recipientKey) {
             [$mainEmails, $ccEmails] = $this->getEmailsFromEntities($order, $recipientKey);
-            if (empty($mainEmails))
+            if (empty($mainEmails)) {
+                Log::warning("No se encontraron emails para el destinatario: {$recipientKey}");
                 continue;
+            }
 
-            $mailable = new \App\Mail\GenericOrderDocument($order, $bodyTemplate, $subject, $documentName);
+            // ✅ Crear mailable y adjuntar PDF
+            $mailable = (new \App\Mail\GenericOrderDocument($order, $bodyTemplate, $subject, $documentName))
+                ->attach($pdfPath, [
+                    'as' => "{$documentName} - Pedido {$order->formattedId}.pdf",
+                    'mime' => 'application/pdf',
+                ]);
 
-            /* DCetener ejecucion y mostrar emails */
+            // ✅ Enviar email
             Mail::to((array) $mainEmails)
                 ->cc((array) $ccEmails)
                 ->send($mailable);
         }
     }
+
 
     /**
      * Obtener emails dinámicos desde las entidades.
