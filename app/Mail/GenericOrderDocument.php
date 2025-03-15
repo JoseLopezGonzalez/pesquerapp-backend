@@ -13,22 +13,35 @@ class GenericOrderDocument extends Mailable
     public $order;
     public $view;
     public $subjectText;
-    public $documentName; // ✅ Añadimos esto
+    public $documentName;
+    public $attachmentPath; // ✅ Nueva propiedad
 
-    public function __construct($order, $view, $subjectText, $documentName) // ✅ Añadimos $documentName
+    public function __construct($order, $view, $subjectText, $documentName, $attachmentPath = null)
     {
         $this->order = $order;
         $this->view = $view;
         $this->subjectText = $subjectText;
         $this->documentName = $documentName;
+        $this->attachmentPath = $attachmentPath;
     }
 
     public function build()
     {
-        return $this->subject($this->subjectText)
-                    ->markdown($this->view, [
-                        'order' => $this->order,
-                        'documentName' => $this->documentName // ✅ Pasamos esto a la vista
-                    ]);
+        $email = $this->subject($this->subjectText)
+            ->markdown($this->view, [
+                'order' => $this->order,
+                'documentName' => $this->documentName
+            ]);
+
+        // ✅ Adjuntar si hay
+        if ($this->attachmentPath && file_exists($this->attachmentPath)) {
+            $email->attach($this->attachmentPath, [
+                'as' => "{$this->documentName} - Pedido {$this->order->formattedId}.pdf",
+                'mime' => 'application/pdf',
+            ]);
+        }
+
+        return $email;
     }
 }
+

@@ -110,7 +110,7 @@ class OrderMailerService
         // ✅ Generar el PDF
         $pdfPath = $this->pdfService->generateDocument($order, $docType);
 
-        // ✅ Comprobar existencia del PDF
+        // ✅ Comprobar existencia
         if (!file_exists($pdfPath)) {
             Log::error("No se encuentra el documento generado: {$pdfPath}");
             return;
@@ -123,12 +123,14 @@ class OrderMailerService
                 continue;
             }
 
-            // ✅ Crear mailable y adjuntar PDF
-            $mailable = (new \App\Mail\GenericOrderDocument($order, $bodyTemplate, $subject, $documentName))
-                ->attach($pdfPath, [
-                    'as' => "{$documentName} - Pedido {$order->formattedId}.pdf",
-                    'mime' => 'application/pdf',
-                ]);
+            // ✅ Crear mailable con adjunto
+            $mailable = new \App\Mail\GenericOrderDocument(
+                $order,
+                $bodyTemplate,
+                $subject,
+                $documentName,
+                $pdfPath // ✅ Adjuntamos el PDF
+            );
 
             // ✅ Enviar email
             Mail::to((array) $mainEmails)
@@ -136,6 +138,7 @@ class OrderMailerService
                 ->send($mailable);
         }
     }
+
 
 
     /**
