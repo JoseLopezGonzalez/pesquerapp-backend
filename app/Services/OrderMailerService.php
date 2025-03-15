@@ -104,7 +104,7 @@ class OrderMailerService
             return;
         }
 
-        $subject = str_replace('{order_id}', $order->formattedId, $documentConfig['subject_template']);
+        $subject = str_replace('{order_id}', $order->id, $documentConfig['subject_template']);
         $bodyTemplate = $documentConfig['body_template'];
 
         $documentName = $documentConfig['document_name'];
