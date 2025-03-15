@@ -11,14 +11,17 @@ use Beganovich\Snappdf\Snappdf;
  * 
  * NOTA: Si se requiere para otras entidades, considerar crear un PDFService general.
  */
-
-
 class OrderPDFService
 {
     /**
      * Generar un documento PDF y devolver su ruta.
+     *
+     * @param Order $order
+     * @param string $docType
+     * @param string $viewName
+     * @return string
      */
-    public function generateDocument(Order $order, string $docType): string
+    public function generateDocument(Order $order, string $docType, string $viewPath): string
     {
         $formattedId = str_replace('#', '', $order->formattedId);
         $pdfPath = storage_path("app/public/{$docType}-{$formattedId}.pdf");
@@ -28,21 +31,8 @@ class OrderPDFService
             return $pdfPath;
         }
 
-        // ✅ Mapear tipo de documento a vista real
-        $viewsMap = [
-            'nota_carga' => 'pdf.v2.orders.loading_note',
-            'packing_list' => 'pdf.v2.orders.order_packing_list',
-            'cmr' => 'pdf.v2.orders.CMR',
-        ];
-
-        $viewName = $viewsMap[$docType] ?? null;
-
-        if (!$viewName) {
-            throw new \Exception("No existe la vista para el tipo de documento: {$docType}");
-        }
-
         // ⚠️ Pasar la variable como 'entity', no como 'order'
-        $html = view($viewName, ['entity' => $order])->render();
+        $html = view($viewPath, ['entity' => $order])->render();
 
         // Crear PDF con Snappdf
         $snappdf = new Snappdf();

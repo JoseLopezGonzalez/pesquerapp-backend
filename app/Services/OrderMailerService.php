@@ -109,8 +109,10 @@ class OrderMailerService
         $documentName = $documentConfig['document_name'];
         //$documentName = ucfirst(str_replace('_', ' ', $docType));
 
+        $viewPath = $documentConfig['view_path'];
+
         // ✅ Generar el PDF
-        $pdfPath = $this->pdfService->generateDocument($order, $docType);
+        $pdfPath = $this->pdfService->generateDocument($order, $docType, $viewPath);
 
         // ✅ Comprobar existencia
         if (!file_exists($pdfPath)) {
