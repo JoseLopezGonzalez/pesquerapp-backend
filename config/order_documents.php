@@ -6,19 +6,19 @@ return [
             'mailable' => \App\Mail\GenericOrderDocument::class,
             'default_recipients' => ['cliente', 'comercial'],
             'subject_template' => 'Nota de Carga - Pedido #{order_id}',
-            'body_template' => 'emails.orders.nota_carga',
+            'body_template' => 'emails.orders.generic', // ✅ Cambiado a genérico
         ],
         'packing_list' => [
             'mailable' => \App\Mail\GenericOrderDocument::class,
             'default_recipients' => ['cliente', 'comercial'],
             'subject_template' => 'Packing List - Pedido #{order_id}',
-            'body_template' => 'emails.orders.packing_list',
+            'body_template' => 'emails.orders.generic', // ✅ Cambiado a genérico
         ],
         'cmr' => [
             'mailable' => \App\Mail\GenericOrderDocument::class,
             'default_recipients' => ['transporte'],
             'subject_template' => 'Documento de Transporte (CMR) - Pedido #{order_id}',
-            'body_template' => 'emails.orders.cmr',
+            'body_template' => 'emails.orders.generic', // ✅ Cambiado a genérico
         ],
     ],
 
@@ -30,6 +30,6 @@ return [
 
 
     'recipients' => [
-       
+        // Otros destinatarios personalizados si quieres añadir después
     ],
 ];
