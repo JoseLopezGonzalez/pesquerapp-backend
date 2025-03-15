@@ -45,7 +45,8 @@ class OrderMailerService
             $documentsToAttach = [];
             foreach ($docTypes as $docType) {
                 // Generar el PDF
-                $pdfPath = $this->pdfService->generateDocument($order, $docType);
+                $viewPath = config("order_documents.documents.{$docType}.view_path");
+                $pdfPath = $this->pdfService->generateDocument($order, $docType, $viewPath);
 
                 // Verificar existencia
                 if (!file_exists($pdfPath)) {
