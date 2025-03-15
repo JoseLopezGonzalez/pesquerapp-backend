@@ -12,14 +12,11 @@ Adjunto le enviamos el documento **{{ $documentName }}** correspondiente al pedi
 - Cliente: {{ $order->customer->name }}
 - Número de Pedido: {{ $order->formattedId }}
 - Fecha de Carga: {{ date('d/m/Y', strtotime($order->load_date)) }}
-- Producto: {{ $order->product_name ?? 'Producto no especificado' }}
-- Cantidad: {{ $order->quantity ?? 'No especificada' }}
 
 <br>
 
-Si necesita más información, no dude en contactarnos a [comercial@empresa.com](mailto:comercial@empresa.com).
+Si necesita más información, no dude en contactarnos.
 
-Saludos cordiales.
-**Departamento de Operaciones**
+Saludos cordiales
 
 </x-mail::message>

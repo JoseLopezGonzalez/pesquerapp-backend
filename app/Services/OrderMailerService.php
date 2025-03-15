@@ -105,7 +105,9 @@ class OrderMailerService
 
         $subject = str_replace('{order_id}', $order->formattedId, $documentConfig['subject_template']);
         $bodyTemplate = $documentConfig['body_template'];
-        $documentName = ucfirst(str_replace('_', ' ', $docType));
+
+        $documentName = $documentConfig['document_name'];
+        //$documentName = ucfirst(str_replace('_', ' ', $docType));
 
         // ✅ Generar el PDF
         $pdfPath = $this->pdfService->generateDocument($order, $docType);

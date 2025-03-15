@@ -2,21 +2,21 @@
 
 return [
     'documents' => [
-        'nota_carga' => [
+        'loaging_note' => [
+            'document_name' => 'Nota de Carga',
             'mailable' => \App\Mail\GenericOrderDocument::class,
-            'default_recipients' => ['cliente', 'comercial'],
             'subject_template' => 'Nota de Carga - Pedido #{order_id}',
             'body_template' => 'emails.orders.generic', // ✅ Cambiado a genérico
         ],
         'packing_list' => [
+            'document_name' => 'Packing List',
             'mailable' => \App\Mail\GenericOrderDocument::class,
-            'default_recipients' => ['cliente', 'comercial'],
             'subject_template' => 'Packing List - Pedido #{order_id}',
             'body_template' => 'emails.orders.generic', // ✅ Cambiado a genérico
         ],
-        'cmr' => [
+        'CMR' => [
+            'document_name' => 'Documento de Transporte (CMR)',
             'mailable' => \App\Mail\GenericOrderDocument::class,
-            'default_recipients' => ['transporte'],
             'subject_template' => 'Documento de Transporte (CMR) - Pedido #{order_id}',
             'body_template' => 'emails.orders.generic', // ✅ Cambiado a genérico
         ],
