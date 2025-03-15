@@ -8,7 +8,7 @@ return [
             'subject_template' => 'Nota de Carga - Pedido #{order_id}',
             'body_template' => 'emails.orders.nota_carga',
         ],
-        'packing-list' => [
+        'packing_list' => [
             'mailable' => \App\Mail\GenericOrderDocument::class,
             'default_recipients' => ['cliente', 'comercial'],
             'subject_template' => 'Packing List - Pedido #{order_id}',
