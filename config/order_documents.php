@@ -2,7 +2,7 @@
 
 return [
     'documents' => [
-        'loaging_note' => [
+        'loading_note' => [
             'document_name' => 'Nota de Carga',
             'view_path' => 'pdf.v2.orders.loading_note',
             'mailable' => \App\Mail\GenericOrderDocument::class,
