@@ -41,7 +41,7 @@
         </div>
 
 
-        
+
 
 
 
@@ -88,20 +88,23 @@
             </div>
         </div>
 
-        <div class='grid-cols-2 grid gap-4 mb-6'>
+        
+
+        <div class="border p-4 py-2 rounded-lg bg-gray-50 mb-2 text-[10px]">
+            <div class="grid grid-cols-3 gap-4 divide-x-gray-800">
+                <div>
+                    <p class="font-bold">FECHA DE RECOGIDA PREVISTA</p>
+                    <p>{{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
+                </div>
+                <div>
+                    <p class="font-bold">Nº DE PALLETS PREVISTOS</p>
+                    <p>
+                        {{ $entity->numberOfPallets }}
+                    </p>
+                </div>
 
 
-            <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
-                <p><strong>Fecha de recogida prevista:</strong></p>
-                <p>{{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
             </div>
-
-            <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
-                <p><strong>Nº de Palets Previstos:</strong></p>
-                <p> {{ $entity->numberOfPallets }}</p>
-            </div>
-
-
         </div>
 
         <!-- DETALLE DE PRODUCTOS -->
