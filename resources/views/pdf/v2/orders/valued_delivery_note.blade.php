@@ -93,7 +93,7 @@
                             $totalAmount += $detail['total'];
                         @endphp
                         <tr class="{{ $rowClass }}">
-                            <td class="p-2 py-1">{{ $detail['product']['article']['name'] }}</td>
+                            <td class="p-2 py-1">{{ $detail['product']->name }}</td>
                             <td class="p-2 py-1 text-center">{{ $detail['boxes'] }}</td>
                             <td class="p-2 py-1 text-center">{{ number_format($detail['netWeight'], 2, ',', '.') }} kg
                             </td>
