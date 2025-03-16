@@ -20,6 +20,13 @@ return [
             'subject_template' => 'Documento de Transporte (CMR) - Pedido #{order_id}',
             'body_template' => 'emails.orders.generic', // ✅ Cambiado a genérico
         ],
+        /* valued loading note */
+        'valued-loading-note' => [
+            'document_name' => 'Nota de Carga Valorada',
+            'view_path' => 'pdf.v2.orders.valued_loading_note',
+            'subject_template' => 'Nota de Carga Valorada - Pedido #{order_id}',
+            'body_template' => 'emails.orders.generic', // ✅ Cambiado a genérico
+        ],
     ],
 
     'standard_recipients' => [
