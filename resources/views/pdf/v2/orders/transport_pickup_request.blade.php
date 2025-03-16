@@ -18,6 +18,7 @@
 
 <body class="bg-white text-black text-xs">
     <div class="max-w-[210mm] mx-auto p-6 bg-white rounded min-h-screen">
+
         <!-- ENCABEZADO -->
         <div class="flex justify-between items-end mb-6">
             <div>
@@ -40,20 +41,34 @@
             </div>
         </div>
 
-        <!-- DATOS DEL TRANSPORTE -->
-        <div class="border rounded-lg bg-gray-50 mb-6 w-full">
-            <div class="font-bold p-2 bg-gray-800 text-white">TRANSPORTE</div>
-            <div class="p-4">
-                <p><span class="font-medium">Empresa:</span> {{ $entity->transport->name }}</p>
-                <p class="font-medium mt-2">Correos electrónicos:</p>
-                <ul class="list-disc pl-5">
-                    @foreach ($entity->transport->emailsArray as $email)
-                        <li>{{ $email }}</li>
-                    @endforeach
-                    @foreach ($entity->ccEmailsArray as $email)
-                        <li>{{ $email }}</li>
-                    @endforeach
-                </ul>
+        <!-- DATOS DEL TRANSPORTE + CONTACTOS -->
+        <div class="grid grid-cols-2 gap-4 mb-6 w-full">
+            <div class="border rounded-lg bg-gray-50">
+                <div class="font-bold p-2 bg-gray-800 text-white">TRANSPORTE</div>
+                <div class="p-4 space-y-1">
+                    <p><span class="font-medium">Empresa:</span> {{ $entity->transport->name }}</p>
+                    <p class="font-medium">Correos electrónicos:</p>
+                    <ul class="list-disc pl-5">
+                        @foreach ($entity->transport->emailsArray as $email)
+                            <li>{{ $email }}</li>
+                        @endforeach
+                        @foreach ($entity->ccEmailsArray as $email)
+                            <li>{{ $email }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border rounded-lg bg-gray-50">
+                <div class="font-bold p-2 bg-gray-800 text-white">DETALLES Y CONTACTOS IMPORTANTES</div>
+                <div class="p-4 space-y-1">
+                    <p><span class="font-medium">Fecha prevista de recogida:</span>
+                        {{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
+                    <p><span class="font-medium">Contacto emergencias:</span> emergencias@congeladosbrisamar.es</p>
+                    <p><span class="font-medium">Contacto incidencias:</span> incidencias@congeladosbrisamar.es</p>
+                    <p><span class="font-medium">Contacto para carga:</span> carga@congeladosbrisamar.es</p>
+                    <p><span class="font-medium">Contacto para descarga:</span> descarga@congeladosbrisamar.es</p>
+                </div>
             </div>
         </div>
 
@@ -98,10 +113,12 @@
             <p>{!! nl2br(e($entity->transportation_notes)) !!}</p>
         </div>
 
-        <!-- ESPACIO PARA FIRMA -->
-        <div class="mt-8 border rounded-lg p-6 h-[150px] flex flex-col justify-between">
-            <p class="font-bold text-center uppercase">Firma, sello y fecha del transportista</p>
-            <div class="border-t border-gray-400 mt-4"></div>
+        <!-- ESPACIO PARA FIRMA Y SELLO -->
+        <div class="mt-10 flex justify-center">
+            <div class="border rounded-lg p-6 h-[130px] w-[320px] flex flex-col justify-between">
+                <p class="font-bold text-center uppercase">Firma, sello y fecha del transportista</p>
+                <div class="border-t border-gray-400 mt-4"></div>
+            </div>
         </div>
 
     </div>
