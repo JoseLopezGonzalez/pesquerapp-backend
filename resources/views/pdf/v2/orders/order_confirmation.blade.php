@@ -178,13 +178,13 @@
                 
                 <p class="font-medium text-xs h-full">
                     Para la aprobación definitiva del pedido, es necesario enviar este documento firmado y sellado a
-                    Congelados Brisamar S.L. a la dirección de correo <strong>administracion@congeladosbrisamar.es</strong>.
+                    Congelados Brisamar S.L. a la dirección de correo <strong>pedidos@congeladosbrisamar.es</strong>.
                 </p>
             </div>
 
             <!-- ESPACIO PARA FIRMA Y SELLO -->
             <div class=" border rounded-lg p-6  flex flex-col justify-between">
-                <p class="font-bold text-center ">Firma y Sello</p>
+                <p class="font-bold text-center mb-3">Firma y Sello</p>
                 <div class="border-t border-gray-400 mt-4"></div>
             </div>
 
