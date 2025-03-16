@@ -312,6 +312,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('orders/{orderId}/pdf/valued-loading-note', [\App\Http\Controllers\v2\PDFController::class, 'generateValuedLoadingNote'])->name('generate_valued_loading_note');
             /* order confirmation */
             Route::get('orders/{orderId}/pdf/order-confirmation', [\App\Http\Controllers\v2\PDFController::class, 'generateOrderConfirmation'])->name('generate_order_confirmation');
+            /* transport pickup request */
+            Route::get('orders/{orderId}/pdf/transport-pickup-request', [\App\Http\Controllers\v2\PDFController::class, 'generateTransportPickupRequest'])->name('generate_transport_pickup_request');
 
             /* Envio de documentos */
             Route::post('orders/{orderId}/send-custom-documents', [OrderDocumentController::class, 'sendCustomDocumentation']);

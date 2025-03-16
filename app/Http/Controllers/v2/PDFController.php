@@ -141,4 +141,12 @@ class PDFController extends Controller
         $fileName = 'Confirmacion_de_pedido_' . $order->formattedId;
         return $this->generatePdf($order, 'pdf.v2.orders.order_confirmation', $fileName);
     }
+
+    /* transport pickup reques */
+    public function generateTransportPickupRequest($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        $fileName = 'Solicitud_de_recogida_' . $order->formattedId;
+        return $this->generatePdf($order, 'pdf.v2.orders.transport_pickup_request', $fileName);
+    }
 }
