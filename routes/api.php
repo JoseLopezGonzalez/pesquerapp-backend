@@ -309,8 +309,7 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('orders/{orderId}/xlsx/lots-report', [\App\Http\Controllers\v2\ExcelController::class, 'exportProductLotDetails'])->name('export_product_lot_details');
             Route::get('orders/{orderId}/xlsx/boxes-report', [\App\Http\Controllers\v2\ExcelController::class, 'exportBoxList'])->name('export_box_list');
             Route::get('orders/{orderId}/xlsx/A3ERP-sales-delivery-note', [\App\Http\Controllers\v2\ExcelController::class, 'exportA3ERPOrderSalesDeliveryNote'])->name('export_A3ERP_sales_delivery_note');
-            /* valued Delivery Note */
-            Route::get('orders/{orderId}/pdf/valued-delivery-note', [\App\Http\Controllers\v2\PDFController::class, 'generateValuedDeliveryNote'])->name('generate_valued_delivery_note');
+            Route::get('orders/{orderId}/pdf/valued-loading-note', [\App\Http\Controllers\v2\PDFController::class, 'generateValuedLoadingNote'])->name('generate_valued_loading_note');
 
             /* Envio de documentos */
             Route::post('orders/{orderId}/send-custom-documents', [OrderDocumentController::class, 'sendCustomDocumentation']);
