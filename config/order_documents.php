@@ -27,6 +27,13 @@ return [
             'subject_template' => 'Nota de Carga Valorada - Pedido #{order_id}',
             'body_template' => 'emails.orders.generic', // ✅ Cambiado a genérico
         ],
+        /* order confirmation */
+        'order-confirmation' => [
+            'document_name' => 'Confirmación de Pedido',
+            'view_path' => 'pdf.v2.orders.order_confirmation',
+            'subject_template' => 'Confirmación de Pedido - Pedido #{order_id}',
+            'body_template' => 'emails.orders.generic', // ✅ Cambiado a genérico
+        ],
     ],
 
     'standard_recipients' => [
