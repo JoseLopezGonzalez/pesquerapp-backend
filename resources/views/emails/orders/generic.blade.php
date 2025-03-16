@@ -1,10 +1,10 @@
 <x-mail::message>
 
-# {{ $order->customer->name }}
+# **{{ $documentName }}** - **#{{ $order->id }}**
 
 <br>
 
-Adjunto le enviamos el documento **{{ $documentName }}** correspondiente al pedido número **{{ $order->formattedId }}**.
+Adjunto le enviamos el documento **{{ $documentName }}** correspondiente al pedido número **#{{ $order->id }}**.
 
 <br>
 
