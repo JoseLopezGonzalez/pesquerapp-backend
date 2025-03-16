@@ -34,6 +34,13 @@ return [
             'subject_template' => 'Confirmación de Pedido - Pedido #{order_id}',
             'body_template' => 'emails.orders.generic', // ✅ Cambiado a genérico
         ],
+        /* transport pickup request */
+        'transport-pickup-request' => [
+            'document_name' => 'Solicitud de Recogida de Transporte',
+            'view_path' => 'pdf.v2.orders.transport_pickup_request',
+            'subject_template' => 'Solicitud de Recogida de Transporte - Pedido #{order_id}',
+            'body_template' => 'emails.orders.generic', // ✅ Cambiado a genérico
+        ],
     ],
 
     'standard_recipients' => [
