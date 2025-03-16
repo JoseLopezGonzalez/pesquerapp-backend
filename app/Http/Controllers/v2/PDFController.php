@@ -133,4 +133,12 @@ class PDFController extends Controller
         $fileName = 'Nota_de_carga_valorada_' . $order->formattedId;
         return $this->generatePdf($order, 'pdf.v2.orders.valued_loading_note', $fileName);
     }
+
+    /* order confirmation */
+    public function generateOrderConfirmation($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        $fileName = 'Confirmacion_de_pedido_' . $order->formattedId;
+        return $this->generatePdf($order, 'pdf.v2.orders.order_confirmation', $fileName);
+    }
 }

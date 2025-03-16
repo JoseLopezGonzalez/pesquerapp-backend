@@ -1,6 +1,6 @@
 <x-mail::message>
 
-# **{{ $documentName }}** - **#{{ $order->id }}**
+# **{{ $documentName }} - #{{ $order->id }}**
 
 <br>
 
