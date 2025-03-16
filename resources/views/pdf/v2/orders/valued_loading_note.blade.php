@@ -46,11 +46,11 @@
 
         <!-- DIRECCIONES -->
         <div class="flex gap-6 mb-6">
-            <div class="border rounded-lg bg-gray-50 flex-1">
+            <div class="border rounded-lg bg-gray-50 flex-1 overflow-hidden">
                 <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE ENVÍO</div>
                 <div class="p-4">{!! nl2br(e($entity->shipping_address)) !!}</div>
             </div>
-            <div class="border rounded-lg bg-gray-50 w-[340px] text-right">
+            <div class="border rounded-lg bg-gray-50 w-[340px] text-right overflow-hidden">
                 <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE FACTURACIÓN</div>
                 <div class="p-4">{!! nl2br(e($entity->billing_address)) !!}</div>
             </div>
