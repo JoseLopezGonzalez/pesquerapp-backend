@@ -32,7 +32,7 @@
             </div>
             <div class="flex items-start gap-4">
                 <div class="text-end">
-                    <h2 class="text-lg font-bold">Nota Valorada</h2>
+                    <h2 class="text-lg font-bold">Nota de cargar valorada</h2>
                     <p class="font-medium">{{ $entity->formattedId }}</p>
                     <p class="font-medium">Fecha: {{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
                     <p class="font-medium">Buyer Reference: {{ $entity->buyer_reference }}</p>
