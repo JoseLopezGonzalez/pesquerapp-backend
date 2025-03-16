@@ -64,11 +64,11 @@
                     <tr>
                         <th class="p-2 text-left">Producto</th>
                         <th class="p-2 text-center">Cajas</th>
-                        <th class="p-2 text-center">Peso Neto</th>
-                        <th class="p-2 text-center">Precio Unitario (€)</th>
-                        <th class="p-2 text-center">Subtotal (€)</th>
-                        <th class="p-2 text-center">IVA (%)</th>
-                        <th class="p-2 text-center">Total (€)</th>
+                        <th class="p-2 text-center">Cantidad</th>
+                        <th class="p-2 text-center">Precio</th>
+                        <th class="p-2 text-center">Subtotal</th>
+                        <th class="p-2 text-center">IVA</th>
+                        <th class="p-2 text-center">Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,11 +97,11 @@
                             <td class="p-2 py-1 text-center">{{ $detail['boxes'] }}</td>
                             <td class="p-2 py-1 text-center">{{ number_format($detail['netWeight'], 2, ',', '.') }} kg
                             </td>
-                            <td class="p-2 py-1 text-center">{{ number_format($detail['unitPrice'], 2, ',', '.') }}</td>
-                            <td class="p-2 py-1 text-center">{{ number_format($detail['subtotal'], 2, ',', '.') }}</td>
+                            <td class="p-2 py-1 text-center">{{ number_format($detail['unitPrice'], 2, ',', '.') }} €</td>
+                            <td class="p-2 py-1 text-center">{{ number_format($detail['subtotal'], 2, ',', '.') }} €</td>
                             <td class="p-2 py-1 text-center">{{ number_format($detail['tax']['rate'], 2, ',', '.') }}%
                             </td>
-                            <td class="p-2 py-1 text-center">{{ number_format($detail['total'], 2, ',', '.') }}</td>
+                            <td class="p-2 py-1 text-center">{{ number_format($detail['total'], 2, ',', '.') }} €</td>
                         </tr>
                     @endforeach
                 </tbody>
