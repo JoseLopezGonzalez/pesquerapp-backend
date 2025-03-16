@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Order Confirmation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            font-family: 'DejaVu Sans';
+        }
+
+        @page {
+            size: A4 portrait;
+        }
+
+        .bold-first-line::first-line {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-black text-xs">
+    <div class="max-w-[210mm] mx-auto p-6 bg-white rounded min-h-screen">
+        <!-- ENCABEZADO -->
+        <div class="flex justify-between items-end mb-6">
+            <div>
+                <h1 class="text-md font-bold">Congelados Brisamar S.L.</h1>
+                <p>C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
+                <p>Tel: +34 613 09 14 94</p>
+                <p>administracion@congeladosbrisamar.es</p>
+            </div>
+            <div class="flex items-start gap-4">
+                <div class="text-end">
+                    <h2 class="text-lg font-bold">Order Confirmation</h2>
+                    <p class="font-medium">{{ $entity->formattedId }}</p>
+                    <p class="font-medium">Fecha: {{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
+                    <p class="font-medium">Buyer Reference: {{ $entity->buyer_reference }}</p>
+                </div>
+                <div class="p-1 border rounded bg-white">
+                    <img src="{{ 'https://barcode.tec-it.com/barcode.ashx?data=Pedido%3A' . $entity->id . '&code=QRCode&eclevel=L' }}"
+                        class="w-[4.1rem] h-[4.1rem]" alt="QR Code" />
+                </div>
+            </div>
+        </div>
+
+        <!-- CLIENTE Y TRANSPORTE -->
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="border rounded-lg overflow-hidden bg-gray-50">
+                <div class="font-bold p-2 bg-gray-800 text-white">DATOS DEL CLIENTE</div>
+                <div class="p-4">
+                    <p><span class="font-medium">Nombre:</span> {{ $entity->customer->name }}</p>
+                    <p><span class="font-medium">NIF/CIF:</span> {{ $entity->customer->vat_number }}</p>
+                    <p class="font-medium mt-2">Correos electrónicos:</p>
+                    <ul class="list-disc pl-5">
+                        @foreach ($entity->emailsArray as $email)
+                            <li>{{ $email }}</li>
+                        @endforeach
+                        @foreach ($entity->ccEmailsArray as $email)
+                            <li>{{ $email }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border rounded-lg overflow-hidden bg-gray-50">
+                <div class="font-bold p-2 bg-gray-800 text-white">DATOS DE TRANSPORTE</div>
+                <div class="p-4">
+                    <p><span class="font-medium">Empresa:</span> {{ $entity->transport->name }}</p>
+                    <p class="font-medium mt-2">Correos electrónicos:</p>
+                    <ul class="list-disc pl-5">
+                        @foreach ($entity->transport->emailsArray as $email)
+                            <li>{{ $email }}</li>
+                        @endforeach
+                        @foreach ($entity->ccEmailsArray as $email)
+                            <li>{{ $email }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIRECCIONES -->
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="border rounded-lg bg-gray-50">
+                <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE FACTURACIÓN</div>
+                <div class="p-4">{!! nl2br(e($entity->billing_address)) !!}</div>
+            </div>
+            <div class="border rounded-lg bg-gray-50">
+                <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE ENVÍO</div>
+                <div class="p-4">{!! nl2br(e($entity->shipping_address)) !!}</div>
+            </div>
+        </div>
+
+        <!-- CONDICIONES GENERALES -->
+        <div class="border p-4 rounded-lg bg-gray-50 mb-6 text-[10px]">
+            <div class="grid grid-cols-3 gap-4">
+                <div>
+                    <p class="font-bold">FORMA DE PAGO</p>
+                    <p>{{ $entity->payment_term->name }}</p>
+                </div>
+                <div>
+                    <p class="font-bold">INCOTERM</p>
+                    <p>{{ $entity->incoterm->code }} - {{ $entity->incoterm->description }}</p>
+                </div>
+                <div>
+                    <p class="font-bold">NÚMERO DE PALETS</p>
+                    <p>{{ $entity->numberOfPallets }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DETALLE DE PRODUCTOS -->
+        <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
+        <div class="border rounded-lg overflow-hidden">
+            <table class="w-full text-xs">
+                <thead class="border-b bg-gray-100">
+                    <tr>
+                        <th class="p-2 text-left">Producto</th>
+                        <th class="p-2 text-center">Cajas</th>
+                        <th class="p-2 text-center">Peso Neto</th>
+                        <th class="p-2 text-center">Precio Unitario (€)</th>
+                        <th class="p-2 text-center">Subtotal (€)</th>
+                        <th class="p-2 text-center">IVA (%)</th>
+                        <th class="p-2 text-center">Total (€)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $totalBoxes = 0;
+                        $totalQuantity = 0;
+                        $totalSubtotal = 0;
+                        $totalTax = 0;
+                        $totalAmount = 0;
+                    @endphp
+
+                    @foreach ($entity->plannedProductDetails as $detail)
+                        @php
+                            $subtotal = $detail->unit_price * $detail->quantity;
+                            $iva = $subtotal * ($detail->tax->rate / 100);
+                            $total = $subtotal + $iva;
+                            $totalBoxes += $detail->boxes;
+                            $totalQuantity += $detail->quantity;
+                            $totalSubtotal += $subtotal;
+                            $totalTax += $iva;
+                            $totalAmount += $total;
+                        @endphp
+                        <tr>
+                            <td class="p-2">{{ $detail->product->article->name }}</td>
+                            <td class="p-2 text-center">{{ $detail->boxes }}</td>
+                            <td class="p-2 text-center">{{ number_format($detail->quantity, 2, ',', '.') }} kg</td>
+                            <td class="p-2 text-center">{{ number_format($detail->unit_price, 2, ',', '.') }}</td>
+                            <td class="p-2 text-center">{{ number_format($subtotal, 2, ',', '.') }}</td>
+                            <td class="p-2 text-center">{{ number_format($detail->tax->rate, 2, ',', '.') }}%</td>
+                            <td class="p-2 text-center">{{ number_format($total, 2, ',', '.') }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+                <tfoot class="border-t bg-gray-100 font-semibold">
+                    <tr>
+                        <td class="p-2">Totales:</td>
+                        <td class="p-2 text-center">{{ $totalBoxes }}</td>
+                        <td class="p-2 text-center">{{ number_format($totalQuantity, 2, ',', '.') }} kg</td>
+                        <td></td>
+                        <td class="p-2 text-center">{{ number_format($totalSubtotal, 2, ',', '.') }}</td>
+                        <td></td>
+                        <td class="p-2 text-center">{{ number_format($totalAmount, 2, ',', '.') }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- OBSERVACIONES -->
+        <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs">
+            Este documento refleja la confirmación de pedido y precios acordados. No es una factura.
+        </div>
+
+    </div>
+</body>
+
+</html>
