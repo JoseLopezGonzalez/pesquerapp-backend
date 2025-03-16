@@ -184,7 +184,8 @@
 
             <!-- ESPACIO PARA FIRMA Y SELLO -->
             <div class=" border rounded-lg p-6  flex flex-col justify-between">
-                <p class="font-bold text-center mb-3">Firma y Sello</p>
+                <p class="font-bold text-center">Firma y Sello</p>
+                <div className='h-4'></div>
                 <div class="border-t border-gray-400 mt-4"></div>
             </div>
 
