@@ -170,13 +170,13 @@
             </table>
         </div>
 
-        <div class="grid-cols-2 grid ">
+        <div class="grid-cols-2 grid my-6">
 
 
             <!-- OBSERVACIONES Y CONFIRMACIÓN -->
-            <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
+            <div class=" p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
                 
-                <p class="font-medium text-xs">
+                <p class="font-medium text-xs h-full">
                     Para la aprobación definitiva del pedido, es necesario enviar este documento firmado y sellado a
                     Congelados Brisamar S.L. a la dirección de correo
                     <strong>administracion@congeladosbrisamar.es</strong>.
