@@ -23,9 +23,9 @@ return [
     ],
 
     'standard_recipients' => [
-        'cliente' => ['nota_carga', 'packing_list'],
-        'comercial' => ['nota_carga', 'packing_list'],
-        'transporte' => ['cmr', 'packing_list'],
+        'customer' => ['nota_carga', 'packing_list'],
+        'salesperson' => ['nota_carga', 'packing_list'],
+        'transport' => ['cmr', 'packing_list'],
     ],
 
 ];

@@ -71,9 +71,9 @@ class OrderMailerService
 
             // Definir Markdown según destinatario
             $markdownTemplates = [
-                'cliente' => 'emails.orders.shipped',
-                'transporte' => 'emails.orders.transport_details',
-                'comercial' => 'emails.orders.commercial',
+                'customer' => 'emails.orders.shipped',
+                'transport' => 'emails.orders.transport_details',
+                'salesperson' => 'emails.orders.commercial',
             ];
             $markdownTemplate = $markdownTemplates[$recipientKey] ?? 'emails.orders.shipped';
 
@@ -155,17 +155,17 @@ class OrderMailerService
         $ccEmails = [];
 
         switch ($recipientKey) {
-            case 'cliente':
+            case 'customer':
                 $mainEmails = $order->emailsArray ?? [];
                 $ccEmails = $order->ccEmailsArray ?? [];
                 break;
 
-            case 'transporte':
+            case 'transport':
                 $mainEmails = $order->transport->emailsArray ?? [];
                 $ccEmails = $order->transport->ccEmailsArray ?? [];
                 break;
 
-            case 'comercial':
+            case 'salesperson':
                 if ($order->salesperson) {
                     $mainEmails = $order->salesperson->emailsArray ?? [];
                     $ccEmails = $order->salesperson->ccEmailsArray ?? [];
