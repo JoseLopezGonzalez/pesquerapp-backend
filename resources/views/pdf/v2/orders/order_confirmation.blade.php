@@ -113,7 +113,7 @@
         <!-- DETALLE DE PRODUCTOS -->
         <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
         <div class="border rounded-lg overflow-hidden">
-            <table class="w-full text-xs">
+            <table class="w-full text-xs text-nowrap">
                 <thead class="border-b bg-gray-100">
                     <tr>
                         <th class="p-2 text-left">Producto</th>
@@ -121,7 +121,7 @@
                         <th class="p-2 text-center">Cantidad</th>
                         <th class="p-2 text-center">Precio</th>
                         <th class="p-2 text-center">Subtotal</th>
-                        <th class="p-2 text-center">IVA (%)</th>
+                        <th class="p-2 text-center">IVA</th>
                         <th class="p-2 text-center">Total</th>
                     </tr>
                 </thead>
@@ -146,7 +146,7 @@
                             $totalAmount += $total;
                         @endphp
                         <tr>
-                            <td class="p-2">{{ $detail->product->article->name }}</td>
+                            <td class="p-2 text-wrap">{{ $detail->product->article->name }}</td>
                             <td class="p-2 text-center">{{ $detail->boxes }}</td>
                             <td class="p-2 text-center">{{ number_format($detail->quantity, 2, ',', '.') }} kg</td>
                             <td class="p-2 text-center">{{ number_format($detail->unit_price, 2, ',', '.') }} €</td>
@@ -158,7 +158,7 @@
                 </tbody>
                 <tfoot class="border-t bg-gray-100 font-semibold">
                     <tr>
-                        <td class="p-2">Totales:</td>
+                        <td class="p-2">Totales</td>
                         <td class="p-2 text-center">{{ $totalBoxes }}</td>
                         <td class="p-2 text-center">{{ number_format($totalQuantity, 2, ',', '.') }} kg</td>
                         <td></td>
