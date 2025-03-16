@@ -125,4 +125,12 @@ class PDFController extends Controller
         $fileName = 'Factura_' . $order->formattedId;
         return $this->generatePdf($order, 'pdf.v2.orders.invoice', $fileName);
     }
+
+    /* valued Delivery Note */
+    public function generateValuedDeliveryNote($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        $fileName = 'Nota_de_entrega_valorada_' . $order->formattedId;
+        return $this->generatePdf($order, 'pdf.v2.orders.valued_delivery_note', $fileName);
+    }
 }
