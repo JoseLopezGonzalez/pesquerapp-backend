@@ -41,21 +41,7 @@
         </div>
 
 
-        <div class='grid-cols-2 grid gap-4'>
-
-
-            <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
-                <p><strong>Fecha de recogida prevista:</strong></p>
-                <p>{{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
-            </div>
-
-            <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
-                <p><strong>Nº de Palets Previstos:</strong></p>
-                <p> {{ $entity->numberOfPallets }}</p>
-            </div>
-
-
-        </div>
+        
 
 
 
@@ -100,6 +86,22 @@
                 <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE ENTREGA</div>
                 <div class="p-4">{!! nl2br(e($entity->billing_address)) !!}</div>
             </div>
+        </div>
+
+        <div class='grid-cols-2 grid gap-4 mb-6'>
+
+
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
+                <p><strong>Fecha de recogida prevista:</strong></p>
+                <p>{{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
+            </div>
+
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
+                <p><strong>Nº de Palets Previstos:</strong></p>
+                <p> {{ $entity->numberOfPallets }}</p>
+            </div>
+
+
         </div>
 
         <!-- DETALLE DE PRODUCTOS -->
