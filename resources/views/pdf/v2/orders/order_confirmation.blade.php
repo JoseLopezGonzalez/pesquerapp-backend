@@ -32,7 +32,7 @@
             </div>
             <div class="flex items-start gap-4">
                 <div class="text-end">
-                    <h2 class="text-lg font-bold">Order Confirmation</h2>
+                    <h2 class="text-lg font-bold">Confirmación de pedido</h2>
                     <p class="font-medium">{{ $entity->formattedId }}</p>
                     <p class="font-medium">Fecha: {{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
                     <p class="font-medium">Buyer Reference: {{ $entity->buyer_reference }}</p>
@@ -118,11 +118,11 @@
                     <tr>
                         <th class="p-2 text-left">Producto</th>
                         <th class="p-2 text-center">Cajas</th>
-                        <th class="p-2 text-center">Peso Neto</th>
-                        <th class="p-2 text-center">Precio Unitario (€)</th>
-                        <th class="p-2 text-center">Subtotal (€)</th>
+                        <th class="p-2 text-center">Cantidad</th>
+                        <th class="p-2 text-center">Precio</th>
+                        <th class="p-2 text-center">Subtotal</th>
                         <th class="p-2 text-center">IVA (%)</th>
-                        <th class="p-2 text-center">Total (€)</th>
+                        <th class="p-2 text-center">Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -149,10 +149,10 @@
                             <td class="p-2">{{ $detail->product->article->name }}</td>
                             <td class="p-2 text-center">{{ $detail->boxes }}</td>
                             <td class="p-2 text-center">{{ number_format($detail->quantity, 2, ',', '.') }} kg</td>
-                            <td class="p-2 text-center">{{ number_format($detail->unit_price, 2, ',', '.') }}</td>
-                            <td class="p-2 text-center">{{ number_format($subtotal, 2, ',', '.') }}</td>
+                            <td class="p-2 text-center">{{ number_format($detail->unit_price, 2, ',', '.') }} €</td>
+                            <td class="p-2 text-center">{{ number_format($subtotal, 2, ',', '.') }} €</td>
                             <td class="p-2 text-center">{{ number_format($detail->tax->rate, 2, ',', '.') }}%</td>
-                            <td class="p-2 text-center">{{ number_format($total, 2, ',', '.') }}</td>
+                            <td class="p-2 text-center">{{ number_format($total, 2, ',', '.') }} €</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -162,18 +162,15 @@
                         <td class="p-2 text-center">{{ $totalBoxes }}</td>
                         <td class="p-2 text-center">{{ number_format($totalQuantity, 2, ',', '.') }} kg</td>
                         <td></td>
-                        <td class="p-2 text-center">{{ number_format($totalSubtotal, 2, ',', '.') }}</td>
+                        <td class="p-2 text-center">{{ number_format($totalSubtotal, 2, ',', '.') }} €</td>
                         <td></td>
-                        <td class="p-2 text-center">{{ number_format($totalAmount, 2, ',', '.') }}</td>
+                        <td class="p-2 text-center">{{ number_format($totalAmount, 2, ',', '.') }} €</td>
                     </tr>
                 </tfoot>
             </table>
         </div>
 
-        <!-- OBSERVACIONES -->
-        <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs">
-            Este documento refleja la confirmación de pedido y precios acordados. No es una factura.
-        </div>
+
 
     </div>
 </body>
