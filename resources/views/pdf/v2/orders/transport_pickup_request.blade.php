@@ -48,8 +48,8 @@
 
 
         <!-- DATOS DEL TRANSPORTE + CONTACTOS -->
-        <div class="grid grid-cols-2 gap-4 mb-6 w-full">
-            <div class="border rounded-lg bg-gray-50">
+        <div class="grid grid-cols-2 gap-4 mb-4 w-full">
+            <div class="border rounded-lg bg-gray-50 overflow-hidden">
                 <div class="font-bold p-2 bg-gray-800 text-white">TRANSPORTE</div>
                 <div class="p-4 space-y-1">
                     <p><span class="font-medium">Empresa:</span> {{ $entity->transport->name }}</p>
@@ -65,8 +65,8 @@
                 </div>
             </div>
 
-            <div class="border rounded-lg bg-gray-50">
-                <div class="font-bold p-2 bg-gray-800 text-white">CONTACTOS IMPORTANTES</div>
+            <div class="border rounded-lg bg-gray-50 overflow-hidden">
+                <div class="font-bold p-2 bg-gray-800 text-white">CONTACTOS</div>
                 <div class="p-4 space-y-1">
                     <p><span class="font-medium">Contacto emergencias:</span> emergencias@congeladosbrisamar.es</p>
                     <p><span class="font-medium">Contacto incidencias:</span> incidencias@congeladosbrisamar.es</p>
@@ -77,12 +77,12 @@
         </div>
 
         <!-- DIRECCIÓN DE RECOGIDA Y ENTREGA -->
-        <div class="grid grid-cols-2 gap-4 mb-6">
-            <div class="border rounded-lg bg-gray-50">
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="border rounded-lg bg-gray-50 overflow-hidden">
                 <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE RECOGIDA</div>
                 <div class="p-4">{!! nl2br(e($entity->shipping_address)) !!}</div>
             </div>
-            <div class="border rounded-lg bg-gray-50">
+            <div class="border rounded-lg bg-gray-50 overflow-hidden">
                 <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE ENTREGA</div>
                 <div class="p-4">{!! nl2br(e($entity->billing_address)) !!}</div>
             </div>
@@ -136,13 +136,7 @@
             <p>{!! nl2br(e($entity->transportation_notes)) !!}</p>
         </div>
 
-        <!-- ESPACIO PARA FIRMA Y SELLO CENTRADO -->
-        <div class="mt-10 flex justify-center">
-            <div class="border rounded-lg p-6 h-[130px] w-[320px] flex flex-col justify-between">
-                <p class="font-bold text-center uppercase">Firma, sello y fecha del transportista</p>
-                <div class="border-t border-gray-400 mt-4"></div>
-            </div>
-        </div>
+       
 
     </div>
 </body>
