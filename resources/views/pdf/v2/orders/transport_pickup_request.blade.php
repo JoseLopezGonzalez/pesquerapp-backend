@@ -40,11 +40,14 @@
             </div>
         </div>
 
-        <!-- FECHA PREVISTA DE RECOGIDA DESTACADA -->
-        <div class="border-2 border-black bg-gray-100 rounded-lg p-4 mb-6 text-center">
-            <h3 class="text-lg font-bold uppercase mb-1">⚠️ Fecha prevista de recogida ⚠️</h3>
-            <p class="text-xl font-semibold">{{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
+        <!-- FECHA PREVISTA DE RECOGIDA -->
+        <div class="border rounded-lg bg-gray-50 mb-6 w-full">
+            <div class="font-bold p-2 bg-gray-800 text-white uppercase text-center">Fecha prevista de recogida</div>
+            <div class="p-4 flex justify-center items-center">
+                <p class="text-lg font-bold">{{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
+            </div>
         </div>
+
 
         <!-- DATOS DEL TRANSPORTE + CONTACTOS -->
         <div class="grid grid-cols-2 gap-4 mb-6 w-full">
