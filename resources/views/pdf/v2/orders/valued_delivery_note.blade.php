@@ -108,26 +108,26 @@
                 <!-- TOTALES -->
                 <tfoot class="border-t bg-gray-100 font-semibold">
                     <tr>
-                        <td class="p-2">Totales:</td>
+                        <td class="p-2">Totales</td>
                         <td class="p-2 text-center">{{ $totalBoxes }}</td>
                         <td class="p-2 text-center">{{ number_format($totalNetWeight, 2, ',', '.') }} kg</td>
                         <td class="p-2 text-center"></td>
-                        <td class="p-2 text-center">{{ number_format($totalSubtotal, 2, ',', '.') }}</td>
+                        <td class="p-2 text-center">{{ number_format($totalSubtotal, 2, ',', '.') }} €</td>
                         <td class="p-2 text-center"></td>
-                        <td class="p-2 text-center">{{ number_format($totalAmount, 2, ',', '.') }}</td>
+                        <td class="p-2 text-center">{{ number_format($totalAmount, 2, ',', '.') }} €</td>
                     </tr>
                     <tr>
-                        <td colspan="4" class="p-2 text-end">Base Imponible (€):</td>
-                        <td colspan="3" class="p-2 text-end">{{ number_format($totalSubtotal, 2, ',', '.') }}</td>
+                        <td colspan="4" class="p-2 text-end">Base Imponible:</td>
+                        <td colspan="3" class="p-2 text-end">{{ number_format($totalSubtotal, 2, ',', '.') }} €</td>
                     </tr>
                     <tr>
-                        <td colspan="4" class="p-2 text-end">IVA Total (€):</td>
-                        <td colspan="3" class="p-2 text-end">{{ number_format($totalTax, 2, ',', '.') }}</td>
+                        <td colspan="4" class="p-2 text-end">IVA Total:</td>
+                        <td colspan="3" class="p-2 text-end">{{ number_format($totalTax, 2, ',', '.') }} €</td>
                     </tr>
                     <tr>
-                        <td colspan="4" class="p-2 text-end">TOTAL (€):</td>
+                        <td colspan="4" class="p-2 text-end">TOTAL:</td>
                         <td colspan="3" class="p-2 text-end font-bold">
-                            {{ number_format($totalAmount, 2, ',', '.') }}</td>
+                            {{ number_format($totalAmount, 2, ',', '.') }} €</td>
                     </tr>
                 </tfoot>
             </table>
