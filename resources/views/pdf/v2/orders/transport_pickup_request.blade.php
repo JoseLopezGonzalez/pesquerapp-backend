@@ -43,22 +43,18 @@
 
         <div class='grid-cols-2 grid gap-4'>
 
-            <!-- FECHA PREVISTA DE RECOGIDA -->
-            <div class="border rounded-lg bg-gray-50 mb-6 w-full">
-                <div class="font-bold p-2 bg-gray-800 text-white uppercase text-center">Fecha prevista de recogida</div>
-                <div class="p-4 flex justify-center items-center">
-                    <p class="text-lg font-bold">{{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
-                </div>
+
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
+                <p><strong>Fecha de recogida prevista:</strong></p>
+                <p>{{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
             </div>
 
-            <div class="border rounded-lg bg-gray-50 mb-6 w-full">
-                <div class="font-bold p-2 bg-gray-800 text-white uppercase text-center">Nº de Palets Previstos</div>
-                <div class="p-4 flex justify-center items-center">
-                    <p class="text-lg font-bold">
-                        {{ $entity->numberOfPallets }}
-                    </p>
-                </div>
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
+                <p><strong>Nº de Palets Previstos:</strong></p>
+                <p> {{ $entity->numberOfPallets }}</p>
             </div>
+
+
         </div>
 
 
