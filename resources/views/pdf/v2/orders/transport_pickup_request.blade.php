@@ -29,7 +29,7 @@
             </div>
             <div class="flex items-start gap-4">
                 <div class="text-end">
-                    <h2 class="text-lg font-bold">Solicitud de recogida de transporte</h2>
+                    <h2 class="text-lg font-bold">Solicitud de recogida</h2>
                     <p class="font-medium">{{ $entity->formattedId }}</p>
                     <p class="font-medium">Buyer Reference: {{ $entity->buyer_reference }}</p>
                 </div>
@@ -90,8 +90,8 @@
 
         
 
-        <div class="border p-4 py-2 rounded-lg bg-gray-50 mb-2 text-[10px]">
-            <div class="grid grid-cols-3 gap-4 divide-x-gray-800">
+        <div class="border p-4 py-2 rounded-lg bg-gray-50 mb-6 text-[10px]">
+            <div class="grid grid-cols-2 gap-4 divide-x-gray-800">
                 <div>
                     <p class="font-bold">FECHA DE RECOGIDA PREVISTA</p>
                     <p>{{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
