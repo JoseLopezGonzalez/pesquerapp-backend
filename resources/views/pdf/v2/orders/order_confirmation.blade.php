@@ -170,22 +170,29 @@
             </table>
         </div>
 
-        <!-- OBSERVACIONES Y CONFIRMACIÓN -->
-        <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
-            <p>
-                Este documento refleja la confirmación del pedido y los precios acordados. No es una factura.
-            </p>
-            <p class="font-semibold">
-                Para la aprobación definitiva del pedido, es necesario enviar este documento firmado y sellado a
-                Congelados Brisamar S.L. a la dirección de correo <strong>administracion@congeladosbrisamar.es</strong>.
-            </p>
+        <div class="grid-cols-2 grid ">
+
+
+            <!-- OBSERVACIONES Y CONFIRMACIÓN -->
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
+                <p>
+                    Este documento refleja la confirmación del pedido y los precios acordados. No es una factura.
+                </p>
+                <p class="font-medium text-xs">
+                    Para la aprobación definitiva del pedido, es necesario enviar este documento firmado y sellado a
+                    Congelados Brisamar S.L. a la dirección de correo
+                    <strong>administracion@congeladosbrisamar.es</strong>.
+                </p>
+            </div>
+
+            <!-- ESPACIO PARA FIRMA Y SELLO -->
+            <div class="mt-8 border rounded-lg p-6 h-[150px] flex flex-col justify-between">
+                <p class="font-bold text-center uppercase">Firma y sello del cliente</p>
+                <div class="border-t border-gray-400 mt-4"></div>
+            </div>
+
         </div>
 
-        <!-- ESPACIO PARA FIRMA Y SELLO -->
-        <div class="mt-8 border rounded-lg p-6 h-[150px] flex flex-col justify-between">
-            <p class="font-bold text-center uppercase">Firma y sello del cliente</p>
-            <div class="border-t border-gray-400 mt-4"></div>
-        </div>
 
 
 
