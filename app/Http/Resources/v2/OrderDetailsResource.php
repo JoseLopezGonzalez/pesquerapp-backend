@@ -48,6 +48,8 @@ class OrderDetailsResource extends JsonResource
             'productDetails' => $this->productDetails,
             'subTotalAmount' => $this->subTotalAmount,
             'totalAmount' => $this->totalAmount,
+            'emailsArray' => $this->emailsArray,
+            'ccEmailsArray' => $this->ccEmailsArray,
         ];
     }
 }

@@ -29,6 +29,8 @@ class Transport extends Model
             'vatNumber' => $this->vat_number,
             'address' => $this->address,
             'emails' => $this->emails,
+            'emailsArray' => $this->emailsArray,
+            'ccEmailsArray' => $this->ccEmailsArray,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];
