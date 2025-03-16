@@ -170,7 +170,7 @@
             </table>
         </div>
 
-        <div class="grid-cols-2 grid my-6">
+        <div class="grid-cols-2 grid mt-14 gap-3">
 
 
             <!-- OBSERVACIONES Y CONFIRMACIÓN -->
@@ -185,8 +185,8 @@
 
             <!-- ESPACIO PARA FIRMA Y SELLO -->
             <div class=" border rounded-lg p-6  flex flex-col justify-between">
-                <p class="font-bold text-center uppercase">Firma y sello del cliente</p>
-                <div class="border-t border-gray-400 mt-4"></div>
+                <p class="font-bold text-center ">Firma y Sello</p>
+                <div class="border-t border-gray-400 mt-8"></div>
             </div>
 
         </div>
