@@ -40,63 +40,32 @@
             </div>
         </div>
 
-        <!-- CLIENTE Y TRANSPORTE -->
+        <!-- DATOS DEL TRANSPORTE -->
+        <div class="border rounded-lg bg-gray-50 mb-6 w-full">
+            <div class="font-bold p-2 bg-gray-800 text-white">TRANSPORTE</div>
+            <div class="p-4">
+                <p><span class="font-medium">Empresa:</span> {{ $entity->transport->name }}</p>
+                <p class="font-medium mt-2">Correos electrónicos:</p>
+                <ul class="list-disc pl-5">
+                    @foreach ($entity->transport->emailsArray as $email)
+                        <li>{{ $email }}</li>
+                    @endforeach
+                    @foreach ($entity->ccEmailsArray as $email)
+                        <li>{{ $email }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+
+        <!-- DIRECCIÓN DE RECOGIDA Y ENTREGA -->
         <div class="grid grid-cols-2 gap-4 mb-6">
             <div class="border rounded-lg bg-gray-50">
-                <div class="font-bold p-2 bg-gray-800 text-white">DATOS DEL CLIENTE</div>
-                <div class="p-4">
-                    <p><span class="font-medium">Nombre:</span> {{ $entity->customer->name }}</p>
-                    <p><span class="font-medium">NIF/CIF:</span> {{ $entity->customer->vat_number }}</p>
-                    <p class="font-medium mt-2">Correos electrónicos:</p>
-                    <ul class="list-disc pl-5">
-                        @foreach ($entity->emailsArray as $email)
-                            <li>{{ $email }}</li>
-                        @endforeach
-                        @foreach ($entity->ccEmailsArray as $email)
-                            <li>{{ $email }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+                <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE RECOGIDA</div>
+                <div class="p-4">{!! nl2br(e($entity->shipping_address)) !!}</div>
             </div>
-
             <div class="border rounded-lg bg-gray-50">
-                <div class="font-bold p-2 bg-gray-800 text-white">TRANSPORTE</div>
-                <div class="p-4">
-                    <p><span class="font-medium">Empresa:</span> {{ $entity->transport->name }}</p>
-                    <p class="font-medium mt-2">Correos electrónicos:</p>
-                    <ul class="list-disc pl-5">
-                        @foreach ($entity->transport->emailsArray as $email)
-                            <li>{{ $email }}</li>
-                        @endforeach
-                        @foreach ($entity->ccEmailsArray as $email)
-                            <li>{{ $email }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- DIRECCIÓN DE RECOGIDA -->
-        <div class="border rounded-lg bg-gray-50 mb-6">
-            <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE RECOGIDA</div>
-            <div class="p-4">{!! nl2br(e($entity->shipping_address)) !!}</div>
-        </div>
-
-        <!-- CONDICIONES DEL PEDIDO -->
-        <div class="border p-4 rounded-lg bg-gray-50 mb-6 text-[10px]">
-            <div class="grid grid-cols-3 gap-4">
-                <div>
-                    <p class="font-bold">FORMA DE PAGO</p>
-                    <p>{{ $entity->payment_term->name }}</p>
-                </div>
-                <div>
-                    <p class="font-bold">INCOTERM</p>
-                    <p>{{ $entity->incoterm->code }} - {{ $entity->incoterm->description }}</p>
-                </div>
-                <div>
-                    <p class="font-bold">NÚMERO DE PALETS</p>
-                    <p>{{ $entity->numberOfPallets }}</p>
-                </div>
+                <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE ENTREGA</div>
+                <div class="p-4">{!! nl2br(e($entity->billing_address)) !!}</div>
             </div>
         </div>
 
