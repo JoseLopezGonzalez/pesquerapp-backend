@@ -31,7 +31,6 @@
                 <div class="text-end">
                     <h2 class="text-lg font-bold">Solicitud de recogida de transporte</h2>
                     <p class="font-medium">{{ $entity->formattedId }}</p>
-                    <p class="font-medium">Fecha solicitud: {{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
                     <p class="font-medium">Buyer Reference: {{ $entity->buyer_reference }}</p>
                 </div>
                 <div class="p-1 border rounded bg-white">
@@ -39,6 +38,12 @@
                         class="w-[4.1rem] h-[4.1rem]" alt="QR Code" />
                 </div>
             </div>
+        </div>
+
+        <!-- FECHA PREVISTA DE RECOGIDA DESTACADA -->
+        <div class="border-2 border-black bg-gray-100 rounded-lg p-4 mb-6 text-center">
+            <h3 class="text-lg font-bold uppercase mb-1">⚠️ Fecha prevista de recogida ⚠️</h3>
+            <p class="text-xl font-semibold">{{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
         </div>
 
         <!-- DATOS DEL TRANSPORTE + CONTACTOS -->
@@ -60,10 +65,8 @@
             </div>
 
             <div class="border rounded-lg bg-gray-50">
-                <div class="font-bold p-2 bg-gray-800 text-white">DETALLES Y CONTACTOS IMPORTANTES</div>
+                <div class="font-bold p-2 bg-gray-800 text-white">CONTACTOS IMPORTANTES</div>
                 <div class="p-4 space-y-1">
-                    <p><span class="font-medium">Fecha prevista de recogida:</span>
-                        {{ date('d/m/Y', strtotime($entity->load_date)) }}</p>
                     <p><span class="font-medium">Contacto emergencias:</span> emergencias@congeladosbrisamar.es</p>
                     <p><span class="font-medium">Contacto incidencias:</span> incidencias@congeladosbrisamar.es</p>
                     <p><span class="font-medium">Contacto para carga:</span> carga@congeladosbrisamar.es</p>
@@ -113,7 +116,7 @@
             <p>{!! nl2br(e($entity->transportation_notes)) !!}</p>
         </div>
 
-        <!-- ESPACIO PARA FIRMA Y SELLO -->
+        <!-- ESPACIO PARA FIRMA Y SELLO CENTRADO -->
         <div class="mt-10 flex justify-center">
             <div class="border rounded-lg p-6 h-[130px] w-[320px] flex flex-col justify-between">
                 <p class="font-bold text-center uppercase">Firma, sello y fecha del transportista</p>
