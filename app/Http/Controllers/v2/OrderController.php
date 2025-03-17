@@ -253,4 +253,17 @@ class OrderController extends Controller
 
         return response()->json($order);
     }
+
+    /* update Order status */
+    public function updateStatus(Request $request, string $id)
+    {
+        $request->validate([
+            'status' => 'required|string',
+        ]);
+
+        $order = Order::findOrFail($id);
+        $order->status = $request->status;
+        $order->save();
+        return new OrderDetailsResource($order);
+    }
 }

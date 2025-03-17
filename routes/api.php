@@ -298,6 +298,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::apiResource('countries', CountryController::class);
             Route::apiResource('payment-terms', V2PaymentTermController::class);
             Route::apiResource('cebo-dispatches', V2CeboDispatchController::class);
+            /* Update Order status */
+            Route::put('orders/{order}/status', [V2OrderController::class, 'updateStatus'])->name('orders.update_status');
 
             /* Descargas */
             Route::get('orders/{orderId}/pdf/order-sheet', [\App\Http\Controllers\v2\PDFController::class, 'generateOrderSheet'])->name('generate_order_sheet');
