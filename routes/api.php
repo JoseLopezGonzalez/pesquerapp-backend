@@ -224,7 +224,7 @@ Route::post('v1/insert-auto-sales-customers', [CustomerController::class, 'inser
 }); */
 
 
-Route::group(['prefix' => 'v2'], function () {
+Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
     // Rutas públicas (sin autenticación)
     Route::post('login', [V2AuthController::class, 'login'])->name('v2.login');
     Route::post('logout', [V2AuthController::class, 'logout'])->middleware('auth:sanctum')->name('v2.logout');
