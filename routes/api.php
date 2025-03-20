@@ -25,6 +25,7 @@ use App\Http\Controllers\v1\SalespersonController;
 use App\Http\Controllers\v1\SpeciesController;
 use App\Http\Controllers\v1\ProcessNodeController;
 use App\Http\Controllers\v1\FinalNodeController;
+use App\Http\Controllers\v1\PdfExtractionController;
 use App\Http\Controllers\v2\TaxController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -248,6 +249,10 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('users', UserController::class);
             Route::apiResource('activity-logs', ActivityLogController::class);
             Route::apiResource('roles', RoleController::class);
+
+            /* Pdf extractor */
+            Route::post('pdf-extractor', [PdfExtractionController::class, 'extract'])->name('pdf.extract');
+
         });
 
         // Rutas para Gerencia
