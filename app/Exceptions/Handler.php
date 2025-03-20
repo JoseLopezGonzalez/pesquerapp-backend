@@ -16,24 +16,24 @@ class Handler extends ExceptionHandler
      *
      * @var array<int, string>
      */
-    /* protected $dontFlash = [
+    protected $dontFlash = [
         'current_password',
         'password',
         'password_confirmation',
-    ]; */
+    ];
 
     /**
      * Register the exception handling callbacks for the application.
      */
-    /* public function register(): void
+    public function register(): void
     {
         $this->reportable(function (Throwable $e) {
             //
         });
-    } */
+    }
 
     /* Render */
-    /* public function render($request, Throwable $exception)
+    public function render($request, Throwable $exception)
     {
         // Si la solicitud espera JSON o es una API, forzar la respuesta JSON
         if ($request->expectsJson() || $request->is('api/*')) {
@@ -69,12 +69,12 @@ class Handler extends ExceptionHandler
 
         // Si no es una API o no espera JSON, usar el manejo por defecto
         return parent::render($request, $exception);
-    } */
+    }
 
 
-    public function render($request, Throwable $exception)
+    /* public function render($request, Throwable $exception)
     {
         return parent::render($request, $exception); // Esto muestra los errores normales en pantalla
     }
-
+ */
 }
