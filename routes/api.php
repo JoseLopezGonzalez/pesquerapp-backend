@@ -25,7 +25,7 @@ use App\Http\Controllers\v1\SalespersonController;
 use App\Http\Controllers\v1\SpeciesController;
 use App\Http\Controllers\v1\ProcessNodeController;
 use App\Http\Controllers\v1\FinalNodeController;
-use App\Http\Controllers\v1\PdfExtractionController;
+use App\Http\Controllers\v2\PdfExtractionController;
 use App\Http\Controllers\v2\TaxController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
