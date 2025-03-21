@@ -9,6 +9,7 @@
         "barryvdh/laravel-dompdf": "^2.1",
         "barryvdh/laravel-snappy": "^1.0",
         "beganovich/snappdf": "^4.0",
+        "google/cloud-document-ai": "^2.1",
         "guzzlehttp/guzzle": "^7.2",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^10.10",

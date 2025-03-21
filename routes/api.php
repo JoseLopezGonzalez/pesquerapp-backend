@@ -43,6 +43,7 @@ use App\Http\Controllers\v2\CeboDispatchController as V2CeboDispatchController;
 use App\Http\Controllers\v2\CountryController;
 use App\Http\Controllers\v2\CustomerController as V2CustomerController;
 use App\Http\Controllers\v2\FishingGearController;
+use App\Http\Controllers\v2\GoogleDocumentAIController;
 use App\Http\Controllers\v2\IncotermController as V2IncotermController;
 use App\Http\Resources\v1\CustomerResource;
 use App\Models\PaymentTerm;
@@ -252,6 +253,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
 
             /* Pdf extractor */
             Route::post('pdf-extractor', [PdfExtractionController::class, 'extract'])->name('pdf.extract');
+            Route::post('v1/document-ai/parse', [GoogleDocumentAIController::class, 'processPdf']);
+
 
         });
 
