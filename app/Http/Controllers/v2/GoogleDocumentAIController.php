@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
+use Google\Cloud\DocumentAI\V1\Client\DocumentProcessorServiceClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Google\Cloud\DocumentAI\V1\DocumentProcessorServiceClient;
+/* use Google\Cloud\DocumentAI\V1\DocumentProcessorServiceClient; */
 use Google\Cloud\DocumentAI\V1\RawDocument;
 use Google\Cloud\DocumentAI\V1\ProcessRequest;
 
