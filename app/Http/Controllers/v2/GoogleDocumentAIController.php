@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Google\Cloud\DocumentAI\V1\Client\DocumentProcessorServiceClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-/* use Google\Cloud\DocumentAI\V1\DocumentProcessorServiceClient; */
 use Google\Cloud\DocumentAI\V1\RawDocument;
 use Google\Cloud\DocumentAI\V1\ProcessRequest;
 
@@ -14,60 +13,71 @@ class GoogleDocumentAIController extends Controller
 {
     public function processPdf(Request $request)
     {
-        // Validar PDF
+        // 1. Validar PDF
         $request->validate([
             'pdf' => 'required|file|mimes:pdf|max:20480',
         ]);
 
-        // Guardar temporal
+        // 2. Guardar temporal
         $path = $request->file('pdf')->store('pdfs');
         $fullPath = Storage::path($path);
 
-        // Credenciales
-        $credentialsPath = storage_path('app/google-credentials.json'); // Ajusta a tu archivo
-        $projectId = '223147234811';
-        $location = 'eu'; // ej. "eu" o "us"
-        $processorId = '8ac94b1c45e776ee'; // tu ID, p. ej: 1091d309f8ae
+        // 3. Configurar credenciales y datos de Document AI
+        $credentialsPath = storage_path('app/google-credentials.json'); 
+        $projectId   = '223147234811';
+        $location    = 'eu'; 
+        $processorId = '8ac94b1c45e776ee'; 
 
-        // Crear el cliente
+        // 4. Crear el cliente DocumentProcessorService
         $documentProcessor = new DocumentProcessorServiceClient([
             'credentials' => $credentialsPath,
-            // Para procesadores en la region EU (eu)
             'apiEndpoint' => 'eu-documentai.googleapis.com',
         ]);
 
-        // Construir el nombre del processor
+        // 5. Construir el nombre del procesador
         $name = $documentProcessor->processorName($projectId, $location, $processorId);
 
-        // Leer el PDF
+        // 6. Leer el PDF como RawDocument
         $content = file_get_contents($fullPath);
         $rawDocument = (new RawDocument())
             ->setContent($content)
             ->setMimeType('application/pdf');
 
-        // Armar la request
+        // 7. Preparar la solicitud
         $requestProcess = (new ProcessRequest())
             ->setName($name)
             ->setRawDocument($rawDocument);
 
-        // Llamar a Document AI
+        // 8. Llamar a Document AI
         try {
             $response = $documentProcessor->processDocument($requestProcess);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
 
+        // 9. Obtener el Document resultante
         $document = $response->getDocument();
 
-        // Ejemplo: extraer texto completo y/o Entities
+        // 10. (Opcional) Texto completo (si quieres verlo)
         $fullText = $document->getText();
-        // Si es un Custom Processor con campos etiquetados,
-        // podrías explorar $document->getEntities() para ver tus campos.
 
+        // 11. Iterar sobre las entidades (etiquetas personalizadas)
+        $entitiesList = $document->getEntities();
+        $entities = [];  // Aquí guardamos tus campos etiquetados
+
+        foreach ($entitiesList as $entity) {
+            $entities[] = [
+                'type'       => $entity->getType(),         // nombre de la etiqueta
+                'value'      => $entity->getMentionText(),  // texto detectado
+                'confidence' => $entity->getConfidence(),   // nivel de confianza
+            ];
+        }
+
+        // 12. Devolver en JSON el texto y las entidades
         return response()->json([
-            'message' => 'Procesado con éxito',
-            'fullText' => $fullText,
-            // 'entities' => $document->getEntities(), // si quieres debug
+            'message'  => 'Procesado con éxito',
+            'fullText' => $fullText,   // O quítalo si no quieres mostrar el OCR completo
+            'entities' => $entities,   // Etiquetas con valores
         ]);
     }
 }
