@@ -253,7 +253,7 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
 
             /* Pdf extractor */
             Route::post('pdf-extractor', [PdfExtractionController::class, 'extract'])->name('pdf.extract');
-            Route::post('v1/document-ai/parse', [GoogleDocumentAIController::class, 'processPdf']);
+            Route::post('document-ai/parse', [GoogleDocumentAIController::class, 'processPdf']);
 
 
         });
