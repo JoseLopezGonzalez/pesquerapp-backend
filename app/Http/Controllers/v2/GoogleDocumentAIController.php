@@ -31,7 +31,9 @@ class GoogleDocumentAIController extends Controller
 
         // Crear el cliente
         $documentProcessor = new DocumentProcessorServiceClient([
-            'credentials' => $credentialsPath
+            'credentials' => $credentialsPath,
+            // Para procesadores en la region EU (eu)
+            'apiEndpoint' => 'eu-documentai.googleapis.com',
         ]);
 
         // Construir el nombre del processor
