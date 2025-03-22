@@ -104,11 +104,11 @@
 
                     </p>
 
-                    <p style="text-align: left; font-size: 9pt; left: 800px; top: 350px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 500px; top: 350px; position: absolute;">
                         {{ $entity->truck_plate }}
                     </p>
 
-                    <p style="text-align: left; font-size: 9pt; left: 850px; top: 350px; position: absolute;">
+                    <p style="text-align: left; font-size: 9pt; left: 550px; top: 350px; position: absolute;">
                         {{ $entity->trailer_plate }}
                     </p>
 
