@@ -44,6 +44,7 @@ use App\Http\Controllers\v2\CountryController;
 use App\Http\Controllers\v2\CustomerController as V2CustomerController;
 use App\Http\Controllers\v2\FishingGearController;
 use App\Http\Controllers\v2\GoogleDocumentAIController;
+use App\Http\Controllers\v2\IncidentController;
 use App\Http\Controllers\v2\IncotermController as V2IncotermController;
 use App\Http\Resources\v1\CustomerResource;
 use App\Models\PaymentTerm;
@@ -307,7 +308,10 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('payment-terms', V2PaymentTermController::class);
             Route::apiResource('cebo-dispatches', V2CeboDispatchController::class);
             /* order incidents */
-            Route::apiResource('orders.incidents', \App\Http\Controllers\v2\IncidentController::class);
+            Route::get('orders/{orderId}/incident', [IncidentController::class, 'show']);
+            Route::post('orders/{orderId}/incident', [IncidentController::class, 'store']);
+            Route::put('orders/{orderId}/incident', [IncidentController::class, 'update']);
+            Route::delete('orders/{orderId}/incident', [IncidentController::class, 'destroy']);
 
             /* Update Order status */
             Route::put('orders/{order}/status', [V2OrderController::class, 'updateStatus'])->name('orders.update_status');

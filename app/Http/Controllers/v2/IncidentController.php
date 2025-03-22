@@ -1,41 +1,57 @@
 <?php
 
-
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
 use App\Models\Incident;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class IncidentController extends Controller
 {
-    public function index(Request $request)
+    public function show($orderId)
     {
-        return Incident::with('order')->latest()->get();
+        $order = Order::with('incident')->findOrFail($orderId);
+
+        if (!$order->incident) {
+            return response()->json(['message' => 'Incident not found'], 404);
+        }
+
+        return response()->json($order->incident);
     }
 
-    public function show(Incident $incident)
+    public function store(Request $request, $orderId)
     {
-        return response()->json($incident->load('order'));
-    }
+        $order = Order::with('incident')->findOrFail($orderId);
 
-    public function store(Request $request)
-    {
+        if ($order->incident) {
+            return response()->json(['message' => 'Incident already exists'], 400);
+        }
+
         $validated = $request->validate([
-            'order_id' => 'required|exists:orders,id',
             'description' => 'required|string',
         ]);
 
-        $incident = Incident::create($validated);
+        $incident = Incident::create([
+            'order_id' => $order->id,
+            'description' => $validated['description'],
+        ]);
 
-        // Al crear la incidencia, el pedido pasa a estado 'incident'
-        $incident->order->update(['status' => 'incident']);
+        $order->update(['status' => 'incident']);
 
         return response()->json($incident, 201);
     }
 
-    public function update(Request $request, Incident $incident)
+    public function update(Request $request, $orderId)
     {
+        $order = Order::with('incident')->findOrFail($orderId);
+
+        $incident = $order->incident;
+
+        if (!$incident) {
+            return response()->json(['message' => 'Incident not found'], 404);
+        }
+
         $validated = $request->validate([
             'resolution_type' => 'required|in:returned,partially_returned,compensated',
             'resolution_notes' => 'nullable|string',
@@ -51,9 +67,18 @@ class IncidentController extends Controller
         return response()->json($incident);
     }
 
-    public function destroy(Incident $incident)
+    public function destroy($orderId)
     {
+        $order = Order::with('incident')->findOrFail($orderId);
+
+        $incident = $order->incident;
+
+        if (!$incident) {
+            return response()->json(['message' => 'Incident not found'], 404);
+        }
+
         $incident->delete();
+
         return response()->noContent();
     }
 }
