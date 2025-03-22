@@ -103,6 +103,15 @@
                         {!! nl2br(e($modifiedAddress)) !!}
 
                     </p>
+
+                    <p style="text-align: right; font-size: 9pt; right: 165px; top: 340px; position: absolute;">
+                        {{ $entity->truck_plate }}
+                    </p>
+
+                    <p style="text-align: right; font-size: 9pt; right: 165px; top: 340px; position: absolute;">
+                        {{ $entity->trailer_plate }}
+                    </p>
+
                     <p class="preserve-line-breaks"
                         style="text-align: left; font-size: 6pt; left: 90px; top: 253px; position: absolute;">
                         {{-- {{ $entity->customer->alias }} <br/> --}}
