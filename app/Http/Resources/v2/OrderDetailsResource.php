@@ -52,6 +52,7 @@ class OrderDetailsResource extends JsonResource
             'ccEmailsArray' => $this->ccEmailsArray,
             'truckPlate' => $this->truck_plate,
             'trailerPlate' => $this->trailer_plate,
+            'temperature' => $this->temperature,
         ];
     }
 }

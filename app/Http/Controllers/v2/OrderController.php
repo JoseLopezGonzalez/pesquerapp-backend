@@ -239,6 +239,11 @@ class OrderController extends Controller
             $order->trailer_plate = $request->trailerPlate;
         }
 
+        /* temperature */
+        if ($request->has('temperature')) {
+            $order->temperature = $request->temperature;
+        }
+
         $order->updated_at = now();
         $order->save();
         return new OrderDetailsResource($order);
