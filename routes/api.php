@@ -306,6 +306,9 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('countries', CountryController::class);
             Route::apiResource('payment-terms', V2PaymentTermController::class);
             Route::apiResource('cebo-dispatches', V2CeboDispatchController::class);
+            /* order incidents */
+            Route::apiResource('orders.incidents', \App\Http\Controllers\v2\IncidentController::class);
+
             /* Update Order status */
             Route::put('orders/{order}/status', [V2OrderController::class, 'updateStatus'])->name('orders.update_status');
 

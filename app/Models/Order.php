@@ -488,5 +488,13 @@ class Order extends Model
         return collect($this->productDetails)->sum('total');
     }
 
+    /* incident only one */
+    public function incident()
+    {
+        return $this->hasOne(Incident::class);
+    }
+    
+    
+
 
 }

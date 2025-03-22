@@ -53,6 +53,7 @@ class OrderDetailsResource extends JsonResource
             'truckPlate' => $this->truck_plate,
             'trailerPlate' => $this->trailer_plate,
             'temperature' => $this->temperature,
+            'incident' => $this->incident ? $this->incident->toArrayAssoc() : null, 
         ];
     }
 }
