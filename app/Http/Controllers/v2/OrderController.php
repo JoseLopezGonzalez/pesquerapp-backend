@@ -72,14 +72,14 @@ class OrderController extends Controller
             }
 
             /* entryDate */
-            if($request->has('entryDate')){
+            if ($request->has('entryDate')) {
                 $entryDate = $request->input('entryDate');
-                if(isset($entryDate['start'])){
+                if (isset($entryDate['start'])) {
                     $startDate = $entryDate['start'];
                     $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
                     $query->where('entry_date', '>=', $startDate);
                 }
-                if(isset($entryDate['end'])){
+                if (isset($entryDate['end'])) {
                     $endDate = $entryDate['end'];
                     $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
                     $query->where('entry_date', '<=', $endDate);
@@ -101,11 +101,11 @@ class OrderController extends Controller
             /* palletState */
             if ($request->has('palletsState')) {
                 /* if order has any pallets */
-                if($request->palletsState == 'stored'){
+                if ($request->palletsState == 'stored') {
                     $query->whereHas('pallets', function ($q) use ($request) {
                         $q->where('state_id', 2);
                     });
-                }else if ($request->palletsState == 'shipping'){
+                } else if ($request->palletsState == 'shipping') {
                     /* Solo tiene palets en el estado 3 */
                     $query->whereHas('pallets', function ($q) use ($request) {
                         $q->where('state_id', 3);
@@ -143,7 +143,8 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {}
+    {
+    }
 
     /**
      * Display the specified resource.
@@ -226,6 +227,16 @@ class OrderController extends Controller
         }
         if ($request->has('incoterm')) {
             $order->incoterm_id = $request->incoterm;
+        }
+
+        /*  'truckPlate' 
+         'trailerPlate' */
+
+        if ($request->has('truckPlate')) {
+            $order->truck_plate = $request->truckPlate;
+        }
+        if ($request->has('trailerPlate')) {
+            $order->trailer_plate = $request->trailerPlate;
         }
 
         $order->updated_at = now();
