@@ -153,7 +153,7 @@
                         {{ number_format($entity->totals['netWeight'], 2, ',', '.') }} kg
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 190px; top: 680px; position: absolute;">
-                        {{ $entity->temperature }} ºC
+                        {{ $entity->temperature || '0' }} ºC
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 815px; position: absolute;">
                         {{ $entity->incoterm->code }} - {{ $entity->incoterm->description }}
