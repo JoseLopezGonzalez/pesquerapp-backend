@@ -39,7 +39,7 @@ class IncidentController extends Controller
 
         $order->update(['status' => 'incident']);
 
-        return response()->json($incident, 201);
+        return response()->json($incident->toArrayAssoc(), 201);
     }
 
     public function update(Request $request, $orderId)
@@ -64,7 +64,7 @@ class IncidentController extends Controller
             'resolved_at' => now(),
         ]);
 
-        return response()->json($incident);
+        return response()->json($incident->toArrayAssoc());
     }
 
     public function destroy($orderId)
@@ -79,6 +79,11 @@ class IncidentController extends Controller
 
         $incident->delete();
 
-        return response()->noContent();
+        /* cambiar order status a finished */
+        $order->update(['status' => 'finished']);
+
+        /* return response()->noContent(); */
+        /* return mensaje satisfactorio */
+        return response()->json(['message' => 'Incident deleted'], 200);
     }
 }
