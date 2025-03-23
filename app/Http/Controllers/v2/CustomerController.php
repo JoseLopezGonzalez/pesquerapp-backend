@@ -81,7 +81,9 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+
+        return new V2CustomerResource($customer);
     }
 
     /**
