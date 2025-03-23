@@ -9,6 +9,9 @@ use App\Models\Order;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
+use App\Models\OrderPlannedProductDetail;
+use Illuminate\Support\Facades\DB;
+
 class OrderController extends Controller
 {
     /**
@@ -144,6 +147,76 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'customer' => 'required|integer|exists:customers,id',
+            'entryDate' => 'required|date',
+            'loadDate' => 'required|date',
+            'salesperson' => 'nullable|integer|exists:salespeople,id',
+            'payment' => 'nullable|integer|exists:payment_terms,id',
+            'incoterm' => 'nullable|integer|exists:incoterms,id',
+            'transport' => 'nullable|integer|exists:transports,id',
+            'truckPlate' => 'nullable|string',
+            'trailerPlate' => 'nullable|string',
+            'temperature' => 'nullable|string',
+            'billingAddress' => 'nullable|string',
+            'shippingAddress' => 'nullable|string',
+            'transportationNotes' => 'nullable|string',
+            'productionNotes' => 'nullable|string',
+            'accountingNotes' => 'nullable|string',
+            'emails' => 'nullable|string',
+            'plannedProducts' => 'nullable|array',
+            'plannedProducts.*.product' => 'required|integer|exists:products,id',
+            'plannedProducts.*.quantity' => 'required|numeric',
+            'plannedProducts.*.boxes' => 'required|integer',
+            'plannedProducts.*.unitPrice' => 'required|numeric',
+            'plannedProducts.*.tax' => 'required|integer|exists:taxes,id',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $order = Order::create([
+                'customer_id' => $validated['customer'],
+                'entry_date' => $validated['entryDate'],
+                'load_date' => $validated['loadDate'],
+                'salesperson_id' => $validated['salesperson'] ?? null,
+                'payment_term_id' => $validated['payment'] ?? null,
+                'incoterm_id' => $validated['incoterm'] ?? null,
+                'transport_id' => $validated['transport'] ?? null,
+                'truck_plate' => $validated['truckPlate'] ?? null,
+                'trailer_plate' => $validated['trailerPlate'] ?? null,
+                'temperature' => $validated['temperature'] ?? null,
+                'billing_address' => $validated['billingAddress'] ?? null,
+                'shipping_address' => $validated['shippingAddress'] ?? null,
+                'transportation_notes' => $validated['transportationNotes'] ?? null,
+                'production_notes' => $validated['productionNotes'] ?? null,
+                'accounting_notes' => $validated['accountingNotes'] ?? null,
+                'emails' => $validated['emails'] ?? null,
+                'status' => 'pending',
+            ]);
+
+            if (!empty($validated['plannedProducts'])) {
+                foreach ($validated['plannedProducts'] as $line) {
+                    OrderPlannedProductDetail::create([
+                        'order_id' => $order->id,
+                        'product_id' => $line['product'],
+                        'tax_id' => $line['tax'],
+                        'quantity' => $line['quantity'],
+                        'boxes' => $line['boxes'],
+                        'unit_price' => $line['unitPrice'],
+                        'line_base' => $line['unitPrice'] * $line['quantity'],
+                        'line_total' => $line['unitPrice'] * $line['quantity'],
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            return new OrderDetailsResource($order);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Error al crear el pedido', 'error' => $e->getMessage()], 500);
+        }
     }
 
     /**
