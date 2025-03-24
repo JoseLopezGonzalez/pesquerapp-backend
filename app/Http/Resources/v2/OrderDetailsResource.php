@@ -100,7 +100,7 @@ class OrderDetailsResource extends JsonResource
                     'formatted_id' => $prevOrder->formatted_id,
                     'load_date' => $prevOrder->load_date,
                     'boxes' => $detail['boxes'],
-                    'net_weight' => $detail['netWeight'],
+                    'net_weight' => (float) $detail['netWeight'],
                     'unit_price' => $detail['unitPrice'],
                     'subtotal' => $detail['subtotal'],
                     'total' => $detail['total'],
