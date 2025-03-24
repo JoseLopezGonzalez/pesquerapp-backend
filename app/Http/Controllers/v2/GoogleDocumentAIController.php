@@ -26,7 +26,7 @@ class GoogleDocumentAIController extends Controller
         $credentialsPath = storage_path('app/google-credentials.json'); 
         $projectId   = '223147234811';
         $location    = 'eu'; 
-        $processorId = '8ac94b1c45e776ee'; 
+        $processorId = '3c49f1160f79a1af'; 
 
         // 4. Crear el cliente DocumentProcessorService
         $documentProcessor = new DocumentProcessorServiceClient([
