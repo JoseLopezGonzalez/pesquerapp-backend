@@ -35,6 +35,7 @@ class IncidentController extends Controller
         $incident = Incident::create([
             'order_id' => $order->id,
             'description' => $validated['description'],
+            'status' => 'open',
         ]);
 
         $order->update(['status' => 'incident']);
