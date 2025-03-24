@@ -10,7 +10,7 @@
         "barryvdh/laravel-snappy": "^1.0",
         "beganovich/snappdf": "^4.0",
         "google/cloud-document-ai": "^2.1",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^7.9",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",

@@ -37,6 +37,7 @@ use App\Http\Controllers\v1\SupplierController;
 use App\Http\Controllers\v1\TransportController;
 use App\Http\Controllers\v2\ActivityLogController;
 use App\Http\Controllers\v2\AuthController as V2AuthController;
+use App\Http\Controllers\v2\AzureDocumentAIController;
 use App\Http\Controllers\v2\BoxesController;
 use App\Http\Controllers\v2\CaptureZoneController as V2CaptureZoneController;
 use App\Http\Controllers\v2\CeboDispatchController as V2CeboDispatchController;
@@ -253,8 +254,10 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('roles', RoleController::class);
 
             /* Pdf extractor */
-            Route::post('pdf-extractor', [PdfExtractionController::class, 'extract'])->name('pdf.extract');
-            Route::post('document-ai/parse', [GoogleDocumentAIController::class, 'processPdf']);
+            /* Route::post('pdf-extractor', [PdfExtractionController::class, 'extract'])->name('pdf.extract'); */
+            /* Route::post('document-ai/parse', [GoogleDocumentAIController::class, 'processPdf']); */
+            Route::post('document-ai/parse', [AzureDocumentAIController::class, 'processPdf']);
+
 
 
         });
