@@ -17,17 +17,13 @@ class PalletResource extends JsonResource
         return [
             'id' => $this->id,
             'observations' => $this->observations,
-            /* 'state' => $this->palletState->name, */
+            'state' => $this->palletState->name,
             'articlesNames' => $this->articlesNames,
-            'boxes' => $this->boxes->map(function ($box) {
-               /*  return $box->toArrayAssoc(); */
-               /* boxResource */
-                return BoxResource::make($box);
-            }),
+            'boxes' => BoxResource::collection($this->boxes)->toArray($request),
             'lots' => $this->lots,
             'netWeight' => $this->netWeight,
             'position' => $this->position,
-            /* 'store' => $this->store ? $this->store->name : null, */
+            'store' => $this->store ? $this->store->name : null,
             'orderId' => $this->order_id,
             'numberOfBoxes' => $this->numberOfBoxes,
         ];
