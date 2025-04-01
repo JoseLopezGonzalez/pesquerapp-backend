@@ -19,7 +19,9 @@ class PalletResource extends JsonResource
             'observations' => $this->observations,
             'state' => $this->palletState?->name,
             'articlesNames' => $this->articlesNames,
-            'boxes' => BoxResource::collection($this->boxes),
+            'boxes' => $this->whenLoaded('boxes', function () {
+                return BoxResource::collection($this->boxes);
+            }, []), // 👈 Protegido por si no está cargado
             'lots' => $this->lots,
             'netWeight' => $this->netWeight,
             'position' => $this->position,
