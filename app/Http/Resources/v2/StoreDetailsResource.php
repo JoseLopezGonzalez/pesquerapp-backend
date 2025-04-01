@@ -24,10 +24,8 @@ class StoreDetailsResource extends JsonResource
             'content' => [
                 'pallets' => $this->palletsV2->map(function ($pallet) {
                     /* return $pallet->toArrayAssocV2(); *//* resource */
-                    return array_merge(
-                        $pallet->toArrayAssocV2(),
-                        ['position' => $pallet->pivot->position ?? null]
-                    );
+                    return $pallet->toArrayAssocV2();
+
                 }),
                 'boxes' => [],
                 'bigBoxes' => [],

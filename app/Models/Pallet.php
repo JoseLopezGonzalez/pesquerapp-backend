@@ -121,6 +121,14 @@ class Pallet extends Model
         }
     }
 
+    public function getPositionV2Attribute()
+    {
+
+        // Si viene por otra vía, consulta manual
+        return $this->storedPallet?->position;
+    }
+
+
 
     public function getStoreIdAttribute()
     {
@@ -246,8 +254,10 @@ class Pallet extends Model
             'productsNames' => $this->productsNames,
             'lots' => $this->lots,
             'numberOfBoxes' => $this->numberOfBoxes,
+            'position' => $this->positionV2,
         ];
     }
+
 
 
 }
