@@ -56,6 +56,13 @@ class Pallet extends Model
         return $this->hasMany(PalletBox::class, 'pallet_id');
     }
 
+
+    public function boxesV2()
+    {
+        return $this->belongsToMany(Box::class, 'pallet_boxes', 'pallet_id', 'box_id');
+    }
+
+
     public function order()
     {
         return $this->belongsTo(Order::class);
@@ -232,7 +239,7 @@ class Pallet extends Model
             'id' => $this->id,
             'observations' => $this->observations,
             'state' => $this->palletState->toArrayAssoc(),
-            'boxes' => $this->boxes->map(function ($box) {
+            'boxes' => $this->boxesV2->map(function ($box) {
                 return $box->toArrayAssocV2();
             }),
             'netWeight' => $this->netWeight,
