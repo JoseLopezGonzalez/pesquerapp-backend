@@ -226,5 +226,21 @@ class Pallet extends Model
         ];
     }
 
+    public function toArrayAssocV2()
+    {
+        return [
+            'id' => $this->id,
+            'observations' => $this->observations,
+            'state' => $this->palletState->toArrayAssoc(),
+            'boxes' => $this->boxes->map(function ($box) {
+                return $box->toArrayAssocV2();
+            }),
+            'netWeight' => $this->netWeight,
+            'productsNames' => $this->productsNames,
+            'lots' => $this->lots,
+            'numberOfBoxes' => $this->numberOfBoxes,
+        ];
+    }
+
 
 }

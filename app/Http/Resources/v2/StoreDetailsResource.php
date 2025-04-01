@@ -22,7 +22,9 @@ class StoreDetailsResource extends JsonResource
             'netWeightPallets' => $this->netWeightPallets,
             'totalNetWeight' => $this->totalNetWeight,
             'content' => [
-                'pallets' =>  PalletResource::collection($this->pallets),
+                'pallets' => $this->pallets->map(function ($pallet) {
+                    return $pallet->toArrayAssocV2();/* resource */
+                }),
                 'boxes' => [],
                 'bigBoxes' => [],
             ],

@@ -47,4 +47,19 @@ class Box extends Model
             'createdAt' => $this->created_at, //formatear para mostrar solo fecha
         ];
     }
+
+
+    public function toArrayAssocV2()
+    {
+        return [
+            'id' => $this->id,
+            'palletId' => $this->pallet_id,
+            'product' => $this->product->toArrayAssoc(),
+            'lot' => $this->lot,
+            'gs1128' => $this->gs1_128,
+            'grossWeight' => $this->gross_weight,
+            'netWeight' => $this->net_weight,
+            'createdAt' => $this->created_at, //formatear para mostrar solo fecha
+        ];
+    }
 }
