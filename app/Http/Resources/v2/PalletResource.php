@@ -17,7 +17,7 @@ class PalletResource extends JsonResource
         return [
             'id' => $this->id,
             'observations' => $this->observations,
-            'state' => $this->palletState->name,
+            'state' => $this->palletState?->name,
             'articlesNames' => $this->articlesNames,
             'boxes' => BoxResource::collection($this->boxes),
             'lots' => $this->lots,
