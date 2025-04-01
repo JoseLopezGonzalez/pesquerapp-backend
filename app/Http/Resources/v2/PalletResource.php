@@ -27,8 +27,7 @@ class PalletResource extends JsonResource
             'lots' => $this->lots,
             'netWeight' => $this->netWeight,
             'position' => $this->position,
-            'store' => /* si es null o no */
-                $this->store ? $this->store->name : null,
+            /* 'store' => $this->store ? $this->store->name : null, */
             'orderId' => $this->order_id,
             'numberOfBoxes' => $this->numberOfBoxes,
         ];
