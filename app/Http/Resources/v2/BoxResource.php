@@ -24,7 +24,7 @@ class BoxResource extends JsonResource
                 'boxGtin' => $this->product->box_gtin,
                 'palletGtin' => $this->product->pallet_gtin,
                 'fixedWeight' => $this->product->fixed_weight,
-                'name' => $this->product->name,
+                /* 'name' => $this->product->name, */
                 'id' => $this->product->id,
             ],
             'lot' => $this->lot,
