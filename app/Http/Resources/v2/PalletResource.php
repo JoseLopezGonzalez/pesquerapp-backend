@@ -20,7 +20,9 @@ class PalletResource extends JsonResource
             'state' => $this->palletState->name,
             'articlesNames' => $this->articlesNames,
             'boxes' => $this->boxes->map(function ($box) {
-                return $box->toArrayAssoc();
+               /*  return $box->toArrayAssoc(); */
+               /* boxResource */
+                return BoxResource::make($box);
             }),
             'lots' => $this->lots,
             'netWeight' => $this->netWeight,
