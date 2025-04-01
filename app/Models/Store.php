@@ -34,7 +34,8 @@ class Store extends Model
 
     public function palletsV2()
     {
-        return $this->belongsToMany(Pallet::class, 'stored_pallets', 'store_id', 'pallet_id');
+        return $this->belongsToMany(Pallet::class, 'stored_pallets', 'store_id', 'pallet_id')
+            ->withPivot('position');
     }
 
 
