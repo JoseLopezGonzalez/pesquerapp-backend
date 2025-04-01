@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Http\Resources\v1\StoreDetailsResource;
 use App\Http\Resources\v1\StoreResource;
+use App\Http\Resources\v2\StoreDetailsResource as V2StoreDetailsResource;
 use App\Http\Resources\v2\StoreResource as V2StoreResource;
 
 class StoreController extends Controller
@@ -56,7 +57,7 @@ class StoreController extends Controller
      */
     public function show(string $id)
     {
-        
+        return new V2StoreDetailsResource(Store::find($id));
     }
 
     /**
