@@ -32,6 +32,11 @@ class Store extends Model
         return $this->hasMany(StoredPallet::class, 'store_id');
     }
 
+    public function palletsV2()
+    {
+        return $this->belongsToMany(Pallet::class, 'stored_pallets', 'store_id', 'pallet_id');
+    }
+
 
     //Accessor 
     public function getNetWeightPalletsAttribute()
@@ -42,12 +47,12 @@ class Store extends Model
             return $carry + $pallet->pallet->netWeight;
         }, 0);
 
-       /*  $this->pallets->map(function ($pallet) {
-            global $netWeightPallets;
-            $netWeightPallets += $pallet->netWeight;
-        }); */
+        /*  $this->pallets->map(function ($pallet) {
+             global $netWeightPallets;
+             $netWeightPallets += $pallet->netWeight;
+         }); */
 
-        
+
 
         /* foreach ($this->pallets as $pallet) {
             $netWeightPallets += $pallet->netWeight; //Implementar atributo accesor en pallet pesoNeto
