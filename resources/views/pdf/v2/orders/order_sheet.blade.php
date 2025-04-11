@@ -35,6 +35,7 @@
                     <p class=" ">C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
                     <p class=" ">Tel: +34 613 09 14 94 </p>
                     <p class=" ">administracion@congeladosbrisamar.es</p>
+                    <p class=" ">ES 12.021462/H CE</p>
                 </div>
             </div>
             <div class="flex items-start gap-4">
