@@ -149,23 +149,18 @@ class ProductionController extends Controller
 
     public function getProductionIdByLot(Request $request)
     {
-        try {
-            $request->validate([
-                'lot' => 'required|string',
-            ]);
+        $lot = $request->query('lot'); // ✅ obtener desde query string
 
-            $production = Production::where('lot', $request->lot)->first();
+        if (!$lot) {
+            return response()->json(['message' => 'El parámetro "lot" es requerido.'], 400);
+        }
 
-            if ($production) {
-                return response()->json(['production_id' => $production->id]);
-            } else {
-                return response()->json(['message' => 'Producción no encontrada.'], 404);
-            }
-        } catch (\Throwable $e) {
-            return response()->json([
-                'message' => 'Ocurrió un error inesperado.',
-                'error' => $e->getMessage(),
-            ], 500);
+        $production = Production::where('lot', $lot)->first();
+
+        if ($production) {
+            return response()->json(['production_id' => $production->id]);
+        } else {
+            return response()->json(['message' => 'Producción no encontrada.'], 404);
         }
     }
 
