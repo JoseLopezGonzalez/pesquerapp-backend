@@ -150,7 +150,7 @@ class ProductionController extends Controller
     public function getProductionIdByLot(Request $request)
     {
 
-        dd('estoy dentro del método');
+        /* dd('estoy dentro del método'); */
         $lot = $request->query('lot'); // ✅ obtener desde query string
 
         if (!$lot) {
