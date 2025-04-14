@@ -125,6 +125,10 @@ Route::apiResource('v1/capture_zones', CaptureZoneController::class);
 Route::apiResource('v1/raw-materials', RawMaterialController::class);
 Route::apiResource('v1/cebos', CeboController::class);
 Route::apiResource('v1/productions', ProductionController::class);
+
+
+/* getProductionIdByLot */
+Route::get('v1/productions/get-production-id-by-lot', [ProductionController::class, 'getProductionIdByLot'])->name('productions.getProductionIdByLot');
 Route::apiResource('v1/processes', ProcessController::class);
 
 

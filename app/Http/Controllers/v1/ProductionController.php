@@ -146,4 +146,21 @@ class ProductionController extends Controller
 
         return response()->json(['message' => 'Producción eliminada correctamente.']);
     }
+
+    public function getProductionIdByLot(Request $request)
+    {
+        $request->validate([
+            'lot' => 'required|string',
+        ]);
+
+        // Buscar la producción por el lote
+        $production = Production::where('lot', $request->lot)->first();
+
+        if ($production) {
+            return response()->json(['production_id' => $production->id]);
+        } else {
+            return response()->json(['message' => 'Producción no encontrada.'], 404);
+        }
+        
+    }
 }
