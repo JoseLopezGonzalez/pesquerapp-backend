@@ -152,30 +152,54 @@
             </div>
         </div>
 
-        <div class=" mb-6 ">
+        <div class="mb-6">
             <h3 class="font-bold mb-2">DETALLE DE INCIDENCIA</h3>
             <div class="border rounded-lg bg-gray-50 p-4 space-y-4">
-                <p><span class="font-semibold">Fecha de creación:</span>
-                    {{ date('d/m/Y', strtotime($entity->incident->created_at)) }}</p>
 
-                <div>
-                    <p class="font-semibold">Descripción:</p>
-                    <p class="ml-2">{!! nl2br(e($entity->incident->description)) !!}</p>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <p class="font-medium text-gray-700">📅 Fecha de creación</p>
+                        <p class="pl-2">{{ date('d/m/Y', strtotime($entity->incident->created_at)) }}</p>
+                    </div>
+
+                    @if($entity->incident->resolved_at)
+                        <div>
+                            <p class="font-medium text-gray-700">✅ Fecha de resolución</p>
+                            <p class="pl-2">{{ date('d/m/Y', strtotime($entity->incident->resolved_at)) }}</p>
+                        </div>
+                    @else
+                        <div class="col-span-2">
+                            <p class="text-red-600 font-semibold">⚠️ Incidencia pendiente de resolución</p>
+                        </div>
+                    @endif
                 </div>
 
-                @if($entity->incident->resolved_at)
-                    <p><span class="font-semibold">Fecha de resolución:</span>
-                        {{ date('d/m/Y', strtotime($entity->incident->resolved_at)) }}</p>
-                    <p><span class="font-semibold">Tipo de resolución:</span> {{ $entity->incident->resolution_type }}</p>
-                    <div>
-                        <p class="font-semibold">Resolución:</p>
-                        <p class="ml-2">{!! nl2br(e($entity->incident->resolution_notes)) !!}</p>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div class="col-span-2">
+                        <p class="font-medium text-gray-700">📝 Descripción</p>
+                        <div class="p-2 bg-white rounded border">
+                            {!! nl2br(e($entity->incident->description)) !!}
+                        </div>
                     </div>
-                @else
-                    <p class="text-red-600 font-semibold">Incidencia pendiente de resolución</p>
-                @endif
+
+                    @if($entity->incident->resolved_at)
+                        <div>
+                            <p class="font-medium text-gray-700">📌 Tipo de resolución</p>
+                            <p class="pl-2">{{ $entity->incident->resolution_type }}</p>
+                        </div>
+
+                        <div class="col-span-2">
+                            <p class="font-medium text-gray-700">🛠️ Resolución</p>
+                            <div class="p-2 bg-white rounded border">
+                                {!! nl2br(e($entity->incident->resolution_notes)) !!}
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
             </div>
         </div>
+
 
     </div>
 </body>
