@@ -158,25 +158,25 @@
 
                 <div class="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                        <p class="font-medium text-gray-700">📅 Fecha de creación</p>
+                        <p class="font-medium text-gray-700">Fecha de creación</p>
                         <p class="pl-2">{{ date('d/m/Y', strtotime($entity->incident->created_at)) }}</p>
                     </div>
 
                     @if($entity->incident->resolved_at)
                         <div>
-                            <p class="font-medium text-gray-700">✅ Fecha de resolución</p>
+                            <p class="font-medium text-gray-700">Fecha de resolución</p>
                             <p class="pl-2">{{ date('d/m/Y', strtotime($entity->incident->resolved_at)) }}</p>
                         </div>
                     @else
                         <div class="col-span-2">
-                            <p class="text-red-600 font-semibold">⚠️ Incidencia pendiente de resolución</p>
+                            <p class="text-red-600 font-semibold">Incidencia pendiente de resolución</p>
                         </div>
                     @endif
                 </div>
 
                 <div class="grid grid-cols-2 gap-4 text-sm">
                     <div class="col-span-2">
-                        <p class="font-medium text-gray-700">📝 Descripción</p>
+                        <p class="font-medium text-gray-700">Descripción</p>
                         <div class="p-2 bg-white rounded border">
                             {!! nl2br(e($entity->incident->description)) !!}
                         </div>
@@ -184,12 +184,15 @@
 
                     @if($entity->incident->resolved_at)
                         <div>
-                            <p class="font-medium text-gray-700">📌 Tipo de resolución</p>
-                            <p class="pl-2">{{ $entity->incident->resolution_type }}</p>
+                            <p class="font-medium text-gray-700">Tipo de resolución</p>
+                            <p class="pl-2">
+                                <!-- Switch returned,partially_returned,compensated -->
+                                {{ $entity->incident->resolution_type == 'returned' ? 'Devolución' : ($entity->incident->resolution_type == 'partially_returned' ? 'Devolución parcial' : ($entity->incident->resolution_type == 'compensated' ? 'Compensación' : ''))}}
+                            </p>
                         </div>
 
                         <div class="col-span-2">
-                            <p class="font-medium text-gray-700">🛠️ Resolución</p>
+                            <p class="font-medium text-gray-700">Resolución</p>
                             <div class="p-2 bg-white rounded border">
                                 {!! nl2br(e($entity->incident->resolution_notes)) !!}
                             </div>
