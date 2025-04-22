@@ -40,7 +40,7 @@
             </div>
             <div class="flex items-start gap-4">
                 <div class="  rounded  text-end">
-                    <h2 class="text-lg font-bold ">Hoja de pedido</h2>
+                    <h2 class="text-lg font-bold ">Reporte de Incidencia</h2>
                     <p class=" font-medium"><span class="">{{ $entity->formattedId }}</span></p>
                     <p class=" font-medium">Fecha:<span class="">
                             {{ date('d/m/Y', strtotime($entity->load_date)) }}
