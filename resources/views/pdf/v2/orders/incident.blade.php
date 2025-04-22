@@ -153,7 +153,7 @@
         </div>
 
         <div class=" mb-6 ">
-            <h3 class="font-bold mb-2">DETALLE DE PRODUCTOS</h3>
+            <h3 class="font-bold mb-2">DETALLE DE INCIDENCIA</h3>
             <div class="border rounded-lg bg-gray-50 p-4 space-y-4">
                 <p><span class="font-semibold">Fecha de creación:</span>
                     {{ date('d/m/Y', strtotime($entity->incident->created_at)) }}</p>
