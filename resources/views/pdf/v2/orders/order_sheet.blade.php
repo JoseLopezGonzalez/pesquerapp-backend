@@ -87,7 +87,7 @@
                             @foreach ($entity->transport->emailsArray as $email)
                             <li>{{ $email }}</li>
                             @endforeach
-                            @foreach ($entity->ccEmailsArray as $email)
+                            @foreach ($entity->transport->ccEmailsArray as $email)
                             <li>{{ $email }}</li>
                             @endforeach
 
