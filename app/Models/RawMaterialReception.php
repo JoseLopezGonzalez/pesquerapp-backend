@@ -9,7 +9,7 @@ class RawMaterialReception extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['supplier_id', 'date', 'notes', 'declared_total_amount'];
+    protected $fillable = ['supplier_id', 'date', 'notes', 'declared_total_amount', 'declared_total_net_weight'];
 
     protected $appends = ['total_amount'];
 

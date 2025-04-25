@@ -20,6 +20,7 @@ class RawMaterialReceptionResource extends JsonResource
             'date' => $this->date,
             'notes' => $this->notes,
             'declaredTotalAmount' => $this->declared_total_amount,
+            'declaredTotalNetWeight' => $this->declared_total_net_weight,
             'netWeight' => $this->netWeight,
             'totalAmount' => $this->total_amount,
             'species' => $this->species,
