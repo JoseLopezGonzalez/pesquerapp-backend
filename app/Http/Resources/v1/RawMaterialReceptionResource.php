@@ -19,6 +19,7 @@ class RawMaterialReceptionResource extends JsonResource
             'supplier' => new SupplierResource($this->supplier), // Asumiendo que tienes un resource para Supplier
             'date' => $this->date,
             'notes' => $this->notes,
+            'declaredTotalAmount' => $this->declared_total_amount,
             'netWeight' => $this->netWeight,
             'species' => $this->species,
             'details' => RawMaterialReceptionProductResource::collection($this->products) // Asumiendo que tienes un resource para RawMaterialReceptionProduct
