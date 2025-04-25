@@ -85,13 +85,37 @@ class RawMaterialReceptionController extends Controller
         $reception->save();
 
         if ($request->has('details')) {
-            foreach ($request->details as $detail) {
+            /* foreach ($request->details as $detail) {
                 $reception->products()->create([
                     'product_id' => $detail['product']['id'],
                     'net_weight' => $detail['netWeight'],
                     'price' => $detail['price'] ?? null
                 ]);
+            } */
+            if ($request->has('details')) {
+                foreach ($request->details as $detail) {
+                    $productId = $detail['product']['id'];
+                    $netWeight = $detail['netWeight'];
+                    $price = $detail['price'] ?? null;
+
+                    // Si no viene el precio, lo buscamos
+                    if (is_null($price)) {
+                        $price = RawMaterialReceptionProduct::where('product_id', $productId)
+                            ->whereHas('reception', function ($query) use ($request) {
+                                $query->where('supplier_id', $request->supplier['id']);
+                            })
+                            ->latest('created_at')
+                            ->value('price');
+                    }
+
+                    $reception->products()->create([
+                        'product_id' => $productId,
+                        'net_weight' => $netWeight,
+                        'price' => $price,
+                    ]);
+                }
             }
+
         }
 
         $reception->save();
@@ -128,11 +152,31 @@ class RawMaterialReceptionController extends Controller
         ]);
 
         $reception->products()->delete();
-        foreach ($validated['details'] as $detail) {
+        /* foreach ($validated['details'] as $detail) {
             $reception->products()->create([
                 'product_id' => $detail['product']['id'],
                 'net_weight' => $detail['netWeight'],
                 'price' => $detail['price'] ?? null
+            ]);
+        } */
+        foreach ($validated['details'] as $detail) {
+            $productId = $detail['product']['id'];
+            $netWeight = $detail['netWeight'];
+            $price = $detail['price'] ?? null;
+
+            if (is_null($price)) {
+                $price = RawMaterialReceptionProduct::where('product_id', $productId)
+                    ->whereHas('reception', function ($query) use ($validated) {
+                        $query->where('supplier_id', $validated['supplier']['id']);
+                    })
+                    ->latest('created_at')
+                    ->value('price');
+            }
+
+            $reception->products()->create([
+                'product_id' => $productId,
+                'net_weight' => $netWeight,
+                'price' => $price,
             ]);
         }
 
