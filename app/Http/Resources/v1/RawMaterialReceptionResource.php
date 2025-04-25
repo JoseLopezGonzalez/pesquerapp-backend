@@ -19,15 +19,15 @@ class RawMaterialReceptionResource extends JsonResource
             'supplier' => new SupplierResource($this->supplier), // Asumiendo que tienes un resource para Supplier
             'date' => $this->date,
             'notes' => $this->notes,
-            'declaredTotalAmount' => $this->declared_total_amount,
-            'declaredTotalNetWeight' => $this->declared_total_net_weight,
-            'netWeight' => $this->netWeight,
-            'totalAmount' => $this->total_amount,
+            'declaredTotalAmount' => round((float) $this->declared_total_amount, 2),
+            'declaredTotalNetWeight' => round((float) $this->declared_total_net_weight, 2),
+            'netWeight' => round((float) $this->netWeight, 2),
+            'totalAmount' => round((float) $this->total_amount, 2),
             'species' => $this->species,
             'details' => RawMaterialReceptionProductResource::collection($this->products) // Asumiendo que tienes un resource para RawMaterialReceptionProduct
         ];
     }
 
 
-    
+
 }
