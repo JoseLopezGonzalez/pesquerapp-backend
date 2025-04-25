@@ -62,6 +62,7 @@ class RawMaterialReceptionController extends Controller
             'details' => 'required|array',
             'details.*.product.id' => 'required|exists:products,id',
             'details.*.netWeight' => 'required|numeric',
+            'declaredTotalAmount' => 'nullable|numeric|min:0',
         ]);
 
         if ($validator->fails()) {
@@ -71,6 +72,10 @@ class RawMaterialReceptionController extends Controller
         $reception = new RawMaterialReception();
         $reception->supplier_id = $request->supplier['id'];
         $reception->date = $request->date;
+
+        if ($request->has('declaredTotalAmount')) {
+            $reception->declared_total_amount = $request->declaredTotalAmount;
+        }
         
         if($request->has('notes')){
             $reception->notes = $request->notes;
@@ -108,13 +113,15 @@ class RawMaterialReceptionController extends Controller
             'details' => 'required|array',
             'details.*.product.id' => 'required|exists:products,id',
             'details.*.netWeight' => 'required|numeric',
+            'declaredTotalAmount' => 'nullable|numeric|min:0',
         ]);
 
         $reception = RawMaterialReception::findOrFail($id);
         $reception->update([
             'supplier_id' => $validated['supplier']['id'],
             'date' => $validated['date'],
-            'notes' => $validated['notes']
+            'notes' => $validated['notes'],
+            'declared_total_amount' => $request->declaredTotalAmount ?? null
         ]);
 
         $reception->products()->delete();
