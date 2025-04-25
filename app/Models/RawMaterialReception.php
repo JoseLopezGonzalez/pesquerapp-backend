@@ -14,11 +14,7 @@ class RawMaterialReception extends Model
     protected $appends = ['total_amount'];
 
     /* hacer numeros  declared_total_amount y declared_total_net_weight*/
-    protected $casts = [
-        'declared_total_amount' => 'decimal:2',
-        'declared_total_net_weight' => 'decimal:2',
-        'date' => 'datetime:Y-m-d',
-    ];
+    
 
 
     public function supplier()
