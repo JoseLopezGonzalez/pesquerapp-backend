@@ -9,7 +9,10 @@ class RawMaterialReception extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['supplier_id', 'date', 'notes' , 'declared_total_amount'];
+    protected $fillable = ['supplier_id', 'date', 'notes', 'declared_total_amount'];
+
+    protected $appends = ['total_amount'];
+
 
     public function supplier()
     {
@@ -18,7 +21,7 @@ class RawMaterialReception extends Model
 
     public function products()
     {
-        return $this->hasMany(RawMaterialReceptionProduct::class , 'reception_id');
+        return $this->hasMany(RawMaterialReceptionProduct::class, 'reception_id');
     }
 
     public function getNetWeightAttribute()
@@ -32,4 +35,12 @@ class RawMaterialReception extends Model
     {
         return $this->products->first()->product->species;
     }
+
+    public function getTotalAmountAttribute()
+    {
+        return $this->products->sum(function ($product) {
+            return ($product->net_weight ?? 0) * ($product->price ?? 0);
+        });
+    }
+
 }
