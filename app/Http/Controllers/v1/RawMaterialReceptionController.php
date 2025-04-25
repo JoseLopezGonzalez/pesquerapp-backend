@@ -200,4 +200,32 @@ class RawMaterialReceptionController extends Controller
         $order->delete();
         return response()->json(['message' => 'Palet eliminado correctamente'], 200);
     }
+
+    public function updateDeclaredData(Request $request)
+    {
+        $validated = $request->validate([
+            'supplier_id' => 'required|integer|exists:suppliers,id',
+            'date' => 'required|date',
+            'declared_total_amount' => 'nullable|numeric|min:0',
+            'declared_total_net_weight' => 'nullable|numeric|min:0',
+        ]);
+
+        // Buscar la recepción
+        $reception = RawMaterialReception::where('supplier_id', $validated['supplier_id'])
+            ->whereDate('date', $validated['date'])
+            ->first();
+
+        if (!$reception) {
+            return response()->json(['error' => 'Reception not found'], 404);
+        }
+
+        // Actualizar los valores
+        $reception->update([
+            'declared_total_amount' => $validated['declared_total_amount'],
+            'declared_total_net_weight' => $validated['declared_total_net_weight'],
+        ]);
+
+        return new RawMaterialReceptionResource($reception);
+    }
+
 }

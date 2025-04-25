@@ -118,6 +118,9 @@ Route::apiResource('v1/salespeople', SalespersonController::class);
 Route::apiResource('v1/payment_terms', PaymentTermController::class);
 Route::apiResource('v1/suppliers', SupplierController::class);
 Route::apiResource('v1/raw-material-receptions', RawMaterialReceptionController::class);
+/* updateDeclaredData */
+Route::post('/v1/raw-material-receptions/update-declared-data', [RawMaterialReceptionController::class, 'updateDeclaredData']);
+
 Route::apiResource('v1/cebo-dispatches', CeboDispatchController::class);
 Route::apiResource('v1/species', SpeciesController::class);
 /* CaptureZones */
@@ -336,7 +339,7 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('orders/{orderId}/pdf/valued-loading-note', [\App\Http\Controllers\v2\PDFController::class, 'generateValuedLoadingNote'])->name('generate_valued_loading_note');
             /* generateIncident */
             Route::get('orders/{orderId}/pdf/incident', [\App\Http\Controllers\v2\PDFController::class, 'generateIncident'])->name('generate_incident');
-            
+
             /* order confirmation */
             Route::get('orders/{orderId}/pdf/order-confirmation', [\App\Http\Controllers\v2\PDFController::class, 'generateOrderConfirmation'])->name('generate_order_confirmation');
             /* transport pickup request */
