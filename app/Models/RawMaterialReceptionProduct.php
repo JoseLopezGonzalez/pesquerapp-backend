@@ -9,7 +9,7 @@ class RawMaterialReceptionProduct extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['reception_id', 'product_id', 'net_weight'];
+    protected $fillable = ['reception_id', 'product_id', 'net_weight' , 'price'];
 
     public function reception()
     {

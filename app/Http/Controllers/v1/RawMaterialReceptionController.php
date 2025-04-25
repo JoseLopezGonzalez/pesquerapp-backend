@@ -62,6 +62,7 @@ class RawMaterialReceptionController extends Controller
             'details' => 'required|array',
             'details.*.product.id' => 'required|exists:products,id',
             'details.*.netWeight' => 'required|numeric',
+            'details.*.price' => 'nullable|numeric|min:0',
             'declaredTotalAmount' => 'nullable|numeric|min:0',
         ]);
 
@@ -76,18 +77,19 @@ class RawMaterialReceptionController extends Controller
         if ($request->has('declaredTotalAmount')) {
             $reception->declared_total_amount = $request->declaredTotalAmount;
         }
-        
-        if($request->has('notes')){
+
+        if ($request->has('notes')) {
             $reception->notes = $request->notes;
         }
 
         $reception->save();
 
-        if($request->has('details')){
-            foreach($request->details as $detail){
+        if ($request->has('details')) {
+            foreach ($request->details as $detail) {
                 $reception->products()->create([
                     'product_id' => $detail['product']['id'],
-                    'net_weight' => $detail['netWeight']
+                    'net_weight' => $detail['netWeight'],
+                    'price' => $detail['price'] ?? null
                 ]);
             }
         }
@@ -113,6 +115,7 @@ class RawMaterialReceptionController extends Controller
             'details' => 'required|array',
             'details.*.product.id' => 'required|exists:products,id',
             'details.*.netWeight' => 'required|numeric',
+            'details.*.price' => 'nullable|numeric|min:0',
             'declaredTotalAmount' => 'nullable|numeric|min:0',
         ]);
 
@@ -128,14 +131,15 @@ class RawMaterialReceptionController extends Controller
         foreach ($validated['details'] as $detail) {
             $reception->products()->create([
                 'product_id' => $detail['product']['id'],
-                'net_weight' => $detail['netWeight']
+                'net_weight' => $detail['netWeight'],
+                'price' => $detail['price'] ?? null
             ]);
         }
 
         return new RawMaterialReceptionResource($reception);
-        
 
-        
+
+
     }
 
     public function destroy($id)

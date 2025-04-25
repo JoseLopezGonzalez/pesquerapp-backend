@@ -18,6 +18,7 @@ class RawMaterialReceptionProductResource extends JsonResource
             'id' => $this->id,
             'product' => new ProductResource($this->product), // 
             'netWeight' => $this->net_weight,
+            'price' => $this->price,
             'alias' => $this->alias,
         ];
     }
