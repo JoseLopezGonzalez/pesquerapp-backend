@@ -17,10 +17,12 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
     use Exportable;
 
     protected $filters;
+    protected $index; // <-- Contador global
 
     public function __construct(Request $request)
     {
         $this->filters = $request;
+        $this->index = 1; // Inicializar el contador global
     }
 
     public function query()
@@ -68,11 +70,9 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
     {
         $mappedProducts = [];
 
-        $index = 0;
-
         foreach ($rawMaterialReception->products as $product) {
             $mappedProducts[] = [
-                'id' => $index++,
+                'id' => $this->index,
                 /* Date format DD/MM/YYYY */
                 'date' => date('d/m/Y', strtotime($rawMaterialReception->date)),
                 'supplierId' => $rawMaterialReception->supplier->facil_com_code,
@@ -86,6 +86,8 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
                 'lot' => date('dmY', strtotime($rawMaterialReception->date)),
             ];
         }
+
+        $this->index++;
 
         return $mappedProducts;
     }
