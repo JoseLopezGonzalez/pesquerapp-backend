@@ -79,6 +79,7 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
                 'articleId' => $product->product->facil_com_code,
                 'articleName' => $product->product->article->name,
                 'netWeight' => $product->net_weight,
+                'price' => $product->price,
                 /* Lot es DDMMYYYY */
                 'lot' => date('dmY', strtotime($rawMaterialReception->date)),
             ];
@@ -97,6 +98,7 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
             'Cod. Producto',
             'Producto',
             'Cantidad Kg',
+            'Precio',
             'Lote asignado',
         ];
     }
