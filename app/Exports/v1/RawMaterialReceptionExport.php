@@ -68,9 +68,11 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
     {
         $mappedProducts = [];
 
+        $index = 0;
+
         foreach ($rawMaterialReception->products as $product) {
             $mappedProducts[] = [
-                'id' => $rawMaterialReception->id,
+                'id' => $index++,
                 /* Date format DD/MM/YYYY */
                 'date' => date('d/m/Y', strtotime($rawMaterialReception->date)),
                 'supplierId' => $rawMaterialReception->supplier->facil_com_code,
