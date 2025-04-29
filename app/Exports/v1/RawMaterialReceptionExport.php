@@ -88,7 +88,7 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
         }
 
         /* Si hay declared_total_amount y declared_total_net_weight */
-        if ($rawMaterialReception->declared_total_amount && $rawMaterialReception->declared_total_net_weight) {
+        if ($rawMaterialReception->declared_total_amount > 0 && $rawMaterialReception->declared_total_net_weight > 0) {
             $mappedProducts[] = [
                 'id' => $this->index,
                 'date' => date('d/m/Y', strtotime($rawMaterialReception->date)),
