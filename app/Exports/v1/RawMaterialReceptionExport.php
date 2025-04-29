@@ -12,8 +12,8 @@ use Maatwebsite\Excel\Concerns\Exportable;
 
 class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
 {
-    
-    
+
+
     use Exportable;
 
     protected $filters;
@@ -83,6 +83,21 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
                 'netWeight' => $product->net_weight,
                 'price' => $product->price,
                 /* Lot es DDMMYYYY */
+                'lot' => date('dmY', strtotime($rawMaterialReception->date)),
+            ];
+        }
+
+        /* Si hay declared_total_amount y declared_total_net_weight */
+        if ($rawMaterialReception->declared_total_amount && $rawMaterialReception->declared_total_net_weight) {
+            $mappedProducts[] = [
+                'id' => $this->index,
+                'date' => date('d/m/Y', strtotime($rawMaterialReception->date)),
+                'supplierId' => $rawMaterialReception->supplier->facil_com_code,
+                'supplierName' => $rawMaterialReception->supplier->name,
+                'articleId' => 100,
+                'articleName' => 'PULPO FRESCO LONJA',
+                'netWeight' => $rawMaterialReception->declared_total_net_weight,
+                'price' => $rawMaterialReception->declared_total_amount / $rawMaterialReception->declared_total_net_weight,
                 'lot' => date('dmY', strtotime($rawMaterialReception->date)),
             ];
         }
