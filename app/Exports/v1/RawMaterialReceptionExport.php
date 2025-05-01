@@ -96,7 +96,7 @@ class RawMaterialReceptionExport implements FromQuery, WithHeadings, WithMapping
                 'supplierName' => $rawMaterialReception->supplier->name,
                 'articleId' => 100,
                 'articleName' => 'PULPO FRESCO LONJA',
-                'netWeight' => $rawMaterialReception->declared_total_net_weight,
+                'netWeight' => $rawMaterialReception->declared_total_net_weight * -1,
                 'price' => $rawMaterialReception->declared_total_amount / $rawMaterialReception->declared_total_net_weight,
                 'lot' => date('dmY', strtotime($rawMaterialReception->date)),
             ];
