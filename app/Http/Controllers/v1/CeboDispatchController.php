@@ -84,12 +84,18 @@ class CeboDispatchController extends Controller
 
         if ($request->has('details')) {
             foreach ($request->details as $detail) {
+                $price = $detail['price'] ?? null;
+                if ($price === null) {
+                    $price = $this->getLastPrice($dispatch->supplier_id, $detail['product']['id']);
+                }
+
                 $dispatch->products()->create([
                     'product_id' => $detail['product']['id'],
                     'net_weight' => $detail['netWeight'],
-                    'price' => $detail['price'] ?? null, // ✅ NUEVO
+                    'price' => $price,
                 ]);
             }
+
         }
 
         return new CeboDispatchResource($dispatch);
@@ -126,13 +132,18 @@ class CeboDispatchController extends Controller
 
         $dispatch->products()->delete();
         foreach ($validated['details'] as $detail) {
+            $price = $detail['price'] ?? null;
+            if ($price === null) {
+                $price = $this->getLastPrice($dispatch->supplier_id, $detail['product']['id']);
+            }
+
             $dispatch->products()->create([
                 'product_id' => $detail['product']['id'],
                 'net_weight' => $detail['netWeight'],
-                'price' => $detail['price'] ?? null, // ✅ Añade esto también aquí
-
+                'price' => $price,
             ]);
         }
+
 
         return new CeboDispatchResource($dispatch);
     }
@@ -143,4 +154,16 @@ class CeboDispatchController extends Controller
         $dispatch->delete();
         return response()->json(['message' => 'Despacho de cebo eliminado correctamente'], 200);
     }
+
+    private function getLastPrice($supplierId, $productId)
+    {
+        return CeboDispatchProduct::whereHas('dispatch', function ($query) use ($supplierId) {
+            $query->where('supplier_id', $supplierId);
+        })
+            ->where('product_id', $productId)
+            ->whereNotNull('price')
+            ->orderByDesc('created_at')
+            ->value('price'); // Devuelve solo el último precio
+    }
+
 }
