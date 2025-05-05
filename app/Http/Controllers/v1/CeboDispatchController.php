@@ -111,6 +111,8 @@ class CeboDispatchController extends Controller
             'details' => 'required|array',
             'details.*.product.id' => 'required|exists:products,id',
             'details.*.netWeight' => 'required|numeric',
+            'details.*.price' => 'nullable|numeric',
+
         ]);
 
         $dispatch = CeboDispatch::findOrFail($id);
@@ -126,7 +128,9 @@ class CeboDispatchController extends Controller
         foreach ($validated['details'] as $detail) {
             $dispatch->products()->create([
                 'product_id' => $detail['product']['id'],
-                'net_weight' => $detail['netWeight']
+                'net_weight' => $detail['netWeight'],
+                'price' => $detail['price'] ?? null, // ✅ Añade esto también aquí
+
             ]);
         }
 

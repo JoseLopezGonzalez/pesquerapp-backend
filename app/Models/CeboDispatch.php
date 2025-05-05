@@ -1,6 +1,7 @@
 <?php
 
 // app/Models/CeboDispatch.php
+namespace App\Models;
 
 use App\Models\CeboDispatchProduct;
 use App\Models\Supplier;
