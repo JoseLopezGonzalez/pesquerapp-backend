@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use CeboDispatch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,7 +10,7 @@ class CeboDispatchProduct extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['dispatch_id', 'product_id', 'net_weight'];
+    protected $fillable = ['dispatch_id', 'product_id', 'net_weight', 'price'];
 
     public function dispatch()
     {

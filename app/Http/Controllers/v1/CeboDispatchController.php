@@ -57,9 +57,11 @@ class CeboDispatchController extends Controller
             'supplier.id' => 'required',
             'date' => 'required|date',
             'notes' => 'nullable|string',
+            'export_type' => 'nullable|in:facilcom,a3erp', // ✅ NUEVO
             'details' => 'required|array',
             'details.*.product.id' => 'required|exists:products,id',
             'details.*.netWeight' => 'required|numeric',
+            'details.*.price' => 'nullable|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -69,18 +71,23 @@ class CeboDispatchController extends Controller
         $dispatch = new CeboDispatch();
         $dispatch->supplier_id = $request->supplier['id'];
         $dispatch->date = $request->date;
-        
-        if($request->has('notes')){
+
+        if ($request->has('notes')) {
             $dispatch->notes = $request->notes;
         }
 
+        $dispatch->export_type = $request->input('export_type', 'facilcom'); // ✅ NUEVO
+
+
+
         $dispatch->save();
 
-        if($request->has('details')){
-            foreach($request->details as $detail){
+        if ($request->has('details')) {
+            foreach ($request->details as $detail) {
                 $dispatch->products()->create([
                     'product_id' => $detail['product']['id'],
-                    'net_weight' => $detail['netWeight']
+                    'net_weight' => $detail['netWeight'],
+                    'price' => $detail['price'] ?? null, // ✅ NUEVO
                 ]);
             }
         }
@@ -100,6 +107,7 @@ class CeboDispatchController extends Controller
             'supplier.id' => 'required',
             'date' => 'required|date',
             'notes' => 'nullable|string',
+            'export_type' => 'nullable|in:facilcom,a3erp', // ✅ NUEVO
             'details' => 'required|array',
             'details.*.product.id' => 'required|exists:products,id',
             'details.*.netWeight' => 'required|numeric',
@@ -109,7 +117,9 @@ class CeboDispatchController extends Controller
         $dispatch->update([
             'supplier_id' => $validated['supplier']['id'],
             'date' => $validated['date'],
-            'notes' => $validated['notes']
+            'notes' => $validated['notes'],
+            'export_type' => $validated['export_type'] ?? 'facilcom', // ✅ NUEVO
+
         ]);
 
         $dispatch->products()->delete();
