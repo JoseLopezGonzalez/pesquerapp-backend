@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\CeboDispatchResource;
 use App\Models\CeboDispatch;
 use App\Models\CeboDispatchProduct;
+use App\Models\Supplier;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -76,7 +77,11 @@ class CeboDispatchController extends Controller
             $dispatch->notes = $request->notes;
         }
 
-        $dispatch->export_type = $request->input('exportType', 'facilcom'); // ✅ NUEVO
+        $supplier = Supplier::findOrFail($request->supplier['id']);
+        $dispatch->export_type = $request->input('exportType', $supplier->cebo_export_type ?? 'facilcom');
+
+        /* $dispatch->export_type = $request->input('exportType', $dispatch->supplier->cebo_export_type ?? 'facilcom'); */
+
 
 
 

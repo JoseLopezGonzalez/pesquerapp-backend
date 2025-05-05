@@ -10,6 +10,6 @@ class Supplier extends Model
 
     use HasFactory;
 
-    protected $fillable = ['name', 'type', 'contact_person', 'phone', 'email', 'address'];
+    protected $fillable = ['name', 'type', 'contact_person', 'phone', 'email', 'address', 'cebo_export_type'];
 
 }
