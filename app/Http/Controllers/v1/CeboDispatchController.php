@@ -57,7 +57,7 @@ class CeboDispatchController extends Controller
             'supplier.id' => 'required',
             'date' => 'required|date',
             'notes' => 'nullable|string',
-            'export_type' => 'nullable|in:facilcom,a3erp', // ✅ NUEVO
+            'exportType' => 'nullable|in:facilcom,a3erp', // ✅ NUEVO
             'details' => 'required|array',
             'details.*.product.id' => 'required|exists:products,id',
             'details.*.netWeight' => 'required|numeric',
@@ -76,7 +76,7 @@ class CeboDispatchController extends Controller
             $dispatch->notes = $request->notes;
         }
 
-        $dispatch->export_type = $request->input('export_type', 'facilcom'); // ✅ NUEVO
+        $dispatch->export_type = $request->input('exportType', 'facilcom'); // ✅ NUEVO
 
 
 
@@ -113,7 +113,7 @@ class CeboDispatchController extends Controller
             'supplier.id' => 'required',
             'date' => 'required|date',
             'notes' => 'nullable|string',
-            'export_type' => 'nullable|in:facilcom,a3erp', // ✅ NUEVO
+            'exportType' => 'nullable|in:facilcom,a3erp', // ✅ NUEVO
             'details' => 'required|array',
             'details.*.product.id' => 'required|exists:products,id',
             'details.*.netWeight' => 'required|numeric',
@@ -126,7 +126,7 @@ class CeboDispatchController extends Controller
             'supplier_id' => $validated['supplier']['id'],
             'date' => $validated['date'],
             'notes' => $validated['notes'],
-            'export_type' => $validated['export_type'] ?? 'facilcom', // ✅ NUEVO
+            'export_type' => $validated['exportType'] ?? 'facilcom', // ✅ NUEVO
 
         ]);
 
