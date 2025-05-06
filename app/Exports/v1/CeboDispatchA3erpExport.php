@@ -19,11 +19,14 @@ class CeboDispatchA3erpExport implements FromQuery, WithHeadings, WithMapping
 
     protected $filters;
     protected $index; // <-- Contador global
+    protected $initialInvoiceNumber; // Número de factura inicial
 
     public function __construct(Request $request)
     {
         $this->filters = $request;
         $this->index = 1; // Inicializar el contador global
+        $this->initialInvoiceNumber = (int) $request->input('initial_invoice_number', 1); // Por defecto: 1
+
     }
 
     public function query()
@@ -76,7 +79,7 @@ class CeboDispatchA3erpExport implements FromQuery, WithHeadings, WithMapping
 
             foreach ($ceboDispatch->products as $product) {
                 $mappedProducts[] = [
-                    'id' => $this->index,
+                    'id' => $this->initialInvoiceNumber + $this->index - 1,
                     /* Date format DD/MM/YYYY */
                     'date' => date('d/m/Y', strtotime($ceboDispatch->date)),
                     'supplierId' => $ceboDispatch->supplier->a3erp_cebo_code,
