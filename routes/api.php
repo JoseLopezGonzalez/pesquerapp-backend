@@ -8,6 +8,7 @@ use App\Http\Controllers\v1\BoxesReportController;
 use App\Http\Controllers\v1\CaptureZoneController;
 use App\Http\Controllers\v1\CeboController;
 use App\Http\Controllers\v1\CeboDispatchController;
+use App\Http\Controllers\v1\CeboDispatchReportController;
 use App\Http\Controllers\v1\CustomerController;
 use App\Http\Controllers\v1\IncotermController;
 use App\Http\Controllers\v1\OrderController;
@@ -146,6 +147,8 @@ Route::get('v1/boxes_report', [BoxesReportController::class, 'exportToExcel'])->
 /* RawMaterialReceptionsReportController */
 Route::get('v1/raw_material_receptions_report', [RawMaterialReceptionsReportController::class, 'exportToExcel'])->name('export.raw_material_receptions');
 // Ruta personalizada para enviar documentación de un pedido (NO CRUD)
+/* v1/cebo_dispatches_report */
+Route::get('v1/cebo_dispatches_report', [CeboDispatchReportController::class, 'exportToExcel'])->name('export.cebo_dispatches');
 Route::post('v1/send_order_documentation/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentation'])->name('send_order_documentation');
 /* Send order documentation to Transport  */
 Route::post('v1/send_order_documentation_transport/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentationTransport'])->name('send_order_documentation_transport');
