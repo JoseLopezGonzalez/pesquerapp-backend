@@ -77,7 +77,7 @@ class CeboDispatchExport implements FromQuery, WithHeadings, WithMapping
                 'id' => $this->index,
                 /* Date format DD/MM/YYYY */
                 'date' => date('d/m/Y', strtotime($ceboDispatch->date)),
-                'supplierId' => $ceboDispatch->supplier->facil_com_code,
+                'supplierId' => $ceboDispatch->supplier->facilcom_cebo_code,
                 'supplierName' => $ceboDispatch->supplier->name,
                 /* 'date' => $ceboDispatch->date, */
                 'articleId' => $product->product->facil_com_code,
