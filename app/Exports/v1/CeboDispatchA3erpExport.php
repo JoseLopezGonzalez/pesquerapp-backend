@@ -77,15 +77,15 @@ class CeboDispatchA3erpExport implements FromQuery, WithHeadings, WithMapping
                 'id' => $this->index,
                 /* Date format DD/MM/YYYY */
                 'date' => date('d/m/Y', strtotime($ceboDispatch->date)),
-                'supplierId' => $ceboDispatch->supplier->facilcom_cebo_code,
-                'supplierName' => $ceboDispatch->supplier->name,
+                'supplierId' => $ceboDispatch->supplier->a3erp_cebo_code,
+                'reference' => $ceboDispatch->supplier->name . " - CEBO - " . date('d/m/Y', strtotime($ceboDispatch->date)),
                 /* 'date' => $ceboDispatch->date, */
                 'articleId' => $product->product->facil_com_code,
                 'articleName' => $product->product->article->name,
                 'netWeight' => $product->net_weight,
                 'price' => $product->price,
                 /* Lot es DDMMYYYY */
-                'lot' => date('dmY', strtotime($ceboDispatch->date)),
+                'iva' => 'ORD21',
             ];
         }
 
@@ -112,15 +112,15 @@ class CeboDispatchA3erpExport implements FromQuery, WithHeadings, WithMapping
     public function headings(): array
     {
         return [
-            'CODIGO',
-            'Fecha',
-            'CODIGO CLIENTE',
-            'Destino',
-            'Cod. Producto',
-            'Producto',
-            'Cantidad Kg',
-            'Precio',
-            'Lote asignado',
+            'CABNUMDOC',
+            'CABFECHA',
+            'CABCODCLI',
+            'CABREFERENCIA',
+            'LINCODART',
+            'LINDESCLIN',
+            'LINUNIDADES',
+            'LINPRCMONEDA',
+            'LINTIPIVA',
         ];
     }
 }
