@@ -72,39 +72,42 @@ class CeboDispatchA3erpExport implements FromQuery, WithHeadings, WithMapping
     {
         $mappedProducts = [];
 
-        foreach ($ceboDispatch->products as $product) {
-            $mappedProducts[] = [
-                'id' => $this->index,
-                /* Date format DD/MM/YYYY */
-                'date' => date('d/m/Y', strtotime($ceboDispatch->date)),
-                'supplierId' => $ceboDispatch->supplier->a3erp_cebo_code,
-                'reference' => $ceboDispatch->supplier->name . " - CEBO - " . date('d/m/Y', strtotime($ceboDispatch->date)),
-                /* 'date' => $ceboDispatch->date, */
-                'articleId' => $product->product->facil_com_code,
-                'articleName' => $product->product->article->name,
-                'netWeight' => $product->net_weight,
-                'price' => $product->price,
-                /* Lot es DDMMYYYY */
-                'iva' => 'ORD21',
-            ];
+        if ($ceboDispatch->export_type == 'a3erp') {
+
+            foreach ($ceboDispatch->products as $product) {
+                $mappedProducts[] = [
+                    'id' => $this->index,
+                    /* Date format DD/MM/YYYY */
+                    'date' => date('d/m/Y', strtotime($ceboDispatch->date)),
+                    'supplierId' => $ceboDispatch->supplier->a3erp_cebo_code,
+                    'reference' => $ceboDispatch->supplier->name . " - CEBO - " . date('d/m/Y', strtotime($ceboDispatch->date)),
+                    /* 'date' => $ceboDispatch->date, */
+                    'articleId' => $product->product->facil_com_code,
+                    'articleName' => $product->product->article->name,
+                    'netWeight' => $product->net_weight,
+                    'price' => $product->price,
+                    /* Lot es DDMMYYYY */
+                    'iva' => 'ORD21',
+                ];
+            }
+
+            /* Si hay declared_total_amount y declared_total_net_weight */
+            /* if ($ceboDispatch->declared_total_amount > 0 && $ceboDispatch->declared_total_net_weight > 0) {
+                $mappedProducts[] = [
+                    'id' => $this->index,
+                    'date' => date('d/m/Y', strtotime($ceboDispatch->date)),
+                    'supplierId' => $ceboDispatch->supplier->facil_com_code,
+                    'supplierName' => $ceboDispatch->supplier->name,
+                    'articleId' => 100,
+                    'articleName' => 'PULPO FRESCO LONJA',
+                    'netWeight' => $ceboDispatch->declared_total_net_weight * -1,
+                    'price' => $ceboDispatch->declared_total_amount / $ceboDispatch->declared_total_net_weight,
+                    'lot' => date('dmY', strtotime($ceboDispatch->date)),
+                ];
+            } */
+
+            $this->index++;
         }
-
-        /* Si hay declared_total_amount y declared_total_net_weight */
-        /* if ($ceboDispatch->declared_total_amount > 0 && $ceboDispatch->declared_total_net_weight > 0) {
-            $mappedProducts[] = [
-                'id' => $this->index,
-                'date' => date('d/m/Y', strtotime($ceboDispatch->date)),
-                'supplierId' => $ceboDispatch->supplier->facil_com_code,
-                'supplierName' => $ceboDispatch->supplier->name,
-                'articleId' => 100,
-                'articleName' => 'PULPO FRESCO LONJA',
-                'netWeight' => $ceboDispatch->declared_total_net_weight * -1,
-                'price' => $ceboDispatch->declared_total_amount / $ceboDispatch->declared_total_net_weight,
-                'lot' => date('dmY', strtotime($ceboDispatch->date)),
-            ];
-        } */
-
-        $this->index++;
 
         return $mappedProducts;
     }
