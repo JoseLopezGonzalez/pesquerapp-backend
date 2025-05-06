@@ -72,7 +72,7 @@ class CeboDispatchFacilcomExport implements FromQuery, WithHeadings, WithMapping
     {
         $mappedProducts = [];
 
-        if ($ceboDispatch->supplier->cebo_export_type == 'facilcom') {
+        if ($ceboDispatch->export_type == 'facilcom') {
 
             foreach ($ceboDispatch->products as $product) {
                 $mappedProducts[] = [
