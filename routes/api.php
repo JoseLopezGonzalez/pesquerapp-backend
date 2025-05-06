@@ -148,7 +148,7 @@ Route::get('v1/boxes_report', [BoxesReportController::class, 'exportToExcel'])->
 Route::get('v1/raw_material_receptions_report', [RawMaterialReceptionsReportController::class, 'exportToExcel'])->name('export.raw_material_receptions');
 // Ruta personalizada para enviar documentación de un pedido (NO CRUD)
 /* v1/cebo_dispatches_report */
-Route::get('v1/cebo_dispatches_report', [CeboDispatchReportController::class, 'exportToExcel'])->name('export.cebo_dispatches');
+Route::get('v1/cebo_dispatches_report/facilcom', [CeboDispatchReportController::class, 'exportToFacilcomExcel'])->name('export.cebo_dispatches_facilcom');
 Route::post('v1/send_order_documentation/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentation'])->name('send_order_documentation');
 /* Send order documentation to Transport  */
 Route::post('v1/send_order_documentation_transport/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentationTransport'])->name('send_order_documentation_transport');
