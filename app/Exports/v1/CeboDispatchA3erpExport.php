@@ -85,7 +85,7 @@ class CeboDispatchA3erpExport implements FromQuery, WithHeadings, WithMapping
                     'supplierId' => $ceboDispatch->supplier->a3erp_cebo_code,
                     'reference' => $ceboDispatch->supplier->name . " - CEBO - " . date('d/m/Y', strtotime($ceboDispatch->date)),
                     /* 'date' => $ceboDispatch->date, */
-                    'articleId' => $product->product->facil_com_code,
+                    'articleId' => $product->product->a3erp_code,
                     'articleName' => $product->product->article->name,
                     'netWeight' => $product->net_weight,
                     'price' => $product->price,
