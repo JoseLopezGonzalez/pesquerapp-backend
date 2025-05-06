@@ -45,7 +45,22 @@ class CeboDispatchReportController extends Controller
             ini_set('max_execution_time', 300);
 
             // Exportar en formato .xls (Excel 97-2003)
-            return Excel::download(new CeboDispatchFacilcomExport($request), 'cebo_dispatch_report.xls', \Maatwebsite\Excel\Excel::XLS);
+            return Excel::download(new CeboDispatchFacilcomExport($request), 'cebo_dispatch_report_facilcom.xls', \Maatwebsite\Excel\Excel::XLS);
+        } catch (\Exception $e) {
+            // Manejo de la excepción y retorno de un mensaje de error adecuado
+            return response()->json(['error' => 'Error durante la exportación del archivo: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function exportToA3erpExcel(Request $request)
+    {
+        try {
+            // Aumentar el límite de memoria y tiempo de ejecución solo para esta operación
+            ini_set('memory_limit', '1024M');
+            ini_set('max_execution_time', 300);
+
+            // Exportar en formato .xls (Excel 97-2003)
+            return Excel::download(new CeboDispatchFacilcomExport($request), 'cebo_dispatch_report_a3erp.xls', \Maatwebsite\Excel\Excel::XLS);
         } catch (\Exception $e) {
             // Manejo de la excepción y retorno de un mensaje de error adecuado
             return response()->json(['error' => 'Error durante la exportación del archivo: ' . $e->getMessage()], 500);
