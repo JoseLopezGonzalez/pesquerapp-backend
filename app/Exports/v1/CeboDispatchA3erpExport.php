@@ -79,7 +79,7 @@ class CeboDispatchA3erpExport implements FromQuery, WithHeadings, WithMapping
 
             foreach ($ceboDispatch->products as $product) {
                 $mappedProducts[] = [
-                    'id' => 1/* $this->initialInvoiceNumber + $this->index - 1 */,
+                    'id' => $this->initialInvoiceNumber + $this->index - 1,
                     /* Date format DD/MM/YYYY */
                     'date' => date('d/m/Y', strtotime($ceboDispatch->date)),
                     'supplierId' => $ceboDispatch->supplier->a3erp_cebo_code,
