@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Exports\v1\BoxesExport;
+use App\Exports\v1\CeboDispatchA3erpExport;
 use App\Exports\v1\CeboDispatchExport;
 use App\Exports\v1\CeboDispatchFacilcomExport;
 use App\Exports\v1\RawMaterialReceptionExport;
@@ -60,7 +61,7 @@ class CeboDispatchReportController extends Controller
             ini_set('max_execution_time', 300);
 
             // Exportar en formato .xls (Excel 97-2003)
-            return Excel::download(new CeboDispatchFacilcomExport($request), 'cebo_dispatch_report_a3erp.xls', \Maatwebsite\Excel\Excel::XLS);
+            return Excel::download(new CeboDispatchA3erpExport($request), 'cebo_dispatch_report_a3erp.xls', \Maatwebsite\Excel\Excel::XLS);
         } catch (\Exception $e) {
             // Manejo de la excepción y retorno de un mensaje de error adecuado
             return response()->json(['error' => 'Error durante la exportación del archivo: ' . $e->getMessage()], 500);
