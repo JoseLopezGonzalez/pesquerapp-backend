@@ -83,8 +83,6 @@ class CeboDispatchController extends Controller
         /* $dispatch->export_type = $request->input('exportType', $dispatch->supplier->cebo_export_type ?? 'facilcom'); */
 
 
-
-
         $dispatch->save();
 
         if ($request->has('details')) {
