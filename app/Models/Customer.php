@@ -23,7 +23,7 @@ class Customer extends Model
         'contact_info',
         'country_id',
         'transport_id',
-        'a3erp_code'
+        'a3erp_code',
     ];
 
     public function orders()
