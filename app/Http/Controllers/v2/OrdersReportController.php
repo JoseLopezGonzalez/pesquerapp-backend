@@ -41,7 +41,7 @@ class OrdersReportController extends Controller
 
 
     /* A3ERPOrderSalesDeliveryNoteExport */
-    /* public function exportToExcelA3ERP(Request $request)
+    public function exportToExcelA3ERP(Request $request)
     {
         try {
             // Aumentar el límite de memoria y tiempo de ejecución solo para esta operación
@@ -54,22 +54,10 @@ class OrdersReportController extends Controller
             // Manejo de la excepción y retorno de un mensaje de error adecuado
             return response()->json(['error' => 'Error durante la exportación del archivo: ' . $e->getMessage()], 500);
         }
-    } */
-
-    public function exportToExcelA3ERP(Request $request)
-    {
-        try {
-            // Aumentar el límite de memoria y tiempo de ejecución solo para esta operación
-            ini_set('memory_limit', '1024M');
-            ini_set('max_execution_time', 300);
-
-            // Exportar en formato .xlsx (moderno)
-            return Excel::download(new OrderExport($request), 'orders_report_a3erp.xlsx', \Maatwebsite\Excel\Excel::XLSX);
-        } catch (\Exception $e) {
-            // Manejo de la excepción y retorno de un mensaje de error adecuado
-            return response()->json(['error' => 'Error durante la exportación del archivo: ' . $e->getMessage()], 500);
-        }
     }
+
+ 
+    
 
 
 }
