@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v2;
 
 use App\Exports\v2\A3ERPOrderSalesDeliveryNoteExport;
+use App\Exports\v2\A3ERPOrdersSalesDeliveryNotesExport;
 use App\Exports\v2\OrderBoxListExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -59,9 +60,13 @@ class ExcelController extends Controller
 
         if ($request->has('active')) {
             if ($request->active == 'true') {
-                $query->where('status', 'pending')->orWhereDate('load_date', '>=', now());
+                $query->where(function ($q) {
+                    $q->where('status', 'pending')
+                        ->orWhereDate('load_date', '>=', now());
+                });
             } else {
-                $query->where('status', 'finished')->whereDate('load_date', '<', now());
+                $query->where('status', 'finished')
+                    ->whereDate('load_date', '<', now());
             }
         }
 
@@ -70,7 +75,7 @@ class ExcelController extends Controller
         }
 
         if ($request->has('id')) {
-            $query->where('id', 'like', "%" . $request->id . "%");
+            $query->where('id', 'like', '%' . $request->id . '%');
         }
 
         if ($request->has('ids')) {
@@ -78,7 +83,7 @@ class ExcelController extends Controller
         }
 
         if ($request->has('buyerReference')) {
-            $query->where('buyer_reference', 'like', "%" . $request->buyerReference . "%");
+            $query->where('buyer_reference', 'like', '%' . $request->buyerReference . '%');
         }
 
         if ($request->has('status')) {
@@ -131,15 +136,13 @@ class ExcelController extends Controller
 
         $query->orderBy('load_date', 'desc');
 
-        $orders = $query->get(); // ⚠️ No paginamos para exportar TODO
+        $orders = $query->get(); // exporta todos los resultados filtrados
 
         return Excel::download(
-            new A3ERPOrderSalesDeliveryNoteExport($orders),
+            new A3ERPOrdersSalesDeliveryNotesExport($orders),
             'albaran_venta_filtrado.xls',
             \Maatwebsite\Excel\Excel::XLS
         );
     }
-
-
 
 }
