@@ -27,7 +27,7 @@ class A3ERPOrdersSalesDeliveryNotesExport implements FromCollection, WithHeading
         foreach ($this->orders as $order) {
             foreach ($order->productDetails as $productDetail) {
                 $rows[] = [
-                    'NUMSERIE' => 'P25',
+                    'CABNUMSERIE' => 'P25',
                     'CABNUMDOC' => $order->id,
                     'CABFECHA' => date('d/m/Y', strtotime($order->load_date)),
                     'CABCODCLI' => optional($order->customer)->a3erp_code,
@@ -48,7 +48,7 @@ class A3ERPOrdersSalesDeliveryNotesExport implements FromCollection, WithHeading
     public function headings(): array
     {
         return [
-            'NUMSERIE',
+            'CABNUMSERIE',
             'CABNUMDOC',
             'CABFECHA',
             'CABCODCLI',
@@ -65,7 +65,7 @@ class A3ERPOrdersSalesDeliveryNotesExport implements FromCollection, WithHeading
     public function map($row): array
     {
         return [
-            $row['NUMSERIE'],
+            $row['CABNUMSERIE'],
             $row['CABNUMDOC'],
             $row['CABFECHA'],
             $row['CABCODCLI'],
