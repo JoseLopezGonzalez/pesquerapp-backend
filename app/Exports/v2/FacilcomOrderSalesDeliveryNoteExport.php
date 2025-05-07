@@ -45,17 +45,17 @@ class FacilcomOrderSalesDeliveryNoteExport implements FromCollection, WithHeadin
     {
         $mappedRows = [];
 
-        foreach ($order->productDetails as $product) {
+        foreach ($this->order->productDetails as $productDetail) {
             $mappedRows[] = [
                 $this->index++,
-                date('d/m/Y', strtotime($order->load_date)),
-                optional($order->customer)->facilcom_code,
-                optional($order->customer)->name,
-                optional($product->product)->facilcom_code,
-                optional($product->product)->name,
-                $product->netWeight,
-                $product->unitPrice,
-                date('dmY', strtotime($order->load_date)),
+                date('d/m/Y', strtotime($this->order->load_date)),
+                $this->order->customer['facilcom_code'] ?? '',
+                $this->order->customer['name'] ?? '',
+                $productDetail['product']['facilcom_code'] ?? '',
+                $productDetail['product']['name'] ?? '',
+                $productDetail['netWeight'],
+                $productDetail['unitPrice'],
+                date('dmY', strtotime($this->order->load_date)),
             ];
         }
 

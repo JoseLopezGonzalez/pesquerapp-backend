@@ -44,16 +44,16 @@ class FacilcomOrdersSalesDeliveryNotesExport implements FromCollection, WithHead
     {
         $mappedRows = [];
 
-        foreach ($order->productDetails as $product) {
+        foreach ($order->productDetails as $productDetail) {
             $mappedRows[] = [
                 'CODIGO' => $this->index++,
                 'Fecha' => date('d/m/Y', strtotime($order->load_date)),
-                'CODIGO CLIENTE' => optional($order->customer)->facilcom_code,
-                'Destino' => optional($order->customer)->name,
-                'Cod. Producto' => optional($product->product)->facilcom_code,
-                'Producto' => optional($product->product)->name,
-                'Cantidad Kg' => $product->netWeight,
-                'Precio' => $product->unitPrice,
+                'CODIGO CLIENTE' => $order->customer['facilcom_code'] ?? '',
+                'Destino' => $order->customer['name'] ?? '',
+                'Cod. Producto' => $productDetail['product']['facilcom_code'] ?? '',
+                'Producto' => $productDetail['product']['name'] ?? '',
+                'Cantidad Kg' => $productDetail['netWeight'],
+                'Precio' => $productDetail['unitPrice'],
                 'Lote asignado' => date('dmY', strtotime($order->load_date)),
             ];
         }
