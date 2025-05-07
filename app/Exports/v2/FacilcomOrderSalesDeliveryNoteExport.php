@@ -48,7 +48,7 @@ class FacilcomOrderSalesDeliveryNoteExport implements FromArray, WithHeadings, W
             'PEDIDO #' . $this->order->id,
             '0',
             '0',
-            '',
+            '-',
         ];
 
         $this->index++;
