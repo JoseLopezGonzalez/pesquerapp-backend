@@ -47,7 +47,7 @@ class ExcelController extends Controller
     {
         ini_set('memory_limit', '1024M');
         $order = Order::findOrFail($orderId);
-        return Excel::download(new A3ERPOrderSalesDeliveryNoteExport($order), "albaran_venta_{$order->formattedId}.xlsx");
+        return Excel::download(new A3ERPOrderSalesDeliveryNoteExport($order), "albaran_venta_{$order->formattedId}.xls");
     }
 
 
