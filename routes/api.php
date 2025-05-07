@@ -344,6 +344,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('orders/{orderId}/xlsx/boxes-report', [\App\Http\Controllers\v2\ExcelController::class, 'exportBoxList'])->name('export_box_list');
             Route::get('orders/{orderId}/xls/A3ERP-sales-delivery-note', [\App\Http\Controllers\v2\ExcelController::class, 'exportA3ERPOrderSalesDeliveryNote'])->name('export_A3ERP_sales_delivery_note');
             Route::get('orders/xls/A3ERP-sales-delivery-note-filtered', [\App\Http\Controllers\v2\ExcelController::class, 'exportA3ERPOrderSalesDeliveryNoteWithFilters'])->name('export.a3erp.filtered');
+            Route::get('orders/xls/facilcom-sales-delivery-note', [\App\Http\Controllers\v2\ExcelController::class, 'exportFacilcomOrderSalesDeliveryNoteWithFilters'])->name('export_facilcom_orders');
+            Route::get('orders/{orderId}/xls/facilcom-single', [\App\Http\Controllers\v2\ExcelController::class, 'exportFacilcomSingleOrder'])->name('export_facilcom_single');
 
             Route::get('orders/{orderId}/pdf/valued-loading-note', [\App\Http\Controllers\v2\PDFController::class, 'generateValuedLoadingNote'])->name('generate_valued_loading_note');
             /* generateIncident */
