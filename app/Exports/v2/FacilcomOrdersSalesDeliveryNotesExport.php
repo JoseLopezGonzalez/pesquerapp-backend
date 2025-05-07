@@ -50,7 +50,7 @@ class FacilcomOrdersSalesDeliveryNotesExport implements FromCollection, WithHead
                 'Fecha' => date('d/m/Y', strtotime($order->load_date)),
                 'CODIGO CLIENTE' => $order->customer['facilcom_code'] ?? '',
                 'Destino' => $order->customer['name'] ?? '',
-                'Cod. Producto' => $productDetail['product']['facilcom_code'] ?? '',
+                'Cod. Producto' => $productDetail['product']['facilcomCode'] ?? '',
                 'Producto' => $productDetail['product']['name'] ?? '',
                 'Cantidad Kg' => $productDetail['netWeight'],
                 'Precio' => $productDetail['unitPrice'],

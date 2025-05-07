@@ -51,7 +51,7 @@ class FacilcomOrderSalesDeliveryNoteExport implements FromCollection, WithHeadin
                 date('d/m/Y', strtotime($this->order->load_date)),
                 $this->order->customer['facilcom_code'] ?? '',
                 $this->order->customer['name'] ?? '',
-                $productDetail['product']['facilcom_code'] ?? '',
+                $productDetail['product']['facilcomCode'] ?? '',
                 $productDetail['product']['name'] ?? '',
                 $productDetail['netWeight'],
                 $productDetail['unitPrice'],

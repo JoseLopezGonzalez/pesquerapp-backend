@@ -423,6 +423,7 @@ class Order extends Model
                             'id' => $product->id,
                             'name' => $product->name,
                             'a3erpCode' => $product->a3erp_code,
+                            'facilcomCode' => $product->facilcom_code,
                         ],
                         'boxes' => 0,
                         'netWeight' => 0,
