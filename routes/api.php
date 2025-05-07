@@ -152,6 +152,7 @@ Route::get('v1/cebo_dispatches_report/facilcom', [CeboDispatchReportController::
 /* v1/cebo_dispatches_report/a3erp */
 Route::get('v1/cebo_dispatches_report/a3erp', [CeboDispatchReportController::class, 'exportToA3erpExcel'])->name('export.cebo_dispatches_a3erp');
 
+
 Route::post('v1/send_order_documentation/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentation'])->name('send_order_documentation');
 /* Send order documentation to Transport  */
 Route::post('v1/send_order_documentation_transport/{orderId}', [OrderDocumentMailerController::class, 'sendDocumentationTransport'])->name('send_order_documentation_transport');
