@@ -49,8 +49,8 @@ class FacilcomOrdersSalesDeliveryNotesExport implements FromArray, WithHeadings
                 $order->customer['name'] ?? '',
                 '106',
                 'PEDIDO #' . $order->id,
-                0,
-                0,
+                '0',
+                '0',
                 '',
             ];
 
