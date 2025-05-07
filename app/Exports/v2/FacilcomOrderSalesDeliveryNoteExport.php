@@ -3,13 +3,12 @@
 namespace App\Exports\v2;
 
 use App\Models\Order;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Concerns\Exportable;
 
-class FacilcomOrderSalesDeliveryNoteExport implements FromCollection, WithHeadings, WithMapping, WithTitle
+class FacilcomOrderSalesDeliveryNoteExport implements FromArray, WithHeadings, WithTitle
 {
     use Exportable;
 
@@ -21,9 +20,40 @@ class FacilcomOrderSalesDeliveryNoteExport implements FromCollection, WithHeadin
         $this->order = $order;
     }
 
-    public function collection()
+    public function array(): array
     {
-        return collect([$this->order]); // Necesario para que se procese en `map()`
+        $rows = [];
+
+        foreach ($this->order->productDetails as $productDetail) {
+            $rows[] = [
+                $this->index,
+                date('d/m/Y', strtotime($this->order->load_date)),
+                $this->order->customer['facilcom_code'] ?? '',
+                $this->order->customer['name'] ?? '',
+                $productDetail['product']['facilcomCode'] ?? '',
+                $productDetail['product']['name'] ?? '',
+                $productDetail['netWeight'],
+                $productDetail['unitPrice'],
+                date('dmY', strtotime($this->order->load_date)),
+            ];
+        }
+
+        // Línea adicional tipo "PEDIDO #123"
+        $rows[] = [
+            $this->index,
+            date('d/m/Y', strtotime($this->order->load_date)),
+            $this->order->customer['facilcom_code'] ?? '',
+            $this->order->customer['name'] ?? '',
+            '106',
+            'PEDIDO #' . $this->order->id,
+            0,
+            0,
+            '',
+        ];
+
+        $this->index++;
+
+        return $rows;
     }
 
     public function headings(): array
@@ -39,27 +69,6 @@ class FacilcomOrderSalesDeliveryNoteExport implements FromCollection, WithHeadin
             'Precio',
             'Lote asignado',
         ];
-    }
-
-    public function map($order): array
-    {
-        $mappedRows = [];
-
-        foreach ($this->order->productDetails as $productDetail) {
-            $mappedRows[] = [
-                $this->index++,
-                date('d/m/Y', strtotime($this->order->load_date)),
-                $this->order->customer['facilcom_code'] ?? '',
-                $this->order->customer['name'] ?? '',
-                $productDetail['product']['facilcomCode'] ?? '',
-                $productDetail['product']['name'] ?? '',
-                $productDetail['netWeight'],
-                $productDetail['unitPrice'],
-                date('dmY', strtotime($this->order->load_date)),
-            ];
-        }
-
-        return $mappedRows;
     }
 
     public function title(): string

@@ -7,8 +7,10 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromArray;
 
-class FacilcomOrdersSalesDeliveryNotesExport implements FromCollection, WithHeadings, WithMapping
+
+class FacilcomOrdersSalesDeliveryNotesExport implements FromArray, WithHeadings
 {
     use Exportable;
 
@@ -20,9 +22,42 @@ class FacilcomOrdersSalesDeliveryNotesExport implements FromCollection, WithHead
         $this->orders = $orders;
     }
 
-    public function collection()
+    public function array(): array
     {
-        return $this->orders;
+        $rows = [];
+
+        foreach ($this->orders as $order) {
+            foreach ($order->productDetails as $productDetail) {
+                $rows[] = [
+                    $this->index,
+                    date('d/m/Y', strtotime($order->load_date)),
+                    $order->customer['facilcom_code'] ?? '',
+                    $order->customer['name'] ?? '',
+                    $productDetail['product']['facilcomCode'] ?? '',
+                    $productDetail['product']['name'] ?? '',
+                    $productDetail['netWeight'],
+                    $productDetail['unitPrice'],
+                    date('dmY', strtotime($order->load_date)),
+                ];
+            }
+
+            // Línea resumen "PEDIDO #"
+            $rows[] = [
+                $this->index,
+                date('d/m/Y', strtotime($order->load_date)),
+                $order->customer['facilcom_code'] ?? '',
+                $order->customer['name'] ?? '',
+                '106',
+                'PEDIDO #' . $order->id,
+                0,
+                0,
+                '',
+            ];
+
+            $this->index++;
+        }
+
+        return $rows;
     }
 
     public function headings(): array
@@ -38,26 +73,5 @@ class FacilcomOrdersSalesDeliveryNotesExport implements FromCollection, WithHead
             'Precio',
             'Lote asignado',
         ];
-    }
-
-    public function map($order): array
-    {
-        $mappedRows = [];
-
-        foreach ($order->productDetails as $productDetail) {
-            $mappedRows[] = [
-                'CODIGO' => $this->index++,
-                'Fecha' => date('d/m/Y', strtotime($order->load_date)),
-                'CODIGO CLIENTE' => $order->customer['facilcom_code'] ?? '',
-                'Destino' => $order->customer['name'] ?? '',
-                'Cod. Producto' => $productDetail['product']['facilcomCode'] ?? '',
-                'Producto' => $productDetail['product']['name'] ?? '',
-                'Cantidad Kg' => $productDetail['netWeight'],
-                'Precio' => $productDetail['unitPrice'],
-                'Lote asignado' => date('dmY', strtotime($order->load_date)),
-            ];
-        }
-
-        return $mappedRows;
     }
 }
