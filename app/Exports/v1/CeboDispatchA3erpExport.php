@@ -8,8 +8,9 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\WithTitle;
 
-class CeboDispatchA3erpExport implements FromQuery, WithHeadings, WithMapping
+class CeboDispatchA3erpExport implements FromQuery, WithHeadings, WithMapping, WithTitle
 {
     use Exportable;
 
@@ -99,5 +100,10 @@ class CeboDispatchA3erpExport implements FromQuery, WithHeadings, WithMapping
             'LINPRCMONEDA',
             'LINTIPIVA',
         ];
+    }
+
+    public function title(): string
+    {
+        return 'ALBARANESVENTA';
     }
 }
