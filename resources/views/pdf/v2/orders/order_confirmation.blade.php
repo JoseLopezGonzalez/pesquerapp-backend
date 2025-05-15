@@ -46,7 +46,7 @@
         </div>
 
         <!-- CLIENTE Y TRANSPORTE -->
-        <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="grid grid-cols-2 gap-2 mb-2">
             <div class="border rounded-lg overflow-hidden bg-gray-50">
                 <div class="font-bold p-2 bg-gray-800 text-white">DATOS DEL CLIENTE</div>
                 <div class="p-4">
@@ -82,7 +82,7 @@
         </div>
 
         <!-- DIRECCIONES -->
-        <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="grid grid-cols-2 gap-2 mb-2">
             <div class="border rounded-lg bg-gray-50">
                 <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE FACTURACIÓN</div>
                 <div class="p-4">{!! nl2br(e($entity->billing_address)) !!}</div>
