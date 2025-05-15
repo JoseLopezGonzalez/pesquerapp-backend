@@ -21,7 +21,7 @@
 </head>
 
 <body class="bg-white text-black text-xs">
-    <div class="max-w-[210mm] mx-auto p-6 bg-white rounded min-h-screen">
+    <div class="max-w-[210mm] mx-auto p-4 bg-white rounded min-h-screen">
         <!-- ENCABEZADO -->
         <div class="flex justify-between items-end mb-2">
             <div>
