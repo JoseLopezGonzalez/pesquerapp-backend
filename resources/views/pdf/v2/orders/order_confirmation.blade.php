@@ -202,8 +202,8 @@
 
 </body>
 <footer class="text-[10px] text-center mt-16 border-t pt-2 text-gray-500 leading-snug">
-    Congelados Brisamar S.L. · CIF B00000000 · C/Dieciocho de Julio de 1922 Nº2 · 21410 Isla Cristina, Huelva · www.congeladosbrisamar.es<br>
-    No se admitirán devoluciones ni reclamaciones relacionadas con la mercancía transcurridas 48 horas desde su recepción.
+    Congelados Brisamar S.L. · CIF B21573282 · C/Dieciocho de Julio de 1922 Nº2 · 21410 Isla Cristina, Huelva · www.congeladosbrisamar.es<br>
+    <span class="font-medium text-black">No se admitirán devoluciones ni reclamaciones relacionadas con la mercancía transcurridas 48 horas desde su recepción.</span>
 </footer>
 
 
