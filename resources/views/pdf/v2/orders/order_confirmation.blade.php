@@ -187,11 +187,17 @@
                 <div class="border-t border-gray-400 mt-4"></div>
             </div>
 
+            <div class="text-[10px] text-center border-t pt-2 text-gray-500 ">
+                No se admitirán devoluciones ni reclamaciones relacionadas con la mercancía transcurridas 48 horas desde
+                su
+                recepción.
+            </div>
+
         </div>
 
 
     </div>
-    <div class="text-[10px] text-center border-t pt-2 text-gray-500 leading-snug">
+    <div class="text-[10px] text-center border-t pt-2 text-gray-500 ">
         No se admitirán devoluciones ni reclamaciones relacionadas con la mercancía transcurridas 48 horas desde su
         recepción.
     </div>
