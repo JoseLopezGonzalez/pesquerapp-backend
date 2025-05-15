@@ -83,11 +83,11 @@
 
         <!-- DIRECCIONES -->
         <div class="grid grid-cols-2 gap-2 mb-2">
-            <div class="border rounded-lg bg-gray-50">
+            <div class="border rounded-lg bg-gray-50 overflow-hidden">
                 <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE FACTURACIÓN</div>
                 <div class="p-4">{!! nl2br(e($entity->billing_address)) !!}</div>
             </div>
-            <div class="border rounded-lg bg-gray-50">
+            <div class="border rounded-lg bg-gray-50 overflow-hidden">
                 <div class="font-bold p-2 bg-gray-800 text-white">DIRECCIÓN DE ENVÍO</div>
                 <div class="p-4">{!! nl2br(e($entity->shipping_address)) !!}</div>
             </div>
