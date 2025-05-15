@@ -20,8 +20,8 @@
     </style>
 </head>
 
-<body class="bg-white text-black text-xs">
-    <div class="max-w-[210mm] mx-auto p-4 bg-white rounded min-h-screen">
+<body class="bg-white text-black text-xs p-4">
+    <div class="max-w-[210mm] mx-auto  bg-white rounded min-h-screen">
         <!-- ENCABEZADO -->
         <div class="flex justify-between items-end mb-2">
             <div>
@@ -195,6 +195,10 @@
         No se admitirán devoluciones ni reclamaciones relacionadas con la mercancía transcurridas 48 horas desde su
         recepción.
     </footer>
+    <!-- <footer class="text-[10px] text-center border-t pt-2 text-gray-500 leading-snug">
+        No se admitirán devoluciones ni reclamaciones relacionadas con la mercancía transcurridas 48 horas desde su
+        recepción.
+    </footer> -->
 </body>
 
 
