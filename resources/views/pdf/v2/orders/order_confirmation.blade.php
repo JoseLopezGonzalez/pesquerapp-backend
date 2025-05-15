@@ -23,7 +23,7 @@
 <body class="bg-white text-black text-xs">
     <div class="max-w-[210mm] mx-auto p-6 bg-white rounded min-h-screen">
         <!-- ENCABEZADO -->
-        <div class="flex justify-between items-end mb-6">
+        <div class="flex justify-between items-end mb-2">
             <div>
                 <h1 class="text-md font-bold">Congelados Brisamar S.L.</h1>
                 <p>C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
@@ -193,7 +193,7 @@
     </div>
 </body>
 
-<footer class="text-[10px] text-center mt-4 border-t  text-gray-500 leading-snug">
+<footer class="text-[10px] text-center mt-4 border-t pt-2 text-gray-500 leading-snug">
     No se admitirán devoluciones ni reclamaciones relacionadas con la mercancía transcurridas 48 horas desde su
     recepción.
 </footer>
