@@ -193,7 +193,7 @@
     </div>
 </body>
 
-<footer class="text-[10px] text-center mt-4 border-t pt-2 text-gray-500 leading-snug">
+<footer class="text-[10px] text-center mt-4 border-t  text-gray-500 leading-snug">
     No se admitirán devoluciones ni reclamaciones relacionadas con la mercancía transcurridas 48 horas desde su
     recepción.
 </footer>
