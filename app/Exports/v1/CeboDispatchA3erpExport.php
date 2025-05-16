@@ -78,7 +78,7 @@ class CeboDispatchA3erpExport implements FromQuery, WithHeadings, WithMapping, W
                     'articleName' => $product->product->article->name,
                     'netWeight' => $product->net_weight,
                     'price' => $product->price,
-                    'iva' => 'ORD21',
+                    'iva' => 'RED10',
                 ];
             }
         }
