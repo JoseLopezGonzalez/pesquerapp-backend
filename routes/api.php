@@ -301,6 +301,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('/pallets/shipped-options', [V2PalletController::class, 'shippedOptions']);
             Route::get('/stores/options', [V2StoreController::class, 'options']);
             Route::get('/orders/options', [V2OrderController::class, 'options']);
+            /* Active Order Options */
+            Route::get('/orders/active-options', [V2OrderController::class, 'activeOptions']);
             Route::get('/fishing-gears/options', [FishingGearController::class, 'options']);
             Route::get('/countries/options', [CountryController::class, 'options']);
             Route::get('/payment-terms/options', [V2PaymentTermController::class, 'options']);
