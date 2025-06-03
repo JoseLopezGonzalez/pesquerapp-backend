@@ -347,15 +347,16 @@ class OrderController extends Controller
 
     /* Active Orders Options */
     public function activeOrdersOptions()
-    {
-        $orders = Order::where('status', 'pending')
-            ->orWhereDate('load_date', '>=', now())
-            ->select('id', 'id as name')
-            ->orderBy('id')
-            ->get();
+{
+    $orders = Order::where('status', 'pending')
+        ->orWhereDate('load_date', '>=', now())
+        ->select('id', 'id as name', 'load_date') // 👈 Aquí añado la fecha
+        ->orderBy('id')
+        ->get();
 
-        return response()->json($orders);
-    }
+    return response()->json($orders);
+}
+
 
     /* update Order status */
     public function updateStatus(Request $request, string $id)
