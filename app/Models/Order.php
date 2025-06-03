@@ -435,8 +435,14 @@ class Order extends Model
             });
         });
 
+        // Redondeamos netWeight a 3 decimales
+        foreach ($details as &$detail) {
+            $detail['netWeight'] = round($detail['netWeight'], 3);
+        }
+
         return array_values($details);
     }
+
 
 
     /* Confrontar en un mismo array productionProductDetails añadiendo el precio y tax sacado de plannedProductDetail y calculando
@@ -494,8 +500,8 @@ class Order extends Model
     {
         return $this->hasOne(Incident::class);
     }
-    
-    
+
+
 
 
 }
