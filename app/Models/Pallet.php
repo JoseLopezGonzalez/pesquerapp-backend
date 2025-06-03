@@ -255,6 +255,7 @@ class Pallet extends Model
             'lots' => $this->lots,
             'numberOfBoxes' => $this->numberOfBoxes,
             'position' => $this->positionV2,
+            'orderId' => $this->order_id,
         ];
     }
 
