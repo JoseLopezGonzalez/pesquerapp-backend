@@ -23,7 +23,7 @@ class PalletResource extends JsonResource
                 return $box->toArrayAssoc();
             }),
             'lots' => $this->lots,
-            'netWeight' => $this->netWeight,
+            'netWeight' => $this->netWeight !== null ? round($this->netWeight, 3) : null,
             'position' => $this->position,
             'store' => /* si es null o no */
                 $this->store ? $this->store->name : null,
