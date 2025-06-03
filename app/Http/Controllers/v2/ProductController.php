@@ -110,9 +110,9 @@ class ProductController extends Controller
     public function options()
     {
         /* Ojo que product no tiene name, teiene article que a su vex tiene name */
-
+/* box_gtin */
         $products = Product::join('articles', 'products.id', '=', 'articles.id')
-            ->select('products.id', 'articles.name') // Selecciona los campos necesarios
+            ->select('products.id', 'articles.name' , 'products.box_gtin as boxGtin') // Selecciona los campos necesarios
             ->orderBy('articles.name', 'asc') // Ordena por el nombre del artículo
             ->get();
 
