@@ -351,7 +351,7 @@ class OrderController extends Controller
     $orders = Order::where('status', 'pending')
         ->orWhereDate('load_date', '>=', now())
         ->select('id', 'id as name', 'load_date') // 👈 Aquí añado la fecha
-        ->orderBy('id')
+        ->orderBy('load_date', 'desc') // 👈 Ordenar por fecha de carga
         ->get();
 
     return response()->json($orders);
