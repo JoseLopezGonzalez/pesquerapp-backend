@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\PalletResource;
-use App\Http\Resources\v2\PalletResource as V2PalletResource;
+use App\Http\Resources\v2\PalletResource;
 use App\Models\Box;
 use App\Models\Order;
 use App\Models\OrderPallet;
@@ -180,7 +179,7 @@ class PalletController extends Controller
         $query->orderBy('id', 'desc');
 
         $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
-        return V2PalletResource::collection($query->paginate($perPage));
+        return PalletResource::collection($query->paginate($perPage));
     }
 
     /**
