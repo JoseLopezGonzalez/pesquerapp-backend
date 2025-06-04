@@ -19,7 +19,9 @@ class PalletResource extends JsonResource
             'observations' => $this->observations,
             'state' => $this->palletState,
             'articlesNames' => $this->articlesNames,
-            'boxes' => $this->boxes->map->box->map->toArrayAssocV2(),
+            'boxes' => $this->boxes->map(function ($box) {
+                return $box->toArrayAssocV2();
+            }),
             'lots' => $this->lots,
             'netWeight' => $this->netWeight !== null ? round($this->netWeight, 3) : null,
             'position' => $this->position,
