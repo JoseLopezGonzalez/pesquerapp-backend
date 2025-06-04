@@ -35,6 +35,11 @@ class PalletBox extends Model
         return $this->box->toArrayAssoc();
     }
 
+    public function toArrayAssocV2()
+    {
+        return $this->box->toArrayAssocV2();
+    }
+
     public function getNetWeightAttribute()
     {
         return $this->box->net_weight;
