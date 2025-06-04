@@ -10,7 +10,7 @@ class Box extends Model
     use HasFactory;
     //protected $table = 'boxes';
 
-    protected $fillable = [ 'article_id', 'lot', 'gs1_128', 'gross_weight', 'net_weight'];
+    protected $fillable = ['article_id', 'lot', 'gs1_128', 'gross_weight', 'net_weight'];
 
     //Alguna parte del codigo usa esto todavia aunque este mal semanticamente
     public function article()
@@ -54,12 +54,13 @@ class Box extends Model
         return [
             'id' => $this->id,
             'palletId' => $this->pallet_id,
-            'product' => $this->product->toArrayAssoc(),
+            'product' => $this->product->toArrayAssoc(), // Asegúrate que también esté limpio este método
             'lot' => $this->lot,
             'gs1128' => $this->gs1_128,
-            'grossWeight' => $this->gross_weight,
-            'netWeight' => $this->net_weight,
-            'createdAt' => $this->created_at, //formatear para mostrar solo fecha
+            'grossWeight' => (float) $this->gross_weight,
+            'netWeight' => (float) $this->net_weight,
+            'createdAt' => $this->created_at?->format('Y-m-d'), // Solo fecha
         ];
     }
+
 }
