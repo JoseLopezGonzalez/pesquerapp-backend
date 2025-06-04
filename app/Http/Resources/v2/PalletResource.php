@@ -26,7 +26,7 @@ class PalletResource extends JsonResource
             'netWeight' => $this->netWeight !== null ? round($this->netWeight, 3) : null,
             'position' => $this->position,
             'store' => /* si es null o no */
-                $this->store ? $this->store->name : null,
+                $this->store ? $this->store->id : null,
             'orderId' => $this->order_id,
             'numberOfBoxes' => $this->numberOfBoxes,
         ];
