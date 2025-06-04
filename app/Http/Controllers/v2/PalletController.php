@@ -208,7 +208,7 @@ class PalletController extends Controller
             'boxes.*.gs1128' => 'required|string',
             'boxes.*.grossWeight' => 'required|numeric',
             'boxes.*.netWeight' => 'required|numeric',
-            'store' => 'sometimes|nullable|integer|exists:stores,id',
+            'store.id' => 'sometimes|nullable|integer|exists:stores,id',
             'order' => 'sometimes|nullable|integer|exists:orders,id',
             'state.id' => 'sometimes|integer|exists:pallet_states,id',
         ]);
@@ -230,10 +230,10 @@ class PalletController extends Controller
         $newPallet->save();
 
         // Crear vínculo con almacén si se proporciona
-        if (isset($pallet['store'])) {
+        if (isset($pallet['store']['id'])) {
             StoredPallet::create([
                 'pallet_id' => $newPallet->id,
-                'store_id' => $pallet['store']
+                'store_id' => $pallet['store']['id'],
             ]);
         }
 
@@ -276,7 +276,7 @@ class PalletController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
             'observations' => 'sometimes|nullable|string',
-            'store' => 'sometimes|nullable|integer',
+            'store.id' => 'sometimes|nullable|integer',
             'state.id' => 'sometimes|integer',
             'boxes' => 'sometimes|array',
             'boxes.*.id' => 'sometimes|nullable|integer',
@@ -343,7 +343,7 @@ class PalletController extends Controller
 
         // Updating Store
         if (array_key_exists("store", $pallet)) {
-            $storeId = $pallet['store'];
+            $storeId = $pallet['store']['id'] ?? null;
 
             $isPalletStored = StoredPallet::where('pallet_id', $updatedPallet->id)->first();
             if ($isPalletStored) {
