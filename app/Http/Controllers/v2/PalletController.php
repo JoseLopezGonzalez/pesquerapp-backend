@@ -365,7 +365,7 @@ class PalletController extends Controller
                 foreach ($boxes as $index => $updatedBox) {
                     if ($updatedBox['id'] == $box->box->id) {
 
-                        $box->box->product_id = $updatedBox['product']['id'];
+                        $box->box->article_id = $updatedBox['product']['id'];
                         $box->box->lot = $updatedBox['lot'];
                         $box->box->gs1_128 = $updatedBox['gs1128'];
                         $box->box->gross_weight = $updatedBox['grossWeight'];
@@ -388,7 +388,7 @@ class PalletController extends Controller
             //Insertando Cajas
             foreach ($boxes as $box) {
                 $newBox = new Box;
-                $newBox->product_id = $box['product']['id'];
+                $newBox->article_id = $box['product']['id'];
                 $newBox->lot = $box['lot'];
                 $newBox->gs1_128 = $box['gs1128'];
                 $newBox->gross_weight = $box['grossWeight'];
