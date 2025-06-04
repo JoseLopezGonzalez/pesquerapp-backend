@@ -242,7 +242,9 @@ class PalletController extends Controller
             $newPalletBox->save();
         }
 
-        return response()->json($newPallet->toArrayAssoc(), 201);
+        /* return resource */
+        $newPallet->refresh(); // Refrescar el modelo para obtener los datos actualizados
+        return response()->json(new PalletResource($newPallet), 201); // Código de estado 201 - Created
     }
 
     /**
