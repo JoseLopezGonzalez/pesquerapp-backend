@@ -210,6 +210,7 @@ class PalletController extends Controller
             'boxes.*.netWeight' => 'required|numeric',
             'store' => 'sometimes|nullable|integer|exists:stores,id',
             'orderId' => 'sometimes|nullable|integer|exists:orders,id',
+            'state.id' => 'sometimes|integer|exists:pallet_states,id',
         ]);
 
         if ($validator->fails()) {
@@ -224,7 +225,7 @@ class PalletController extends Controller
         //Insertando Palet
         $newPallet = new Pallet;
         $newPallet->observations = $pallet['observations'];
-        $newPallet->state_id = 1; // Siempre estado registrado.
+        $newPallet->state_id = $pallet['state']['id'] ?? 1; // Por defecto, estado registrado
         $newPallet->store_id = $pallet['store'] ?? null;
 
         $newPallet->save();
