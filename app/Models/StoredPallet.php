@@ -9,6 +9,10 @@ use App\Models\Pallet;
 
 class StoredPallet extends Model
 {
+    // App\Models\StoredPallet.php
+    protected $fillable = ['pallet_id', 'store_id', 'position']; // si usas 'position' también
+
+
     use HasFactory;
     //protected $table = 'pallet_positions_store';
 
