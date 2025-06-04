@@ -203,7 +203,7 @@ class PalletController extends Controller
         $validator = Validator::make($request->all(), [
             'observations' => 'nullable|string',
             'boxes' => 'required|array',
-            'boxes.*.article.id' => 'required|integer',
+            'boxes.*.product.id' => 'required|integer',
             'boxes.*.lot' => 'required|string',
             'boxes.*.gs1128' => 'required|string',
             'boxes.*.grossWeight' => 'required|numeric',
@@ -228,7 +228,7 @@ class PalletController extends Controller
         //Insertando Cajas
         foreach ($boxes as $box) {
             $newBox = new Box;
-            $newBox->article_id = $box['article']['id'];
+            $newBox->article_id = $box['product']['id'];
             $newBox->lot = $box['lot'];
             $newBox->gs1_128 = $box['gs1128'];
             $newBox->gross_weight = $box['grossWeight'];
