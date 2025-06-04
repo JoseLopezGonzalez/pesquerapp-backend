@@ -208,6 +208,8 @@ class PalletController extends Controller
             'boxes.*.gs1128' => 'required|string',
             'boxes.*.grossWeight' => 'required|numeric',
             'boxes.*.netWeight' => 'required|numeric',
+            'store' => 'sometimes|nullable|integer|exists:stores,id',
+            'orderId' => 'sometimes|nullable|integer|exists:orders,id',
         ]);
 
         if ($validator->fails()) {
@@ -223,6 +225,8 @@ class PalletController extends Controller
         $newPallet = new Pallet;
         $newPallet->observations = $pallet['observations'];
         $newPallet->state_id = 1; // Siempre estado registrado.
+        $newPallet->store_id = $pallet['store'] ?? null;
+        $newPallet->order_id = $pallet['orderId'] ?? null;
         $newPallet->save();
 
         //Insertando Cajas
