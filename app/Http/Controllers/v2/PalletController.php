@@ -226,8 +226,17 @@ class PalletController extends Controller
         $newPallet->observations = $pallet['observations'];
         $newPallet->state_id = 1; // Siempre estado registrado.
         $newPallet->store_id = $pallet['store'] ?? null;
-        $newPallet->order_id = $pallet['orderId'] ?? null;
+
         $newPallet->save();
+
+        // Crear vínculo con almacén si se proporciona
+        if (isset($pallet['store'])) {
+            StoredPallet::create([
+                'pallet_id' => $newPallet->id,
+                'store_id' => $pallet['store']
+            ]);
+        }
+
 
         //Insertando Cajas
         foreach ($boxes as $box) {
