@@ -14,6 +14,7 @@ class ActiveOrderPlannedProductsExport implements FromCollection, WithMapping, W
 
     public function collection()
     {
+
         return OrderPlannedProductDetail::with(['order.customer', 'product', 'tax'])
             ->whereHas('order', function ($q) {
                 $q->where('status', 'pending')
@@ -35,7 +36,7 @@ class ActiveOrderPlannedProductsExport implements FromCollection, WithMapping, W
             $detail->quantity,
             $detail->boxes,
             number_format($detail->unit_price, 2, ',', '.'),
-            $detail->tax->rate.'%' ?? 'N/A',
+            $detail->tax->rate . '%' ?? 'N/A',
         ];
     }
 
