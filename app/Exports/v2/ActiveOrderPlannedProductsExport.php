@@ -24,10 +24,13 @@ class ActiveOrderPlannedProductsExport implements FromCollection, WithMapping, W
 
     public function map($detail): array
     {
+        $loadDate = $detail->order->load_date;
+        $formattedDate = $loadDate ? \Carbon\Carbon::parse($loadDate)->format('Y-m-d') : 'N/A';
+
         return [
             $detail->order->id,
             $detail->order->customer->name ?? 'N/A',
-            optional($detail->order->load_date)->format('Y-m-d'),
+            $formattedDate,
             $detail->product->name ?? 'N/A',
             $detail->quantity,
             $detail->boxes,
@@ -35,6 +38,7 @@ class ActiveOrderPlannedProductsExport implements FromCollection, WithMapping, W
             $detail->tax->name ?? 'N/A',
         ];
     }
+
 
     public function headings(): array
     {
