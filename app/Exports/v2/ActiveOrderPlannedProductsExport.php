@@ -35,7 +35,7 @@ class ActiveOrderPlannedProductsExport implements FromCollection, WithMapping, W
             $detail->quantity,
             $detail->boxes,
             number_format($detail->unit_price, 2, ',', '.'),
-            $detail->tax->rate ?? 'N/A',
+            $detail->tax->rate/100 ?? 'N/A',
         ];
     }
 
