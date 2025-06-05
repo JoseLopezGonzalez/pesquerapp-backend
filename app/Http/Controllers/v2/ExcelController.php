@@ -7,6 +7,8 @@ use App\Exports\v2\A3ERPOrdersSalesDeliveryNotesExport;
 use App\Exports\v2\FacilcomOrderSalesDeliveryNoteExport;
 use App\Exports\v2\FacilcomOrdersSalesDeliveryNotesExport;
 use App\Exports\v2\OrderBoxListExport;
+use App\Exports\v2\ActiveOrderPlannedProductsExport;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -242,11 +244,22 @@ class ExcelController extends Controller
     {
         ini_set('memory_limit', '1024M');
         $order = Order::findOrFail($orderId);
-    
+
         return Excel::download(
             new FacilcomOrderSalesDeliveryNoteExport($order),
             "albaran_facilcom_{$order->formattedId}.xls",
             \Maatwebsite\Excel\Excel::XLS
+        );
+    }
+
+    public function exportActiveOrderPlannedProducts()
+    {
+        ini_set('memory_limit', '1024M');
+        ini_set('max_execution_time', 300);
+
+        return Excel::download(
+            new ActiveOrderPlannedProductsExport(),
+            'productos_previstos_pedidos_activos.xlsx'
         );
     }
 
