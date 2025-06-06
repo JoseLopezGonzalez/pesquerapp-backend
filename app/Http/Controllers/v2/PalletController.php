@@ -483,4 +483,29 @@ class PalletController extends Controller
 
         return response()->json($pallets);
     }
+
+    public function assignToPosition(Request $request)
+    {
+        $validated = Validator::make($request->all(), [
+            'position_id' => 'required|integer|exists:positions,id',
+            'pallet_ids' => 'required|array|min:1',
+            'pallet_ids.*' => 'integer|exists:pallets,id',
+        ]);
+
+        if ($validated->fails()) {
+            return response()->json(['errors' => $validated->errors()], 422);
+        }
+
+        $positionId = $request->input('position_id');
+        $palletIds = $request->input('pallet_ids');
+
+        foreach ($palletIds as $palletId) {
+            $stored = StoredPallet::firstOrNew(['pallet_id' => $palletId]);
+            $stored->position = $positionId;
+            $stored->save();
+        }
+
+        return response()->json(['message' => 'Palets ubicados correctamente'], 200);
+    }
+
 }
