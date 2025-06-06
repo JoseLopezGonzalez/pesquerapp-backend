@@ -487,7 +487,7 @@ class PalletController extends Controller
     public function assignToPosition(Request $request)
     {
         $validated = Validator::make($request->all(), [
-            'position_id' => 'required|integer|exists:positions,id',
+            'position_id' => 'required|integer|min:1',
             'pallet_ids' => 'required|array|min:1',
             'pallet_ids.*' => 'integer|exists:pallets,id',
         ]);
@@ -507,5 +507,6 @@ class PalletController extends Controller
 
         return response()->json(['message' => 'Palets ubicados correctamente'], 200);
     }
+
 
 }
