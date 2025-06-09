@@ -302,6 +302,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('/stores/options', [V2StoreController::class, 'options']);
             Route::get('/orders/options', [V2OrderController::class, 'options']);
             Route::post('/pallets/assign-to-position', [V2PalletController::class, 'assignToPosition']);
+            Route::post('/pallets/move-to-store', [V2PalletController::class, 'moveToStore']);
+
 
 
             /* Active Order Options */

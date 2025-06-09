@@ -508,5 +508,36 @@ class PalletController extends Controller
         return response()->json(['message' => 'Palets ubicados correctamente'], 200);
     }
 
+    public function moveToStore(Request $request)
+    {
+        $validated = Validator::make($request->all(), [
+            'pallet_id' => 'required|integer|exists:pallets,id',
+            'store_id' => 'required|integer|exists:stores,id',
+        ]);
+
+        if ($validated->fails()) {
+            return response()->json(['errors' => $validated->errors()], 422);
+        }
+
+        $palletId = $request->input('pallet_id');
+        $storeId = $request->input('store_id');
+
+        $pallet = Pallet::findOrFail($palletId);
+
+        if ($pallet->state_id !== 2) {
+            return response()->json(['error' => 'El palet no está en estado almacenado'], 400);
+        }
+
+        $storedPallet = StoredPallet::firstOrNew(['pallet_id' => $palletId]);
+        $storedPallet->store_id = $storeId;
+        $storedPallet->save();
+
+        return response()->json([
+            'message' => 'Palet movido correctamente al nuevo almacén',
+            'pallet' => new PalletResource($pallet->refresh()),
+        ], 200);
+    }
+
+
 
 }
