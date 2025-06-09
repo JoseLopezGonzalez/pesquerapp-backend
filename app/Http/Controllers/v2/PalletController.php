@@ -530,6 +530,7 @@ class PalletController extends Controller
 
         $storedPallet = StoredPallet::firstOrNew(['pallet_id' => $palletId]);
         $storedPallet->store_id = $storeId;
+        $storedPallet->position = null; // ← resetea la posición al mover de almacén
         $storedPallet->save();
 
         return response()->json([
@@ -537,6 +538,7 @@ class PalletController extends Controller
             'pallet' => new PalletResource($pallet->refresh()),
         ], 200);
     }
+
 
 
 
