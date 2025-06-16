@@ -31,11 +31,13 @@
         <div class="flex justify-between items-end mb-6 ">
             <div class="flex items-center gap-2">
                 <div>
-                    <h1 class="text-md font-bold">Congelados Brisamar S.L.</h1>
-                    <p class=" ">C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
-                    <p class=" ">Tel: +34 613 09 14 94 </p>
-                    <p class=" ">administracion@congeladosbrisamar.es</p>
-                    <p class=" ">ES 12.021462/H CE</p>
+                    <h1 class="text-md font-bold">{{ config('company.name') }}</h1>
+                    <p>{{ config('company.address.street') }} - {{ config('company.address.postal_code') }}
+                        {{ config('company.address.city') }}
+                    </p>
+                    <p>Tel: {{ config('company.contact.phone_admin') }}</p>
+                    <p>{{ config('company.contact.email_admin') }}</p>
+                    <p>{{ config('company.sanitary_number') }}</p>
                 </div>
             </div>
             <div class="flex items-start gap-4">
@@ -68,11 +70,11 @@
                         <ul class="list-disc pl-5">
                             {{-- $entity->emailsArray --}}
                             @foreach ($entity->emailsArray as $email)
-                            <li>{{ $email }}</li>
+                                <li>{{ $email }}</li>
                             @endforeach
                             {{-- $entity->ccEmailsArray --}}
                             @foreach ($entity->ccEmailsArray as $email)
-                            <li>{{ $email }}</li>
+                                <li>{{ $email }}</li>
                             @endforeach
                         </ul>
                     </div>
@@ -85,10 +87,10 @@
                         <ul class="list-disc pl-5">
                             {{-- $entity->transport->emailsArray y $entity->ccEmailsArray --}}
                             @foreach ($entity->transport->emailsArray as $email)
-                            <li>{{ $email }}</li>
+                                <li>{{ $email }}</li>
                             @endforeach
                             @foreach ($entity->transport->ccEmailsArray as $email)
-                            <li>{{ $email }}</li>
+                                <li>{{ $email }}</li>
                             @endforeach
 
                         </ul>
@@ -167,62 +169,62 @@
                     </thead>
                     <tbody>
                         @php
-                        $rowIndex = 0; // Controlador manual para alternar colores
+                            $rowIndex = 0; // Controlador manual para alternar colores
                         @endphp
 
                         @foreach ($entity->productsWithLotsDetails as $productLine)
-                        @php
-                        $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
-                        $rowIndex++; // Incrementamos el contador de filas
-                        @endphp
+                            @php
+                                $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                                $rowIndex++; // Incrementamos el contador de filas
+                            @endphp
 
-                        <!-- Fila principal del producto -->
-                        <tr class="{{ $rowClass }}">
-                            <td class="p-2 py-1">{{ $productLine['product']['article']['name'] }}</td>
-                            <td class="p-2 py-1">{{ $productLine['product']['boxGtin'] }}</td>
-                            <td class="p-2 py-1">
-                                {{ count($productLine['lots']) === 1 ? $productLine['lots'][0]['lot'] : '' }}
-                            </td>
-                            <td class="p-2 py-1">{{ $productLine['product']['boxes'] }}</td>
-                            <td class="p-2 py-1">
-                                {{ number_format($productLine['product']['netWeight'], 2, ',', '.') }} kg
-                            </td>
-                        </tr>
+                            <!-- Fila principal del producto -->
+                            <tr class="{{ $rowClass }}">
+                                <td class="p-2 py-1">{{ $productLine['product']['article']['name'] }}</td>
+                                <td class="p-2 py-1">{{ $productLine['product']['boxGtin'] }}</td>
+                                <td class="p-2 py-1">
+                                    {{ count($productLine['lots']) === 1 ? $productLine['lots'][0]['lot'] : '' }}
+                                </td>
+                                <td class="p-2 py-1">{{ $productLine['product']['boxes'] }}</td>
+                                <td class="p-2 py-1">
+                                    {{ number_format($productLine['product']['netWeight'], 2, ',', '.') }} kg
+                                </td>
+                            </tr>
 
-                        <!-- Fila con información de la especie -->
-                        @php
-                        $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
-                        $rowIndex++;
-                        @endphp
-                        <tr class="{{ $rowClass }}">
-                            <td class="pl-5 p-2 py-1 text-[10px]" colspan="5">
-                                <i>
-                                    {{ $productLine['product']['species']['name'] }}
-                                    `{{ $productLine['product']['species']['scientificName'] }} -
-                                    {{ $productLine['product']['species']['fao'] }}`
-                                    - {{ $productLine['product']['fishingGear'] }} /
-                                    {{ $productLine['product']['captureZone'] }}
-                                </i>
-                            </td>
-                        </tr>
+                            <!-- Fila con información de la especie -->
+                            @php
+                                $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                                $rowIndex++;
+                            @endphp
+                            <tr class="{{ $rowClass }}">
+                                <td class="pl-5 p-2 py-1 text-[10px]" colspan="5">
+                                    <i>
+                                        {{ $productLine['product']['species']['name'] }}
+                                        `{{ $productLine['product']['species']['scientificName'] }} -
+                                        {{ $productLine['product']['species']['fao'] }}`
+                                        - {{ $productLine['product']['fishingGear'] }} /
+                                        {{ $productLine['product']['captureZone'] }}
+                                    </i>
+                                </td>
+                            </tr>
 
-                        <!-- Si hay más de un lote, se imprimen en filas separadas -->
-                        @if (count($productLine['lots']) > 1)
-                        @foreach ($productLine['lots'] as $lot)
-                        @php
-                        $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
-                        $rowIndex++;
-                        @endphp
-                        <tr class="{{ $rowClass }} text-[10px]">
-                            <td class="p-2 py-1"></td>
-                            <td class="text-md text-end">↪︎</td>
-                            <td class="p-2 py-1">{{ $lot['lot'] }}</td>
-                            <td class="p-2 py-1">{{ $lot['boxes'] }}</td>
-                            <td class="p-2 py-1">{{ number_format($lot['netWeight'], 2, ',', '.') }} kg
-                            </td>
-                        </tr>
-                        @endforeach
-                        @endif
+                            <!-- Si hay más de un lote, se imprimen en filas separadas -->
+                            @if (count($productLine['lots']) > 1)
+                                @foreach ($productLine['lots'] as $lot)
+                                    @php
+                                        $rowClass = $rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                                        $rowIndex++;
+                                    @endphp
+                                    <tr class="{{ $rowClass }} text-[10px]">
+                                        <td class="p-2 py-1"></td>
+                                        <td class="text-md text-end">↪︎</td>
+                                        <td class="p-2 py-1">{{ $lot['lot'] }}</td>
+                                        <td class="p-2 py-1">{{ $lot['boxes'] }}</td>
+                                        <td class="p-2 py-1">{{ number_format($lot['netWeight'], 2, ',', '.') }} kg
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         @endforeach
 
                         <tr className='font-bold '>

@@ -20,12 +20,12 @@ class OrderDocumentMailerController extends Controller
 
     public function sendDocumentation($orderId)
     {
-        
+
         $order = Order::findOrFail($orderId); // Asegúrate de que el pedido existe
         Mail::to($order->emailsArray)
-        ->cc($order->ccEmailsArray)  // Ejemplo de añadir un CC
-        ->bcc('orders@brisatlantic.com')  // Ejemplo de añadir un BCC
-        ->send(new OrderShipped($order)); // Envía el correo con la documentación
+            ->cc($order->ccEmailsArray)  // Ejemplo de añadir un CC
+            ->bcc('orders@brisatlantic.com')  // Ejemplo de añadir un BCC
+            ->send(new OrderShipped($order)); // Envía el correo con la documentación
 
 
         return response()->json(['message' => 'Documentation sent successfully!']);
@@ -34,12 +34,12 @@ class OrderDocumentMailerController extends Controller
 
     public function sendDocumentationTransport($orderId)
     {
-        
+
         $order = Order::findOrFail($orderId); // Asegúrate de que el pedido existe
         Mail::to($order->transport->emailsArray)
-        ->cc($order->transport->ccEmailsArray)  // Ejemplo de añadir un CC
-        ->bcc('pedidos@congeladosbrisamar.es')  // Ejemplo de añadir un BCC
-        ->send(new TransportShipmentDetails($order)); // Envía el correo con la documentación
+            ->cc($order->transport->ccEmailsArray)  // Ejemplo de añadir un CC
+            ->bcc(config('company.bcc_email'))  // Utiliza la configuración de BCC de la empresa
+            ->send(new TransportShipmentDetails($order)); // Envía el correo con la documentación
 
 
         return response()->json(['message' => 'Documentation sent successfully!']);

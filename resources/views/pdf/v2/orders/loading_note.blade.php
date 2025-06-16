@@ -30,11 +30,13 @@
         <div class="flex justify-between items-end mb-6 ">
             <div class="flex items-center gap-2">
                 <div>
-                    <h1 class="text-md font-bold">Congelados Brisamar S.L.</h1>
-                    <p class=" ">C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
-                    <p class=" ">Tel: +34 613 09 14 94 </p>
-                    <p class=" ">administracion@congeladosbrisamar.es</p>
-                    <p class=" ">ES 12.021462/H CE</p>
+                    <h1 class="text-md font-bold">{{ config('company.name') }}</h1>
+                    <p>{{ config('company.address.street') }} - {{ config('company.address.postal_code') }}
+                        {{ config('company.address.city') }}
+                    </p>
+                    <p>Tel: {{ config('company.contact.phone_admin') }}</p>
+                    <p>{{ config('company.contact.email_admin') }}</p>
+                    <p>{{ config('company.sanitary_number') }}</p>
                 </div>
             </div>
             <div class="flex items-start gap-4">

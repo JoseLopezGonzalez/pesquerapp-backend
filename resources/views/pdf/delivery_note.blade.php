@@ -1,45 +1,56 @@
 <!-- resources/views/pdf/delivery_note.blade.php -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Delivery Note </title>
     {{-- Tailwind no funciona, lo cojo todo directamente de un cdn --}}
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-   
+
 
     <style>
-        body { font-family: 'DejaVu Sans'; }
+        body {
+            font-family: 'DejaVu Sans';
+        }
+
         .bold-first-line::first-line {
             font-weight: bold;
         }
-       /*  table { width: 100%; border-collapse: collapse; }
+
+        /*  table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; } */
-        
     </style>
 </head>
+
 <body>
     <div class="pt-4 pl-2 pr-7">
         <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
             <div class="col-span-4  ">
-                <img src="{{ asset(env('DELIVERY_NOTE_LOGO_PATH')) }}" class="h-24" alt="Logo" >
+                <img src="{{ asset(env('DELIVERY_NOTE_LOGO_PATH')) }}" class="h-24" alt="Logo">
             </div>
             <div class="col-span-8" style="line-height: 122%; text-align: right; color: #1E79BB;">
                 <p style="font-size: 10pt;">
-                    <strong>CONGELADOS BRISAMAR S.L.</strong><br>
-                    C.I.F.: B-215 732 82<br>
-                    Poligono vista hermosa, nave 11A<br>
-                    21410 Isla Cristina Huelva
+                    <strong>{{ config('company.name') }}</strong><br>
+                    C.I.F.: {{ config('company.cif') }}<br>
+                    {{ config('company.address.street') }}<br>
+                    {{ config('company.address.postal_code') }} {{ config('company.address.city') }}
+                    ({{ config('company.address.province') }})
                 </p>
+
             </div>
         </div>
         <div class="grid grid-cols-12" style=" margin-bottom: 1rem;">
             <!-- Color bars across the top -->
-            <div class="col-span-3" style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #06d6ff;"></div>
-            <div class="col-span-3" style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #079def;"></div>
-            <div class="col-span-3" style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #d1d1d1;"></div>
-            <div class="col-span-3" style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: black;"></div>
+            <div class="col-span-3"
+                style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #06d6ff;"></div>
+            <div class="col-span-3"
+                style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #079def;"></div>
+            <div class="col-span-3"
+                style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: #d1d1d1;"></div>
+            <div class="col-span-3"
+                style=" padding-right: 0; padding-left: 0; height: 0.1rem; background-color: black;"></div>
         </div>
         <div class="grid grid-cols-12 mt-2 mb-4">
             <div class="col-span-12">
@@ -84,23 +95,25 @@
                             <tr class="border-b border-gray-200">
                                 <th class="text-left font-medium p-1.5">{{ $product['product']->article->name}}</th>
                                 <td class="text-center">{{ $product['boxes'] }}</td>
-                                <td class="text-center">{{ number_format($product['netWeight'], 2,',', '.') }} kg</td>
+                                <td class="text-center">{{ number_format($product['netWeight'], 2, ',', '.') }} kg</td>
                             </tr>
-                            
+
 
                         @endforeach
 
-                        <tr class="border-b border-gray-200" >
-                           {{-- {{dd($order)}}
+                        <tr class="border-b border-gray-200">
+                            {{-- {{dd($order)}}
                             {{dd($productsBySpeciesAndCaptureZone['species'])}} --}}
-                            <th class="text-left font-light italic  p-1.5" style="font-size:0.60rem; line-height:100%" >{{ $productsBySpeciesAndCaptureZone['species']->scientific_name.'('. $productsBySpeciesAndCaptureZone['species']->fao.')'.' - '.$productsBySpeciesAndCaptureZone['captureZone']->name .' - Caught with: '.$productsBySpeciesAndCaptureZone['species']->fishingGear->name }}</th>
+                            <th class="text-left font-light italic  p-1.5" style="font-size:0.60rem; line-height:100%">
+                                {{ $productsBySpeciesAndCaptureZone['species']->scientific_name . '(' . $productsBySpeciesAndCaptureZone['species']->fao . ')' . ' - ' . $productsBySpeciesAndCaptureZone['captureZone']->name . ' - Caught with: ' . $productsBySpeciesAndCaptureZone['species']->fishingGear->name }}
+                            </th>
                             <td class="text-center"></td>
                             <td class="text-center"></td>
                         </tr>
                     @endforeach
                     {{-- <tr class="border-b border-gray-200">
-                        <th class="italic text-left p-1.5 font-normal">Lots: 
-                          
+                        <th class="italic text-left p-1.5 font-normal">Lots:
+
                             {{ implode(', ', $order->lots)}}
                         </th>
                         <td></td>
@@ -111,36 +124,37 @@
                         <td></td>
                         <td></td>
                     </tr> --}}
-                    
+
                 </tbody>
                 <tfoot>
                     <tr class="">
                         <th class="text-left font-medium p-1.5">Total</th>
                         <td class="text-center">{{ $order->totals['boxes'] }}</td>
-                        <td class="text-center">{{ number_format($order->totals['netWeight'], 2,',', '.') }} kg</td>
+                        <td class="text-center">{{ number_format($order->totals['netWeight'], 2, ',', '.') }} kg</td>
                     </tr>
                 </tfoot>
             </table>
         </div>
         <div class="grid grid-cols-2">
 
-            
-    
+
+
             <div class="grid grid-cols-12 mt-8">
                 <div class="col-span-10">
-                   
+
 
                     <div class="col-span-10">
                         <p style="font-size: 1.2rem;"><strong>Delivery Address:</strong></p>
                         <p class="text-sm mt-3 preserve-line-breaks bold-first-line">
                             {!! nl2br($order->shipping_address) !!}
                         </p>
-                        
+
                     </div>
 
                     <p style="font-size: 1.2rem; margin-top: 1.5rem;"><strong>Terms & Conditions:</strong></p>
                     <p class="mt-3 text-sm">
-                        <strong class="mr-1">INCOTERM:</strong> {{ $order->incoterm->code}} ({{$order->incoterm->description}})
+                        <strong class="mr-1">INCOTERM:</strong> {{ $order->incoterm->code}}
+                        ({{$order->incoterm->description}})
                     </p>
 
 
@@ -155,13 +169,14 @@
                     <p class="mt-1 text-sm">
                         <strong>Pallets:</strong> {{ $order->numberOfPallets}}
                     </p>
-                    
+
                 </div>
             </div>
 
         </div>
-        
+
     </div>
-    
+
 </body>
+
 </html>

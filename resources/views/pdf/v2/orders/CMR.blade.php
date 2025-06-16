@@ -51,10 +51,10 @@
 
                     </div>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 70px; position: absolute;">
-                        CONGELADOS BRISAMAR S.L.</br>
-                        POLIGONO VISTA HERMOSA, N11A</br>
-                        21410 ISLA CRISTINA</br>
-                        HUELVA - ESPAÑA
+                        {{ config('company.name') }}<br>
+                        {{ config('company.address.street') }}<br>
+                        {{ config('company.address.postal_code') }} {{ config('company.address.city') }}<br>
+                        {{ config('company.address.province') }} - {{ config('company.address.country') }}
                     </p>
                     <p
                         style="font-weight: bold; text-align: left; font-size: 9pt; left: 655px; top: 50px; position: absolute;">
@@ -114,7 +114,7 @@
 
                     <p class="preserve-line-breaks"
                         style="text-align: left; font-size: 6pt; left: 90px; top: 253px; position: absolute;">
-                        {{-- {{ $entity->customer->alias }} <br/> --}}
+                        {{-- {{ $entity->customer->alias }} <br /> --}}
 
                         @php
                             // Separamos el texto en líneas

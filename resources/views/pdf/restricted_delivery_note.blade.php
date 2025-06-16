@@ -28,14 +28,15 @@
     <div class="pt-4 pl-2 pr-7">
         <div class="grid grid-cols-12" style="margin-bottom: 1rem;">
             <div class="col-span-4">
-                <img src="{{ asset(env('DELIVERY_NOTE_LOGO_PATH')) }}" class="h-24" alt="Logo" >
+                <img src="{{ asset(env('DELIVERY_NOTE_LOGO_PATH')) }}" class="h-24" alt="Logo">
             </div>
             <div class="col-span-8" style="line-height: 122%; text-align: right; color: #1E79BB;">
                 <p style="font-size: 10pt;">
-                    <strong>CONGELADOS BRISAMAR S.L.</strong><br>
-                    C.I.F.: B-215 732 82<br>
-                    Poligono vista hermosa, nave 11A<br>
-                    21410 Isla Cristina Huelva
+                    <strong>{{ config('company.name') }}</strong><br>
+                    C.I.F.: {{ config('company.cif') }}<br>
+                    {{ config('company.address.street') }}<br>
+                    {{ config('company.address.postal_code') }} {{ config('company.address.city') }}
+                    ({{ config('company.address.province') }})
                 </p>
             </div>
         </div>
@@ -76,7 +77,8 @@
                 <p class="cliente preserve-line-breaks bold-first-line" style="font-size: 0.9rem;">
 
                     {{ $order->customer->alias }} <br />
-                    {{-- Delete first line of Text of billing Address y respetar los saltos de lineas del texto original con nl2br --}}
+                    {{-- Delete first line of Text of billing Address y respetar los saltos de lineas del texto original
+                    con nl2br --}}
 
                     @php
                         // Separamos el texto en líneas
@@ -92,7 +94,7 @@
 
 
 
-                    {{--  {!! nl2br($order->billing_address) !!} --}}
+                    {{-- {!! nl2br($order->billing_address) !!} --}}
 
                 </p>
             </div>
@@ -127,8 +129,8 @@
                         </tr>
                     @endforeach
                     {{-- <tr class="border-b border-gray-200">
-                        <th class="italic text-left p-1.5 font-normal">Lots: 
-                          
+                        <th class="italic text-left p-1.5 font-normal">Lots:
+
                             {{ implode(', ', $order->lots)}}
                         </th>
                         <td></td>

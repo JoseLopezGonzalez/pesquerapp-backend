@@ -22,12 +22,16 @@
         <!-- ENCABEZADO -->
         <div class="flex justify-between items-end mb-6">
             <div>
-                <h1 class="text-md font-bold">Congelados Brisamar S.L.</h1>
-                <p>C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
-                <p>Tel: +34 613 09 14 94</p>
-                <p>administracion@congeladosbrisamar.es</p>
-                <p class=" ">ES 12.021462/H CE</p>
+                <h1 class="text-md font-bold">{{ config('company.name') }}</h1>
+                <p>
+                    {{ config('company.address.street') }} -
+                    {{ config('company.address.postal_code') }} {{ config('company.address.city') }}
+                </p>
+                <p>Tel: {{ config('company.contact.phone_admin') }}</p>
+                <p>{{ config('company.contact.email_admin') }}</p>
+                <p>{{ config('company.sanitary_number') }}</p>
             </div>
+
             <div class="flex items-start gap-4">
                 <div class="text-end">
                     <h2 class="text-lg font-bold">Solicitud de recogida</h2>
@@ -69,10 +73,14 @@
             <div class="border rounded-lg bg-gray-50 overflow-hidden">
                 <div class="font-bold p-2 bg-gray-800 text-white">CONTACTOS</div>
                 <div class="p-4 space-y-1">
-                    <p><span class="font-medium">Contacto emergencias:</span> emergencias@congeladosbrisamar.es</p>
-                    <p><span class="font-medium">Contacto incidencias:</span> incidencias@congeladosbrisamar.es</p>
-                    <p><span class="font-medium">Contacto para carga:</span> carga@congeladosbrisamar.es</p>
-                    <p><span class="font-medium">Contacto para descarga:</span> descarga@congeladosbrisamar.es</p>
+                    <p><span class="font-medium">Contacto de emergencias:</span>
+                        {{ config('company.contact.emergency_email') }}</p>
+                    <p><span class="font-medium">Contacto de incidencias:</span>
+                        {{ config('company.contact.incidents_email') }}</p>
+                    <p><span class="font-medium">Contacto para carga:</span>
+                        {{ config('company.contact.loading_email') }}</p>
+                    <p><span class="font-medium">Contacto para descarga:</span>
+                        {{ config('company.contact.unloading_email') }}</p>
                 </div>
             </div>
         </div>
@@ -89,7 +97,7 @@
             </div>
         </div>
 
-        
+
 
         <div class="border p-4 py-2 rounded-lg bg-gray-50 mb-6 text-[10px]">
             <div class="grid grid-cols-2 gap-4 divide-x-gray-800">
@@ -137,7 +145,7 @@
             <p>{!! nl2br(e($entity->transportation_notes)) !!}</p>
         </div>
 
-       
+
 
     </div>
 </body>

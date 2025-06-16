@@ -36,6 +36,7 @@
 
     @php
         $imgs = ['cmr-page-1.png', 'cmr-page-2.png', 'cmr-page-3.png', 'cmr-page-4.png'];
+        $company = config('company');
     @endphp
 
 
@@ -51,10 +52,10 @@
 
                     </div>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 70px; position: absolute;">
-                        CONGELADOS BRISAMAR S.L.</br>
-                        POLIGONO VISTA HERMOSA, N11A</br>
-                        21410 ISLA CRISTINA</br>
-                        HUELVA - ESPAÑA
+                        {{ $company['name'] }}<br>
+                        {{ $company['address']['street'] }}<br>
+                        {{ $company['address']['postal_code'] }} {{ $company['address']['city'] }}<br>
+                        {{ $company['address']['province'] }} - {{ $company['address']['country'] }}
                     </p>
                     <p
                         style="font-weight: bold; text-align: left; font-size: 9pt; left: 655px; top: 50px; position: absolute;">
@@ -105,7 +106,7 @@
                     </p>
                     <p class="preserve-line-breaks"
                         style="text-align: left; font-size: 6pt; left: 90px; top: 253px; position: absolute;">
-                        {{-- {{ $order->customer->alias }} <br/> --}}
+                        {{-- {{ $order->customer->alias }} <br /> --}}
 
                         @php
                             // Separamos el texto en líneas
@@ -119,7 +120,7 @@
                         {!! nl2br(e($modifiedAddress)) !!}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 90px; top: 330px; position: absolute;">
-                        ISLA CRISTINA - HUELVA
+                        {{ config('company.loading_place') }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 320px; top: 302px; position: absolute;">
                         {{ date('d/m/Y', strtotime($order->load_date)) }}
@@ -147,7 +148,7 @@
                         0 ºC
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 160px; top: 855px; position: absolute;">
-                        ISLA CRISTINA
+                        {{ config('company.signature_location') }}
                     </p>
                     <p style="text-align: left; font-size: 9pt; left: 290px; top: 855px; position: absolute;">
                         {{ date('d/m/Y', strtotime($order->load_date)) }}

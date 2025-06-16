@@ -25,12 +25,16 @@
         <!-- ENCABEZADO -->
         <div class="flex justify-between items-end mb-6">
             <div>
-                <h1 class="text-md font-bold">Congelados Brisamar S.L.</h1>
-                <p>C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
-                <p>Tel: +34 613 09 14 94</p>
-                <p>administracion@congeladosbrisamar.es</p>
-                <p class=" ">ES 12.021462/H CE</p>
+                <h1 class="text-md font-bold">{{ config('company.name') }}</h1>
+                <p>
+                    {{ config('company.address.street') }} -
+                    {{ config('company.address.postal_code') }} {{ config('company.address.city') }}
+                </p>
+                <p>Tel: {{ config('company.contact.phone_admin') }}</p>
+                <p>{{ config('company.contact.email_admin') }}</p>
+                <p>{{ config('company.sanitary_number') }}</p>
             </div>
+
             <div class="flex items-start gap-4">
                 <div class="text-end">
                     <h2 class="text-lg font-bold">Nota de carga valorada</h2>
@@ -128,7 +132,8 @@
                     <tr>
                         <td colspan="5" class="p-2 text-end">TOTAL:</td>
                         <td colspan="2" class="p-2 text-end font-bold">
-                            {{ number_format($totalAmount, 2, ',', '.') }} €</td>
+                            {{ number_format($totalAmount, 2, ',', '.') }} €
+                        </td>
                     </tr>
                 </tfoot>
             </table>
@@ -137,7 +142,8 @@
         <!-- OBSERVACIONES -->
         <div class="mt-6 p-4 bg-gray-50 rounded-lg border">
             <p class="text-xs italic">
-                Documento de carga valorado para confirmación de precios y cantidades. Este documento no es un albarán ni factura contable. 
+                Documento de carga valorado para confirmación de precios y cantidades. Este documento no es un albarán
+                ni factura contable.
             </p>
         </div>
     </div>

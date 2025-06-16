@@ -25,12 +25,15 @@
         <!-- ENCABEZADO -->
         <div class="flex justify-between items-end mb-2">
             <div>
-                <h1 class="text-md font-bold">Congelados Brisamar S.L.</h1>
-                <p>C/Dieciocho de Julio de 1922 Nº2 - 21410 Isla Cristina</p>
-                <p>Tel: +34 613 09 14 94</p>
-                <p>administracion@congeladosbrisamar.es</p>
-                <p class=" ">ES 12.021462/H CE</p>
+                <h1 class="text-md font-bold">{{ config('company.name') }}</h1>
+                <p>{{ config('company.address.street') }} - {{ config('company.address.postal_code') }}
+                    {{ config('company.address.city') }}
+                </p>
+                <p>Tel: {{ config('company.contact.phone_admin') }}</p>
+                <p>{{ config('company.contact.email_admin') }}</p>
+                <p>{{ config('company.sanitary_number') }}</p>
             </div>
+
             <div class="flex items-start gap-4">
                 <div class="text-end">
                     <h2 class="text-lg font-bold">Confirmación de pedido</h2>
@@ -173,12 +176,14 @@
 
         <div class="grid-cols-2 grid mt-4 gap-4">
             <!-- OBSERVACIONES Y CONFIRMACIÓN -->
-            <div class=" p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
+            <div class="p-4 bg-gray-50 rounded-lg border text-xs space-y-3">
                 <p class="font-medium text-xs h-full">
                     Para la aprobación definitiva del pedido, es necesario enviar este documento firmado y sellado a
-                    Congelados Brisamar S.L. a la dirección de correo <strong>pedidos@congeladosbrisamar.es</strong>.
+                    {{ config('company.name') }} a la dirección de correo
+                    <strong>{{ config('company.contact.email_orders') }}</strong>.
                 </p>
             </div>
+
 
             <!-- ESPACIO PARA FIRMA Y SELLO -->
             <div class=" border rounded-lg p-6 flex flex-col justify-between">
@@ -202,12 +207,17 @@
 
 </body>
 <footer class="text-[10px] text-center mt-16 border-t pt-2 text-gray-500 leading-snug">
-    <span class="font-medium text-black">No se admitirán devoluciones ni reclamaciones relacionadas con la mercancía
-        transcurridas 48 horas desde su recepción.</span><br>
-    Congelados Brisamar S.L. · CIF B21573282 · C/Dieciocho de Julio de 1922 Nº2 · 21410 Isla Cristina, Huelva ·
-    www.congeladosbrisamar.es
-
+    <span class="font-medium text-black">
+        No se admitirán devoluciones ni reclamaciones relacionadas con la mercancía
+        transcurridas 48 horas desde su recepción.
+    </span><br>
+    {{ config('company.name') }} · CIF {{ config('company.cif') }} ·
+    {{ config('company.address.street') }} ·
+    {{ config('company.address.postal_code') }} {{ config('company.address.city') }},
+    {{ config('company.address.province') }} ·
+    {{ config('company.website') }}
 </footer>
+
 
 
 

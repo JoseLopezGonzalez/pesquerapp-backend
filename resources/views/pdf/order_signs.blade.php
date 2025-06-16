@@ -36,16 +36,23 @@
         <div class="w-full p-4 text-black h-svh flex flex-col gap-3 bg-white border-black rounded-lg">
             <div class='grid grid-cols-2 w-full gap-3'>
                 <div class="space-y-2 border rounded-lg p-8">
-                    <div class="text-md font-semibold ">Expedidor:</div>
-                    <div class="text-2xl font-semibold ">Congelados Brisamar S.L.</div>
-                    <p>Poligono Vista Hermosa, Nave 11A<br>21410 Isla Cristina (Huelva)<br>España</p>
+                    <div class="text-md font-semibold">Expedidor:</div>
+                    <div class="text-2xl font-semibold">{{ config('company.name') }}</div>
+                    <p>
+                        {{ config('company.address.street') }}<br>
+                        {{ config('company.address.postal_code') }} {{ config('company.address.city') }}
+                        ({{ config('company.address.province') }})<br>
+                        {{ config('company.address.country') }}
+                    </p>
                 </div>
+
 
                 <div class="space-y-2 border rounded-lg p-8">
                     <div class="text-md font-semibold ">Consignatario:</div>
                     <div class="text-2xl font-semibold ">{{ $order->customer->alias }}</div>
                     <p class="">
-                        {{-- Delete first line of Text of shipping Address y respetar los saltos de lineas del texto original con nl2br --}}
+                        {{-- Delete first line of Text of shipping Address y respetar los saltos de lineas del texto
+                        original con nl2br --}}
 
                         @php
                             // Separamos el texto en líneas
