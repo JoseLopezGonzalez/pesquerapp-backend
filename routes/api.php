@@ -321,7 +321,7 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('transports', V2TransportController::class);
             Route::apiResource('products', V2ProductController::class);
             Route::apiResource('stores', V2StoreController::class);
-            Route::delete('stores', [StoreController::class, 'deleteMultiple']); // <-- importante
+            Route::delete('stores', [V2StoreController::class, 'deleteMultiple']); // <-- importante
 
             Route::apiResource('boxes', BoxesController::class); /* Algo raro en el nombre */
             Route::apiResource('pallets', V2PalletController::class);
