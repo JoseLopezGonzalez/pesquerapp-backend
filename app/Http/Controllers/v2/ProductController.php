@@ -88,26 +88,35 @@ class ProductController extends Controller
             'palletGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
         ]);
 
-        $product = DB::transaction(function () use ($validated) {
-            $article = Article::create([
-                'name' => $validated['name'],
-                'category_id' => 1, // Asegúrate de que esta categoría existe
-            ]);
+        try {
+            $product = DB::transaction(function () use ($validated) {
+                // Creamos el artículo
+                $article = Article::create([
+                    'name' => $validated['name'],
+                    'category_id' => 1,
+                ]);
 
-            return Product::create([
-                'id' => $article->id,
-                'species_id' => $validated['speciesId'],
-                'capture_zone_id' => $validated['captureZoneId'],
-                'article_gtin' => $validated['articleGtin'] ?? null,
-                'box_gtin' => $validated['boxGtin'] ?? null,
-                'pallet_gtin' => $validated['palletGtin'] ?? null,
-            ]);
-        });
+                // Creamos el producto referenciando el ID del artículo
+                return Product::create([
+                    'id' => $article->id,
+                    'species_id' => $validated['speciesId'],
+                    'capture_zone_id' => $validated['captureZoneId'],
+                    'article_gtin' => $validated['articleGtin'] ?? null,
+                    'box_gtin' => $validated['boxGtin'] ?? null,
+                    'pallet_gtin' => $validated['palletGtin'] ?? null,
+                ]);
+            });
 
-        return response()->json([
-            'message' => 'Producto creado con éxito',
-            'data' => new ProductResource($product),
-        ], 201);
+            return response()->json([
+                'message' => 'Producto creado con éxito',
+                'data' => new ProductResource($product),
+            ], 201);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Ocurrió un error inesperado.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
 
