@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\ProductResource;
-use App\Http\Resources\v2\ProductResource as V2ProductResource;
+use App\Http\Resources\v2\ProductResource;
 use App\Models\Article;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -70,12 +70,13 @@ class ProductController extends Controller
 
 
         $perPage = $request->input('perPage', 14); // Default a 10 si no se proporciona
-        return V2ProductResource::collection($query->paginate($perPage));
+        return ProductResource::collection($query->paginate($perPage));
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -87,26 +88,28 @@ class ProductController extends Controller
             'palletGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
         ]);
 
-        // Crear el artículo (asociado por id al producto)
-        $article = Article::create([
-            'name' => $validated['name'],
-            'category_id' => 1, // Asumiendo que la categoría de producto es la ID 1
-        ]);
+        $product = DB::transaction(function () use ($validated) {
+            $article = Article::create([
+                'name' => $validated['name'],
+                'category_id' => 1, // Asegúrate de que esta categoría existe
+            ]);
 
-        $product = Product::create([
-            'id' => $article->id,
-            'species_id' => $validated['speciesId'],
-            'capture_zone_id' => $validated['captureZoneId'],
-            'article_gtin' => $validated['articleGtin'] ?? null,
-            'box_gtin' => $validated['boxGtin'] ?? null,
-            'pallet_gtin' => $validated['palletGtin'] ?? null,
-        ]);
+            return Product::create([
+                'id' => $article->id,
+                'species_id' => $validated['speciesId'],
+                'capture_zone_id' => $validated['captureZoneId'],
+                'article_gtin' => $validated['articleGtin'] ?? null,
+                'box_gtin' => $validated['boxGtin'] ?? null,
+                'pallet_gtin' => $validated['palletGtin'] ?? null,
+            ]);
+        });
 
         return response()->json([
             'message' => 'Producto creado con éxito',
-            'data' => new V2ProductResource($product),
+            'data' => new ProductResource($product),
         ], 201);
     }
+
 
 
     /**
@@ -129,11 +132,12 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
+        DB::transaction(function () use ($id) {
+            $product = Product::findOrFail($id);
+            $product->delete();
 
-        // Eliminar también el artículo vinculado si se usa el mismo id
-        Article::where('id', $id)->delete();
+            Article::where('id', $id)->delete();
+        });
 
         return response()->json(['message' => 'Producto eliminado correctamente']);
     }
@@ -146,8 +150,10 @@ class ProductController extends Controller
             return response()->json(['message' => 'No se proporcionaron IDs válidos'], 400);
         }
 
-        Product::whereIn('id', $ids)->delete();
-        Article::whereIn('id', $ids)->delete();
+        DB::transaction(function () use ($ids) {
+            Product::whereIn('id', $ids)->delete();
+            Article::whereIn('id', $ids)->delete();
+        });
 
         return response()->json(['message' => 'Productos eliminados correctamente']);
     }
