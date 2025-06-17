@@ -28,10 +28,10 @@ class Product extends Model
         'a3erp_code',
     ];
 
-   /*  public function article()
-    {
-        return $this->belongsTo(Article::class, 'id'); // No se bien porque no indica que el id es el que relaciona las tablas
-    } */
+    /*  public function article()
+     {
+         return $this->belongsTo(Article::class, 'id'); // No se bien porque no indica que el id es el que relaciona las tablas
+     } */
 
     public function species()
     {
@@ -45,18 +45,21 @@ class Product extends Model
 
     public function toArrayAssoc()
     {
-        return array_merge($this->article->toArrayAssoc(), [
-            'species' => $this->species->toArrayAssoc(),
-            'captureZone' => $this->captureZone->toArrayAssoc(),
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+
+            'article' => $this->article?->toArrayAssoc() ?? 'ARTICLE_NULL',
+            'species' => $this->species?->toArrayAssoc() ?? 'SPECIES_NULL',
+            'captureZone' => $this->captureZone?->toArrayAssoc() ?? 'CAPTURE_NULL',
+
             'articleGtin' => $this->article_gtin,
             'boxGtin' => $this->box_gtin,
             'palletGtin' => $this->pallet_gtin,
             'fixedWeight' => $this->fixed_weight,
-            'name' => $this->name,
-            'id' => $this->id,
-        ]);
-
+        ];
     }
+
 
     /* name attribute */
     public function getNameAttribute()
