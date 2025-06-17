@@ -18,7 +18,7 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS' , 'PATCH'],
 
 
     // Permitir varios orígenes (especifica los dominios)
