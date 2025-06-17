@@ -11,7 +11,7 @@ class Store extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'category_id'];
+    protected $fillable = ['name', 'category_id', 'temperature', 'capacity', 'map'];
     //protected $table = 'stores';
 
     public function categoria()
