@@ -16,6 +16,7 @@ class Product extends Model
     //protected $table = 'products';
     /* fillable */
     protected $fillable = [
+        'id',
         'article_id',
         'species_id',
         'capture_zone_id',
