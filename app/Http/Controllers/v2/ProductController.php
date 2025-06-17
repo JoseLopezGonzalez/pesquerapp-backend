@@ -47,7 +47,7 @@ class ProductController extends Controller
 
         /* articleGtin */
         if ($request->has('articleGtin')) {
-                $query->where('article_gtin', $request->articleGtin);
+            $query->where('article_gtin', $request->articleGtin);
         }
 
         /* boxGtin */
@@ -57,9 +57,9 @@ class ProductController extends Controller
 
         /* palletGtin */
         if ($request->has('palletGtin')) {
-                $query->where('pallet_gtin', $request->palletGtin);
+            $query->where('pallet_gtin', $request->palletGtin);
         }
-        
+
 
         /* Always order by article.name */
         $query->orderBy(
@@ -78,13 +78,42 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|min:3|max:255',
+            'speciesId' => 'required|exists:species,id',
+            'captureZoneId' => 'required|exists:capture_zones,id',
+            'articleGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
+            'boxGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
+            'palletGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
+        ]);
+
+        // Crear el artículo (asociado por id al producto)
+        $article = Article::create([
+            'name' => $validated['name'],
+        ]);
+
+        $product = Product::create([
+            'id' => $article->id,
+            'species_id' => $validated['speciesId'],
+            'capture_zone_id' => $validated['captureZoneId'],
+            'article_gtin' => $validated['articleGtin'] ?? null,
+            'box_gtin' => $validated['boxGtin'] ?? null,
+            'pallet_gtin' => $validated['palletGtin'] ?? null,
+        ]);
+
+        return response()->json([
+            'message' => 'Producto creado con éxito',
+            'data' => new V2ProductResource($product),
+        ], 201);
     }
+
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id) {}
+    public function show(string $id)
+    {
+    }
 
     /**
      * Update the specified resource in storage.
@@ -99,8 +128,30 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        // Eliminar también el artículo vinculado si se usa el mismo id
+        Article::where('id', $id)->delete();
+
+        return response()->json(['message' => 'Producto eliminado correctamente']);
     }
+
+    public function destroyMultiple(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (!is_array($ids) || empty($ids)) {
+            return response()->json(['message' => 'No se proporcionaron IDs válidos'], 400);
+        }
+
+        Product::whereIn('id', $ids)->delete();
+        Article::whereIn('id', $ids)->delete();
+
+        return response()->json(['message' => 'Productos eliminados correctamente']);
+    }
+
+
 
     /**
      * Get all options for the products select box.
@@ -110,9 +161,9 @@ class ProductController extends Controller
     public function options()
     {
         /* Ojo que product no tiene name, teiene article que a su vex tiene name */
-/* box_gtin */
+        /* box_gtin */
         $products = Product::join('articles', 'products.id', '=', 'articles.id')
-            ->select('products.id', 'articles.name' , 'products.box_gtin as boxGtin') // Selecciona los campos necesarios
+            ->select('products.id', 'articles.name', 'products.box_gtin as boxGtin') // Selecciona los campos necesarios
             ->orderBy('articles.name', 'asc') // Ordena por el nombre del artículo
             ->get();
 

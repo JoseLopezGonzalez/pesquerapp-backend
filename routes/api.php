@@ -320,6 +320,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('raw-material-receptions', V2RawMaterialReceptionController::class);
             Route::apiResource('transports', V2TransportController::class);
             Route::apiResource('products', V2ProductController::class);
+            Route::delete('products', [V2ProductController::class, 'destroyMultiple']);
+
             Route::apiResource('stores', V2StoreController::class);
             Route::delete('stores', [V2StoreController::class, 'deleteMultiple']); // <-- importante
 

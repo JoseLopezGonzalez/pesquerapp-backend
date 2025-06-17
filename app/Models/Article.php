@@ -13,6 +13,10 @@ class Article extends Model
     use HasFactory;
     //protected $table = 'articles';
 
+    protected $fillable = [
+        'name',
+    ];
+
     public function product()
     {
         if ($this->categoria->name === 'product') { // Cambia el valor 1 por el ID de la categoría correspondiente
@@ -23,7 +27,7 @@ class Article extends Model
 
     public function categoria()
     {
-        return $this->belongsTo(ArticleCategory::class , 'category_id');
+        return $this->belongsTo(ArticleCategory::class, 'category_id');
     }
 
     public function toArrayAssoc()
@@ -35,8 +39,8 @@ class Article extends Model
         ];
     }
 
-    
 
 
-    
+
+
 }
