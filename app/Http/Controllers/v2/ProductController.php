@@ -90,13 +90,11 @@ class ProductController extends Controller
 
         try {
             $product = DB::transaction(function () use ($validated) {
-                // Creamos el artículo
                 $article = Article::create([
                     'name' => $validated['name'],
                     'category_id' => 1,
                 ]);
 
-                // Creamos el producto referenciando el ID del artículo
                 return Product::create([
                     'id' => $article->id,
                     'species_id' => $validated['speciesId'],
@@ -107,10 +105,14 @@ class ProductController extends Controller
                 ]);
             });
 
+            // 👇 Aseguramos que venga con las relaciones necesarias para el resource
+            $product->load('article');
+
             return response()->json([
                 'message' => 'Producto creado con éxito',
                 'data' => new ProductResource($product),
             ], 201);
+
         } catch (\Throwable $e) {
             return response()->json([
                 'message' => 'Ocurrió un error inesperado.',
@@ -118,6 +120,7 @@ class ProductController extends Controller
             ], 500);
         }
     }
+
 
 
 
