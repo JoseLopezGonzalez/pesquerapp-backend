@@ -106,10 +106,26 @@ class SalespersonController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Salesperson $salesperson)
     {
-        //
+        $salesperson->delete();
+        return response()->json(['message' => 'Comercial eliminado con éxito.']);
     }
+
+
+
+    public function destroyMultiple(Request $request)
+    {
+        $validated = $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:salespeople,id',
+        ]);
+
+        Salesperson::whereIn('id', $validated['ids'])->delete();
+
+        return response()->json(['message' => 'Comerciales eliminados correctamente.']);
+    }
+
 
 
     public function options()

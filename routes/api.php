@@ -329,6 +329,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('species', V2SpeciesController::class);
             Route::apiResource('incoterms', V2IncotermController::class);
             Route::apiResource('salespeople', V2SalespersonController::class);
+            Route::delete('/salespeople', [V2SalespersonController::class, 'destroyMultiple']);
+
             Route::apiResource('fishing-gears', FishingGearController::class);
             Route::apiResource('countries', CountryController::class);
             Route::apiResource('payment-terms', V2PaymentTermController::class);
