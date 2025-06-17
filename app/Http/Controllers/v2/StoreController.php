@@ -20,7 +20,7 @@ class StoreController extends Controller
     {
         $query = Store::query();
 
-       /* filter by id */
+        /* filter by id */
         if ($request->has('id')) {
             $query->where('id', $request->id);
         }
@@ -36,7 +36,7 @@ class StoreController extends Controller
         }
 
         /* ORDER */
-        $query->orderBy('name' , 'asc');
+        $query->orderBy('name', 'asc');
 
         $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
         return V2StoreResource::collection($query->paginate($perPage));
@@ -49,8 +49,20 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $validated = $request->validate([
+            'name' => 'required|string|min:3|max:255',
+            'temperature' => 'required|string|max:255',
+            'capacity' => 'required|numeric|min:0',
+        ]);
+
+        $store = Store::create($validated);
+
+        return response()->json([
+            'message' => 'Almacén creado correctamente',
+            'data' => new V2StoreResource($store),
+        ], 201);
     }
+
 
     /**
      * Display the specified resource.
@@ -65,7 +77,7 @@ class StoreController extends Controller
      */
     public function update(Request $request, string $id)
     {
-       
+
     }
 
     /**
@@ -73,15 +85,32 @@ class StoreController extends Controller
      */
     public function destroy(string $id)
     {
-       
+        $store = Store::findOrFail($id);
+        $store->delete();
+
+        return response()->json(['message' => 'Almacén eliminado correctamente.']);
     }
+
+    public function deleteMultiple(Request $request)
+    {
+        $validated = $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:stores,id',
+        ]);
+
+        Store::whereIn('id', $validated['ids'])->delete();
+
+        return response()->json(['message' => 'Almacenes eliminados correctamente.']);
+    }
+
+
 
     /* Options */
     public function options()
     {
         $store = Store::select('id', 'name')
-        ->orderBy('id')
-        ->get();
+            ->orderBy('id')
+            ->get();
 
         return response()->json($store);
     }
