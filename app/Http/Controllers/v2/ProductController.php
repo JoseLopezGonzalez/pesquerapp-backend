@@ -96,8 +96,6 @@ class ProductController extends Controller
             $article = Article::create([
                 'name' => $validated['name'],
                 'category_id' => 1,
-                'a3erp_code' => $validated['a3erp_code'] ?? null,
-                'facil_com_code' => $validated['facil_com_code'] ?? null,
             ]);
 
             $articleId = $article->id;
@@ -109,6 +107,8 @@ class ProductController extends Controller
                 'article_gtin' => $validated['articleGtin'] ?? null,
                 'box_gtin' => $validated['boxGtin'] ?? null,
                 'pallet_gtin' => $validated['palletGtin'] ?? null,
+                'a3erp_code' => $validated['a3erp_code'] ?? null,
+                'facil_com_code' => $validated['facil_com_code'] ?? null,
             ]);
         });
 
@@ -119,6 +119,7 @@ class ProductController extends Controller
             'data' => new ProductResource($product),
         ], 201);
     }
+
 
 
 
