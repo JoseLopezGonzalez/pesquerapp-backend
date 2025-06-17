@@ -90,6 +90,7 @@ class ProductController extends Controller
         // Crear el artículo (asociado por id al producto)
         $article = Article::create([
             'name' => $validated['name'],
+            'category_id' => 1, // Asumiendo que la categoría de producto es la ID 1
         ]);
 
         $product = Product::create([
