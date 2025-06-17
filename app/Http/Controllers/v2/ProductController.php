@@ -89,25 +89,27 @@ class ProductController extends Controller
         ]);
 
         $product = DB::transaction(function () use ($validated) {
-            // Crear el artículo (el ID será autoincremental y se usará como ID del producto)
+            // 1. Crear el artículo
             $article = Article::create([
                 'name' => $validated['name'],
-                'category_id' => 1, // Asegúrate de que esta categoría existe en tu base de datos
+                'category_id' => 1, // Asegúrate de que esta categoría exista
             ]);
 
-            // Crear el producto vinculado al artículo
-            return Product::create([
-                'id' => $article->id, // ID manualmente igual al del artículo
+            // 2. Crear el producto con el mismo ID
+            $product = Product::create([
+                'id' => $article->id,
                 'species_id' => $validated['speciesId'],
                 'capture_zone_id' => $validated['captureZoneId'],
                 'article_gtin' => $validated['articleGtin'] ?? null,
                 'box_gtin' => $validated['boxGtin'] ?? null,
                 'pallet_gtin' => $validated['palletGtin'] ?? null,
             ]);
+
+            return $product;
         });
 
-        // Cargar relaciones necesarias para el recurso
-        $product->load(['article', 'species', 'captureZone']);
+        // 3. Cargar las relaciones necesarias para el resource
+        $product->loadMissing(['article', 'species', 'captureZone']);
 
         return response()->json([
             'message' => 'Producto creado con éxito',

@@ -45,21 +45,18 @@ class Product extends Model
 
     public function toArrayAssoc()
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-
-            'article' => $this->article?->toArrayAssoc() ?? 'ARTICLE_NULL',
-            'species' => $this->species?->toArrayAssoc() ?? 'SPECIES_NULL',
-            'captureZone' => $this->captureZone?->toArrayAssoc() ?? 'CAPTURE_NULL',
-
+        return array_merge($this->article->toArrayAssoc(), [
+            'species' => $this->species->toArrayAssoc(),
+            'captureZone' => $this->captureZone->toArrayAssoc(),
             'articleGtin' => $this->article_gtin,
             'boxGtin' => $this->box_gtin,
             'palletGtin' => $this->pallet_gtin,
             'fixedWeight' => $this->fixed_weight,
-        ];
-    }
+            'name' => $this->name,
+            'id' => $this->id,
+        ]);
 
+    }
 
     /* name attribute */
     public function getNameAttribute()
