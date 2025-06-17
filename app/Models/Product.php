@@ -27,7 +27,6 @@ class Product extends Model
         'name',
         'a3erp_code',
         'facil_com_code',
-
     ];
 
     /*  public function article()
