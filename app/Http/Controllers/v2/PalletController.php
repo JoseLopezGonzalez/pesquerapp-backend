@@ -539,6 +539,24 @@ class PalletController extends Controller
         ], 200);
     }
 
+    public function unassignPosition($id)
+    {
+        $stored = StoredPallet::where('pallet_id', $id)->first();
+
+        if (!$stored) {
+            return response()->json(['error' => 'El palet no está almacenado'], 404);
+        }
+
+        $stored->position = null;
+        $stored->save();
+
+        return response()->json([
+            'message' => 'Posición eliminada correctamente del palet',
+            'pallet_id' => $id,
+        ], 200);
+    }
+
+
 
 
 
