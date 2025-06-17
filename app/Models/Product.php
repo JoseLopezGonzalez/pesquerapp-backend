@@ -28,24 +28,24 @@ class Product extends Model
         'a3erp_code',
     ];
 
-    public function article()
+   /*  public function article()
     {
-        return $this->belongsTo(Article::class , 'id'); // No se bien porque no indica que el id es el que relaciona las tablas
-    }
+        return $this->belongsTo(Article::class, 'id'); // No se bien porque no indica que el id es el que relaciona las tablas
+    } */
 
     public function species()
     {
-        return $this->belongsTo(Species::class , 'species_id'); // No se bien porque no indica que el id es el que relaciona las tablas
+        return $this->belongsTo(Species::class, 'species_id'); // No se bien porque no indica que el id es el que relaciona las tablas
     }
 
     public function captureZone()
     {
-        return $this->belongsTo(CaptureZone::class , 'capture_zone_id'); // No se bien porque no indica que el id es el que relaciona las tablas
+        return $this->belongsTo(CaptureZone::class, 'capture_zone_id'); // No se bien porque no indica que el id es el que relaciona las tablas
     }
 
     public function toArrayAssoc()
     {
-        return array_merge($this->article->toArrayAssoc() , [
+        return array_merge($this->article->toArrayAssoc(), [
             'species' => $this->species->toArrayAssoc(),
             'captureZone' => $this->captureZone->toArrayAssoc(),
             'articleGtin' => $this->article_gtin,
@@ -71,10 +71,16 @@ class Product extends Model
 
     public function rawMaterials()
     {
-        return $this->has(RawMaterial::class , 'id');
+        return $this->has(RawMaterial::class, 'id');
     }
 
-    
 
-    
+    public function article()
+    {
+        return $this->hasOne(Article::class, 'id', 'id');
+    }
+
+
+
+
 }
