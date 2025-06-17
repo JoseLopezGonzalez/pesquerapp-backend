@@ -13,6 +13,41 @@ use App\Http\Resources\v2\StoreResource as V2StoreResource;
 
 class StoreController extends Controller
 {
+
+    private function getDefaultMap(): array
+    {
+        return [
+            "posiciones" => [
+                [
+                    "id" => 1,
+                    "nombre" => "U1",
+                    "x" => 40,
+                    "y" => 40,
+                    "width" => 460,
+                    "height" => 238,
+                    "tipo" => "center",
+                    "nameContainer" => [
+                        "x" => 0,
+                        "y" => 0,
+                        "width" => 230,
+                        "height" => 180
+                    ],
+                ]
+            ],
+            "elementos" => [
+                "fondos" => [
+                    [
+                        "x" => 0,
+                        "y" => 0,
+                        "width" => 3410,
+                        "height" => 900
+                    ]
+                ],
+                "textos" => []
+            ]
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -55,6 +90,8 @@ class StoreController extends Controller
             'capacity' => 'required|numeric|min:0',
         ]);
 
+        $validated['map'] = json_encode($this->getDefaultMap());
+
         $store = Store::create($validated);
 
         return response()->json([
@@ -62,6 +99,7 @@ class StoreController extends Controller
             'data' => new V2StoreResource($store),
         ], 201);
     }
+
 
 
     /**
