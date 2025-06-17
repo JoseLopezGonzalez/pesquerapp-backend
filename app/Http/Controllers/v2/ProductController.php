@@ -86,6 +86,8 @@ class ProductController extends Controller
             'articleGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
             'boxGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
             'palletGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
+            'a3erp_code' => 'nullable|string|max:255',
+            'facil_com_code' => 'nullable|string|max:255',
         ]);
 
         $articleId = null;
@@ -94,6 +96,8 @@ class ProductController extends Controller
             $article = Article::create([
                 'name' => $validated['name'],
                 'category_id' => 1,
+                'a3erp_code' => $validated['a3erp_code'] ?? null,
+                'facil_com_code' => $validated['facil_com_code'] ?? null,
             ]);
 
             $articleId = $article->id;
@@ -108,7 +112,6 @@ class ProductController extends Controller
             ]);
         });
 
-        // 🔥 Aquí cargamos todas las relaciones seguras
         $product = Product::with(['article', 'species', 'captureZone'])->find($articleId);
 
         return response()->json([
@@ -116,6 +119,7 @@ class ProductController extends Controller
             'data' => new ProductResource($product),
         ], 201);
     }
+
 
 
 
