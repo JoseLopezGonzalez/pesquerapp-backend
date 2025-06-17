@@ -88,34 +88,35 @@ class ProductController extends Controller
             'palletGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
         ]);
 
-        $product = DB::transaction(function () use ($validated) {
-            // 1. Crear el artículo
+        $articleId = null;
+
+        DB::transaction(function () use (&$articleId, $validated) {
             $article = Article::create([
                 'name' => $validated['name'],
-                'category_id' => 1, // Asegúrate de que esta categoría exista
+                'category_id' => 1,
             ]);
 
-            // 2. Crear el producto con el mismo ID
-            $product = Product::create([
-                'id' => $article->id,
+            $articleId = $article->id;
+
+            Product::create([
+                'id' => $articleId,
                 'species_id' => $validated['speciesId'],
                 'capture_zone_id' => $validated['captureZoneId'],
                 'article_gtin' => $validated['articleGtin'] ?? null,
                 'box_gtin' => $validated['boxGtin'] ?? null,
                 'pallet_gtin' => $validated['palletGtin'] ?? null,
             ]);
-
-            return $product;
         });
 
-        // 3. Cargar las relaciones necesarias para el resource
-        $product->loadMissing(['article', 'species', 'captureZone']);
+        // 🔥 Aquí cargamos todas las relaciones seguras
+        $product = Product::with(['article', 'species', 'captureZone'])->find($articleId);
 
         return response()->json([
             'message' => 'Producto creado con éxito',
             'data' => new ProductResource($product),
         ], 201);
     }
+
 
 
 
