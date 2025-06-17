@@ -88,38 +88,33 @@ class ProductController extends Controller
             'palletGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
         ]);
 
-        try {
-            $product = DB::transaction(function () use ($validated) {
-                $article = Article::create([
-                    'name' => $validated['name'],
-                    'category_id' => 1,
-                ]);
+        $product = DB::transaction(function () use ($validated) {
+            // Crear el artículo (el ID será autoincremental y se usará como ID del producto)
+            $article = Article::create([
+                'name' => $validated['name'],
+                'category_id' => 1, // Asegúrate de que esta categoría existe en tu base de datos
+            ]);
 
-                return Product::create([
-                    'id' => $article->id,
-                    'species_id' => $validated['speciesId'],
-                    'capture_zone_id' => $validated['captureZoneId'],
-                    'article_gtin' => $validated['articleGtin'] ?? null,
-                    'box_gtin' => $validated['boxGtin'] ?? null,
-                    'pallet_gtin' => $validated['palletGtin'] ?? null,
-                ]);
-            });
+            // Crear el producto vinculado al artículo
+            return Product::create([
+                'id' => $article->id, // ID manualmente igual al del artículo
+                'species_id' => $validated['speciesId'],
+                'capture_zone_id' => $validated['captureZoneId'],
+                'article_gtin' => $validated['articleGtin'] ?? null,
+                'box_gtin' => $validated['boxGtin'] ?? null,
+                'pallet_gtin' => $validated['palletGtin'] ?? null,
+            ]);
+        });
 
-            // 👇 Aseguramos que venga con las relaciones necesarias para el resource
-            $product->load('article');
+        // Cargar relaciones necesarias para el recurso
+        $product->load(['article', 'species', 'captureZone']);
 
-            return response()->json([
-                'message' => 'Producto creado con éxito',
-                'data' => new ProductResource($product),
-            ], 201);
-
-        } catch (\Throwable $e) {
-            return response()->json([
-                'message' => 'Ocurrió un error inesperado.',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'message' => 'Producto creado con éxito',
+            'data' => new ProductResource($product),
+        ], 201);
     }
+
 
 
 
