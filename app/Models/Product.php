@@ -17,7 +17,7 @@ class Product extends Model
     /* fillable */
     protected $fillable = [
         'id',
-        'article_id',
+        'article_id', //Esto 
         'species_id',
         'capture_zone_id',
         'article_gtin',
@@ -26,6 +26,8 @@ class Product extends Model
         'fixed_weight',
         'name',
         'a3erp_code',
+        'facil_com_code',
+
     ];
 
     /*  public function article()
