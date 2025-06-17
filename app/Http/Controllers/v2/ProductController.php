@@ -100,7 +100,6 @@ class ProductController extends Controller
             'article_gtin' => $validated['articleGtin'] ?? null,
             'box_gtin' => $validated['boxGtin'] ?? null,
             'pallet_gtin' => $validated['palletGtin'] ?? null,
-            'fixed_weight' => 0, // Asignar un valor por defecto , revisar en un futuro si es necesario
         ]);
 
         return response()->json([
