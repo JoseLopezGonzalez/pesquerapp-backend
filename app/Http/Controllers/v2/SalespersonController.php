@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\SalespersonResource;
+use App\Http\Resources\v2\SalespersonResource;
 use App\Models\Salesperson;
 use Illuminate\Http\Request;
 
@@ -49,8 +49,35 @@ class SalespersonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'emails' => 'nullable|array',
+            'emails.*' => 'string|email:rfc,dns|distinct',
+            'ccEmails' => 'nullable|array',
+            'ccEmails.*' => 'string|email:rfc,dns|distinct',
+        ]);
+
+        // Combinar emails y ccEmails en el string único con separador ;
+        $allEmails = [];
+
+        foreach ($validated['emails'] ?? [] as $email) {
+            $allEmails[] = trim($email);
+        }
+
+        foreach ($validated['ccEmails'] ?? [] as $ccEmail) {
+            $allEmails[] = 'CC:' . trim($ccEmail);
+        }
+
+        $validated['emails'] = implode(';', $allEmails);
+
+        unset($validated['ccEmails']); // ya están incluidos
+
+        $salesperson = Salesperson::create($validated);
+
+        return new SalespersonResource($salesperson);
     }
+
+
 
     /**
      * Display the specified resource.
