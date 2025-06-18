@@ -115,8 +115,22 @@ class StoreController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $store = Store::findOrFail($id);
 
+        $validated = $request->validate([
+            'name' => 'required|string|min:3|max:255',
+            'temperature' => 'required|string|max:255',
+            'capacity' => 'required|numeric|min:0',
+        ]);
+
+        $store->update($validated);
+
+        return response()->json([
+            'message' => 'Almacén actualizado correctamente',
+            'data' => new V2StoreResource($store),
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
