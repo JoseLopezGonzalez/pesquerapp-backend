@@ -41,7 +41,7 @@ class CustomerController extends Controller
         if ($request->has('paymentTerms')) {
             $query->whereIn('payment_term_id', $request->paymentTerms);
         }
-        
+
 
         /* salespeople */
         if ($request->has('salespeople')) {
@@ -52,7 +52,7 @@ class CustomerController extends Controller
         if ($request->has('countries')) {
             $query->whereIn('country_id', $request->countries);
         }
-        
+
         /* order */
         $query->orderBy('name', 'asc');
 
@@ -73,8 +73,47 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'vatNumber' => 'nullable|string|max:20',
+            'billing_address' => 'nullable|string|max:1000',
+            'shipping_address' => 'nullable|string|max:1000',
+            'transportation_notes' => 'nullable|string|max:1000',
+            'production_notes' => 'nullable|string|max:1000',
+            'accounting_notes' => 'nullable|string|max:1000',
+            'emails' => 'nullable|array',
+            'emails.*' => 'string|email:rfc,dns|distinct',
+            'ccEmails' => 'nullable|array',
+            'ccEmails.*' => 'string|email:rfc,dns|distinct',
+            'contact_info' => 'nullable|string|max:1000',
+            'salesperson_id' => 'nullable|exists:salespeople,id',
+            'country_id' => 'nullable|exists:countries,id',
+            'payment_term_id' => 'nullable|exists:payment_terms,id',
+            'transport_id' => 'nullable|exists:transports,id',
+            'a3erp_code' => 'nullable|string|max:255',
+        ]);
+
+        $allEmails = [];
+
+        foreach ($validated['emails'] ?? [] as $email) {
+            $allEmails[] = trim($email);
+        }
+
+        foreach ($validated['ccEmails'] ?? [] as $email) {
+            $allEmails[] = 'CC:' . trim($email);
+        }
+
+        $validated['emails'] = count($allEmails) > 0
+            ? implode(";\n", $allEmails) . ';'
+            : null;
+
+        unset($validated['ccEmails']); // Ya está incluido todo en 'emails'
+
+        $customer = Customer::create($validated);
+
+        return new V2CustomerResource($customer);
     }
+
 
     /**
      * Display the specified resource.
@@ -107,7 +146,23 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $customer->delete();
+
+        return response()->json(['message' => 'Cliente eliminado con éxito']);
+    }
+
+    public function destroyMultiple(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (!is_array($ids) || empty($ids)) {
+            return response()->json(['message' => 'No se han proporcionado IDs válidos'], 400);
+        }
+
+        Customer::whereIn('id', $ids)->delete();
+
+        return response()->json(['message' => 'Clientes eliminados con éxito']);
     }
 
     /**
