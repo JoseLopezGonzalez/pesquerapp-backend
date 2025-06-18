@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class SpeciesController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -31,7 +31,7 @@ class SpeciesController extends Controller
         if (request()->has('name')) {
             $query->where('name', 'like', '%' . request()->name . '%');
         }
-        
+
 
         /* fishingGears where ir */
         if (request()->has('fishingGears')) {
@@ -61,7 +61,21 @@ class SpeciesController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $validated = $request->validate([
+            'name' => 'required|string|min:2',
+            'scientificName' => 'required|string|min:2',
+            'fao' => ['required', 'regex:/^[A-Z]{3,5}$/'],
+            'fishingGearId' => 'required|exists:fishing_gears,id',
+        ]);
+
+        $species = Species::create([
+            'name' => $validated['name'],
+            'scientific_name' => $validated['scientificName'],
+            'fao' => $validated['fao'],
+            'fishing_gear_id' => $validated['fishingGearId'],
+        ]);
+
+        return new V2SpeciesResource($species);
     }
 
     /**
@@ -69,7 +83,7 @@ class SpeciesController extends Controller
      */
     public function show(Species $species)
     {
-        
+
     }
 
     /**
@@ -77,7 +91,7 @@ class SpeciesController extends Controller
      */
     public function update(Request $request, Species $species)
     {
-        
+
     }
 
     /**
@@ -85,9 +99,21 @@ class SpeciesController extends Controller
      */
     public function destroy(Species $species)
     {
-        
+        $species->delete();
+        return response()->json(['message' => 'Especie eliminada con éxito.']);
     }
 
+    public function destroyMultiple(Request $request)
+    {
+        $validated = $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:species,id',
+        ]);
+
+        Species::whereIn('id', $validated['ids'])->delete();
+
+        return response()->json(['message' => 'Especies eliminadas con éxito.']);
+    }
     /**
      * Get all options for the species select box.
      *
@@ -96,8 +122,8 @@ class SpeciesController extends Controller
     public function options()
     {
         $species = Species::select('id', 'name') // Selecciona solo los campos necesarios
-                       ->orderBy('name', 'asc') // Ordena por nombre, opcional
-                       ->get();
+            ->orderBy('name', 'asc') // Ordena por nombre, opcional
+            ->get();
 
         return response()->json($species);
     }

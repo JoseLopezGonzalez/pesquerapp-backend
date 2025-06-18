@@ -332,6 +332,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('capture-zones', V2CaptureZoneController::class);
             Route::delete('/capture-zones', [V2CaptureZoneController::class, 'destroyMultiple']);
             Route::apiResource('species', V2SpeciesController::class);
+            Route::delete('/species', [V2SpeciesController::class, 'destroyMultiple']);
+
             Route::apiResource('incoterms', V2IncotermController::class);
             Route::apiResource('salespeople', V2SalespersonController::class);
             Route::delete('/salespeople', [V2SalespersonController::class, 'destroyMultiple']);

@@ -9,7 +9,7 @@ class Species extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['name', 'scientific_name', 'fao', 'image'];
+    protected $fillable = ['name', 'scientific_name', 'fao', 'image' , 'fishing_gear_id'];
 
     public function toArrayAssoc()
     {
