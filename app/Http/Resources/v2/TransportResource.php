@@ -14,6 +14,15 @@ class TransportResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return $this->toArrayAssoc();
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'vatNumber' => $this->vat_number,
+            'address' => $this->address,
+            'emails' => $this->emailsArray,
+            'ccEmails' => $this->ccEmailsArray,
+            'createdAt' => $this->created_at,
+            'updatedAt' => $this->updated_at,
+        ];
     }
 }
