@@ -70,8 +70,14 @@ class FishingGearController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $fishingGear = FishingGear::findOrFail($id);
+
+        return response()->json([
+            'message' => 'Arte de pesca obtenido con éxito',
+            'data' => new FishingGearResource($fishingGear),
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -86,8 +92,20 @@ class FishingGearController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $fishingGear = FishingGear::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|min:2',
+        ]);
+
+        $fishingGear->update($validated);
+
+        return response()->json([
+            'message' => 'Arte de pesca actualizado con éxito',
+            'data' => new FishingGearResource($fishingGear),
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
