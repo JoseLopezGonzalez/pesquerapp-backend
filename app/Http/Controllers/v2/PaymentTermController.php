@@ -27,7 +27,7 @@ class PaymentTermController extends Controller
             $query->whereIn('id', $request->ids);
         }
 
-       /* name like */
+        /* name like */
         if ($request->has('name')) {
             $query->where('name', 'like', '%' . $request->name . '%');
         }
@@ -52,8 +52,15 @@ class PaymentTermController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $paymentTerm = PaymentTerm::create($validated);
+
+        return new PaymentTermResource($paymentTerm);
     }
+
 
     /**
      * Display the specified resource.
@@ -84,8 +91,26 @@ class PaymentTermController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $paymentTerm = PaymentTerm::findOrFail($id);
+        $paymentTerm->delete();
+
+        return response()->json(['message' => 'Método de pago eliminado con éxito']);
     }
+
+    public function destroyMultiple(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (!is_array($ids) || empty($ids)) {
+            return response()->json(['message' => 'No se han proporcionado IDs válidos'], 400);
+        }
+
+        PaymentTerm::whereIn('id', $ids)->delete();
+
+        return response()->json(['message' => 'Métodos de pago eliminados con éxito']);
+    }
+
+
 
     /**
      * Get all options for the transports select box.
@@ -95,8 +120,8 @@ class PaymentTermController extends Controller
     public function options()
     {
         $paymentTerm = PaymentTerm::select('id', 'name') // Selecciona solo los campos necesarios
-                       ->orderBy('name', 'asc') // Ordena por nombre, opcional
-                       ->get();
+            ->orderBy('name', 'asc') // Ordena por nombre, opcional
+            ->get();
 
         return response()->json($paymentTerm);
     }

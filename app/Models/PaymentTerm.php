@@ -9,7 +9,11 @@ class PaymentTerm extends Model
 {
     use HasFactory;
 
-    public function toArrayAssoc(){
+    protected $fillable = ['name'];
+
+
+    public function toArrayAssoc()
+    {
         return [
             'id' => $this->id,
             'name' => $this->name,
