@@ -52,6 +52,7 @@ class SupplierController extends Controller
             'cebo_export_type' => 'nullable|string|max:255',
             'a3erp_cebo_code' => 'nullable|string|max:255',
             'facilcom_cebo_code' => 'nullable|string|max:255',
+            'facil_com_code' => 'nullable|string|max:255',
         ]);
 
         $allEmails = [];

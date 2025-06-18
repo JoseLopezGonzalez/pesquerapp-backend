@@ -23,6 +23,7 @@ class SupplierResource extends JsonResource
             'emails' => $this->emailsArray,
             'ccEmails' => $this->ccEmailsArray,
             'address' => $this->address,
+            'facilComCode' => $this->facil_com_code,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

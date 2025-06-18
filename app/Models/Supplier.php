@@ -18,6 +18,7 @@ class Supplier extends Model
         'emails',
         'address',
         'cebo_export_type',
+        'facil_com_code',
         'a3erp_cebo_code',
         'facilcom_cebo_code',
     ];
