@@ -93,26 +93,46 @@ class CustomerController extends Controller
             'a3erp_code' => 'nullable|string|max:255',
         ]);
 
+        // Formatear emails
         $allEmails = [];
 
         foreach ($validated['emails'] ?? [] as $email) {
-            $allEmails[] = trim($email);
+            $allEmails[] = trim($email) . ';';
         }
 
-        foreach ($validated['ccEmails'] ?? [] as $email) {
-            $allEmails[] = 'CC:' . trim($email);
+        foreach ($validated['ccEmails'] ?? [] as $ccEmail) {
+            $allEmails[] = 'CC:' . trim($ccEmail) . ';';
         }
 
-        $validated['emails'] = count($allEmails) > 0
-            ? implode(";\n", $allEmails) . ';'
-            : null;
+        // Reemplazar emails por texto formateado
+        $validated['emails'] = !empty($allEmails) ? implode("\n", $allEmails) : null;
 
-        unset($validated['ccEmails']); // Ya está incluido todo en 'emails'
+        // Remover ccEmails (ya están incluidos en 'emails')
+        unset($validated['ccEmails']);
 
-        $customer = Customer::create($validated);
+        // Convertir camelCase a snake_case donde sea necesario
+        $data = [
+            'name' => $validated['name'],
+            'vat_number' => $validated['vatNumber'] ?? null,
+            'billing_address' => $validated['billing_address'] ?? null,
+            'shipping_address' => $validated['shipping_address'] ?? null,
+            'transportation_notes' => $validated['transportation_notes'] ?? null,
+            'production_notes' => $validated['production_notes'] ?? null,
+            'accounting_notes' => $validated['accounting_notes'] ?? null,
+            'emails' => $validated['emails'] ?? null,
+            'contact_info' => $validated['contact_info'] ?? null,
+            'salesperson_id' => $validated['salesperson_id'] ?? null,
+            'country_id' => $validated['country_id'] ?? null,
+            'payment_term_id' => $validated['payment_term_id'] ?? null,
+            'transport_id' => $validated['transport_id'] ?? null,
+            'a3erp_code' => $validated['a3erp_code'] ?? null,
+        ];
+
+        $customer = Customer::create($data);
 
         return new V2CustomerResource($customer);
     }
+
 
 
     /**
