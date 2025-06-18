@@ -67,8 +67,14 @@ class CaptureZoneController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $zone = CaptureZone::findOrFail($id);
+
+        return response()->json([
+            'message' => 'Zona de captura obtenida con éxito',
+            'data' => new CaptureZoneResource($zone),
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -83,8 +89,20 @@ class CaptureZoneController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $zone = CaptureZone::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|min:3|max:255',
+        ]);
+
+        $zone->update($validated);
+
+        return response()->json([
+            'message' => 'Zona de captura actualizada con éxito',
+            'data' => new CaptureZoneResource($zone),
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
