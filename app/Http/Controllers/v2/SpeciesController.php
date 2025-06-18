@@ -83,7 +83,7 @@ class SpeciesController extends Controller
      */
     public function show(Species $species)
     {
-
+        return new V2SpeciesResource($species);
     }
 
     /**
