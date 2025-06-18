@@ -128,10 +128,16 @@ class CustomerController extends Controller
             'a3erp_code' => $validated['a3erp_code'] ?? null,
         ];
 
+        // Crear cliente
         $customer = Customer::create($data);
+
+        // Añadir alias con Cliente Nº {cliente.id}
+        $customer->alias = "Cliente Nº " . $customer->id;
+        $customer->save();  // Guardamos el alias en la base de datos
 
         return new V2CustomerResource($customer);
     }
+
 
 
 
