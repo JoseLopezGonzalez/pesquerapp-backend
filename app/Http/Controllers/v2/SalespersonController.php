@@ -89,8 +89,14 @@ class SalespersonController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $salesperson = Salesperson::findOrFail($id);
+
+        return response()->json([
+            'message' => 'Comercial obtenido con éxito',
+            'data' => new SalespersonResource($salesperson),
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -105,8 +111,40 @@ class SalespersonController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $salesperson = Salesperson::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'emails' => 'nullable|array',
+            'emails.*' => 'string|email:rfc,dns|distinct',
+            'ccEmails' => 'nullable|array',
+            'ccEmails.*' => 'string|email:rfc,dns|distinct',
+        ]);
+
+        $allEmails = [];
+
+        foreach ($validated['emails'] ?? [] as $email) {
+            $allEmails[] = trim($email);
+        }
+
+        foreach ($validated['ccEmails'] ?? [] as $ccEmail) {
+            $allEmails[] = 'CC:' . trim($ccEmail);
+        }
+
+        $validated['emails'] = count($allEmails) > 0
+            ? implode(";\n", $allEmails) . ';'
+            : null;
+
+        unset($validated['ccEmails']);
+
+        $salesperson->update($validated);
+
+        return response()->json([
+            'message' => 'Comercial actualizado con éxito',
+            'data' => new SalespersonResource($salesperson),
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
