@@ -54,7 +54,15 @@ class FishingGearController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|min:2',
+        ]);
+
+        $fishingGear = FishingGear::create([
+            'name' => $validated['name'],
+        ]);
+
+        return new FishingGearResource($fishingGear);
     }
 
     /**
@@ -86,7 +94,22 @@ class FishingGearController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $fishingGear = FishingGear::findOrFail($id);
+        $fishingGear->delete();
+
+        return response()->json(['message' => 'Arte de pesca eliminado con éxito.']);
+    }
+
+    public function destroyMultiple(Request $request)
+    {
+        $validated = $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:fishing_gears,id',
+        ]);
+
+        FishingGear::whereIn('id', $validated['ids'])->delete();
+
+        return response()->json(['message' => 'Artes de pesca eliminadas con éxito.']);
     }
 
     /**
