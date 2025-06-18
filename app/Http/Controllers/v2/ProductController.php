@@ -132,15 +132,58 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
+        $product = Product::with(['article', 'species', 'captureZone'])->findOrFail($id);
+
+        return response()->json([
+            'message' => 'Producto obtenido con éxito',
+            'data' => new ProductResource($product),
+        ]);
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $article = Article::findOrFail($id); // mismo ID
+
+        $validated = $request->validate([
+            'name' => 'required|string|min:3|max:255',
+            'speciesId' => 'required|exists:species,id',
+            'captureZoneId' => 'required|exists:capture_zones,id',
+            'articleGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
+            'boxGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
+            'palletGtin' => 'nullable|string|regex:/^[0-9]{8,14}$/',
+            'a3erp_code' => 'nullable|string|max:255',
+            'facil_com_code' => 'nullable|string|max:255',
+        ]);
+
+        DB::transaction(function () use ($article, $product, $validated) {
+            $article->update([
+                'name' => $validated['name'],
+            ]);
+
+            $product->update([
+                'species_id' => $validated['speciesId'],
+                'capture_zone_id' => $validated['captureZoneId'],
+                'article_gtin' => $validated['articleGtin'] ?? null,
+                'box_gtin' => $validated['boxGtin'] ?? null,
+                'pallet_gtin' => $validated['palletGtin'] ?? null,
+                'a3erp_code' => $validated['a3erp_code'] ?? null,
+                'facil_com_code' => $validated['facil_com_code'] ?? null,
+            ]);
+        });
+
+        $updated = Product::with(['article', 'species', 'captureZone'])->find($id);
+
+        return response()->json([
+            'message' => 'Producto actualizado con éxito',
+            'data' => new ProductResource($updated),
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
