@@ -98,8 +98,14 @@ class TransportController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $transport = Transport::findOrFail($id);
+
+        return response()->json([
+            'message' => 'Transportista obtenido con éxito',
+            'data' => new V2TransportResource($transport),
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -114,8 +120,45 @@ class TransportController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $transport = Transport::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|min:3',
+            'vatNumber' => 'required|string|regex:/^[A-Z0-9]{8,12}$/',
+            'address' => 'required|string|min:10',
+            'emails' => 'nullable|array',
+            'emails.*' => 'email',
+            'ccEmails' => 'nullable|array',
+            'ccEmails.*' => 'email',
+        ]);
+
+        $allEmails = [];
+
+        foreach ($validated['emails'] ?? [] as $email) {
+            $allEmails[] = trim($email);
+        }
+
+        foreach ($validated['ccEmails'] ?? [] as $email) {
+            $allEmails[] = 'CC:' . trim($email);
+        }
+
+        $emailsText = count($allEmails) > 0
+            ? implode(";\n", $allEmails) . ';'
+            : null;
+
+        $transport->update([
+            'name' => $validated['name'],
+            'vat_number' => $validated['vatNumber'],
+            'address' => $validated['address'],
+            'emails' => $emailsText,
+        ]);
+
+        return response()->json([
+            'message' => 'Transportista actualizado con éxito',
+            'data' => new V2TransportResource($transport),
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
