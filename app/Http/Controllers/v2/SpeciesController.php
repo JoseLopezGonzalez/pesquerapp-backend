@@ -91,7 +91,21 @@ class SpeciesController extends Controller
      */
     public function update(Request $request, Species $species)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|min:2',
+            'scientificName' => 'required|string|min:2',
+            'fao' => ['required', 'regex:/^[A-Z]{3,5}$/'],
+            'fishingGearId' => 'required|exists:fishing_gears,id',
+        ]);
 
+        $species->update([
+            'name' => $validated['name'],
+            'scientific_name' => $validated['scientificName'],
+            'fao' => $validated['fao'],
+            'fishing_gear_id' => $validated['fishingGearId'],
+        ]);
+
+        return new V2SpeciesResource($species);
     }
 
     /**
