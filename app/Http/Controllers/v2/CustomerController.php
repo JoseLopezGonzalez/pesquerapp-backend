@@ -91,6 +91,7 @@ class CustomerController extends Controller
             'payment_term_id' => 'nullable|exists:payment_terms,id',
             'transport_id' => 'nullable|exists:transports,id',
             'a3erp_code' => 'nullable|string|max:255',
+            'facilcom_code' => 'nullable|string|max:255',
         ]);
 
         // Formatear emails
@@ -126,6 +127,7 @@ class CustomerController extends Controller
             'payment_term_id' => $validated['payment_term_id'] ?? null,
             'transport_id' => $validated['transport_id'] ?? null,
             'a3erp_code' => $validated['a3erp_code'] ?? null,
+            'facilcom_code' => $validated['facilcom_code'] ?? null,
         ];
 
         // Crear cliente
