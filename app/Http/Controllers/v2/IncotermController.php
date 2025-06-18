@@ -73,8 +73,14 @@ class IncotermController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $incoterm = Incoterm::findOrFail($id);
+
+        return response()->json([
+            'message' => 'Incoterm obtenido con éxito',
+            'data' => new IncotermResource($incoterm),
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -89,8 +95,21 @@ class IncotermController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $incoterm = Incoterm::findOrFail($id);
+
+        $validated = $request->validate([
+            'code' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        $incoterm->update($validated);
+
+        return response()->json([
+            'message' => 'Incoterm actualizado con éxito',
+            'data' => new IncotermResource($incoterm),
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
