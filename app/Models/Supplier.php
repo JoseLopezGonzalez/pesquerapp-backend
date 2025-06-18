@@ -15,7 +15,7 @@ class Supplier extends Model
         'type',
         'contact_person',
         'phone',
-        'email',
+        'emails',
         'address',
         'cebo_export_type',
         'a3erp_cebo_code',
