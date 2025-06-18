@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\TransportResource;
-use App\Http\Resources\v2\TransportResource as V2TransportResource;
+use App\Http\Resources\v1\CaptureZoneResource;
 use App\Models\CaptureZone;
-use App\Models\Transport;
 use Illuminate\Http\Request;
 
 class CaptureZoneController extends Controller
@@ -31,12 +29,12 @@ class CaptureZoneController extends Controller
         if ($request->has('name')) {
             $query->where('name', 'like', '%' . $request->name . '%');
         }
-        
+
         /* order by name */
         $query->orderBy('name', 'asc');
 
         $perPage = $request->input('perPage', 12); // Default a 10 si no se proporciona
-        return V2TransportResource::collection($query->paginate($perPage));
+        return CaptureZoneResource::collection($query->paginate($perPage));
     }
 
     /**
@@ -52,7 +50,16 @@ class CaptureZoneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|min:3|max:255',
+        ]);
+
+        $captureZone = CaptureZone::create($validated);
+
+        return response()->json([
+            'message' => 'Zona de captura creada con éxito',
+            'data' => new CaptureZoneResource($captureZone),
+        ], 201);
     }
 
     /**
@@ -84,7 +91,23 @@ class CaptureZoneController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $zone = CaptureZone::findOrFail($id);
+        $zone->delete();
+
+        return response()->json(['message' => 'Zona de captura eliminada correctamente']);
+    }
+
+    public function destroyMultiple(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (!is_array($ids) || empty($ids)) {
+            return response()->json(['message' => 'No se proporcionaron IDs válidos'], 400);
+        }
+
+        CaptureZone::whereIn('id', $ids)->delete();
+
+        return response()->json(['message' => 'Zonas de captura eliminadas correctamente']);
     }
 
     /**
@@ -95,8 +118,8 @@ class CaptureZoneController extends Controller
     public function options()
     {
         $captureZones = CaptureZone::select('id', 'name') // Selecciona solo los campos necesarios
-                       ->orderBy('name', 'asc') // Ordena por nombre, opcional
-                       ->get();
+            ->orderBy('name', 'asc') // Ordena por nombre, opcional
+            ->get();
 
         return response()->json($captureZones);
     }
