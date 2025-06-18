@@ -57,7 +57,7 @@ class SalespersonController extends Controller
             'ccEmails.*' => 'string|email:rfc,dns|distinct',
         ]);
 
-        // Combinar emails y ccEmails en el string único con separador ;
+        // Combinar emails y ccEmails en el string único con separador ; y salto de línea
         $allEmails = [];
 
         foreach ($validated['emails'] ?? [] as $email) {
@@ -68,7 +68,7 @@ class SalespersonController extends Controller
             $allEmails[] = 'CC:' . trim($ccEmail);
         }
 
-        $validated['emails'] = implode(';', $allEmails);
+        $validated['emails'] = implode(";\n", $allEmails); // ← salto de línea después del ;
 
         unset($validated['ccEmails']); // ya están incluidos
 
@@ -76,6 +76,7 @@ class SalespersonController extends Controller
 
         return new SalespersonResource($salesperson);
     }
+
 
 
 
