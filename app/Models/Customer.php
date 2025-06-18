@@ -24,6 +24,7 @@ class Customer extends Model
         'country_id',
         'transport_id',
         'a3erp_code',
+        'alias',
     ];
 
     public function orders()
