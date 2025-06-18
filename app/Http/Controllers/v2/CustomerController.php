@@ -166,8 +166,69 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'vatNumber' => 'nullable|string|max:20',
+            'billing_address' => 'nullable|string|max:1000',
+            'shipping_address' => 'nullable|string|max:1000',
+            'transportation_notes' => 'nullable|string|max:1000',
+            'production_notes' => 'nullable|string|max:1000',
+            'accounting_notes' => 'nullable|string|max:1000',
+            'emails' => 'nullable|array',
+            'emails.*' => 'string|email:rfc,dns|distinct',
+            'ccEmails' => 'nullable|array',
+            'ccEmails.*' => 'string|email:rfc,dns|distinct',
+            'contact_info' => 'nullable|string|max:1000',
+            'salesperson_id' => 'nullable|exists:salespeople,id',
+            'country_id' => 'nullable|exists:countries,id',
+            'payment_term_id' => 'nullable|exists:payment_terms,id',
+            'transport_id' => 'nullable|exists:transports,id',
+            'a3erp_code' => 'nullable|string|max:255',
+            'facilcom_code' => 'nullable|string|max:255',
+        ]);
+
+        $allEmails = [];
+
+        foreach ($validated['emails'] ?? [] as $email) {
+            $allEmails[] = trim($email) . ';';
+        }
+
+        foreach ($validated['ccEmails'] ?? [] as $ccEmail) {
+            $allEmails[] = 'CC:' . trim($ccEmail) . ';';
+        }
+
+        $validated['emails'] = !empty($allEmails) ? implode("\n", $allEmails) : null;
+        unset($validated['ccEmails']);
+
+        $data = [
+            'name' => $validated['name'],
+            'vat_number' => $validated['vatNumber'] ?? null,
+            'billing_address' => $validated['billing_address'] ?? null,
+            'shipping_address' => $validated['shipping_address'] ?? null,
+            'transportation_notes' => $validated['transportation_notes'] ?? null,
+            'production_notes' => $validated['production_notes'] ?? null,
+            'accounting_notes' => $validated['accounting_notes'] ?? null,
+            'emails' => $validated['emails'] ?? null,
+            'contact_info' => $validated['contact_info'] ?? null,
+            'salesperson_id' => $validated['salesperson_id'] ?? null,
+            'country_id' => $validated['country_id'] ?? null,
+            'payment_term_id' => $validated['payment_term_id'] ?? null,
+            'transport_id' => $validated['transport_id'] ?? null,
+            'a3erp_code' => $validated['a3erp_code'] ?? null,
+            'facilcom_code' => $validated['facilcom_code'] ?? null,
+        ];
+
+        $customer->update($data);
+
+        // Recalcular alias si se requiere (opcional)
+        $customer->alias = "Cliente Nº " . $customer->id;
+        $customer->save();
+
+        return new V2CustomerResource($customer);
     }
+
 
     /**
      * Remove the specified resource from storage.
