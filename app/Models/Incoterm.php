@@ -10,6 +10,12 @@ class Incoterm extends Model
     use HasFactory;
 
 
+    protected $fillable = [
+        'code',
+        'description',
+    ];
+
+
     public function toArrayAssoc(): array
     {
         return [
@@ -25,7 +31,7 @@ class Incoterm extends Model
     public function orders()
     {
         return $this->hasMany(Order::class);
-    } 
+    }
 
 
 }
