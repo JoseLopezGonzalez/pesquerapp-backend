@@ -56,7 +56,7 @@ class Product extends Model
             'name' => $this->name,
             'id' => $this->id,
             'a3erpCode' => $this->a3erp_code,
-            'facilComCode' => $this->facil_com_code,
+            'facilcomCode' => $this->facil_com_code,
         ]);
 
     }
