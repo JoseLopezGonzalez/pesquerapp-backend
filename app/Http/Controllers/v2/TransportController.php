@@ -25,7 +25,7 @@ class TransportController extends Controller
             $query->whereIn('id', $request->ids);
         }
 
-       /* name like */
+        /* name like */
         if ($request->has('name')) {
             $query->where('name', 'like', '%' . $request->name . '%');
         }
@@ -55,8 +55,36 @@ class TransportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|min:3',
+            'vatNumber' => 'required|string|regex:/^[A-Z0-9]{8,12}$/',
+            'address' => 'required|string|min:10',
+            'emails' => 'nullable|array',
+            'emails.*' => 'email',
+            'ccEmails' => 'nullable|array',
+            'ccEmails.*' => 'email',
+        ]);
+
+        $allEmails = [];
+
+        foreach ($validated['emails'] ?? [] as $email) {
+            $allEmails[] = trim($email);
+        }
+
+        foreach ($validated['ccEmails'] ?? [] as $email) {
+            $allEmails[] = 'CC:' . trim($email);
+        }
+
+        $transport = Transport::create([
+            'name' => $validated['name'],
+            'vat_number' => $validated['vatNumber'],
+            'address' => $validated['address'],
+            'emails' => implode(';', $allEmails),
+        ]);
+
+        return new V2TransportResource($transport);
     }
+
 
     /**
      * Display the specified resource.
@@ -87,7 +115,22 @@ class TransportController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $transport = Transport::findOrFail($id);
+        $transport->delete();
+
+        return response()->json(['message' => 'Transporte eliminado con éxito.']);
+    }
+
+    public function destroyMultiple(Request $request)
+    {
+        $validated = $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:transports,id',
+        ]);
+
+        Transport::whereIn('id', $validated['ids'])->delete();
+
+        return response()->json(['message' => 'Transportes eliminados con éxito.']);
     }
 
     /**
@@ -98,8 +141,8 @@ class TransportController extends Controller
     public function options()
     {
         $transports = Transport::select('id', 'name') // Selecciona solo los campos necesarios
-                       ->orderBy('name', 'asc') // Ordena por nombre, opcional
-                       ->get();
+            ->orderBy('name', 'asc') // Ordena por nombre, opcional
+            ->get();
 
         return response()->json($transports);
     }

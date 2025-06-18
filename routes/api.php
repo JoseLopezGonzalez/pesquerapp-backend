@@ -319,6 +319,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('order-planned-product-details', OrderPlannedProductDetailController::class);
             Route::apiResource('raw-material-receptions', V2RawMaterialReceptionController::class);
             Route::apiResource('transports', V2TransportController::class);
+            Route::delete('/transports', [V2TransportController::class, 'destroyMultiple']);
+
             Route::apiResource('products', V2ProductController::class);
             Route::delete('products', [V2ProductController::class, 'destroyMultiple']);
 

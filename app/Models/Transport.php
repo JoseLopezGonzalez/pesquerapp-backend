@@ -10,6 +10,12 @@ class Transport extends Model
     use HasFactory;
 
     // Define los atributos fillable y otras propiedades
+    protected $fillable = [
+        'name',
+        'vat_number',
+        'address',
+        'emails',
+    ];
 
     public function orders()
     {
