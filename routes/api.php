@@ -319,7 +319,7 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('order-planned-product-details', OrderPlannedProductDetailController::class);
             Route::apiResource('raw-material-receptions', V2RawMaterialReceptionController::class);
             Route::apiResource('transports', V2TransportController::class);
-            Route::delete('/transports', [V2TransportController::class, 'destroyMultiple']);
+            Route::delete('transports', [V2TransportController::class, 'destroyMultiple']);
 
             Route::apiResource('products', V2ProductController::class);
             Route::delete('products', [V2ProductController::class, 'destroyMultiple']);
@@ -327,25 +327,26 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('stores', V2StoreController::class);
             Route::delete('stores', [V2StoreController::class, 'deleteMultiple']); // <-- importante
 
-            Route::apiResource('v2/payment-terms', V2PaymentTermController::class);
-            Route::delete('v2/payment-terms', [V2PaymentTermController::class, 'destroyMultiple']);
+            Route::apiResource('payment-terms', V2PaymentTermController::class);
+            Route::delete('payment-terms', [V2PaymentTermController::class, 'destroyMultiple']);
+
             Route::apiResource('boxes', BoxesController::class); /* Algo raro en el nombre */
             Route::apiResource('pallets', V2PalletController::class);
             Route::apiResource('customers', V2CustomerController::class);
             Route::apiResource('suppliers', V2SupplierController::class);
             Route::apiResource('capture-zones', V2CaptureZoneController::class);
-            Route::delete('/capture-zones', [V2CaptureZoneController::class, 'destroyMultiple']);
+            Route::delete('capture-zones', [V2CaptureZoneController::class, 'destroyMultiple']);
             Route::apiResource('species', V2SpeciesController::class);
-            Route::delete('/species', [V2SpeciesController::class, 'destroyMultiple']);
+            Route::delete('species', [V2SpeciesController::class, 'destroyMultiple']);
 
             Route::apiResource('incoterms', V2IncotermController::class);
-            Route::delete('/incoterms', [V2IncotermController::class, 'destroyMultiple']);
+            Route::delete('incoterms', [V2IncotermController::class, 'destroyMultiple']);
 
             Route::apiResource('salespeople', V2SalespersonController::class);
-            Route::delete('/salespeople', [V2SalespersonController::class, 'destroyMultiple']);
+            Route::delete('salespeople', [V2SalespersonController::class, 'destroyMultiple']);
 
             Route::apiResource('fishing-gears', FishingGearController::class);
-            Route::delete('/fishing-gears', [FishingGearController::class, 'destroyMultiple']);
+            Route::delete('fishing-gears', [FishingGearController::class, 'destroyMultiple']);
 
             Route::apiResource('countries', CountryController::class);
             Route::apiResource('payment-terms', V2PaymentTermController::class);
