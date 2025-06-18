@@ -24,6 +24,7 @@ class Customer extends Model
         'country_id',
         'transport_id',
         'a3erp_code',
+        'facilcom_code',
         'alias',
     ];
 
@@ -71,6 +72,8 @@ class Customer extends Model
             'contactInfo' => $this->contact_info,
             'country' => $this->country->toArrayAssoc(),
             'transport' => $this->transport->toArrayAssoc(),
+            'a3erp_code' => $this->a3erp_code,
+            'facilcom_code' => $this->facilcom_code,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];
