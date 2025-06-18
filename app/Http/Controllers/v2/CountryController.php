@@ -27,7 +27,7 @@ class CountryController extends Controller
             $query->whereIn('id', $request->ids);
         }
 
-       /* name like */
+        /* name like */
         if ($request->has('name')) {
             $query->where('name', 'like', '%' . $request->name . '%');
         }
@@ -52,7 +52,12 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|min:2|max:255',
+        ]);
+
+        $country = Country::create($validated);
+        return new CountryResource($country);
     }
 
     /**
@@ -84,7 +89,23 @@ class CountryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $country = Country::findOrFail($id);
+        $country->delete();
+
+        return response()->json(['message' => 'País eliminado con éxito']);
+    }
+
+    public function destroyMultiple(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (!is_array($ids) || empty($ids)) {
+            return response()->json(['message' => 'No se han proporcionado IDs válidos'], 400);
+        }
+
+        Country::whereIn('id', $ids)->delete();
+
+        return response()->json(['message' => 'Países eliminados con éxito']);
     }
 
     /**
@@ -95,8 +116,8 @@ class CountryController extends Controller
     public function options()
     {
         $country = Country::select('id', 'name') // Selecciona solo los campos necesarios
-                       ->orderBy('name', 'asc') // Ordena por nombre, opcional
-                       ->get();
+            ->orderBy('name', 'asc') // Ordena por nombre, opcional
+            ->get();
 
         return response()->json($country);
     }
