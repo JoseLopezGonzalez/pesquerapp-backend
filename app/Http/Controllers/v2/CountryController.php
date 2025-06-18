@@ -65,8 +65,14 @@ class CountryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $country = Country::findOrFail($id);
+
+        return response()->json([
+            'message' => 'País obtenido con éxito',
+            'data' => new CountryResource($country),
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -81,8 +87,20 @@ class CountryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $country = Country::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|min:2|max:255',
+        ]);
+
+        $country->update($validated);
+
+        return response()->json([
+            'message' => 'País actualizado con éxito',
+            'data' => new CountryResource($country),
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
