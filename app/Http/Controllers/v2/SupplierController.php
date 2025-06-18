@@ -79,13 +79,56 @@ class SupplierController extends Controller
 
     public function show($id)
     {
+        $supplier = Supplier::findOrFail($id);
 
+        return response()->json([
+            'message' => 'Proveedor obtenido con éxito',
+            'data' => new V2SupplierResource($supplier),
+        ]);
     }
+
 
     public function update(Request $request, $id)
     {
+        $supplier = Supplier::findOrFail($id);
 
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => 'nullable|string|max:255',
+            'contact_person' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:50',
+            'emails' => 'nullable|array',
+            'emails.*' => 'string|email:rfc,dns|distinct',
+            'ccEmails' => 'nullable|array',
+            'ccEmails.*' => 'string|email:rfc,dns|distinct',
+            'address' => 'nullable|string|max:1000',
+            'cebo_export_type' => 'nullable|string|max:255',
+            'a3erp_cebo_code' => 'nullable|string|max:255',
+            'facilcom_cebo_code' => 'nullable|string|max:255',
+            'facil_com_code' => 'nullable|string|max:255',
+        ]);
+
+        $allEmails = [];
+
+        foreach ($validated['emails'] ?? [] as $email) {
+            $allEmails[] = trim($email);
+        }
+
+        foreach ($validated['ccEmails'] ?? [] as $email) {
+            $allEmails[] = 'CC:' . trim($email);
+        }
+
+        $validated['emails'] = count($allEmails) > 0
+            ? implode(";\n", $allEmails) . ';'
+            : null;
+
+        unset($validated['ccEmails']);
+
+        $supplier->update($validated);
+
+        return new V2SupplierResource($supplier);
     }
+
 
     public function destroy(string $id)
     {
