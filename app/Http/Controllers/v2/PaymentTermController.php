@@ -67,8 +67,14 @@ class PaymentTermController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $paymentTerm = PaymentTerm::findOrFail($id);
+
+        return response()->json([
+            'message' => 'Término de pago obtenido con éxito',
+            'data' => new PaymentTermResource($paymentTerm),
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -83,8 +89,20 @@ class PaymentTermController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $paymentTerm = PaymentTerm::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $paymentTerm->update($validated);
+
+        return response()->json([
+            'message' => 'Término de pago actualizado con éxito',
+            'data' => new PaymentTermResource($paymentTerm),
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
