@@ -57,8 +57,16 @@ class IncotermController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'code' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        $incoterm = Incoterm::create($validated);
+
+        return new IncotermResource($incoterm);
     }
+
 
     /**
      * Display the specified resource.
@@ -89,8 +97,26 @@ class IncotermController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $incoterm = Incoterm::findOrFail($id);
+        $incoterm->delete();
+
+        return response()->json(['message' => 'Incoterm eliminado con éxito.']);
     }
+
+
+    public function destroyMultiple(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array|min:1',
+            'ids.*' => 'integer|exists:incoterms,id',
+        ]);
+
+        Incoterm::whereIn('id', $request->ids)->delete();
+
+        return response()->json(['message' => 'Incoterms eliminados con éxito.']);
+    }
+
+
 
     /**
      * Get all options for the incoterms select box.
@@ -99,8 +125,8 @@ class IncotermController extends Controller
      */
     public function options()
     {
-        $incoterms = Incoterm::select('id', 'code' , 'description') // Selecciona solo los campos necesarios
-                       ->get();
+        $incoterms = Incoterm::select('id', 'code', 'description') // Selecciona solo los campos necesarios
+            ->get();
 
         $incoterms = $incoterms->map(function ($incoterm) {
             return [
