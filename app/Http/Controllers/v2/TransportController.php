@@ -75,8 +75,10 @@ class TransportController extends Controller
             $allEmails[] = 'CC:' . trim($email);
         }
 
-        // Formatear con salto de línea después del ;
-        $emailsText = implode(";\n", $allEmails);
+        // Unir con salto de línea y añadir ; al final si hay emails
+        $emailsText = count($allEmails) > 0
+            ? implode(";\n", $allEmails) . ';'
+            : null;
 
         $transport = Transport::create([
             'name' => $validated['name'],
@@ -87,6 +89,7 @@ class TransportController extends Controller
 
         return new V2TransportResource($transport);
     }
+
 
 
 
