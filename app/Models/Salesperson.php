@@ -74,9 +74,8 @@ class Salesperson extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'emails' => $this->emails,
-            'emailsArray' => $this->emailsArray,
-            'ccEmailsArray' => $this->ccEmailsArray,
+            'emails' => $this->emailsArray,
+            'ccEmails' => $this->ccEmailsArray,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];
