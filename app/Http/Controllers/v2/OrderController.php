@@ -282,8 +282,9 @@ class OrderController extends Controller
             'loadDate' => 'sometimes|date',
             'status' => 'sometimes|string',
             'incoterm' => 'sometimes|integer',
-            'truckPlate' => 'sometimes|string',
-            'trailerPlate' => 'sometimes|string',
+            'truckPlate' => 'sometimes|nullable|string',
+            'trailerPlate' => 'sometimes|nullable|string',
+
             'temperature' => 'sometimes|string',
         ]);
 
