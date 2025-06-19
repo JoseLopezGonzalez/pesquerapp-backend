@@ -164,7 +164,10 @@ class OrderController extends Controller
             'transportationNotes' => 'nullable|string',
             'productionNotes' => 'nullable|string',
             'accountingNotes' => 'nullable|string',
-            'emails' => 'nullable|string',
+            'emails' => 'nullable|array',
+            'emails.*' => 'string|email:rfc,dns|distinct',
+            'ccEmails' => 'nullable|array',
+            'ccEmails.*' => 'string|email:rfc,dns|distinct',
             'plannedProducts' => 'nullable|array',
             'plannedProducts.*.product' => 'required|integer|exists:products,id',
             'plannedProducts.*.quantity' => 'required|numeric',
@@ -172,6 +175,21 @@ class OrderController extends Controller
             'plannedProducts.*.unitPrice' => 'required|numeric',
             'plannedProducts.*.tax' => 'required|integer|exists:taxes,id',
         ]);
+
+        // Formatear emails
+        $allEmails = [];
+
+        foreach ($validated['emails'] ?? [] as $email) {
+            $allEmails[] = trim($email);
+        }
+
+        foreach ($validated['ccEmails'] ?? [] as $email) {
+            $allEmails[] = 'CC:' . trim($email);
+        }
+
+        $formattedEmails = count($allEmails) > 0
+            ? implode(";\n", $allEmails) . ';'
+            : null;
 
         DB::beginTransaction();
 
@@ -193,7 +211,7 @@ class OrderController extends Controller
                 'transportation_notes' => $validated['transportationNotes'] ?? null,
                 'production_notes' => $validated['productionNotes'] ?? null,
                 'accounting_notes' => $validated['accountingNotes'] ?? null,
-                'emails' => $validated['emails'] ?? null,
+                'emails' => $formattedEmails,
                 'status' => 'pending',
             ]);
 
@@ -215,9 +233,13 @@ class OrderController extends Controller
             DB::commit();
 
             return new OrderDetailsResource($order);
+
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['message' => 'Error al crear el pedido', 'error' => $e->getMessage()], 500);
+            return response()->json([
+                'message' => 'Error al crear el pedido',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -347,15 +369,15 @@ class OrderController extends Controller
 
     /* Active Orders Options */
     public function activeOrdersOptions()
-{
-    $orders = Order::where('status', 'pending')
-        ->orWhereDate('load_date', '>=', now())
-        ->select('id', 'id as name', 'load_date') // 👈 Aquí añado la fecha
-        ->orderBy('load_date', 'desc') // 👈 Ordenar por fecha de carga
-        ->get();
+    {
+        $orders = Order::where('status', 'pending')
+            ->orWhereDate('load_date', '>=', now())
+            ->select('id', 'id as name', 'load_date') // 👈 Aquí añado la fecha
+            ->orderBy('load_date', 'desc') // 👈 Ordenar por fecha de carga
+            ->get();
 
-    return response()->json($orders);
-}
+        return response()->json($orders);
+    }
 
 
     /* update Order status */
