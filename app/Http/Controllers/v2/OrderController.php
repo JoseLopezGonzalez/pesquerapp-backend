@@ -285,7 +285,7 @@ class OrderController extends Controller
             'truckPlate' => 'sometimes|nullable|string',
             'trailerPlate' => 'sometimes|nullable|string',
 
-            'temperature' => 'sometimes|nullable|float',
+            'temperature' => 'sometimes|nullable|numeric',
         ]);
 
         $order = Order::findOrFail($id);
