@@ -34,9 +34,8 @@ class Transport extends Model
             'name' => $this->name,
             'vatNumber' => $this->vat_number,
             'address' => $this->address,
-            'emails' => $this->emails, // ??¿?¿
-            'emailsArray' => $this->emailsArray, // OJO DIFERENTE A RESOURCE V2
-            'ccEmailsArray' => $this->ccEmailsArray, //OJO DIFERENTE A RESOURCE V2
+            'emails' => $this->emailsArray, // OJO DIFERENTE A RESOURCE V2
+            'ccEmails' => $this->ccEmailsArray, //OJO DIFERENTE A RESOURCE V2
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];
