@@ -48,6 +48,7 @@ use App\Http\Controllers\v2\FishingGearController;
 use App\Http\Controllers\v2\GoogleDocumentAIController;
 use App\Http\Controllers\v2\IncidentController;
 use App\Http\Controllers\v2\IncotermController as V2IncotermController;
+use App\Http\Controllers\v2\LabelController;
 use App\Http\Resources\v1\CustomerResource;
 use App\Models\PaymentTerm;
 use Illuminate\Support\Facades\App;
@@ -358,6 +359,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('countries', CountryController::class);
             Route::apiResource('payment-terms', V2PaymentTermController::class);
             Route::apiResource('cebo-dispatches', V2CeboDispatchController::class);
+            Route::apiResource('labels', LabelController::class);
+
             /* order incidents */
             Route::get('orders/{orderId}/incident', [IncidentController::class, 'show']);
             Route::post('orders/{orderId}/incident', [IncidentController::class, 'store']);
