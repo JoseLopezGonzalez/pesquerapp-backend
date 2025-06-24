@@ -40,8 +40,15 @@ class LabelController extends Controller
         return new LabelResource($label);
     }
 
-    public function destroy(Label $label)
+    /* public function destroy(Label $label)
     {
+        $label->delete();
+        return response()->noContent();
+    } */
+    /* Destroy by id */
+    public function destroy($id)
+    {
+        $label = Label::findOrFail($id);
         $label->delete();
         return response()->noContent();
     }
