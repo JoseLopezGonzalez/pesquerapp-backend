@@ -43,7 +43,11 @@ class LabelController extends Controller
     public function destroy(Label $label)
     {
         $label->delete();
-        return response()->noContent();
+        /* Devolver mensaje satisfactorio o error */
+        return response()->json([
+            'message' => 'Etiqueta eliminada correctamente.'
+        ], 200);
+
     }
     /* Destroy by id */
     /* public function destroy($id)
