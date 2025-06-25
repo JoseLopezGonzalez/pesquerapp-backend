@@ -55,14 +55,14 @@ class LabelController extends Controller
     public function options()
     {
         $labels = Label::orderBy('name')->get();
-        return response()->json([
-            'options' => $labels->map(function ($label) {
+        return response()->json(
+            $labels->map(function ($label) {
                 return [
                     'id' => $label->id,
                     'name' => $label->name,
                 ];
             }),
-        ]);
+        );
     }
 
     /* Destroy by id */
