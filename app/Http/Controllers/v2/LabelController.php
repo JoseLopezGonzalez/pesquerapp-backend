@@ -49,6 +49,22 @@ class LabelController extends Controller
         ], 200);
 
     }
+
+
+    /* Labels options */
+    public function options()
+    {
+        $labels = Label::orderBy('name')->get();
+        return response()->json([
+            'options' => $labels->map(function ($label) {
+                return [
+                    'id' => $label->id,
+                    'name' => $label->name,
+                ];
+            }),
+        ]);
+    }
+
     /* Destroy by id */
     /* public function destroy($id)
     {
