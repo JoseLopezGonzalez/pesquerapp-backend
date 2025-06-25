@@ -359,9 +359,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::apiResource('countries', CountryController::class);
             Route::apiResource('payment-terms', V2PaymentTermController::class);
             Route::apiResource('cebo-dispatches', V2CeboDispatchController::class);
-            Route::apiResource('labels', LabelController::class);
-            /* label options */
             Route::get('labels/options', [LabelController::class, 'options'])->name('labels.options');
+            Route::apiResource('labels', LabelController::class);
 
             /* order incidents */
             Route::get('orders/{orderId}/incident', [IncidentController::class, 'show']);
