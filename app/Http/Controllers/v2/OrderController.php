@@ -525,58 +525,24 @@ class OrderController extends Controller
             'speciesId' => 'nullable|integer|exists:species,id',
         ])->validate();
 
-        $dateFrom = Carbon::parse($validated['dateFrom'])->startOfDay();
-        $dateTo = Carbon::parse($validated['dateTo'])->endOfDay();
+        $dateFrom = $validated['dateFrom'] . ' 00:00:00';
+        $dateTo = $validated['dateTo'] . ' 23:59:59';
         $speciesId = $validated['speciesId'] ?? null;
 
-        // Rango actual
-        $ordersCurrent = Order::with(['pallets.boxes.box.product'])
-            ->whereBetween('entry_date', [$dateFrom, $dateTo])
-            ->get();
+        $query = DB::table('boxes')
+            ->join('pallets', 'boxes.pallet_id', '=', 'pallets.id')
+            ->join('orders', 'pallets.order_id', '=', 'orders.id')
+            ->join('products', 'boxes.product_id', '=', 'products.id')
+            ->whereBetween('orders.entry_date', [$dateFrom, $dateTo]);
 
-        $totalCurrent = 0;
-
-        foreach ($ordersCurrent as $order) {
-            foreach ($order->pallets as $pallet) {
-                foreach ($pallet->boxes as $box) {
-                    $product = $box->box->product;
-                    if ($speciesId && $product->species_id !== $speciesId)
-                        continue;
-                    $totalCurrent += $box->netWeight;
-                }
-            }
+        if ($speciesId) {
+            $query->where('products.species_id', $speciesId);
         }
 
-        // Mismo rango un año atrás
-        $previousFrom = $dateFrom->copy()->subYear();
-        $previousTo = $dateTo->copy()->subYear();
-
-        $ordersPrevious = Order::with(['pallets.boxes.box.product'])
-            ->whereBetween('entry_date', [$previousFrom, $previousTo])
-            ->get();
-
-        $totalPrevious = 0;
-
-        foreach ($ordersPrevious as $order) {
-            foreach ($order->pallets as $pallet) {
-                foreach ($pallet->boxes as $box) {
-                    $product = $box->box->product;
-                    if ($speciesId && $product->species_id !== $speciesId)
-                        continue;
-                    $totalPrevious += $box->netWeight;
-                }
-            }
-        }
-
-        $percentageChange = null;
-        if ($totalPrevious > 0) {
-            $percentageChange = round((($totalCurrent - $totalPrevious) / $totalPrevious) * 100, 2);
-        }
+        $totalQuantity = $query->sum('boxes.netWeight');
 
         return response()->json([
-            'value' => round($totalCurrent, 2),
-            'comparisonValue' => round($totalPrevious, 2),
-            'percentageChange' => $percentageChange,
+            'totalQuantity' => round($totalQuantity, 2),
         ]);
     }
 
