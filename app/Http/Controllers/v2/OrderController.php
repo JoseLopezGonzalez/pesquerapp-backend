@@ -516,6 +516,45 @@ class OrderController extends Controller
     }
 
 
+    public function totalQuantity(Request $request)
+    {
+        $validated = Validator::make($request->all(), [
+            'dateFrom' => 'required|date',
+            'dateTo' => 'required|date',
+            'speciesId' => 'nullable|integer|exists:species,id',
+        ])->validate();
+
+        $dateFrom = $validated['dateFrom'] . ' 00:00:00';
+        $dateTo = $validated['dateTo'] . ' 23:59:59';
+        $speciesId = $validated['speciesId'] ?? null;
+
+        $orders = Order::with(['pallets.boxes.box.product'])
+            ->whereBetween('entry_date', [$dateFrom, $dateTo])
+            ->get();
+
+        $totalQuantity = 0;
+
+        foreach ($orders as $order) {
+            foreach ($order->pallets as $pallet) {
+                foreach ($pallet->boxes as $box) {
+                    $product = $box->box->product;
+
+                    if ($speciesId && $product->species_id !== $speciesId) {
+                        continue;
+                    }
+
+                    $totalQuantity += $box->netWeight;
+                }
+            }
+        }
+
+        return response()->json([
+            'totalQuantity' => round($totalQuantity, 2),
+        ]);
+    }
+
+
+
 
 
 

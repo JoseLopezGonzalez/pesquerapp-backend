@@ -315,6 +315,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('/countries/options', [CountryController::class, 'options']);
             Route::get('/payment-terms/options', [V2PaymentTermController::class, 'options']);
 
+            Route::get('orders/total-quantity', [V2OrderController::class, 'totalQuantity']);
+
             Route::get('orders/ranking', [V2OrderController::class, 'orderRanking']);
             /* orders/sales-by-salesperson */
             Route::get('orders/sales-by-salesperson', [V2OrderController::class, 'salesBySalesperson']);
