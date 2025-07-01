@@ -413,7 +413,7 @@ class OrderController extends Controller
     public function orderRanking(Request $request)
     {
         $validated = Validator::make($request->all(), [
-            'groupBy' => 'required|in:client,country',
+            'groupBy' => 'required|in:client,country,product',
             'valueType' => 'required|in:totalAmount,totalQuantity',
             'dateFrom' => 'required|date',
             'dateTo' => 'required|date',
@@ -439,24 +439,26 @@ class OrderController extends Controller
                 $products = array_filter($products, fn($p) => $p['product']['species_id'] === (int) $speciesId);
             }
 
-            // ❗ Ignorar este pedido si no tiene productos tras el filtro
             if (empty($products)) {
                 continue;
             }
 
-            $groupName = $groupBy === 'client'
-                ? $order->customer->name
-                : ($order->customer->country->name ?? 'Sin país');
-
-            if (!isset($summary[$groupName])) {
-                $summary[$groupName] = [
-                    'name' => $groupName,
-                    'totalQuantity' => 0,
-                    'totalAmount' => 0,
-                ];
-            }
-
             foreach ($products as $p) {
+                // 👇 Determinar nombre del grupo
+                $groupName = match ($groupBy) {
+                    'client' => $order->customer->name,
+                    'country' => $order->customer->country->name ?? 'Sin país',
+                    'product' => $p['product']['name'],
+                };
+
+                if (!isset($summary[$groupName])) {
+                    $summary[$groupName] = [
+                        'name' => $groupName,
+                        'totalQuantity' => 0,
+                        'totalAmount' => 0,
+                    ];
+                }
+
                 $summary[$groupName]['totalQuantity'] += $p['netWeight'];
                 $summary[$groupName]['totalAmount'] += $p['total'];
             }
@@ -472,6 +474,7 @@ class OrderController extends Controller
 
         return response()->json($results);
     }
+
 
 
 
