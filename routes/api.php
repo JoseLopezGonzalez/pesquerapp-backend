@@ -315,7 +315,7 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('/countries/options', [CountryController::class, 'options']);
             Route::get('/payment-terms/options', [V2PaymentTermController::class, 'options']);
 
-            Route::get('v2/orders/ranking', [V2OrderController::class, 'orderRanking']);
+            Route::get('orders/ranking', [V2OrderController::class, 'orderRanking']);
 
             /* Controladores Genericos */
             Route::apiResource('orders', V2OrderController::class);
