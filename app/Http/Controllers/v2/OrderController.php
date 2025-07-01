@@ -529,10 +529,11 @@ class OrderController extends Controller
         $dateTo = $validated['dateTo'] . ' 23:59:59';
         $speciesId = $validated['speciesId'] ?? null;
 
-        $query = DB::table('boxes')
-            ->join('pallets', 'boxes.pallet_id', '=', 'pallets.id')
-            ->join('orders', 'pallets.order_id', '=', 'orders.id')
-            ->join('products', 'boxes.product_id', '=', 'products.id')
+        $query = DB::table('orders')
+            ->join('pallets', 'pallets.order_id', '=', 'orders.id')
+            ->join('pallet_boxes', 'pallet_boxes.pallet_id', '=', 'pallets.id')
+            ->join('boxes', 'boxes.id', '=', 'pallet_boxes.box_id')
+            ->join('products', 'products.id', '=', 'boxes.product_id')
             ->whereBetween('orders.entry_date', [$dateFrom, $dateTo]);
 
         if ($speciesId) {
