@@ -529,15 +529,15 @@ class OrderController extends Controller
         $dateTo = $validated['dateTo'] . ' 23:59:59';
         $speciesId = $validated['speciesId'] ?? null;
 
-        $query = DB::table('orders')
+        $query = \DB::table('orders')
             ->join('pallets', 'pallets.order_id', '=', 'orders.id')
             ->join('pallet_boxes', 'pallet_boxes.pallet_id', '=', 'pallets.id')
             ->join('boxes', 'boxes.id', '=', 'pallet_boxes.box_id')
-            ->join('products', 'products.id', '=', 'boxes.product_id')
+            ->join('articles', 'articles.id', '=', 'boxes.article_id')
             ->whereBetween('orders.entry_date', [$dateFrom, $dateTo]);
 
         if ($speciesId) {
-            $query->where('products.species_id', $speciesId);
+            $query->where('articles.species_id', $speciesId);
         }
 
         $totalQuantity = $query->sum('boxes.net_weight');
@@ -546,6 +546,7 @@ class OrderController extends Controller
             'totalQuantity' => round($totalQuantity, 2),
         ]);
     }
+
 
 
 
