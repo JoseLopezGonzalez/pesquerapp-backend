@@ -529,7 +529,12 @@ class OrderController extends Controller
         $dateTo = $validated['dateTo'] . ' 23:59:59';
         $speciesId = $validated['speciesId'] ?? null;
 
-        $query = \DB::table('orders')
+        // Rango anterior: un año atrás
+        $dateFromPrev = date('Y-m-d H:i:s', strtotime($dateFrom . ' -1 year'));
+        $dateToPrev = date('Y-m-d H:i:s', strtotime($dateTo . ' -1 year'));
+
+        // Consulta para rango actual
+        $queryCurrent = DB::table('orders')
             ->join('pallets', 'pallets.order_id', '=', 'orders.id')
             ->join('pallet_boxes', 'pallet_boxes.pallet_id', '=', 'pallets.id')
             ->join('boxes', 'boxes.id', '=', 'pallet_boxes.box_id')
@@ -537,15 +542,39 @@ class OrderController extends Controller
             ->whereBetween('orders.entry_date', [$dateFrom, $dateTo]);
 
         if ($speciesId) {
-            $query->where('articles.species_id', $speciesId);
+            $queryCurrent->where('articles.species_id', $speciesId);
         }
 
-        $totalQuantity = $query->sum('boxes.net_weight');
+        $totalQuantity = $queryCurrent->sum('boxes.net_weight');
+
+        // Consulta para rango anterior
+        $queryPrev = DB::table('orders')
+            ->join('pallets', 'pallets.order_id', '=', 'orders.id')
+            ->join('pallet_boxes', 'pallet_boxes.pallet_id', '=', 'pallets.id')
+            ->join('boxes', 'boxes.id', '=', 'pallet_boxes.box_id')
+            ->join('articles', 'articles.id', '=', 'boxes.article_id')
+            ->whereBetween('orders.entry_date', [$dateFromPrev, $dateToPrev]);
+
+        if ($speciesId) {
+            $queryPrev->where('articles.species_id', $speciesId);
+        }
+
+        $totalQuantityPrev = $queryPrev->sum('boxes.net_weight');
+
+        // Calcular cambio porcentual (manejo divide por cero)
+        if ($totalQuantityPrev == 0) {
+            $percentageChange = null; // O 100%, o lo que estimes mejor para casos sin dato previo
+        } else {
+            $percentageChange = (($totalQuantity - $totalQuantityPrev) / $totalQuantityPrev) * 100;
+        }
 
         return response()->json([
-            'totalQuantity' => round($totalQuantity, 2),
+            'value' => round($totalQuantity, 2),
+            'comparisonValue' => round($totalQuantityPrev, 2),
+            'percentageChange' => $percentageChange !== null ? round($percentageChange, 2) : null,
         ]);
     }
+
 
 
 
