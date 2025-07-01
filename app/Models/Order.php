@@ -454,15 +454,25 @@ class Order extends Model
         $plannedProductDetails = $this->plannedProductDetails;
 
         $details = [];
-        foreach ($productionProductDetails as $productionProductDetail) {
 
+        foreach ($productionProductDetails as $productionProductDetail) {
             $product = $productionProductDetail['product'];
             $productKey = $product['id'];
-            $details[$productKey]['product'] = $product;
+
+            // Añadimos species_id si existe la relación
+            $speciesId = $product['species_id'] ?? null;
+
+            $details[$productKey]['product'] = [
+                'id' => $product['id'],
+                'name' => $product['name'],
+                'a3erpCode' => $product['a3erpCode'],
+                'facilcomCode' => $product['facilcomCode'],
+                'species_id' => $speciesId,
+            ];
+
             $details[$productKey]['boxes'] = $productionProductDetail['boxes'];
             $details[$productKey]['netWeight'] = $productionProductDetail['netWeight'];
 
-            /* buscar este producto en plannedProductDetails*/
             $plannedProductDetail = $plannedProductDetails->firstWhere('product_id', $product['id']);
             if ($plannedProductDetail) {
                 $details[$productKey]['unitPrice'] = $plannedProductDetail->unit_price;
@@ -471,17 +481,15 @@ class Order extends Model
                 $details[$productKey]['total'] = $details[$productKey]['subtotal'] + ($details[$productKey]['subtotal'] * $details[$productKey]['tax']->rate / 100);
             } else {
                 $details[$productKey]['unitPrice'] = 0;
-                $details[$productKey]['tax']['rate'] = 0;
+                $details[$productKey]['tax'] = ['rate' => 0];
                 $details[$productKey]['subtotal'] = 0;
                 $details[$productKey]['total'] = 0;
             }
-
-
         }
-
 
         return array_values($details);
     }
+
 
     /* Subtotal Atribute */
     public function getSubtotalAmountAttribute()
@@ -502,7 +510,7 @@ class Order extends Model
     }
 
 
-    
+
 
 
 
