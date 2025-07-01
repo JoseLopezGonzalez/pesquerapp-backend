@@ -315,6 +315,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('/countries/options', [CountryController::class, 'options']);
             Route::get('/payment-terms/options', [V2PaymentTermController::class, 'options']);
 
+            Route::get('v2/orders/ranking', [V2OrderController::class, 'orderRanking']);
+
             /* Controladores Genericos */
             Route::apiResource('orders', V2OrderController::class);
             Route::apiResource('order-planned-product-details', OrderPlannedProductDetailController::class);
@@ -362,7 +364,6 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('labels/options', [LabelController::class, 'options'])->name('labels.options');
             Route::apiResource('labels', LabelController::class);
 
-            Route::get('v2/orders/ranking', [V2OrderController::class, 'orderRanking']);
 
             /* order incidents */
             Route::get('orders/{orderId}/incident', [IncidentController::class, 'show']);
