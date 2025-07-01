@@ -426,37 +426,48 @@ class OrderController extends Controller
         $dateTo = $validated['dateTo'] . ' 23:59:59';
         $speciesId = $validated['speciesId'] ?? null;
 
-        $query = DB::table('orders')
-            ->join('order_planned_product_details as lines', 'orders.id', '=', 'lines.order_id')
-            ->join('products', 'lines.product_id', '=', 'products.id')
-            ->join('customers', 'orders.customer_id', '=', 'customers.id')
-            ->leftJoin('countries', 'customers.country_id', '=', 'countries.id')
-            ->whereBetween('orders.entry_date', [$dateFrom, $dateTo]);
+        $orders = Order::with(['customer.country', 'pallets.boxes.box.product.species'])
+            ->whereBetween('entry_date', [$dateFrom, $dateTo])
+            ->get();
 
-        if ($speciesId) {
-            $query->where('products.species_id', $speciesId);
+        $summary = [];
+
+        foreach ($orders as $order) {
+            $products = $order->product_details;
+
+            if ($speciesId) {
+                $products = array_filter($products, fn($p) => $p['product']['species_id'] === (int) $speciesId);
+            }
+
+            $groupName = $groupBy === 'client'
+                ? $order->customer->name
+                : ($order->customer->country->name ?? 'Sin país');
+
+            if (!isset($summary[$groupName])) {
+                $summary[$groupName] = [
+                    'name' => $groupName,
+                    'totalQuantity' => 0,
+                    'totalAmount' => 0,
+                ];
+            }
+
+            foreach ($products as $p) {
+                $summary[$groupName]['totalQuantity'] += $p['netWeight'];
+                $summary[$groupName]['totalAmount'] += $p['total'];
+            }
         }
 
-        $query->selectRaw('
-        ' . ($groupBy === 'client' ? 'customers.name' : 'countries.name') . ' as name,
-        SUM(lines.quantity) as totalQuantity,
-        SUM(lines.quantity * lines.unit_price) as totalAmount
-    ')
-            ->groupBy('name')
-            ->orderBy($valueType, 'desc');
+        $results = collect(array_values($summary))
+            ->sortByDesc($valueType)
+            ->values()
+            ->map(fn($item) => [
+                'name' => $item['name'],
+                'value' => round($item[$valueType], 2),
+            ]);
 
-        $results = $query->get();
-
-        // Formatear al nuevo formato { name, value }
-        $formatted = $results->map(function ($row) use ($valueType) {
-            return [
-                'name' => $row->name,
-                'value' => round($row->{$valueType}, 2),
-            ];
-        });
-
-        return response()->json($formatted);
+        return response()->json($results);
     }
+
 
 
 }
