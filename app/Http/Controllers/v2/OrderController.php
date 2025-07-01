@@ -475,6 +475,47 @@ class OrderController extends Controller
         return response()->json($results);
     }
 
+    public function salesBySalesperson(Request $request)
+    {
+        $validated = Validator::make($request->all(), [
+            'dateFrom' => 'required|date',
+            'dateTo' => 'required|date',
+        ])->validate();
+
+        $dateFrom = $validated['dateFrom'] . ' 00:00:00';
+        $dateTo = $validated['dateTo'] . ' 23:59:59';
+
+        $orders = Order::with(['salesperson', 'pallets.boxes.box'])
+            ->whereBetween('entry_date', [$dateFrom, $dateTo])
+            ->get();
+
+        $summary = [];
+
+        foreach ($orders as $order) {
+            $salespersonName = $order->salesperson->name ?? 'Sin comercial';
+
+            if (!isset($summary[$salespersonName])) {
+                $summary[$salespersonName] = 0;
+            }
+
+            foreach ($order->pallets as $pallet) {
+                foreach ($pallet->boxes as $box) {
+                    $summary[$salespersonName] += $box->netWeight;
+                }
+            }
+        }
+
+        $data = collect($summary)->map(function ($quantity, $name) {
+            return [
+                'name' => $name,
+                'quantity' => round($quantity, 2),
+            ];
+        })->values();
+
+        return response()->json($data);
+    }
+
+
 
 
 
