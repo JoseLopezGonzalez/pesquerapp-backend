@@ -408,4 +408,47 @@ class OrderController extends Controller
         $order->save();
         return new OrderDetailsResource($order);
     }
+
+
+    public function orderRanking(Request $request)
+    {
+        $validated = Validator::make($request->all(), [
+            'groupBy' => 'required|in:client,country',
+            'orderBy' => 'required|in:totalAmount,totalQuantity',
+            'dateFrom' => 'required|date',
+            'dateTo' => 'required|date',
+            'speciesId' => 'nullable|integer|exists:species,id',
+        ])->validate();
+
+        $groupBy = $validated['groupBy'];
+        $orderBy = $validated['orderBy'];
+        $dateFrom = $validated['dateFrom'] . ' 00:00:00';
+        $dateTo = $validated['dateTo'] . ' 23:59:59';
+        $speciesId = $validated['speciesId'] ?? null;
+
+        // Subconsulta para sumar cantidades e importes por pedido
+        $query = DB::table('orders')
+            ->join('order_planned_product_details as lines', 'orders.id', '=', 'lines.order_id')
+            ->join('products', 'lines.product_id', '=', 'products.id')
+            ->join('customers', 'orders.customer_id', '=', 'customers.id')
+            ->leftJoin('countries', 'customers.country_id', '=', 'countries.id')
+            ->whereBetween('orders.entry_date', [$dateFrom, $dateTo]);
+
+        if ($speciesId) {
+            $query->where('products.species_id', $speciesId);
+        }
+
+        $query->selectRaw('
+        ' . ($groupBy === 'client' ? 'customers.name' : 'countries.name') . ' as name,
+        SUM(lines.quantity) as totalQuantity,
+        SUM(lines.quantity * lines.unit_price) as totalAmount
+    ')
+            ->groupBy('name')
+            ->orderBy($orderBy, 'desc');
+
+        $results = $query->get();
+
+        return response()->json($results);
+    }
+
 }

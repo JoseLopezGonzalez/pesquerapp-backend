@@ -362,6 +362,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('labels/options', [LabelController::class, 'options'])->name('labels.options');
             Route::apiResource('labels', LabelController::class);
 
+            Route::get('v2/orders/ranking', [V2OrderController::class, 'orderRanking']);
+
             /* order incidents */
             Route::get('orders/{orderId}/incident', [IncidentController::class, 'show']);
             Route::post('orders/{orderId}/incident', [IncidentController::class, 'store']);
