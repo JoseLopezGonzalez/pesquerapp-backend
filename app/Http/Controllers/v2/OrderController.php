@@ -539,7 +539,7 @@ class OrderController extends Controller
             $query->where('products.species_id', $speciesId);
         }
 
-        $totalQuantity = $query->sum('boxes.netWeight');
+        $totalQuantity = $query->sum('boxes.net_weight');
 
         return response()->json([
             'totalQuantity' => round($totalQuantity, 2),
