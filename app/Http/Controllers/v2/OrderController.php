@@ -439,6 +439,11 @@ class OrderController extends Controller
                 $products = array_filter($products, fn($p) => $p['product']['species_id'] === (int) $speciesId);
             }
 
+            // ❗ Ignorar este pedido si no tiene productos tras el filtro
+            if (empty($products)) {
+                continue;
+            }
+
             $groupName = $groupBy === 'client'
                 ? $order->customer->name
                 : ($order->customer->country->name ?? 'Sin país');
@@ -467,6 +472,7 @@ class OrderController extends Controller
 
         return response()->json($results);
     }
+
 
 
 
