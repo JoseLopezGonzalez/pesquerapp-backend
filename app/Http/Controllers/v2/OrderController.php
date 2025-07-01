@@ -515,7 +515,7 @@ class OrderController extends Controller
         return response()->json($data);
     }
 
-
+    /* Ojo, calcula la comparacion mismo rango de fechas pero un año atrás */
     public function totalQuantity(Request $request)
     {
         $validated = Validator::make($request->all(), [
@@ -524,34 +524,61 @@ class OrderController extends Controller
             'speciesId' => 'nullable|integer|exists:species,id',
         ])->validate();
 
-        $dateFrom = $validated['dateFrom'] . ' 00:00:00';
-        $dateTo = $validated['dateTo'] . ' 23:59:59';
+        $dateFrom = Carbon::parse($validated['dateFrom'])->startOfDay();
+        $dateTo = Carbon::parse($validated['dateTo'])->endOfDay();
         $speciesId = $validated['speciesId'] ?? null;
 
-        $orders = Order::with(['pallets.boxes.box.product'])
+        // Rango actual
+        $ordersCurrent = Order::with(['pallets.boxes.box.product'])
             ->whereBetween('entry_date', [$dateFrom, $dateTo])
             ->get();
 
-        $totalQuantity = 0;
+        $totalCurrent = 0;
 
-        foreach ($orders as $order) {
+        foreach ($ordersCurrent as $order) {
             foreach ($order->pallets as $pallet) {
                 foreach ($pallet->boxes as $box) {
                     $product = $box->box->product;
-
-                    if ($speciesId && $product->species_id !== $speciesId) {
+                    if ($speciesId && $product->species_id !== $speciesId)
                         continue;
-                    }
-
-                    $totalQuantity += $box->netWeight;
+                    $totalCurrent += $box->netWeight;
                 }
             }
         }
 
+        // Mismo rango un año atrás
+        $previousFrom = $dateFrom->copy()->subYear();
+        $previousTo = $dateTo->copy()->subYear();
+
+        $ordersPrevious = Order::with(['pallets.boxes.box.product'])
+            ->whereBetween('entry_date', [$previousFrom, $previousTo])
+            ->get();
+
+        $totalPrevious = 0;
+
+        foreach ($ordersPrevious as $order) {
+            foreach ($order->pallets as $pallet) {
+                foreach ($pallet->boxes as $box) {
+                    $product = $box->box->product;
+                    if ($speciesId && $product->species_id !== $speciesId)
+                        continue;
+                    $totalPrevious += $box->netWeight;
+                }
+            }
+        }
+
+        $percentageChange = null;
+        if ($totalPrevious > 0) {
+            $percentageChange = round((($totalCurrent - $totalPrevious) / $totalPrevious) * 100, 2);
+        }
+
         return response()->json([
-            'totalQuantity' => round($totalQuantity, 2),
+            'value' => round($totalCurrent, 2),
+            'comparisonValue' => round($totalPrevious, 2),
+            'percentageChange' => $percentageChange,
         ]);
     }
+
 
 
 
