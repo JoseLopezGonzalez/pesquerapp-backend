@@ -414,19 +414,18 @@ class OrderController extends Controller
     {
         $validated = Validator::make($request->all(), [
             'groupBy' => 'required|in:client,country',
-            'orderBy' => 'required|in:totalAmount,totalQuantity',
+            'valueType' => 'required|in:totalAmount,totalQuantity',
             'dateFrom' => 'required|date',
             'dateTo' => 'required|date',
             'speciesId' => 'nullable|integer|exists:species,id',
         ])->validate();
 
         $groupBy = $validated['groupBy'];
-        $orderBy = $validated['orderBy'];
+        $valueType = $validated['valueType'];
         $dateFrom = $validated['dateFrom'] . ' 00:00:00';
         $dateTo = $validated['dateTo'] . ' 23:59:59';
         $speciesId = $validated['speciesId'] ?? null;
 
-        // Subconsulta para sumar cantidades e importes por pedido
         $query = DB::table('orders')
             ->join('order_planned_product_details as lines', 'orders.id', '=', 'lines.order_id')
             ->join('products', 'lines.product_id', '=', 'products.id')
@@ -444,11 +443,20 @@ class OrderController extends Controller
         SUM(lines.quantity * lines.unit_price) as totalAmount
     ')
             ->groupBy('name')
-            ->orderBy($orderBy, 'desc');
+            ->orderBy($valueType, 'desc');
 
         $results = $query->get();
 
-        return response()->json($results);
+        // Formatear al nuevo formato { name, value }
+        $formatted = $results->map(function ($row) use ($valueType) {
+            return [
+                'name' => $row->name,
+                'value' => round($row->{$valueType}, 2),
+            ];
+        });
+
+        return response()->json($formatted);
     }
+
 
 }
