@@ -230,5 +230,51 @@ class StoreController extends Controller
         return response()->json($speciesInventory);
     }
 
+    public function totalStockByProducts()
+    {
+        $inventory = \App\Models\StoredPallet::all();
+        $products = \App\Models\Product::with('article')->get();
+
+        $productsInventory = [];
+
+        foreach ($products as $product) {
+            $totalNetWeight = 0;
+
+            foreach ($inventory as $storedPallet) {
+                foreach ($storedPallet->pallet->boxes as $palletBox) {
+                    if ($palletBox->box->product->id == $product->id) {
+                        $totalNetWeight += $palletBox->box->net_weight;
+                    }
+                }
+            }
+
+            if ($totalNetWeight == 0) {
+                continue;
+            }
+
+            $productsInventory[] = [
+                'id' => $product->id,
+                'name' => $product->article->name,
+                'total_kg' => round($totalNetWeight, 2),
+            ];
+        }
+
+        // Calcular total global
+        $totalNetWeight = array_sum(array_column($productsInventory, 'total_kg'));
+
+        // Añadir porcentajes
+        foreach ($productsInventory as &$productInventory) {
+            $productInventory['percentage'] = round(($productInventory['total_kg'] / $totalNetWeight) * 100, 2);
+        }
+
+        // Ordenar descendente por total_kg
+        usort($productsInventory, function ($a, $b) {
+            return $b['total_kg'] <=> $a['total_kg'];
+        });
+
+        return response()->json($productsInventory);
+    }
+
+
 
 }
