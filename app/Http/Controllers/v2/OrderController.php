@@ -732,13 +732,14 @@ class OrderController extends Controller
             ->map(function ($group, $name) {
                 return [
                     'name' => $name,
-                    'netWeight' => $group->sum('net_weight'),
+                    'netWeight' => $group->sum(fn($order) => $order->totalNetWeight ?? 0),
                 ];
             })
             ->values();
 
         return response()->json($result);
     }
+
 
 
 
