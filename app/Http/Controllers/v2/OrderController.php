@@ -658,28 +658,27 @@ class OrderController extends Controller
         $speciesId = $validated['speciesId'] ?? null;
         $valueType = $validated['valueType']; // 'amount' o 'quantity'
 
-        // Cargamos los pedidos filtrando por fecha y especie real si se indica
-        $orders = Order::with('pallets.boxes.box.product.species') // necesario para acceder a species
+        // Cargar pedidos con relaciones profundas necesarias
+        $orders = Order::with('pallets.boxes.box.product.species')
             ->whereBetween('entry_date', [$dateFrom, $dateTo])
             ->get();
 
         $grouped = [];
 
         foreach ($orders as $order) {
-            $entryDate = optional($order->entry_date)->format('Y-m-d');
+            // Aseguramos que entry_date es válida
+            $entryDate = $order->entry_date ? date('Y-m-d', strtotime($order->entry_date)) : null;
             if (!$entryDate)
                 continue;
 
-            // Si se filtra por especie, ignorar pedidos sin coincidencia
+            // Filtrado por especie si se solicita
             if ($speciesId) {
                 $hasSpecies = false;
+
                 foreach ($order->pallets as $pallet) {
                     foreach ($pallet->boxes as $box) {
-                        if (
-                            $box->box &&
-                            $box->box->product &&
-                            $box->box->product->species_id === $speciesId
-                        ) {
+                        $product = optional(optional($box->box)->product);
+                        if ($product && $product->species_id === $speciesId) {
                             $hasSpecies = true;
                             break 2;
                         }
@@ -690,6 +689,7 @@ class OrderController extends Controller
                     continue;
             }
 
+            // Agrupar por fecha
             if (!isset($grouped[$entryDate])) {
                 $grouped[$entryDate] = [
                     'date' => $entryDate,
@@ -698,8 +698,8 @@ class OrderController extends Controller
                 ];
             }
 
-            $grouped[$entryDate]['amount'] += $order->totalAmount ?? 0;
-            $grouped[$entryDate]['quantity'] += $order->totalNetWeight ?? 0;
+            $grouped[$entryDate]['amount'] += floatval($order->totalAmount);
+            $grouped[$entryDate]['quantity'] += floatval($order->totalNetWeight);
         }
 
         $result = collect($grouped)
