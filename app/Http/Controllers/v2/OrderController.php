@@ -651,12 +651,14 @@ class OrderController extends Controller
             'dateTo' => 'required|date',
             'speciesId' => 'nullable|integer|exists:species,id',
             'valueType' => 'required|in:amount,quantity',
+            'groupBy' => 'nullable|in:day,week,month',
         ])->validate();
 
         $dateFrom = $validated['dateFrom'] . ' 00:00:00';
         $dateTo = $validated['dateTo'] . ' 23:59:59';
         $speciesId = $validated['speciesId'] ?? null;
         $valueType = $validated['valueType'];
+        $groupBy = $validated['groupBy'] ?? 'day';
 
         $orders = Order::with('pallets.boxes.box.product.species')
             ->whereBetween('entry_date', [$dateFrom, $dateTo])
@@ -665,16 +667,27 @@ class OrderController extends Controller
         $grouped = [];
 
         foreach ($orders as $order) {
-            $entryDate = $order->entry_date ? date('Y-m-d', strtotime($order->entry_date)) : null;
-            if (!$entryDate)
+            if (!$order->entry_date)
                 continue;
 
-            // Filtrar por especie usando species_list
-            if ($speciesId) {
-                $hasSpecies = collect($order->species_list)->contains('id', $speciesId);
-                if (!$hasSpecies) {
-                    continue;
-                }
+            $date = \Carbon\Carbon::parse($order->entry_date);
+
+            switch ($groupBy) {
+                case 'week':
+                    $entryDate = $date->startOfWeek()->format('Y-\WW'); // Ej: 2025-W27
+                    break;
+                case 'month':
+                    $entryDate = $date->format('Y-m'); // Ej: 2025-07
+                    break;
+                case 'day':
+                default:
+                    $entryDate = $date->format('Y-m-d'); // Ej: 2025-07-02
+                    break;
+            }
+
+            // Filtrar por especie usando el atributo calculado
+            if ($speciesId && !collect($order->species_list)->contains('id', $speciesId)) {
+                continue;
             }
 
             if (!isset($grouped[$entryDate])) {
@@ -699,6 +712,7 @@ class OrderController extends Controller
 
         return response()->json($result);
     }
+
 
 
 
