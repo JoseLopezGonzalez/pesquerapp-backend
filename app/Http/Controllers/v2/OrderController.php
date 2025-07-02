@@ -656,55 +656,63 @@ class OrderController extends Controller
         $dateFrom = $validated['dateFrom'] . ' 00:00:00';
         $dateTo = $validated['dateTo'] . ' 23:59:59';
         $speciesId = $validated['speciesId'] ?? null;
-        $valueType = $validated['valueType'];
+        $valueType = $validated['valueType']; // 'amount' o 'quantity'
 
-        $orders = Order::with(['pallets.boxes.box.article.species'])
+        // Cargamos los pedidos filtrando por fecha y especie real si se indica
+        $orders = Order::with('pallets.boxes.box.product.species') // necesario para acceder a species
             ->whereBetween('entry_date', [$dateFrom, $dateTo])
             ->get();
 
         $grouped = [];
 
         foreach ($orders as $order) {
-            foreach ($order->pallets as $pallet) {
-                foreach ($pallet->boxes as $box) {
-                    if (!$box->box || !$box->box->article) {
-                        continue; // Protección contra nulos
+            $entryDate = optional($order->entry_date)->format('Y-m-d');
+            if (!$entryDate)
+                continue;
+
+            // Si se filtra por especie, ignorar pedidos sin coincidencia
+            if ($speciesId) {
+                $hasSpecies = false;
+                foreach ($order->pallets as $pallet) {
+                    foreach ($pallet->boxes as $box) {
+                        if (
+                            $box->box &&
+                            $box->box->product &&
+                            $box->box->product->species_id === $speciesId
+                        ) {
+                            $hasSpecies = true;
+                            break 2;
+                        }
                     }
-
-                    $article = $box->box->article;
-
-                    if ($speciesId && $article->species_id !== $speciesId) {
-                        continue;
-                    }
-
-                    $day = date('Y-m-d', strtotime($order->entry_date));
-
-                    if (!isset($grouped[$day])) {
-                        $grouped[$day] = [
-                            'date' => $day,
-                            'amount' => 0,
-                            'quantity' => 0,
-                        ];
-                    }
-
-                    $grouped[$day]['quantity'] += $box->netWeight;
-                    $grouped[$day]['amount'] += $box->netWeight * ($article->price_per_kg ?? 0);
                 }
+
+                if (!$hasSpecies)
+                    continue;
             }
+
+            if (!isset($grouped[$entryDate])) {
+                $grouped[$entryDate] = [
+                    'date' => $entryDate,
+                    'amount' => 0,
+                    'quantity' => 0,
+                ];
+            }
+
+            $grouped[$entryDate]['amount'] += $order->totalAmount ?? 0;
+            $grouped[$entryDate]['quantity'] += $order->totalNetWeight ?? 0;
         }
 
         $result = collect($grouped)
             ->sortKeys()
-            ->map(function ($item) use ($valueType) {
-                return [
-                    'date' => $item['date'],
-                    'value' => round($item[$valueType], 2),
-                ];
-            })
+            ->map(fn($item) => [
+                'date' => $item['date'],
+                'value' => round($item[$valueType], 2),
+            ])
             ->values();
 
         return response()->json($result);
     }
+
 
 
 
