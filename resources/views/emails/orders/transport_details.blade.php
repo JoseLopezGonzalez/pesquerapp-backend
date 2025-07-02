@@ -1,6 +1,5 @@
 <x-mail::message>
 
-
     # {{ $order->transport->name }}
 
     ## &nbsp;
@@ -39,9 +38,9 @@
     Por favor, revisen los documentos adjuntos para aseguraros que todos los detalles son correctos y que tienen todo lo
     necesario.
 
-
-    *Si encuentran alguna discrepancia o necesitan más información, no duden en contactarnos a [{{ config('company.contact.email_orders') }}](mailto:{{ config('company.contact.email_orders') }}) ({{ config('company.contact.phone_orders') }})*
-
+    *Si encuentran alguna discrepancia o necesitan más información, no duden en contactarnos a
+    [{{ config('company.contact.email_orders') }}](mailto:{{ config('company.contact.email_orders') }})
+    ({{ config('company.contact.phone_orders') }})*
 
     Saludos.
 </x-mail::message>
