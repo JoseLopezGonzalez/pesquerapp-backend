@@ -46,20 +46,23 @@ class Product extends Model
 
     public function toArrayAssoc()
     {
-        return array_merge($this->article->toArrayAssoc(), [
-            'species' => $this->species->toArrayAssoc(),
-            'captureZone' => $this->captureZone->toArrayAssoc(),
-            'articleGtin' => $this->article_gtin,
-            'boxGtin' => $this->box_gtin,
-            'palletGtin' => $this->pallet_gtin,
-            'fixedWeight' => $this->fixed_weight,
-            'name' => $this->name,
-            'id' => $this->id,
-            'a3erpCode' => $this->a3erp_code,
-            'facilcomCode' => $this->facil_com_code,
-        ]);
-
+        return array_merge(
+            optional($this->article)->toArrayAssoc() ?? [],
+            [
+                'species' => optional($this->species)->toArrayAssoc() ?? [],
+                'captureZone' => optional($this->captureZone)->toArrayAssoc() ?? [],
+                'articleGtin' => $this->article_gtin,
+                'boxGtin' => $this->box_gtin,
+                'palletGtin' => $this->pallet_gtin,
+                'fixedWeight' => $this->fixed_weight,
+                'name' => $this->name,
+                'id' => $this->id,
+                'a3erpCode' => $this->a3erp_code,
+                'facilcomCode' => $this->facil_com_code,
+            ]
+        );
     }
+
 
     /* name attribute */
     public function getNameAttribute()
