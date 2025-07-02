@@ -327,6 +327,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('orders/ranking', [V2OrderController::class, 'orderRanking']);
             /* orders/sales-by-salesperson */
             Route::get('orders/sales-by-salesperson', [V2OrderController::class, 'salesBySalesperson']);
+            /* salesChartData */
+            Route::get('orders/sales-chart-data', [V2OrderController::class, 'salesChartData']);
 
             /* Controladores Genericos */
             Route::apiResource('orders', V2OrderController::class);

@@ -644,6 +644,65 @@ class OrderController extends Controller
         ]);
     }
 
+    public function salesChartData(Request $request)
+    {
+        $validated = Validator::make($request->all(), [
+            'dateFrom' => 'required|date',
+            'dateTo' => 'required|date',
+            'speciesId' => 'nullable|integer|exists:species,id',
+            'valueType' => 'required|in:amount,quantity',
+        ])->validate();
+
+        $dateFrom = $validated['dateFrom'] . ' 00:00:00';
+        $dateTo = $validated['dateTo'] . ' 23:59:59';
+        $speciesId = $validated['speciesId'] ?? null;
+        $valueType = $validated['valueType'];
+
+        $orders = Order::with(['pallets.boxes.box.article.species'])
+            ->whereBetween('entry_date', [$dateFrom, $dateTo])
+            ->get();
+
+        $grouped = [];
+
+        foreach ($orders as $order) {
+            foreach ($order->pallets as $pallet) {
+                foreach ($pallet->boxes as $box) {
+                    $article = $box->box->article;
+
+                    if ($speciesId && $article->species_id !== $speciesId) {
+                        continue;
+                    }
+
+                    $day = date('Y-m-d', strtotime($order->entry_date));
+
+                    if (!isset($grouped[$day])) {
+                        $grouped[$day] = [
+                            'date' => $day,
+                            'amount' => 0,
+                            'quantity' => 0,
+                        ];
+                    }
+
+                    $grouped[$day]['quantity'] += $box->netWeight;
+                    $grouped[$day]['amount'] += $box->netWeight * ($article->price_per_kg ?? 0); // fallback si no hay precio
+                }
+            }
+        }
+
+        $result = collect($grouped)
+            ->sortKeys()
+            ->map(function ($item) use ($valueType) {
+                return [
+                    'date' => $item['date'],
+                    'value' => round($item[$valueType], 2),
+                ];
+            })
+            ->values();
+
+        return response()->json($result);
+    }
+
+
 
 
 
