@@ -316,6 +316,9 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('/payment-terms/options', [V2PaymentTermController::class, 'options']);
             /* stores/total-stock */
             Route::get('stores/total-stock', [V2StoreController::class, 'totalStock']);
+            /* stores/total-stock-by-species */
+            Route::get('stores/total-stock-by-species', [V2StoreController::class, 'totalStockBySpecies']);
+            /* stores/total-stock-by-products */
             Route::get('orders/total-quantity', [V2OrderController::class, 'totalQuantity']);
             /* order total amount */
             Route::get('orders/total-amount', [V2OrderController::class, 'totalAmount']);

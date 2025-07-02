@@ -168,7 +168,7 @@ class StoreController extends Controller
         return response()->json($store);
     }
 
-     public function totalStock()
+    public function totalStock()
     {
         $totalStock = DB::table('pallets')
             ->join('pallet_boxes', 'pallet_boxes.pallet_id', '=', 'pallets.id')
@@ -180,4 +180,47 @@ class StoreController extends Controller
             'totalStock' => round($totalStock, 2),
         ]);
     }
+
+
+
+    public function totalStockBySpecies()
+    {
+        // Obtener todos los StoredPallets con la relación anidada hasta species
+        $storedPallets = \App\Models\StoredPallet::with('pallet.boxes.article.species')->get();
+
+        $speciesTotals = [];
+
+        foreach ($storedPallets as $storedPallet) {
+            foreach ($storedPallet->pallet->boxes as $palletBox) {
+                $species = $palletBox->article->species;
+                if (!$species) {
+                    continue; // Saltar si la caja no tiene especie
+                }
+
+                $speciesId = $species->id;
+                $speciesName = $species->name;
+
+                if (!isset($speciesTotals[$speciesId])) {
+                    $speciesTotals[$speciesId] = [
+                        'id' => $speciesId,
+                        'name' => $speciesName,
+                        'total_kg' => 0,
+                    ];
+                }
+
+                $speciesTotals[$speciesId]['total_kg'] += $palletBox->net_weight;
+            }
+        }
+
+        // Convertir a array, eliminar especies sin stock
+        $result = array_filter(array_values($speciesTotals), fn($item) => $item['total_kg'] > 0);
+
+        // Ordenar por mayor peso
+        usort($result, fn($a, $b) => $b['total_kg'] <=> $a['total_kg']);
+
+        return response()->json([
+            'data' => $result,
+        ]);
+    }
+
 }
