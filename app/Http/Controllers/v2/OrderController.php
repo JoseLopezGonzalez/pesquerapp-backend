@@ -713,6 +713,34 @@ class OrderController extends Controller
         return response()->json($result);
     }
 
+    public function transportChartData(Request $request)
+    {
+        $request->validate([
+            'dateFrom' => 'required|date',
+            'dateTo' => 'required|date|after_or_equal:dateFrom',
+        ]);
+
+        $from = $request->input('dateFrom');
+        $to = $request->input('dateTo');
+
+        $orders = Order::with('transport')
+            ->whereBetween('load_date', [$from, $to])
+            ->whereNotNull('transport_id')
+            ->get();
+
+        $result = $orders->groupBy(fn($order) => optional($order->transport)->name ?? 'Sin transportista')
+            ->map(function ($group, $name) {
+                return [
+                    'name' => $name,
+                    'netWeight' => $group->sum('net_weight'),
+                ];
+            })
+            ->values();
+
+        return response()->json($result);
+    }
+
+
 
 
 
