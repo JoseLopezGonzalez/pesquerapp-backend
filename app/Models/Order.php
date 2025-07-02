@@ -511,6 +511,29 @@ class Order extends Model
     }
 
 
+    public function getSpeciesListAttribute()
+    {
+        $species = collect();
+
+        $this->pallets->each(function ($pallet) use (&$species) {
+            $pallet->boxes->each(function ($box) use (&$species) {
+                $product = $box->box->product;
+                if ($product && $product->species) {
+                    $species->put($product->species->id, [
+                        'id' => $product->species->id,
+                        'name' => $product->species->name,
+                        'scientificName' => $product->species->scientific_name,
+                        'fao' => $product->species->fao,
+                    ]);
+                }
+            });
+        });
+
+        return $species->values();
+    }
+
+
+
 
 
 

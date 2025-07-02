@@ -656,9 +656,8 @@ class OrderController extends Controller
         $dateFrom = $validated['dateFrom'] . ' 00:00:00';
         $dateTo = $validated['dateTo'] . ' 23:59:59';
         $speciesId = $validated['speciesId'] ?? null;
-        $valueType = $validated['valueType']; // 'amount' o 'quantity'
+        $valueType = $validated['valueType'];
 
-        // Cargar pedidos con relaciones profundas necesarias
         $orders = Order::with('pallets.boxes.box.product.species')
             ->whereBetween('entry_date', [$dateFrom, $dateTo])
             ->get();
@@ -666,30 +665,18 @@ class OrderController extends Controller
         $grouped = [];
 
         foreach ($orders as $order) {
-            // Aseguramos que entry_date es válida
             $entryDate = $order->entry_date ? date('Y-m-d', strtotime($order->entry_date)) : null;
             if (!$entryDate)
                 continue;
 
-            // Filtrado por especie si se solicita
+            // Filtrar por especie usando species_list
             if ($speciesId) {
-                $hasSpecies = false;
-
-                foreach ($order->pallets as $pallet) {
-                    foreach ($pallet->boxes as $box) {
-                        $product = optional(optional($box->box)->product);
-                        if ($product && $product->species_id === $speciesId) {
-                            $hasSpecies = true;
-                            break 2;
-                        }
-                    }
-                }
-
-                if (!$hasSpecies)
+                $hasSpecies = collect($order->species_list)->contains('id', $speciesId);
+                if (!$hasSpecies) {
                     continue;
+                }
             }
 
-            // Agrupar por fecha
             if (!isset($grouped[$entryDate])) {
                 $grouped[$entryDate] = [
                     'date' => $entryDate,
@@ -712,6 +699,7 @@ class OrderController extends Controller
 
         return response()->json($result);
     }
+
 
 
 
