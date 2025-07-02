@@ -588,45 +588,35 @@ class OrderController extends Controller
         $dateTo = $validated['dateTo'] . ' 23:59:59';
         $speciesId = $validated['speciesId'] ?? null;
 
-        // Fechas para rango anterior (mismo periodo un año atrás)
         $dateFromPrev = date('Y-m-d H:i:s', strtotime($dateFrom . ' -1 year'));
         $dateToPrev = date('Y-m-d H:i:s', strtotime($dateTo . ' -1 year'));
 
-        // Obtener total actual
-        $ordersCurrent = Order::with('plannedProductDetails')
-            ->whereBetween('entry_date', [$dateFrom, $dateTo]);
+        // Consulta helper para sumar importe total
+        $calculateTotal = function ($from, $to) use ($speciesId) {
+            $query = DB::table('orders')
+                ->join('pallets', 'pallets.order_id', '=', 'orders.id')
+                ->join('pallet_boxes', 'pallet_boxes.pallet_id', '=', 'pallets.id')
+                ->join('boxes', 'boxes.id', '=', 'pallet_boxes.box_id')
+                ->join('articles', 'articles.id', '=', 'boxes.article_id')
+                ->join('order_planned_product_details as planned', function ($join) {
+                    $join->on('planned.order_id', '=', 'orders.id');
+                    // Ajustar join para relacionar también con producto correcto (si necesario)
+                    // Ejemplo: ->on('planned.product_id', '=', 'articles.product_id')
+                })
+                ->whereBetween('orders.entry_date', [$from, $to]);
 
-        if ($speciesId) {
-            $ordersCurrent->whereHas('plannedProductDetails.product', function ($query) use ($speciesId) {
-                $query->where('species_id', $speciesId);
-            });
-        }
+            if ($speciesId) {
+                $query->where('articles.species_id', $speciesId);
+            }
 
-        $ordersCurrent = $ordersCurrent->get();
+            // Suma total precio unitario * cantidad de caja o netWeight, según tu definición
+            // Aquí ajusta fórmula según necesidad:
+            return $query->select(DB::raw('SUM(planned.unit_price * boxes.net_weight) as total'))->value('total');
+        };
 
-        $totalAmount = 0;
-        foreach ($ordersCurrent as $order) {
-            $totalAmount += $order->totalAmount; // usa atributo calculado en el modelo
-        }
+        $totalAmount = $calculateTotal($dateFrom, $dateTo) ?? 0;
+        $totalAmountPrev = $calculateTotal($dateFromPrev, $dateToPrev) ?? 0;
 
-        // Obtener total anterior
-        $ordersPrev = Order::with('plannedProductDetails')
-            ->whereBetween('entry_date', [$dateFromPrev, $dateToPrev]);
-
-        if ($speciesId) {
-            $ordersPrev->whereHas('plannedProductDetails.product', function ($query) use ($speciesId) {
-                $query->where('species_id', $speciesId);
-            });
-        }
-
-        $ordersPrev = $ordersPrev->get();
-
-        $totalAmountPrev = 0;
-        foreach ($ordersPrev as $order) {
-            $totalAmountPrev += $order->totalAmount;
-        }
-
-        // Calcular porcentaje cambio
         if ($totalAmountPrev == 0) {
             $percentageChange = null;
         } else {
@@ -639,6 +629,7 @@ class OrderController extends Controller
             'percentageChange' => $percentageChange !== null ? round($percentageChange, 2) : null,
         ]);
     }
+
 
 
 
