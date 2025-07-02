@@ -667,6 +667,10 @@ class OrderController extends Controller
         foreach ($orders as $order) {
             foreach ($order->pallets as $pallet) {
                 foreach ($pallet->boxes as $box) {
+                    if (!$box->box || !$box->box->article) {
+                        continue; // Protección contra nulos
+                    }
+
                     $article = $box->box->article;
 
                     if ($speciesId && $article->species_id !== $speciesId) {
@@ -684,7 +688,7 @@ class OrderController extends Controller
                     }
 
                     $grouped[$day]['quantity'] += $box->netWeight;
-                    $grouped[$day]['amount'] += $box->netWeight * ($article->price_per_kg ?? 0); // fallback si no hay precio
+                    $grouped[$day]['amount'] += $box->netWeight * ($article->price_per_kg ?? 0);
                 }
             }
         }
@@ -701,6 +705,7 @@ class OrderController extends Controller
 
         return response()->json($result);
     }
+
 
 
 
