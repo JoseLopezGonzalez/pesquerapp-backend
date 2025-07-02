@@ -10,6 +10,7 @@ use App\Http\Resources\v1\StoreDetailsResource;
 use App\Http\Resources\v1\StoreResource;
 use App\Http\Resources\v2\StoreDetailsResource as V2StoreDetailsResource;
 use App\Http\Resources\v2\StoreResource as V2StoreResource;
+use Illuminate\Support\Facades\DB;
 
 class StoreController extends Controller
 {
@@ -165,5 +166,18 @@ class StoreController extends Controller
             ->get();
 
         return response()->json($store);
+    }
+
+     public function totalStock()
+    {
+        $totalStock = DB::table('pallets')
+            ->join('pallet_boxes', 'pallet_boxes.pallet_id', '=', 'pallets.id')
+            ->join('boxes', 'boxes.id', '=', 'pallet_boxes.box_id')
+            ->where('pallets.state_id', 2) // solo palets almacenados
+            ->sum('boxes.net_weight');
+
+        return response()->json([
+            'totalStockKg' => round($totalStock, 2),
+        ]);
     }
 }

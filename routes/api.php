@@ -314,7 +314,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('/fishing-gears/options', [FishingGearController::class, 'options']);
             Route::get('/countries/options', [CountryController::class, 'options']);
             Route::get('/payment-terms/options', [V2PaymentTermController::class, 'options']);
-
+            /* stores/total-stock */
+            Route::get('stores/total-stock', [V2StoreController::class, 'totalStock']);
             Route::get('orders/total-quantity', [V2OrderController::class, 'totalQuantity']);
             /* order total amount */
             Route::get('orders/total-amount', [V2OrderController::class, 'totalAmount']);
