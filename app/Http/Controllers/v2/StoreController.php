@@ -185,42 +185,50 @@ class StoreController extends Controller
 
     public function totalStockBySpecies()
     {
-        // Obtener todos los StoredPallets con la relación anidada hasta species
-        $storedPallets = \App\Models\StoredPallet::with('pallet.boxes.article.species')->get();
+        $inventory = \App\Models\StoredPallet::all();
+        $species = \App\Models\Species::all();
+        $speciesInventory = [];
 
-        $speciesTotals = [];
+        foreach ($species as $specie) {
+            $totalNetWeight = 0;
 
-        foreach ($storedPallets as $storedPallet) {
-            foreach ($storedPallet->pallet->boxes as $palletBox) {
-                $species = $palletBox->article->species;
-                if (!$species) {
-                    continue; // Saltar si la caja no tiene especie
+            foreach ($inventory as $storedPallet) {
+                foreach ($storedPallet->pallet->boxes as $palletBox) {
+                    $box = $palletBox->box;
+
+                    // Cuidado: acceder a product->species porque article->species no está bien enlazado
+                    if ($box->product && $box->product->species && $box->product->species->id == $specie->id) {
+                        $totalNetWeight += $box->net_weight;
+                    }
                 }
-
-                $speciesId = $species->id;
-                $speciesName = $species->name;
-
-                if (!isset($speciesTotals[$speciesId])) {
-                    $speciesTotals[$speciesId] = [
-                        'id' => $speciesId,
-                        'name' => $speciesName,
-                        'total_kg' => 0,
-                    ];
-                }
-
-                $speciesTotals[$speciesId]['total_kg'] += $palletBox->net_weight;
             }
+
+            if ($totalNetWeight == 0) {
+                continue;
+            }
+
+            $speciesInventory[] = [
+                'id' => $specie->id,
+                'name' => $specie->name,
+                'total_kg' => round($totalNetWeight, 2),
+            ];
         }
 
-        // Convertir a array, eliminar especies sin stock
-        $result = array_filter(array_values($speciesTotals), fn($item) => $item['total_kg'] > 0);
+        // Calcular total global
+        $totalKg = array_sum(array_column($speciesInventory, 'total_kg'));
 
-        // Ordenar por mayor peso
-        usort($result, fn($a, $b) => $b['total_kg'] <=> $a['total_kg']);
+        // Calcular porcentaje para cada especie
+        foreach ($speciesInventory as &$item) {
+            $item['percentage'] = $totalKg > 0
+                ? round(($item['total_kg'] / $totalKg) * 100, 2)
+                : 0;
+        }
 
-        return response()->json([
-            'data' => $result,
-        ]);
+        // Ordenar por total_kg descendente
+        usort($speciesInventory, fn($a, $b) => $b['total_kg'] <=> $a['total_kg']);
+
+        return response()->json($speciesInventory);
     }
+
 
 }
