@@ -177,7 +177,7 @@ class StoreController extends Controller
             ->sum('boxes.net_weight');
 
         return response()->json([
-            'totalStockKg' => round($totalStock, 2),
+            'totalStock' => round($totalStock, 2),
         ]);
     }
 }
