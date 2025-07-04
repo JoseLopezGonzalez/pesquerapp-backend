@@ -517,47 +517,7 @@ class OrderController extends Controller
     }
 
     /* Ojo, calcula la comparacion mismo rango de fechas pero un año atrás */
-    public function totalQuantity(Request $request)
-    {
-        $validated = Validator::make($request->all(), [
-            'dateFrom' => 'required|date',
-            'dateTo' => 'required|date',
-            'speciesId' => 'nullable|integer|exists:species,id',
-        ])->validate();
 
-        $dateFrom = $validated['dateFrom'] . ' 00:00:00';
-        $dateTo = $validated['dateTo'] . ' 23:59:59';
-        $speciesId = $validated['speciesId'] ?? null;
-
-        // Periodo anterior (mismo rango pero 1 año antes)
-        $dateFromPrev = date('Y-m-d H:i:s', strtotime($dateFrom . ' -1 year'));
-        $dateToPrev = date('Y-m-d H:i:s', strtotime($dateTo . ' -1 year'));
-
-        // Total actual
-        $totalQuantity = Order::query()
-            ->withArticleJoins()
-            ->withSpecies($speciesId)
-            ->betweenLoadDates($dateFrom, $dateTo)
-            ->sum('boxes.net_weight');
-
-        // Total anterior
-        $totalQuantityPrev = Order::query()
-            ->withArticleJoins()
-            ->withSpecies($speciesId)
-            ->betweenLoadDates($dateFromPrev, $dateToPrev)
-            ->sum('boxes.net_weight');
-
-        // Variación porcentual
-        $percentageChange = $totalQuantityPrev == 0
-            ? null
-            : (($totalQuantity - $totalQuantityPrev) / $totalQuantityPrev) * 100;
-
-        return response()->json([
-            'value' => round($totalQuantity, 2),
-            'comparisonValue' => round($totalQuantityPrev, 2),
-            'percentageChange' => $percentageChange !== null ? round($percentageChange, 2) : null,
-        ]);
-    }
 
 
 
