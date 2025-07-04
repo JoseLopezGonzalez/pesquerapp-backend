@@ -57,6 +57,7 @@ use Illuminate\Support\Facades\App;
 use App\Http\Controllers\v2\OrderController as V2OrderController;
 use App\Http\Controllers\v2\OrderPlannedProductDetailController;
 use App\Http\Controllers\v2\OrdersReportController;
+use App\Http\Controllers\v2\OrderStatisticsController;
 use App\Http\Controllers\v2\PalletController as V2PalletController;
 use App\Http\Controllers\v2\PaymentTermController as V2PaymentTermController;
 use App\Http\Controllers\v2\ProductController as V2ProductController;
@@ -322,6 +323,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('stores/total-stock-by-species', [V2StoreController::class, 'totalStockBySpecies']);
             /* stores/total-stock-by-products */
             Route::get('orders/total-quantity', [V2OrderController::class, 'totalQuantity']);
+            Route::get('statistics/orders/total-net-weight', [OrderStatisticsController::class, 'totalNetWeightStats']);
+
             /* order total amount */
             Route::get('orders/total-amount', [V2OrderController::class, 'totalAmount']);
             Route::get('orders/ranking', [V2OrderController::class, 'orderRanking']);

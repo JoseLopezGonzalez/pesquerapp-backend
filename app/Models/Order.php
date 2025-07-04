@@ -534,6 +534,43 @@ class Order extends Model
 
 
 
+    /* NUEVO ACTUALIZADO 2025 LA PESQUERAPP--------------------------------------- */
+
+    public function scopeBetweenLoadDates($query, $from, $to)
+    {
+        return $query->whereBetween('load_date', [$from, $to]);
+    }
+
+    // En Order.php
+    public function scopeWithSpecies($query, $speciesId)
+    {
+        if ($speciesId) {
+            $query->where('articles.species_id', $speciesId);
+        }
+
+        return $query;
+    }
+
+    public function scopeWithArticleJoins($query)
+    {
+        return $query
+            ->join('pallets', 'pallets.order_id', '=', 'orders.id')
+            ->join('pallet_boxes', 'pallet_boxes.pallet_id', '=', 'pallets.id')
+            ->join('boxes', 'boxes.id', '=', 'pallet_boxes.box_id')
+            ->join('articles', 'articles.id', '=', 'boxes.article_id');
+    }
+
+    // En Order.php
+    public static function executeNetWeightSum($query): float
+    {
+        return (float) $query->sum('boxes.net_weight');
+    }
+
+
+
+
+
+
 
 
 
