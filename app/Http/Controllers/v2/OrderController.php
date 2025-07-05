@@ -521,73 +521,7 @@ class OrderController extends Controller
 
 
 
-    public function totalAmount(Request $request)
-    {
 
-        ini_set('memory_limit', '512M'); // o '1024M' según necesites
-
-
-        $validated = Validator::make($request->all(), [
-            'dateFrom' => 'required|date',
-            'dateTo' => 'required|date',
-            'speciesId' => 'nullable|integer|exists:species,id',
-        ])->validate();
-
-        $dateFrom = $validated['dateFrom'] . ' 00:00:00';
-        $dateTo = $validated['dateTo'] . ' 23:59:59';
-        $speciesId = $validated['speciesId'] ?? null;
-
-        // Fechas para rango anterior (mismo periodo un año atrás)
-        $dateFromPrev = date('Y-m-d H:i:s', strtotime($dateFrom . ' -1 year'));
-        $dateToPrev = date('Y-m-d H:i:s', strtotime($dateTo . ' -1 year'));
-
-        // Obtener total actual
-        $ordersCurrent = Order::with('plannedProductDetails')
-            ->whereBetween('entry_date', [$dateFrom, $dateTo]);
-
-        if ($speciesId) {
-            $ordersCurrent->whereHas('plannedProductDetails.product', function ($query) use ($speciesId) {
-                $query->where('species_id', $speciesId);
-            });
-        }
-
-        $ordersCurrent = $ordersCurrent->get();
-
-        $totalAmount = 0;
-        foreach ($ordersCurrent as $order) {
-            $totalAmount += $order->totalAmount; // usa atributo calculado en el modelo
-        }
-
-        // Obtener total anterior
-        $ordersPrev = Order::with('plannedProductDetails')
-            ->whereBetween('entry_date', [$dateFromPrev, $dateToPrev]);
-
-        if ($speciesId) {
-            $ordersPrev->whereHas('plannedProductDetails.product', function ($query) use ($speciesId) {
-                $query->where('species_id', $speciesId);
-            });
-        }
-
-        $ordersPrev = $ordersPrev->get();
-
-        $totalAmountPrev = 0;
-        foreach ($ordersPrev as $order) {
-            $totalAmountPrev += $order->totalAmount;
-        }
-
-        // Calcular porcentaje cambio
-        if ($totalAmountPrev == 0) {
-            $percentageChange = null;
-        } else {
-            $percentageChange = (($totalAmount - $totalAmountPrev) / $totalAmountPrev) * 100;
-        }
-
-        return response()->json([
-            'value' => round($totalAmount, 2),
-            'comparisonValue' => round($totalAmountPrev, 2),
-            'percentageChange' => $percentageChange !== null ? round($percentageChange, 2) : null,
-        ]);
-    }
 
     public function salesChartData(Request $request)
     {

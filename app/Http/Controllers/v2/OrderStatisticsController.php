@@ -74,7 +74,7 @@ class OrderStatisticsController extends Controller
      */
     public function totalAmountStats(Request $request)
     {
-        set_time_limit(60); // o 120 si necesitas más tiempo
+        set_time_limit(120); // o 120 si necesitas más tiempo
 
         $validated = $request->validate([
             'dateFrom' => 'required|date',
