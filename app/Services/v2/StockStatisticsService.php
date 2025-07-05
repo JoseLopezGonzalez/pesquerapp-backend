@@ -30,7 +30,7 @@ class StockStatisticsService
             ->count('stored_pallets.store_id');
 
         return [
-            'totalWeight' => round($totalWeight, 2),
+            'totalNetWeight' => round($totalWeight, 2),
             'totalPallets' => $totalPallets,
             'totalBoxes' => $totalBoxes,
             'totalSpecies' => $totalSpecies,
