@@ -66,7 +66,7 @@ class OrderStatisticsService
     }
 
 
-    public static function calculateTotalAmount(string $from, string $to, ?int $speciesId = null): float
+    /* public static function calculateTotalAmount(string $from, string $to, ?int $speciesId = null): float
     {
         return Order::query()
             ->withPlannedProductDetails()
@@ -84,37 +84,59 @@ class OrderStatisticsService
             ->betweenLoadDates($from, $to)
             ->get()
             ->sum(fn($order) => $order->subtotalAmount);
+    } */
+
+    public static function calculateAmountDetails(string $from, string $to, ?int $speciesId = null): array
+    {
+        $orders = Order::query()
+            ->withPlannedProductDetails()
+            ->wherePlannedProductSpecies($speciesId)
+            ->betweenLoadDates($from, $to)
+            ->get();
+
+        $total = 0;
+        $subtotal = 0;
+
+        foreach ($orders as $order) {
+            $total += $order->totalAmount;
+            $subtotal += $order->subtotalAmount;
+        }
+
+        $tax = $total - $subtotal;
+
+        return [
+            'total' => $total,
+            'subtotal' => $subtotal,
+            'tax' => $tax,
+        ];
     }
+
 
 
     public static function getAmountStatsComparedToLastYear(string $dateFrom, string $dateTo, ?int $speciesId = null): array
     {
         $range = self::prepareDateRangeAndPrevious($dateFrom, $dateTo);
 
-        $totalCurrent = self::calculateTotalAmount($range['from'], $range['to'], $speciesId);
-        $subtotalCurrent = self::calculateSubtotalAmount($range['from'], $range['to'], $speciesId);
-        $taxCurrent = $totalCurrent - $subtotalCurrent;
-
-        $totalPrevious = self::calculateTotalAmount($range['fromPrev'], $range['toPrev'], $speciesId);
-        $subtotalPrevious = self::calculateSubtotalAmount($range['fromPrev'], $range['toPrev'], $speciesId);
-        $taxPrevious = $totalPrevious - $subtotalPrevious;
+        $current = self::calculateAmountDetails($range['from'], $range['to'], $speciesId);
+        $previous = self::calculateAmountDetails($range['fromPrev'], $range['toPrev'], $speciesId);
 
         return [
-            'value' => round($totalCurrent, 2),
-            'subtotal' => round($subtotalCurrent, 2),
-            'tax' => round($taxCurrent, 2),
+            'value' => round($current['total'], 2),
+            'subtotal' => round($current['subtotal'], 2),
+            'tax' => round($current['tax'], 2),
 
-            'comparisonValue' => round($totalPrevious, 2),
-            'comparisonSubtotal' => round($subtotalPrevious, 2),
-            'comparisonTax' => round($taxPrevious, 2),
+            'comparisonValue' => round($previous['total'], 2),
+            'comparisonSubtotal' => round($previous['subtotal'], 2),
+            'comparisonTax' => round($previous['tax'], 2),
 
-            'percentageChange' => self::compareTotals($totalCurrent, $totalPrevious) !== null
-                ? round(self::compareTotals($totalCurrent, $totalPrevious), 2)
+            'percentageChange' => self::compareTotals($current['total'], $previous['total']) !== null
+                ? round(self::compareTotals($current['total'], $previous['total']), 2)
                 : null,
 
             'range' => $range,
         ];
     }
+
 
 
 
