@@ -66,6 +66,7 @@ use App\Http\Controllers\v2\RoleController;
 use App\Http\Controllers\v2\SalespersonController as V2SalespersonController;
 use App\Http\Controllers\v2\SessionController;
 use App\Http\Controllers\v2\SpeciesController as V2SpeciesController;
+use App\Http\Controllers\v2\StockStatisticsController;
 use App\Http\Controllers\v2\StoreController as V2StoreController;
 use App\Http\Controllers\v2\SupplierController as V2SupplierController;
 use App\Http\Controllers\v2\TransportController as V2TransportController;
@@ -323,7 +324,7 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('stores/total-stock-by-species', [V2StoreController::class, 'totalStockBySpecies']);
             Route::get('statistics/orders/total-net-weight', [OrderStatisticsController::class, 'totalNetWeightStats']);
             Route::get('statistics/orders/total-amount', [OrderStatisticsController::class, 'totalAmountStats']);
-
+            Route::post('v2/statistics/stock/total', [StockStatisticsController::class, 'totalStockStats'])->name('v2.statistics.stock.total');
 
             /* order total amount */
             Route::get('orders/total-amount', [V2OrderController::class, 'totalAmount']);

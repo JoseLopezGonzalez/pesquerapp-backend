@@ -35,4 +35,15 @@ class StoredPallet extends Model
             'position' => $this->position,
         ]);
     }
+
+
+    /* NUEVO LA PESQUERAPP */
+
+public function scopeStored($query)
+{
+    return $query
+        ->join('pallets', 'pallets.id', '=', 'stored_pallets.pallet_id')
+        ->where('pallets.state_id', 2);
+}
+
 }

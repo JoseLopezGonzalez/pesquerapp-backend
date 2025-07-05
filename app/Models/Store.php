@@ -111,4 +111,10 @@ class Store extends Model
             'totalNetWeight' => $this->totalNetWeight,
         ];
     }
+
+
+
+    
+
+
 }

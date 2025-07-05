@@ -260,5 +260,27 @@ class Pallet extends Model
     }
 
 
+    /* NUEVO LA PESQUERAPP */
+
+    public function scopeStored($query)
+    {
+        return $query->where('state_id', 2);
+    }
+
+    public function scopeJoinBoxes($query)
+    {
+        return $query
+            ->join('pallet_boxes', 'pallet_boxes.pallet_id', '=', 'pallets.id')
+            ->join('boxes', 'boxes.id', '=', 'pallet_boxes.box_id');
+    }
+
+    public function scopeJoinArticles($query)
+    {
+        return $query
+            ->join('pallet_boxes', 'pallet_boxes.pallet_id', '=', 'pallets.id')
+            ->join('boxes', 'boxes.id', '=', 'pallet_boxes.box_id')
+            ->join('articles', 'articles.id', '=', 'boxes.article_id');
+    }
+
 
 }
