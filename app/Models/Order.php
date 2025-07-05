@@ -542,7 +542,8 @@ class Order extends Model
     }
 
     // En Order.php
-    public function scopeWithSpecies($query, $speciesId)
+
+    public function scopeWhereBoxArticleSpecies($query, $speciesId)
     {
         if ($speciesId) {
             $query->where('articles.species_id', $speciesId);
@@ -551,7 +552,8 @@ class Order extends Model
         return $query;
     }
 
-    public function scopeWithArticleJoins($query)
+
+    public function scopeJoinBoxesAndArticles($query)
     {
         return $query
             ->join('pallets', 'pallets.order_id', '=', 'orders.id')
@@ -560,11 +562,32 @@ class Order extends Model
             ->join('articles', 'articles.id', '=', 'boxes.article_id');
     }
 
+    public function scopeWithPlannedProductDetails($query)
+    {
+        return $query->with('plannedProductDetails.product');
+    }
+
+    public function scopeWherePlannedProductSpecies($query, ?int $speciesId)
+    {
+        if ($speciesId) {
+            $query->whereHas('plannedProductDetails.product', function ($q) use ($speciesId) {
+                $q->where('species_id', $speciesId);
+            });
+        }
+
+        return $query;
+    }
+
+
+
     // En Order.php
     public static function executeNetWeightSum($query): float
     {
         return (float) $query->sum('boxes.net_weight');
     }
+
+
+
 
 
 

@@ -26,8 +26,8 @@ class OrderStatisticsService
     public static function calculateTotalNetWeight(string $from, string $to, ?int $speciesId = null): float
     {
         $query = Order::query()
-            ->withArticleJoins()
-            ->withSpecies($speciesId)
+            ->joinBoxesAndArticles()
+            ->whereBoxArticleSpecies($speciesId)
             ->betweenLoadDates($from, $to);
 
         return Order::executeNetWeightSum($query);
@@ -64,6 +64,59 @@ class OrderStatisticsService
             ]
         ];
     }
+
+
+    public static function calculateTotalAmount(string $from, string $to, ?int $speciesId = null): float
+    {
+        return Order::query()
+            ->withPlannedProductDetails()
+            ->wherePlannedProductSpecies($speciesId)
+            ->betweenLoadDates($from, $to)
+            ->get()
+            ->sum(fn($order) => $order->totalAmount);
+    }
+
+    public static function calculateSubtotalAmount(string $from, string $to, ?int $speciesId = null): float
+    {
+        return Order::query()
+            ->withPlannedProductDetails()
+            ->wherePlannedProductSpecies($speciesId)
+            ->betweenLoadDates($from, $to)
+            ->get()
+            ->sum(fn($order) => $order->subtotalAmount);
+    }
+
+
+    public static function getAmountStatsComparedToLastYear(string $dateFrom, string $dateTo, ?int $speciesId = null): array
+    {
+        $range = self::prepareDateRangeAndPrevious($dateFrom, $dateTo);
+
+        $totalCurrent = self::calculateTotalAmount($range['from'], $range['to'], $speciesId);
+        $subtotalCurrent = self::calculateSubtotalAmount($range['from'], $range['to'], $speciesId);
+        $taxCurrent = $totalCurrent - $subtotalCurrent;
+
+        $totalPrevious = self::calculateTotalAmount($range['fromPrev'], $range['toPrev'], $speciesId);
+        $subtotalPrevious = self::calculateSubtotalAmount($range['fromPrev'], $range['toPrev'], $speciesId);
+        $taxPrevious = $totalPrevious - $subtotalPrevious;
+
+        return [
+            'value' => round($totalCurrent, 2),
+            'subtotal' => round($subtotalCurrent, 2),
+            'tax' => round($taxCurrent, 2),
+
+            'comparisonValue' => round($totalPrevious, 2),
+            'comparisonSubtotal' => round($subtotalPrevious, 2),
+            'comparisonTax' => round($taxPrevious, 2),
+
+            'percentageChange' => self::compareTotals($totalCurrent, $totalPrevious) !== null
+                ? round(self::compareTotals($totalCurrent, $totalPrevious), 2)
+                : null,
+
+            'range' => $range,
+        ];
+    }
+
+
 
 
 
