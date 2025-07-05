@@ -274,13 +274,14 @@ class Pallet extends Model
             ->join('boxes', 'boxes.id', '=', 'pallet_boxes.box_id');
     }
 
-    public function scopeJoinArticles($query)
+    public function scopeJoinProducts($query)
     {
         return $query
             ->join('pallet_boxes', 'pallet_boxes.pallet_id', '=', 'pallets.id')
             ->join('boxes', 'boxes.id', '=', 'pallet_boxes.box_id')
-            ->join('articles', 'articles.id', '=', 'boxes.article_id');
+            ->join('products', 'products.id', '=', 'boxes.article_id'); // ahora join correcto
     }
+
 
 
 }

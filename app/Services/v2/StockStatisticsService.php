@@ -21,9 +21,10 @@ class StockStatisticsService
             ->count('pallet_boxes.id');
 
         $totalSpecies = Pallet::stored()
-            ->joinArticles()
-            ->distinct('articles.species_id')
-            ->count('articles.species_id');
+            ->joinProducts()
+            ->distinct('products.species_id')
+            ->count('products.species_id');
+
 
         $totalStores = StoredPallet::stored()
             ->distinct('stored_pallets.store_id')
