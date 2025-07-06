@@ -319,9 +319,6 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             /* totalStockByProducts */
             Route::get('stores/total-stock-by-products', [V2StoreController::class, 'totalStockByProducts']);
             /* stores/total-stock */
-            Route::get('stores/total-stock', [V2StoreController::class, 'totalStock']);
-            /* stores/total-stock-by-species */
-            Route::get('stores/total-stock-by-species', [V2StoreController::class, 'totalStockBySpecies']);
             Route::get('statistics/orders/total-net-weight', [OrderStatisticsController::class, 'totalNetWeightStats']);
             Route::get('statistics/orders/total-amount', [OrderStatisticsController::class, 'totalAmountStats']);
             Route::get('statistics/stock/total', [StockStatisticsController::class, 'totalStockStats'])->name('v2.statistics.stock.total');
@@ -330,9 +327,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             /* orderRankingStats */
             Route::get('statistics/orders/ranking', [OrderStatisticsController::class, 'orderRankingStats'])->name('v2.statistics.orders.ranking');
 
-            /* order total amount */
-            Route::get('orders/total-amount', [V2OrderController::class, 'totalAmount']);
-            Route::get('orders/ranking', [V2OrderController::class, 'orderRanking']);
+
+
             /* orders/sales-by-salesperson */
             Route::get('orders/sales-by-salesperson', [V2OrderController::class, 'salesBySalesperson']);
             /* salesChartData */

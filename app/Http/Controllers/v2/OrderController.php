@@ -411,70 +411,7 @@ class OrderController extends Controller
     }
 
 
-    public function orderRanking(Request $request)
-    {
-        $validated = Validator::make($request->all(), [
-            'groupBy' => 'required|in:client,country,product',
-            'valueType' => 'required|in:totalAmount,totalQuantity',
-            'dateFrom' => 'required|date',
-            'dateTo' => 'required|date',
-            'speciesId' => 'nullable|integer|exists:species,id',
-        ])->validate();
 
-        $groupBy = $validated['groupBy'];
-        $valueType = $validated['valueType'];
-        $dateFrom = $validated['dateFrom'] . ' 00:00:00';
-        $dateTo = $validated['dateTo'] . ' 23:59:59';
-        $speciesId = $validated['speciesId'] ?? null;
-
-        $orders = Order::with(['customer.country', 'pallets.boxes.box.product.species'])
-            ->whereBetween('entry_date', [$dateFrom, $dateTo])
-            ->get();
-
-        $summary = [];
-
-        foreach ($orders as $order) {
-            $products = $order->product_details;
-
-            if ($speciesId) {
-                $products = array_filter($products, fn($p) => $p['product']['species_id'] === (int) $speciesId);
-            }
-
-            if (empty($products)) {
-                continue;
-            }
-
-            foreach ($products as $p) {
-                // 👇 Determinar nombre del grupo
-                $groupName = match ($groupBy) {
-                    'client' => $order->customer->name,
-                    'country' => $order->customer->country->name ?? 'Sin país',
-                    'product' => $p['product']['name'],
-                };
-
-                if (!isset($summary[$groupName])) {
-                    $summary[$groupName] = [
-                        'name' => $groupName,
-                        'totalQuantity' => 0,
-                        'totalAmount' => 0,
-                    ];
-                }
-
-                $summary[$groupName]['totalQuantity'] += $p['netWeight'];
-                $summary[$groupName]['totalAmount'] += $p['total'];
-            }
-        }
-
-        $results = collect(array_values($summary))
-            ->sortByDesc($valueType)
-            ->values()
-            ->map(fn($item) => [
-                'name' => $item['name'],
-                'value' => round($item[$valueType], 2),
-            ]);
-
-        return response()->json($results);
-    }
 
     public function salesBySalesperson(Request $request)
     {
@@ -521,7 +458,7 @@ class OrderController extends Controller
 
 
 
-   
+
 
     public function salesChartData(Request $request)
     {
