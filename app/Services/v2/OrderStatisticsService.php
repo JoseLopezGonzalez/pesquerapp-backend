@@ -143,24 +143,24 @@ class OrderStatisticsService
         $orders = Order::query()
             ->withCustomerCountry()
             ->withPlannedProductDetailsAndSpecies()
-            ->wherePlannedProductSpecies($speciesId)
             ->betweenLoadDates($dateFrom, $dateTo)
             ->get();
 
         $summary = [];
 
         foreach ($orders as $order) {
-            $products = $order->plannedProductDetails;
+            // Aquí usamos el accessor que contiene todo bien armado
+            $products = collect($order->productDetails);
 
             if ($speciesId) {
-                $products = $products->filter(fn($p) => $p->product?->species_id === $speciesId);
+                $products = $products->filter(fn($p) => $p['product']['species_id'] === $speciesId);
             }
 
             foreach ($products as $p) {
                 $groupName = match ($groupBy) {
                     'client' => $order->customer->name,
                     'country' => $order->customer->country->name ?? 'Sin país',
-                    'product' => $p->product?->name ?? 'Sin producto',
+                    'product' => $p['product']['name'] ?? 'Sin producto',
                 };
 
                 if (!isset($summary[$groupName])) {
@@ -171,8 +171,8 @@ class OrderStatisticsService
                     ];
                 }
 
-                $summary[$groupName]['totalQuantity'] += $p->netWeight ?? 0;
-                $summary[$groupName]['totalAmount'] += $p->total ?? 0;
+                $summary[$groupName]['totalQuantity'] += $p['netWeight'] ?? 0;
+                $summary[$groupName]['totalAmount'] += $p['total'] ?? 0;
             }
         }
 
@@ -184,6 +184,7 @@ class OrderStatisticsService
                 'value' => round($item[$valueType], 2),
             ]);
     }
+
 
 
 
