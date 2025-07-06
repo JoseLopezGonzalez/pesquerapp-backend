@@ -125,6 +125,8 @@ class OrderStatisticsController extends Controller
 
     public function orderRankingStats(Request $request)
     {
+        ini_set('memory_limit', '256M'); // o más si lo necesitas
+
         $validated = $request->validate([
             'groupBy' => 'required|in:client,country,product',
             'valueType' => 'required|in:totalAmount,totalQuantity',
