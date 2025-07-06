@@ -30,4 +30,28 @@ class StockStatisticsController extends Controller
         return response()->json($stats);
     }
 
+    /**
+     * Devuelve el stock total agrupado por especie con porcentaje.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * Formato de respuesta:
+     * [
+     *   {
+     *     "id": int,
+     *     "name": string,
+     *     "totalNetWeight": float,
+     *     "percentage": float
+     *   },
+     *   ...
+     * ]
+     */
+    public function totalStockBySpeciesStats()
+    {
+        $stats = StockStatisticsService::getTotalStockBySpeciesStats();
+
+        return response()->json($stats);
+    }
+
+
 }

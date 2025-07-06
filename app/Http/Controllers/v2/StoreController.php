@@ -168,20 +168,6 @@ class StoreController extends Controller
         return response()->json($store);
     }
 
-    public function totalStock()
-    {
-        $totalStock = DB::table('pallets')
-            ->join('pallet_boxes', 'pallet_boxes.pallet_id', '=', 'pallets.id')
-            ->join('boxes', 'boxes.id', '=', 'pallet_boxes.box_id')
-            ->where('pallets.state_id', 2) // solo palets almacenados
-            ->sum('boxes.net_weight');
-
-        return response()->json([
-            'totalStock' => round($totalStock, 2),
-        ]);
-    }
-
-
 
     public function totalStockBySpecies()
     {
