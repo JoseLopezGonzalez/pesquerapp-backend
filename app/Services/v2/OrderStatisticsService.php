@@ -150,17 +150,17 @@ class OrderStatisticsService
         $summary = [];
 
         foreach ($orders as $order) {
-            $products = $order->plannedProductDetails->toArray();
+            $products = $order->plannedProductDetails;
 
             if ($speciesId) {
-                $products = array_filter($products, fn($p) => $p['product']['species_id'] === $speciesId);
+                $products = $products->filter(fn($p) => $p->product?->species_id === $speciesId);
             }
 
             foreach ($products as $p) {
                 $groupName = match ($groupBy) {
                     'client' => $order->customer->name,
                     'country' => $order->customer->country->name ?? 'Sin país',
-                    'product' => $p['product']['name'],
+                    'product' => $p->product->name ?? 'Sin producto',
                 };
 
                 if (!isset($summary[$groupName])) {
@@ -171,8 +171,8 @@ class OrderStatisticsService
                     ];
                 }
 
-                $summary[$groupName]['totalQuantity'] += $p['net_weight'] ?? 0;
-                $summary[$groupName]['totalAmount'] += $p['total'] ?? 0;
+                $summary[$groupName]['totalQuantity'] += $p->net_weight ?? 0;
+                $summary[$groupName]['totalAmount'] += $p->total ?? 0;
             }
         }
 
@@ -184,6 +184,7 @@ class OrderStatisticsService
                 'value' => round($item[$valueType], 2),
             ]);
     }
+
 
 
 
