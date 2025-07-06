@@ -160,7 +160,7 @@ class OrderStatisticsService
                 $groupName = match ($groupBy) {
                     'client' => $order->customer->name,
                     'country' => $order->customer->country->name ?? 'Sin país',
-                    'product' => $p->product->name ?? 'Sin producto',
+                    'product' => $p->product?->name ?? 'Sin producto',
                 };
 
                 if (!isset($summary[$groupName])) {
@@ -171,7 +171,7 @@ class OrderStatisticsService
                     ];
                 }
 
-                $summary[$groupName]['totalQuantity'] += $p->net_weight ?? 0;
+                $summary[$groupName]['totalQuantity'] += $p->netWeight ?? 0;
                 $summary[$groupName]['totalAmount'] += $p->total ?? 0;
             }
         }
@@ -184,6 +184,7 @@ class OrderStatisticsService
                 'value' => round($item[$valueType], 2),
             ]);
     }
+
 
 
 
