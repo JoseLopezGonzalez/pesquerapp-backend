@@ -44,7 +44,7 @@ class StockStatisticsService
     {
         return Pallet::stored()
             ->joinProducts()
-            ->selectRaw('products.species_id, SUM(boxes.net_weight) as total_kg')
+            ->selectRaw('products.species_id, SUM(boxes.net_weight) as totalNetWeight')
             ->groupBy('products.species_id')
             ->get();
     }
