@@ -327,6 +327,8 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('statistics/stock/total', [StockStatisticsController::class, 'totalStockStats'])->name('v2.statistics.stock.total');
             /* totalStockBySpeciesStats */
             Route::get('statistics/stock/total-by-species', [StockStatisticsController::class, 'totalStockBySpeciesStats'])->name('v2.statistics.stock.total_by_species');
+            /* orderRankingStats */
+            Route::post('statistics/orders/ranking', [OrderStatisticsController::class, 'orderRankingStats'])->name('v2.statistics.orders.ranking');
 
             /* order total amount */
             Route::get('orders/total-amount', [V2OrderController::class, 'totalAmount']);

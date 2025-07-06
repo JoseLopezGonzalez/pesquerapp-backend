@@ -586,6 +586,17 @@ class Order extends Model
         return (float) $query->sum('boxes.net_weight');
     }
 
+    public function scopeWithCustomerCountry($query)
+    {
+        return $query->with(['customer.country']);
+    }
+
+    public function scopeWithPlannedProductDetailsAndSpecies($query)
+    {
+        return $query->with(['plannedProductDetails.product.species']);
+    }
+
+
 
 
 

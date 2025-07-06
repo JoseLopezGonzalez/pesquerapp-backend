@@ -91,4 +91,57 @@ class OrderStatisticsController extends Controller
         return response()->json($stats);
     }
 
+    /**
+     * Devuelve un ranking de pedidos agrupado por cliente, país o producto,
+     * basado en la cantidad total (kg) o el importe total (€), dentro de un rango de fechas,
+     * y opcionalmente filtrado por especie.
+     *
+     * Parámetros esperados (query params):
+     * - groupBy: string (client | country | product) → define cómo agrupar los resultados
+     * - valueType: string (totalAmount | totalQuantity) → define si se ordena por importe o cantidad
+     * - dateFrom: string (formato YYYY-MM-DD) → fecha de inicio del rango
+     * - dateTo: string (formato YYYY-MM-DD) → fecha final del rango
+     * - speciesId: int|null (opcional) → ID de la especie por la que filtrar
+     *
+     * Formato de respuesta:
+     * [
+     *   {
+     *     "name": "Cliente A | España | Producto X",
+     *     "value": float // totalAmount o totalQuantity según valueType
+     *   },
+     *   ...
+     * ]
+     *
+     * Ejemplo de respuesta con groupBy=client y valueType=totalAmount:
+     * [
+     *   { "name": "Congelados Brisamar", "value": 12830.50 },
+     *   { "name": "Frostmar S.L.", "value": 9740.00 },
+     *   ...
+     * ]
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function orderRankingStats(Request $request)
+    {
+        $validated = $request->validate([
+            'groupBy' => 'required|in:client,country,product',
+            'valueType' => 'required|in:totalAmount,totalQuantity',
+            'dateFrom' => 'required|date',
+            'dateTo' => 'required|date',
+            'speciesId' => 'nullable|integer|exists:species,id',
+        ]);
+
+        $results = OrderStatisticsService::getOrderRankingStats(
+            $validated['groupBy'],
+            $validated['valueType'],
+            $validated['dateFrom'] . ' 00:00:00',
+            $validated['dateTo'] . ' 23:59:59',
+            $validated['speciesId'] ?? null
+        );
+
+        return response()->json($results);
+    }
+
 }

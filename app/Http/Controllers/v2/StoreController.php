@@ -169,53 +169,6 @@ class StoreController extends Controller
     }
 
 
-    public function totalStockBySpecies()
-    {
-        $inventory = \App\Models\StoredPallet::all();
-        $species = \App\Models\Species::all();
-        $speciesInventory = [];
-
-        foreach ($species as $specie) {
-            $totalNetWeight = 0;
-
-            foreach ($inventory as $storedPallet) {
-                foreach ($storedPallet->pallet->boxes as $palletBox) {
-                    $box = $palletBox->box;
-
-                    // Cuidado: acceder a product->species porque article->species no está bien enlazado
-                    if ($box->product && $box->product->species && $box->product->species->id == $specie->id) {
-                        $totalNetWeight += $box->net_weight;
-                    }
-                }
-            }
-
-            if ($totalNetWeight == 0) {
-                continue;
-            }
-
-            $speciesInventory[] = [
-                'id' => $specie->id,
-                'name' => $specie->name,
-                'total_kg' => round($totalNetWeight, 2),
-            ];
-        }
-
-        // Calcular total global
-        $totalKg = array_sum(array_column($speciesInventory, 'total_kg'));
-
-        // Calcular porcentaje para cada especie
-        foreach ($speciesInventory as &$item) {
-            $item['percentage'] = $totalKg > 0
-                ? round(($item['total_kg'] / $totalKg) * 100, 2)
-                : 0;
-        }
-
-        // Ordenar por total_kg descendente
-        usort($speciesInventory, fn($a, $b) => $b['total_kg'] <=> $a['total_kg']);
-
-        return response()->json($speciesInventory);
-    }
-
     public function totalStockByProducts()
     {
         $inventory = \App\Models\StoredPallet::all();

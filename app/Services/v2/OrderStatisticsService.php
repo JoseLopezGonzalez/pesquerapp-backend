@@ -138,6 +138,56 @@ class OrderStatisticsService
     }
 
 
+    public static function getOrderRankingStats(string $groupBy, string $valueType, string $dateFrom, string $dateTo, ?int $speciesId = null): \Illuminate\Support\Collection
+    {
+        $orders = Order::query()
+            ->withCustomerCountry()
+            ->withPlannedProductDetailsAndSpecies()
+            ->wherePlannedProductSpecies($speciesId)
+            ->betweenLoadDates($dateFrom, $dateTo)
+            ->get();
+
+        $summary = [];
+
+        foreach ($orders as $order) {
+            $products = $order->plannedProductDetails->toArray();
+
+            if ($speciesId) {
+                $products = array_filter($products, fn($p) => $p['product']['species_id'] === $speciesId);
+            }
+
+            foreach ($products as $p) {
+                $groupName = match ($groupBy) {
+                    'client' => $order->customer->name,
+                    'country' => $order->customer->country->name ?? 'Sin país',
+                    'product' => $p['product']['name'],
+                };
+
+                if (!isset($summary[$groupName])) {
+                    $summary[$groupName] = [
+                        'name' => $groupName,
+                        'totalQuantity' => 0,
+                        'totalAmount' => 0,
+                    ];
+                }
+
+                $summary[$groupName]['totalQuantity'] += $p['net_weight'] ?? 0;
+                $summary[$groupName]['totalAmount'] += $p['total'] ?? 0;
+            }
+        }
+
+        return collect(array_values($summary))
+            ->sortByDesc($valueType)
+            ->values()
+            ->map(fn($item) => [
+                'name' => $item['name'],
+                'value' => round($item[$valueType], 2),
+            ]);
+    }
+
+
+
+
 
 
 

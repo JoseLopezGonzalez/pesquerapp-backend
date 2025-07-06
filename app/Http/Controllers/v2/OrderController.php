@@ -521,7 +521,7 @@ class OrderController extends Controller
 
 
 
-
+   
 
     public function salesChartData(Request $request)
     {
