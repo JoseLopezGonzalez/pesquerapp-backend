@@ -26,8 +26,8 @@ class OrderResource extends JsonResource
             'totalBoxes' => $this->totalBoxes,
             'incoterm' => $this->incoterm->toArrayAssoc(),
             'totalNetWeight' => $this->totalNetWeight,
-            'subtotalAmount' => $this->subtotalAmount,
-            'totalAmount' => $this->totalAmount,
+            'subtotalAmount' => $this->subtotal_amount,
+            'totalAmount' => $this->total_amount,
         ];
     }
 }
