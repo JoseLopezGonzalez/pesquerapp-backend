@@ -26,10 +26,21 @@ class OrderPDFService
         $formattedId = str_replace('#', '', $order->formattedId);
         $pdfPath = storage_path("app/public/{$docType}-{$formattedId}.pdf");
 
-        // Si ya existe no lo regeneramos (opcional)
+        /* // Si ya existe no lo regeneramos (opcional) */
+        // ⏱️ Si existe, verificar si ha sido generado hace menos de 30 segundos
         if (file_exists($pdfPath)) {
-            return $pdfPath;
+            $lastModified = filemtime($pdfPath);
+            $now = time();
+            $ageInSeconds = $now - $lastModified;
+
+            if ($ageInSeconds < 30) {
+                return $pdfPath; // ✅ Reutilizar si es reciente
+            }
+
+            // 🗑️ Eliminar si está obsoleto
+            unlink($pdfPath);
         }
+
 
         // ⚠️ Pasar la variable como 'entity', no como 'order'
         $html = view($viewPath, ['entity' => $order])->render();

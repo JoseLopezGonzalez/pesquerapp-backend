@@ -1,37 +1,36 @@
 <x-mail::message>
 
-    # {{ $order->customer->name }}
+# {{ $order->customer->name }}
 
-    <br>
+<br>
 
-    **Pedido Nº:** **#{{ $order->id }}**
+**Pedido Nº:** **#{{ $order->id }}**
 
-    **Fecha de Carga:** {{ date('d/m/Y', strtotime($order->load_date)) }}
+**Fecha de Carga:** {{ date('d/m/Y', strtotime($order->load_date)) }}
 
-    <br>
+<br>
 
-    Estimado/a comercial,
+Estimado/a comercial,
 
-    Adjuntamos los documentos correspondientes al pedido **#{{ $order->id }}** de
-    **{{ $order->customer->name }}**.
+Adjuntamos los documentos correspondientes al pedido **#{{ $order->id }}** de
+**{{ $order->customer->name }}**.
 
-    <br>
+<br>
 
-    **Documentos incluidos:**
-    - Nota de Carga
-    - Packing List
+**Documentos incluidos:**
+- Nota de Carga
+- Packing List
 
-    <br>
+<br>
 
-    Por favor, revisen la documentación adjunta para asegurarse de que toda la información esté correcta.
+Por favor, revisen la documentación adjunta para asegurarse de que toda la información esté correcta.
 
-    <br>
+<br>
 
-    Si necesitan más información, pueden contactar directamente con el equipo de operaciones a
-    [{{ config('company.contact.email_operations') }}](mailto:{{ config('company.contact.email_operations') }}).
+Si necesitan más información, pueden contactar directamente con el equipo de operaciones a [{{ config('company.contact.email_operations') }}](mailto:{{ config('company.contact.email_operations') }}).
 
-    <br>
+<br>
 
-    Saludos cordiales
+Saludos cordiales
 
 </x-mail::message>
