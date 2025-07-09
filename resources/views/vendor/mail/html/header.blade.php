@@ -8,7 +8,7 @@
 
 <tr>
     <td class="header">
-        <a href="{{ $url ?? config('company.website_url') }}" style="display: inline-block;">
+        <a href="{{ $url ?? config('company.website_url') }}" style="display: inline-block; color: white;">
             @if (trim($slot) === 'Congelados_Brisamar_App')
                 <img src="{{ config('company.logo_url_small') }}" class="logo" alt="Logo {{ config('company.name') }}">
             @else
