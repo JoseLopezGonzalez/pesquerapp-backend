@@ -28,159 +28,113 @@ class PalletController extends Controller
 
     } */
 
-    public function index(Request $request)
+    private function applyFiltersToQuery($query, $filters)
     {
-        $query = Pallet::query();
-        $query->with('storedPallet');
-
-        if ($request->has('id')) {
-            $id = $request->input('id');
-            $query->where('id', 'like', "%{$id}%");
+        if (isset($filters['id'])) {
+            $query->where('id', 'like', "%{$filters['id']}%");
         }
 
-        /* ids */
-        if ($request->has('ids')) {
-            $ids = $request->input('ids');
-            $query->whereIn('id', $ids);
+        if (isset($filters['ids'])) {
+            $query->whereIn('id', $filters['ids']);
         }
 
-        if ($request->has('state')) {
-            if ($request->input('state') == 'stored') {
+        if (!empty($filters['state'])) {
+            if ($filters['state'] === 'stored') {
                 $query->where('state_id', 2);
-            } else if ($request->input('state') == 'shipped') {
+            } elseif ($filters['state'] === 'shipped') {
                 $query->where('state_id', 3);
             }
         }
 
-        // Filtro por estado de la orden (pending o finished)
-        if ($request->has('orderState')) {
-            $orderState = $request->input('orderState');
-
-            if ($orderState === 'pending') {
-                $query->whereHas('order', function ($subQuery) {
-                    $subQuery->where('status', 'pending');
-                });
-            } elseif ($orderState === 'finished') {
-                $query->whereHas('order', function ($subQuery) {
-                    $subQuery->where('status', 'finished');
-                });
-            } elseif ($orderState === 'without_order') {
-                // Filtrar pallets que no tienen ninguna orden asociada
+        if (!empty($filters['orderState'])) {
+            if ($filters['orderState'] === 'pending') {
+                $query->whereHas('order', fn($q) => $q->where('status', 'pending'));
+            } elseif ($filters['orderState'] === 'finished') {
+                $query->whereHas('order', fn($q) => $q->where('status', 'finished'));
+            } elseif ($filters['orderState'] === 'without_order') {
                 $query->whereDoesntHave('order');
             }
         }
 
-        /* Position */
-        if ($request->has('position')) {
-            if ($request->input('position') == 'located') {
-                $query->whereHas('storedPallet', function ($subQuery) {
-                    $subQuery->whereNotNull('position');
-                });
-            } else if ($request->input('position') == 'unlocated') {
-                $query->whereHas('storedPallet', function ($subQuery) {
-                    $subQuery->whereNull('position');
-                });
+        if (!empty($filters['position'])) {
+            if ($filters['position'] === 'located') {
+                $query->whereHas('storedPallet', fn($q) => $q->whereNotNull('position'));
+            } elseif ($filters['position'] === 'unlocated') {
+                $query->whereHas('storedPallet', fn($q) => $q->whereNull('position'));
             }
         }
 
-        /* Dates */
-        if ($request->has('dates')) {
-            $dates = $request->input('dates');
-            if (isset($dates['start'])) {
-                $startDate = $dates['start'];
-                $startDate = date('Y-m-d 00:00:00', strtotime($startDate));
-                $query->where('created_at', '>=', $startDate);
+        if (!empty($filters['dates']['start'])) {
+            $query->where('created_at', '>=', date('Y-m-d 00:00:00', strtotime($filters['dates']['start'])));
+        }
+
+        if (!empty($filters['dates']['end'])) {
+            $query->where('created_at', '<=', date('Y-m-d 23:59:59', strtotime($filters['dates']['end'])));
+        }
+
+        if (!empty($filters['notes'])) {
+            $query->where('observations', 'like', "%{$filters['notes']}%");
+        }
+
+        if (!empty($filters['lots'])) {
+            $query->whereHas('boxes.box', fn($q) => $q->whereIn('lot', $filters['lots']));
+        }
+
+        if (!empty($filters['products'])) {
+            $query->whereHas('boxes.box', fn($q) => $q->whereIn('article_id', $filters['products']));
+        }
+
+        if (!empty($filters['stores'])) {
+            $query->whereHas('storedPallet', fn($q) => $q->whereIn('store_id', $filters['stores']));
+        }
+
+        if (!empty($filters['orders'])) {
+            $query->whereHas('order', fn($q) => $q->whereIn('order_id', $filters['orders']));
+        }
+
+        if (!empty($filters['weights']['netWeight'])) {
+            if (isset($filters['weights']['netWeight']['min'])) {
+                $min = $filters['weights']['netWeight']['min'];
+                $query->whereHas('boxes.box', fn($q) => $q->havingRaw('sum(net_weight) >= ?', [$min]));
             }
-
-            if (isset($dates['end'])) {
-                $endDate = $dates['end'];
-                $endDate = date('Y-m-d 23:59:59', strtotime($endDate));
-                $query->where('created_at', '<=', $endDate);
-            }
-        }
-
-        if ($request->has('notes')) {
-            $notes = $request->input('notes');
-            $query->where('observations', 'like', "%{$notes}%");
-        }
-
-        if ($request->has('lots')) {
-            $lots = $request->input('lots');
-            $query->whereHas('boxes', function ($subQuery) use ($lots) {
-                $subQuery->whereHas('box', function ($subSubQuery) use ($lots) {
-                    $subSubQuery->whereIn('lot', $lots);
-                });
-            });
-        }
-
-        if ($request->has('products')) {
-            $articles = $request->input('products');
-            $query->whereHas('boxes', function ($subQuery) use ($articles) {
-                $subQuery->whereHas('box', function ($subSubQuery) use ($articles) {
-                    $subSubQuery->whereIn('article_id', $articles);
-                });
-            });
-        }
-
-        /* Por mejorar o implementar, actualmente nulo */
-        if ($request->has('weights')) {
-            $weights = $request->input('weights');
-            if (array_key_exists('netWeight', $weights)) {
-                if (array_key_exists('min', $weights['netWeight'])) {
-                    $query->whereHas('boxes', function ($subQuery) use ($weights) {
-                        $subQuery->whereHas('box', function ($subSubQuery) use ($weights) {
-                            $subSubQuery->havingRaw('sum(net_weight) >= ?', [$weights['netWeight']['min']]);
-                        });
-                    });
-                }
-                if (array_key_exists('max', $weights['netWeight'])) {
-                    $query->whereHas('boxes', function ($subQuery) use ($weights) {
-                        $subQuery->whereHas('box', function ($subSubQuery) use ($weights) {
-                            $subSubQuery->havingRaw('sum(net_weight) <= ?', [$weights['netWeight']['max']]);
-                        });
-                    });
-                }
-            }
-            if (array_key_exists('grossWeight', $weights)) {
-                if (array_key_exists('min', $weights['grossWeight'])) {
-                    $query->whereHas('boxes', function ($subQuery) use ($weights) {
-                        $subQuery->whereHas('box', function ($subSubQuery) use ($weights) {
-                            $subSubQuery->havingRaw('sum(gross_weight) >= ?', [$weights['grossWeight']['min']]);
-                        });
-                    });
-                }
-                if (array_key_exists('max', $weights['grossWeight'])) {
-                    $query->whereHas('boxes', function ($subQuery) use ($weights) {
-                        $subQuery->whereHas('box', function ($subSubQuery) use ($weights) {
-                            $subSubQuery->havingRaw('sum(gross_weight) <= ?', [$weights['grossWeight']['max']]);
-                        });
-                    });
-                }
+            if (isset($filters['weights']['netWeight']['max'])) {
+                $max = $filters['weights']['netWeight']['max'];
+                $query->whereHas('boxes.box', fn($q) => $q->havingRaw('sum(net_weight) <= ?', [$max]));
             }
         }
 
-        /* Stores */
-        if ($request->has('stores')) {
-            $stores = $request->input('stores');
-            $query->whereHas('storedPallet', function ($subQuery) use ($stores) {
-                $subQuery->whereIn('store_id', $stores);
-            });
+        if (!empty($filters['weights']['grossWeight'])) {
+            if (isset($filters['weights']['grossWeight']['min'])) {
+                $min = $filters['weights']['grossWeight']['min'];
+                $query->whereHas('boxes.box', fn($q) => $q->havingRaw('sum(gross_weight) >= ?', [$min]));
+            }
+            if (isset($filters['weights']['grossWeight']['max'])) {
+                $max = $filters['weights']['grossWeight']['max'];
+                $query->whereHas('boxes.box', fn($q) => $q->havingRaw('sum(gross_weight) <= ?', [$max]));
+            }
         }
 
-        /* orders */
-        if ($request->has('orders')) {
-            $orders = $request->input('orders');
-            $query->whereHas('order', function ($subQuery) use ($orders) {
-                $subQuery->whereIn('order_id', $orders);
-            });
-        }
+        return $query;
+    }
 
-        /* order by id and show first where state=store */
+
+    public function index(Request $request)
+    {
+        $query = Pallet::query()->with('storedPallet');
+
+        // Extraemos todos los filtros aplicables del request
+        $filters = $request->all();
+
+        // Aplicamos los filtros con el helper reutilizable
+        $query = $this->applyFiltersToQuery($query, $filters);
+
+        // Orden y paginación
         $query->orderBy('id', 'desc');
+        $perPage = $request->input('perPage', 10);
 
-        $perPage = $request->input('perPage', 10); // Default a 10 si no se proporciona
         return PalletResource::collection($query->paginate($perPage));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -574,71 +528,12 @@ class PalletController extends Controller
         $stateId = $request->input('state_id');
         $palletsQuery = Pallet::with('storedPallet');
 
-        // Caso 1: selección directa por IDs
         if ($request->filled('ids')) {
             $palletsQuery->whereIn('id', $request->input('ids'));
-        }
-
-        // Caso 2: filtros dinámicos
-        elseif ($request->filled('filters')) {
-            $filters = $request->input('filters');
-
-            if (!empty($filters['state'])) {
-                if ($filters['state'] === 'stored') {
-                    $palletsQuery->where('state_id', 2);
-                } elseif ($filters['state'] === 'shipped') {
-                    $palletsQuery->where('state_id', 3);
-                }
-            }
-
-            if (!empty($filters['lots'])) {
-                $palletsQuery->whereHas('boxes', function ($q) use ($filters) {
-                    $q->whereHas('box', function ($sq) use ($filters) {
-                        $sq->whereIn('lot', $filters['lots']);
-                    });
-                });
-            }
-
-            if (!empty($filters['stores'])) {
-                $palletsQuery->whereHas('storedPallet', function ($q) use ($filters) {
-                    $q->whereIn('store_id', $filters['stores']);
-                });
-            }
-
-            if (!empty($filters['products'])) {
-                $palletsQuery->whereHas('boxes.box.product', function ($q) use ($filters) {
-                    $q->whereIn('id', $filters['products']);
-                });
-            }
-
-            if (!empty($filters['orders'])) {
-                $palletsQuery->whereHas('boxes.box.order', function ($q) use ($filters) {
-                    $q->whereIn('order_number', $filters['orders']);
-                });
-            }
-
-            if (!empty($filters['notes'])) {
-                $palletsQuery->where('observations', 'like', '%' . $filters['notes'] . '%');
-            }
-
-            if (!empty($filters['dates']['start']) && !empty($filters['dates']['end'])) {
-                $palletsQuery->whereBetween('created_at', [
-                    $filters['dates']['start'],
-                    $filters['dates']['end'],
-                ]);
-            }
-        }
-
-        // Caso 3: aplicar a todos (sin filtros ni selección)
-        elseif ($request->boolean('applyToAll')) {
-            // no se filtra nada → todos los pallets
-        }
-
-        // Si no se cumple ningún caso válido
-        else {
-            return response()->json([
-                'error' => 'No se especificó ninguna condición válida para seleccionar pallets.'
-            ], 400);
+        } elseif ($request->filled('filters')) {
+            $palletsQuery = $this->applyFiltersToQuery($palletsQuery, $request->input('filters'));
+        } elseif (!$request->boolean('applyToAll')) {
+            return response()->json(['error' => 'No se especificó ninguna condición válida para seleccionar pallets.'], 400);
         }
 
         $pallets = $palletsQuery->get();
@@ -646,17 +541,15 @@ class PalletController extends Controller
 
         foreach ($pallets as $pallet) {
             if ($pallet->state_id != $stateId) {
-                // Desalmacenar si pasa de almacenado a otro estado
                 if ($stateId !== 2 && $pallet->storedPallet) {
-                    $pallet->unStore(); // ← función en el modelo
+                    $pallet->unStore();
                 }
 
-                // Almacenar si el nuevo estado es almacenado y no estaba almacenado
                 if ($stateId === 2 && !$pallet->storedPallet) {
-                    $storedPallet = new StoredPallet();
-                    $storedPallet->pallet_id = $pallet->id;
-                    $storedPallet->store_id = 7; // ← ajusta si usas almacén dinámico
-                    $storedPallet->save();
+                    StoredPallet::create([
+                        'pallet_id' => $pallet->id,
+                        'store_id' => 7, // puedes hacer dinámico
+                    ]);
                 }
 
                 $pallet->state_id = $stateId;
@@ -670,6 +563,7 @@ class PalletController extends Controller
             'updated_count' => $updatedCount,
         ]);
     }
+
 
 
 
