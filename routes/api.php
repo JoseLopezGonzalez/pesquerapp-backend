@@ -337,7 +337,7 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::get('orders/transport-chart-data', [V2OrderController::class, 'transportChartData']);
 
             /* bulkUpdateState */
-            Route::put('pallets/update-state', [V2PalletController::class, 'bulkUpdateState'])->name('pallets.bulk_update_state');
+            Route::post('pallets/update-state', [V2PalletController::class, 'bulkUpdateState'])->name('pallets.bulk_update_state');
 
             /* Controladores Genericos */
             Route::apiResource('orders', V2OrderController::class);
