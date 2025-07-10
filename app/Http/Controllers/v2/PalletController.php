@@ -555,7 +555,7 @@ class PalletController extends Controller
                 if ($stateId === 2 && !$pallet->storedPallet) {
                     StoredPallet::create([
                         'pallet_id' => $pallet->id,
-                        'store_id' => 1, // puedes hacer dinámico
+                        'store_id' => 4, // puedes hacer dinámico
                     ]);
                 }
 
