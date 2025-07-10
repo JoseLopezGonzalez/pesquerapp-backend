@@ -30,6 +30,12 @@ class PalletController extends Controller
 
     private function applyFiltersToQuery($query, $filters)
     {
+
+        if (isset($filters['filters'])) {
+            $filters = $filters['filters']; // Para aceptar filtros anidados
+        }
+
+
         if (isset($filters['id'])) {
             $query->where('id', 'like', "%{$filters['id']}%");
         }
@@ -531,7 +537,8 @@ class PalletController extends Controller
         if ($request->filled('ids')) {
             $palletsQuery->whereIn('id', $request->input('ids'));
         } elseif ($request->filled('filters')) {
-            $palletsQuery = $this->applyFiltersToQuery($palletsQuery, $request->input('filters'));
+            $palletsQuery = $this->applyFiltersToQuery($palletsQuery, ['filters' => $request->input('filters')]);
+
         } elseif (!$request->boolean('applyToAll')) {
             return response()->json(['error' => 'No se especificó ninguna condición válida para seleccionar pallets.'], 400);
         }
