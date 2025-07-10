@@ -628,7 +628,7 @@ class PalletController extends Controller
                 if ($stateId === 2 && !$pallet->storedPallet) {
                     $storedPallet = new StoredPallet();
                     $storedPallet->pallet_id = $pallet->id;
-                    $storedPallet->store_id = 1; // Puedes asignar un almacén específico si es necesario
+                    $storedPallet->store_id = 7; // Puedes asignar un almacén específico si es necesario
                     $storedPallet->save();
                 }
 
