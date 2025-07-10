@@ -10,7 +10,8 @@ class Pallet extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['observations', 'state_id', 'store_id'];
+    protected $fillable = ['observations', 'state_id'];
+
 
     public function palletBoxes()
     {

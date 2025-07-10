@@ -557,6 +557,97 @@ class PalletController extends Controller
     }
 
 
+    public function bulkUpdateState(Request $request)
+    {
+        $validated = Validator::make($request->all(), [
+            'state_id' => 'required|integer|exists:pallet_states,id',
+            'ids' => 'array',
+            'ids.*' => 'integer|exists:pallets,id',
+            'filters' => 'array',
+            'applyToAll' => 'boolean',
+        ]);
+
+        if ($validated->fails()) {
+            return response()->json(['errors' => $validated->errors()], 422);
+        }
+
+        $stateId = $request->input('state_id');
+        $palletsQuery = Pallet::with('storedPallet');
+
+        // Caso 1: selección directa
+        if ($request->has('ids')) {
+            $palletsQuery->whereIn('id', $request->input('ids'));
+        }
+        // Caso 2: filtros
+        elseif ($request->has('filters')) {
+            $filters = $request->input('filters');
+
+            if (isset($filters['state'])) {
+                if ($filters['state'] === 'stored') {
+                    $palletsQuery->where('state_id', 2);
+                } elseif ($filters['state'] === 'shipped') {
+                    $palletsQuery->where('state_id', 3);
+                }
+            }
+
+            if (!empty($filters['lots'])) {
+                $palletsQuery->whereHas('boxes', function ($q) use ($filters) {
+                    $q->whereHas('box', function ($sq) use ($filters) {
+                        $sq->whereIn('lot', $filters['lots']);
+                    });
+                });
+            }
+
+            if (!empty($filters['stores'])) {
+                $palletsQuery->whereHas('storedPallet', function ($q) use ($filters) {
+                    $q->whereIn('store_id', $filters['stores']);
+                });
+            }
+
+            // Puedes seguir replicando más filtros si lo necesitas.
+        }
+        // Caso 3: aplicar a todos
+        elseif ($request->boolean('applyToAll')) {
+            // sin filtros → todos
+        } else {
+            return response()->json(['error' => 'No se especificó ninguna condición para seleccionar pallets.'], 400);
+        }
+
+        $pallets = $palletsQuery->get();
+        $updatedCount = 0;
+
+        foreach ($pallets as $pallet) {
+            if ($pallet->state_id != $stateId) {
+
+                // Desalmacenar si el nuevo estado no es almacenado
+                if ($stateId !== 2 && $pallet->storedPallet) {
+                    $pallet->unStore();
+                }
+
+                /* Implementar Almacenar si no está almacenado y es el stateId nuevo almacenado */
+                if ($stateId === 2 && !$pallet->storedPallet) {
+                    $storedPallet = new StoredPallet();
+                    $storedPallet->pallet_id = $pallet->id;
+                    $storedPallet->store_id = 1; // Puedes asignar un almacén específico si es necesario
+                    $storedPallet->save();
+                }
+
+
+                $pallet->state_id = $stateId;
+                $pallet->save();
+                $updatedCount++;
+            }
+        }
+
+        return response()->json([
+            'message' => 'Palets actualizados correctamente',
+            'updated_count' => $updatedCount,
+        ]);
+    }
+
+
+
+
 
 
 
