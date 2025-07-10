@@ -561,10 +561,10 @@ class PalletController extends Controller
     {
         $validated = Validator::make($request->all(), [
             'state_id' => 'required|integer|exists:pallet_states,id',
-            'ids' => 'array',
+            'ids' => 'array|required_without_all:filters,applyToAll',
             'ids.*' => 'integer|exists:pallets,id',
-            'filters' => 'array',
-            'applyToAll' => 'boolean',
+            'filters' => 'array|required_without_all:ids,applyToAll',
+            'applyToAll' => 'boolean|required_without_all:ids,filters',
         ]);
 
         if ($validated->fails()) {
@@ -574,15 +574,16 @@ class PalletController extends Controller
         $stateId = $request->input('state_id');
         $palletsQuery = Pallet::with('storedPallet');
 
-        // Caso 1: selección directa
-        if ($request->has('ids')) {
+        // Caso 1: selección directa por IDs
+        if ($request->filled('ids')) {
             $palletsQuery->whereIn('id', $request->input('ids'));
         }
-        // Caso 2: filtros
-        elseif ($request->has('filters')) {
+
+        // Caso 2: filtros dinámicos
+        elseif ($request->filled('filters')) {
             $filters = $request->input('filters');
 
-            if (isset($filters['state'])) {
+            if (!empty($filters['state'])) {
                 if ($filters['state'] === 'stored') {
                     $palletsQuery->where('state_id', 2);
                 } elseif ($filters['state'] === 'shipped') {
@@ -604,13 +605,40 @@ class PalletController extends Controller
                 });
             }
 
-            // Puedes seguir replicando más filtros si lo necesitas.
+            if (!empty($filters['products'])) {
+                $palletsQuery->whereHas('boxes.box.product', function ($q) use ($filters) {
+                    $q->whereIn('id', $filters['products']);
+                });
+            }
+
+            if (!empty($filters['orders'])) {
+                $palletsQuery->whereHas('boxes.box.order', function ($q) use ($filters) {
+                    $q->whereIn('order_number', $filters['orders']);
+                });
+            }
+
+            if (!empty($filters['notes'])) {
+                $palletsQuery->where('observations', 'like', '%' . $filters['notes'] . '%');
+            }
+
+            if (!empty($filters['dates']['start']) && !empty($filters['dates']['end'])) {
+                $palletsQuery->whereBetween('created_at', [
+                    $filters['dates']['start'],
+                    $filters['dates']['end'],
+                ]);
+            }
         }
-        // Caso 3: aplicar a todos
+
+        // Caso 3: aplicar a todos (sin filtros ni selección)
         elseif ($request->boolean('applyToAll')) {
-            // sin filtros → todos
-        } else {
-            return response()->json(['error' => 'No se especificó ninguna condición para seleccionar pallets.'], 400);
+            // no se filtra nada → todos los pallets
+        }
+
+        // Si no se cumple ningún caso válido
+        else {
+            return response()->json([
+                'error' => 'No se especificó ninguna condición válida para seleccionar pallets.'
+            ], 400);
         }
 
         $pallets = $palletsQuery->get();
@@ -618,20 +646,18 @@ class PalletController extends Controller
 
         foreach ($pallets as $pallet) {
             if ($pallet->state_id != $stateId) {
-
-                // Desalmacenar si el nuevo estado no es almacenado
+                // Desalmacenar si pasa de almacenado a otro estado
                 if ($stateId !== 2 && $pallet->storedPallet) {
-                    $pallet->unStore();
+                    $pallet->unStore(); // ← función en el modelo
                 }
 
-                /* Implementar Almacenar si no está almacenado y es el stateId nuevo almacenado */
+                // Almacenar si el nuevo estado es almacenado y no estaba almacenado
                 if ($stateId === 2 && !$pallet->storedPallet) {
                     $storedPallet = new StoredPallet();
                     $storedPallet->pallet_id = $pallet->id;
-                    $storedPallet->store_id = 7; // Puedes asignar un almacén específico si es necesario
+                    $storedPallet->store_id = 7; // ← ajusta si usas almacén dinámico
                     $storedPallet->save();
                 }
-
 
                 $pallet->state_id = $stateId;
                 $pallet->save();
@@ -644,6 +670,7 @@ class PalletController extends Controller
             'updated_count' => $updatedCount,
         ]);
     }
+
 
 
 
