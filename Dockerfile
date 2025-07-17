@@ -1,27 +1,32 @@
+# Etapa 1: Instalar dependencias de PHP
+FROM composer:latest AS vendor
+
+WORKDIR /app
+
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Etapa 2: Construcción final
 FROM php:8.2-apache
 
-# Instala dependencias del sistema
+# Instalar extensiones necesarias
 RUN apt-get update && apt-get install -y \
-    git unzip zip curl libzip-dev libonig-dev libpng-dev libxml2-dev \
-    && docker-php-ext-install pdo pdo_mysql zip
+    libzip-dev unzip git curl libpng-dev libonig-dev \
+    && docker-php-ext-install pdo pdo_mysql zip mbstring
 
-# Habilita mod_rewrite de Apache
+# Activar mod_rewrite
 RUN a2enmod rewrite
 
-# Instala Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Copia el proyecto al contenedor
-COPY . /var/www/html
-
-# Establece permisos correctos para Laravel
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Establece el directorio de trabajo
+# Copiar código y dependencias
 WORKDIR /var/www/html
 
-# Instala dependencias de PHP
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+COPY . .
 
-# Expone el puerto 80 (ya que Apache se ejecuta ahí)
+COPY --from=vendor /app/vendor ./vendor
+
+# Establecer permisos
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage
+
+# Puerto expuesto por Apache
 EXPOSE 80
