@@ -6,6 +6,14 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
+
+    protected $routeMiddleware = [
+        // ...
+        'tenant' => \App\Http\Middleware\TenantMiddleware::class,
+    ];
+
+
+
     /**
      * The application's global HTTP middleware stack.
      *
@@ -40,9 +48,10 @@ class Kernel extends HttpKernel
 
         'api' => [
             \Illuminate\Http\Middleware\HandleCors::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\LogActivity::class,
+            \App\Http\Middleware\TenantMiddleware::class,
 
 
         ],

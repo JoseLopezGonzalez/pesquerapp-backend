@@ -244,8 +244,7 @@ Route::post('v1/insert-auto-sales-customers', [CustomerController::class, 'inser
     Route::get('v2/orders_report', [OrdersReportController::class, 'exportToExcel'])->name('export.orders');
 }); */
 
-
-Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
+Route::group(['prefix' => 'v2', 'as' => 'v2.', 'middleware' => ['tenant']], function () {
     // Rutas públicas (sin autenticación)
     Route::post('login', [V2AuthController::class, 'login'])->name('v2.login');
     Route::post('logout', [V2AuthController::class, 'logout'])->middleware('auth:sanctum')->name('v2.logout');
@@ -274,13 +273,10 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             /* Route::post('pdf-extractor', [PdfExtractionController::class, 'extract'])->name('pdf.extract'); */
             /* Route::post('document-ai/parse', [GoogleDocumentAIController::class, 'processPdf']); */
             Route::post('document-ai/parse', [AzureDocumentAIController::class, 'processPdf']);
-
-
-
         });
 
         // Rutas para Gerencia
-        Route::middleware(['role:manager'])->group(function () { });
+        Route::middleware(['role:manager'])->group(function () {});
 
         // Rutas para Administración
         Route::middleware(['role:admin'])->group(function () {
@@ -424,7 +420,6 @@ Route::group(['prefix' => 'v2', 'as' => 'v2.'], function () {
             Route::post('orders/{orderId}/send-custom-documents', [OrderDocumentController::class, 'sendCustomDocumentation']);
             Route::post('orders/{orderId}/send-standard-documents', [OrderDocumentController::class, 'sendStandardDocumentation']);
         });
-
     });
 });
 
