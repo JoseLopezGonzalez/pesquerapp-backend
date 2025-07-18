@@ -33,7 +33,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction || cat /app
 # Etapa 2: Servidor Apache con PHP
 FROM php:8.2-apache
 
-# Instalar extensiones necesarias también aquí
+# Instalar extensiones PHP necesarias
 RUN apt-get update && apt-get install -y \
     libzip-dev \
     libpng-dev \
@@ -46,16 +46,23 @@ RUN apt-get update && apt-get install -y \
         mbstring \
         gd
 
-# Habilitar mod_rewrite (útil para Laravel u otros frameworks)
+# Habilitar mod_rewrite (útil para Laravel)
 RUN a2enmod rewrite
 
-# Configurar Apache para que apunte a /public si usas Laravel
+# Configurar Apache para que apunte a /public (Laravel)
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
 # Copiar archivos desde la etapa anterior
 COPY --from=composer /app /var/www/html
 
-# Opcional: Establecer permisos
+# Instalar Google Chrome para generación de PDFs
+RUN apt-get update && apt-get install -y wget gnupg ca-certificates \
+    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /usr/share/keyrings/google-chrome.gpg \
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update && apt-get install -y google-chrome-stable \
+    && rm -rf /var/lib/apt/lists/*
+
+# (Opcional) Establecer permisos correctos
 # RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 80
