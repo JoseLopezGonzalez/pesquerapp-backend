@@ -62,6 +62,9 @@ RUN apt-get update && apt-get install -y wget gnupg ca-certificates \
     && apt-get update && apt-get install -y google-chrome-stable \
     && rm -rf /var/lib/apt/lists/*
 
+# ✅ Instalar fuentes comunes para mejorar tipografía en PDFs
+RUN apt-get update && apt-get install -y fonts-dejavu fonts-liberation fonts-freefont-ttf
+
 # (Opcional) Establecer permisos correctos
 # RUN chown -R www-data:www-data /var/www/html
 
