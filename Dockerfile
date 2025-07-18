@@ -6,7 +6,7 @@ WORKDIR /app
 # Copiar archivos necesarios para Composer
 COPY composer.json composer.lock ./
 
-# Instalar extensiones necesarias
+# Instalar extensiones necesarias para Composer
 RUN apt-get update && apt-get install -y \
     unzip \
     git \
@@ -33,6 +33,19 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction || cat /app
 # Etapa 2: Servidor Apache con PHP
 FROM php:8.2-apache
 
+# Instalar extensiones necesarias también aquí
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    && docker-php-ext-install \
+        zip \
+        pdo \
+        pdo_mysql \
+        mbstring \
+        gd
+
 # Habilitar mod_rewrite (útil para Laravel u otros frameworks)
 RUN a2enmod rewrite
 
@@ -46,4 +59,5 @@ COPY --from=composer /app /var/www/html
 # RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 80
+
 
