@@ -1,4 +1,88 @@
+## 🛠️ Instalación local del proyecto en VS Code
 
+Sigue los siguientes pasos para clonar, instalar dependencias y ejecutar el entorno de desarrollo localmente con VS Code.
+
+---
+
+### 🔁 1. Clona el repositorio
+
+```bash
+git clone https://github.com/tuusuario/nombre-del-repositorio.git
+cd nombre-del-repositorio
+```
+
+---
+
+### ⚙️ 2. Abre el proyecto en VS Code
+
+```bash
+code .
+```
+
+Asegúrate de tener la extensión de PHP, Laravel y soporte para Blade instaladas en VS Code para una mejor experiencia.
+
+---
+
+### 📦 3. Instala dependencias de backend (Laravel)
+
+```bash
+composer install
+```
+
+---
+
+### 📦 4. Instala dependencias de frontend (Vite, Tailwind, etc.)
+
+```bash
+npm install
+```
+
+---
+
+### 🔑 5. Copia y configura el archivo `.env`
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Edita `.env` con tus credenciales de base de datos locales si es necesario.
+
+---
+
+### 🛢️ 6. Ejecuta migraciones (si aplica)
+
+```bash
+php artisan migrate
+```
+
+---
+
+### 🧵 7. Compila los assets de frontend (modo desarrollo)
+
+```bash
+npm run dev
+```
+
+---
+
+### 🚀 8. Inicia el servidor de desarrollo
+
+```bash
+php artisan serve
+```
+
+---
+
+### ✅ Acceso local
+
+Una vez ejecutado todo, accede a tu API o frontend en:
+
+```
+http://127.0.0.1:8000
+```
+
+---
 
 ## 🚀 Despliegue de la API Laravel en Coolify con Dockerfile
 
