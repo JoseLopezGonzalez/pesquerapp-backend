@@ -1,3 +1,92 @@
+# PesquerApp – Laravel API (Backend)
+
+**PesquerApp** es una plataforma ERP multiempresa (_multi-tenant_) diseñada especialmente para pequeñas y medianas industrias del sector pesquero y distribuidores. Este repositorio contiene la API principal, desarrollada en Laravel, que sirve como núcleo de comunicación entre las interfaces de usuario y las bases de datos de cada empresa.
+
+---
+
+## 🚀 Características principales
+
+- 🌐 Arquitectura SaaS multi-tenant con subdominios tipo `empresa.pesquerapp.es`
+- 🔁 Cambio dinámico de base de datos según el subdominio (`X-Tenant`)
+- 🧾 Módulo avanzado de gestión de pedidos con generación de documentos PDF y envío por email
+- 🏷️ Generación e impresión de etiquetas con códigos de barras y QR
+- 📦 Control de stock en almacenes reales mediante mapas interactivos de palets y cajas
+- 🧠 Análisis de producción con sistema de diagrama de nodos
+- 🤖 Extracción de datos con IA desde PDFs de lonjas locales
+- 🔐 Sistema de autenticación por token (Laravel Sanctum)
+
+---
+
+## 🧱 Tecnologías utilizadas
+
+- **Laravel 11**
+- **MySQL** (una base central + una por tenant)
+- **Sanctum** para autenticación
+- **Docker / Coolify** para despliegue
+
+---
+
+## ⚙️ Arquitectura
+
+- Una sola API (`api.pesquerapp.es`) sirve a todas las empresas
+- Cada empresa tiene su propia base de datos (`db_empresa1`, `db_empresa2`, etc.)
+- Se utiliza un **middleware** que:
+  - Detecta la cabecera `X-Tenant`
+  - Busca el subdominio en la tabla `tenants` de la base central
+  - Cambia la conexión activa a la base de datos correspondiente (`DB::setDefaultConnection`)
+
+---
+
+## 🧑‍💼 Superusuario (modo invisible)
+
+- Existen usuarios `superadmin` definidos en la base central
+- Estos pueden iniciar sesión desde cualquier subdominio sin estar presentes en su base de datos
+- Laravel simula la sesión de forma segura y sin alterar el sistema de usuarios del tenant
+
+---
+
+
+## 🔐 Autenticación
+
+Se utiliza **Laravel Sanctum** para proteger rutas y generar tokens para usuarios.
+
+Para iniciar sesión:
+
+```http
+POST /api/login
+Headers:
+  X-Tenant: empresa1
+Body:
+  email, password
+```
+
+---
+
+## 🗃️ Endpoints principales
+
+| Método | Ruta               | Descripción                          |
+|--------|--------------------|--------------------------------------|
+| POST   | /login             | Login de usuarios o superuser        |
+| GET    | /orders            | Listado de pedidos del tenant activo |
+| GET    | /stores            | Consulta de stock por almacén        |
+| POST   | /pallets           | Consulta entre los palets del stock  |
+
+** Revisar endpoints y funciones reales.
+---
+
+## 🧠 Pendiente
+
+- [ ] Sistema de auditoría y logs por empresa
+- [ ] Comandos automáticos para crear nuevas empresas y bases de datos
+- [ ] Panel de control para el administrador global
+
+---
+
+## 📄 Licencia
+
+Este proyecto es privado y propiedad de [La Pesquerapp S.L.](https://lapesquerapp.es).  
+No distribuir sin autorización.
+
 ## 🛠️ Instalación local del proyecto en VS Code
 
 Sigue los siguientes pasos para clonar, instalar dependencias y ejecutar el entorno de desarrollo localmente con VS Code.
