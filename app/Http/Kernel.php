@@ -12,6 +12,23 @@ class Kernel extends HttpKernel
         'tenant' => \App\Http\Middleware\TenantMiddleware::class,
     ];
 
+    /**
+     * The priority-sorted list of middleware.
+     *
+     * This forces certain middleware to always run in the given order.
+     *
+     * @var array<int, class-string|string>
+     */
+    protected $middlewarePriority = [
+        \App\Http\Middleware\TenantMiddleware::class,
+        \Illuminate\Auth\Middleware\Authenticate::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        \Illuminate\Routing\Middleware\ThrottleRequests::class,
+    ];
+
+
 
 
     /**
@@ -28,7 +45,9 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\TenantMiddleware::class, // <-- AÑADIDO AQUÍ
     ];
+
 
     /**
      * The application's route middleware groups.
