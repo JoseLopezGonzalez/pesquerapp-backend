@@ -94,10 +94,6 @@ No distribuir sin autorización.
 
 &nbsp;
 
-&nbsp;
-
-&nbsp;
-
 ## 🛠️ Instalación local del proyecto en VS Code
 
 Sigue los siguientes pasos para clonar, instalar dependencias y ejecutar el entorno de desarrollo localmente con VS Code.
@@ -183,6 +179,11 @@ http://127.0.0.1:8000
 ```
 
 ---
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 ## 🚀 Despliegue de la API Laravel en Coolify con Dockerfile
 
