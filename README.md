@@ -87,6 +87,13 @@ Body:
 Este proyecto es privado y propiedad de [La Pesquerapp S.L.](https://lapesquerapp.es).  
 No distribuir sin autorización.
 
+---
+
+
+
+
+
+
 ## 🛠️ Instalación local del proyecto en VS Code
 
 Sigue los siguientes pasos para clonar, instalar dependencias y ejecutar el entorno de desarrollo localmente con VS Code.
