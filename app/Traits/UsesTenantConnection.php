@@ -4,5 +4,8 @@ namespace App\Traits;
 
 trait UsesTenantConnection
 {
-    protected $connection = 'tenant';
+    public function initializeUsesTenantConnection()
+    {
+        $this->setConnection('tenant');
+    }
 }
