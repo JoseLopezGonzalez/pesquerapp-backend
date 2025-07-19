@@ -88,11 +88,11 @@ Este proyecto es privado y propiedad de [La Pesquerapp S.L.](https://lapesquerap
 No distribuir sin autorización.
 
 ---
-
-
-
-
-
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 
 ## 🛠️ Instalación local del proyecto en VS Code
 
