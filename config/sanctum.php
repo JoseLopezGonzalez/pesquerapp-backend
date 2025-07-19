@@ -44,7 +44,7 @@ return [
     |
     */
 
-   'expiration' => 43200, // 30 días (en minutos)
+    'expiration' => 43200, // 30 días (en minutos)
 
     /*
     |--------------------------------------------------------------------------
@@ -61,6 +61,10 @@ return [
         'verify_csrf_token' => \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
         'encrypt_cookies' => \Illuminate\Cookie\Middleware\EncryptCookies::class,
     ],
+
+
+    'personal_access_token_model' => App\Sanctum\PersonalAccessToken::class,
+
 
 
 ];
