@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\UsesTenantConnection;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class FishingGear extends Model
 {
+    use UsesTenantConnection;
     use HasFactory;
 
     /* Clave foranea fishing_gear - Actualización nueva  en Tabla Species*/

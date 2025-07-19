@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\UsesTenantConnection;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class RawMaterialReceptionProduct extends Model
 {
+    use UsesTenantConnection;
     use HasFactory;
 
     protected $fillable = ['reception_id', 'product_id', 'net_weight' , 'price'];

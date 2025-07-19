@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\UsesTenantConnection;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
 class Pallet extends Model
 {
+    use UsesTenantConnection;
     use HasFactory;
 
     protected $fillable = ['observations', 'state_id'];

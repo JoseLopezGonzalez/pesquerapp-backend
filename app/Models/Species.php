@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\UsesTenantConnection;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Species extends Model
 {
+    use UsesTenantConnection;
     use HasFactory;
     
     protected $fillable = ['name', 'scientific_name', 'fao', 'image' , 'fishing_gear_id'];

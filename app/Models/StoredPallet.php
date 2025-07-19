@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\UsesTenantConnection;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,6 +11,7 @@ use App\Models\Pallet;
 
 class StoredPallet extends Model
 {
+    use UsesTenantConnection;
     // App\Models\StoredPallet.php
     protected $fillable = ['pallet_id', 'store_id', 'position']; // si usas 'position' también
 

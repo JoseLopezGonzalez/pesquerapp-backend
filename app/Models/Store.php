@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\UsesTenantConnection;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,6 +11,7 @@ use App\Models\Pallet;
 
 class Store extends Model
 {
+    use UsesTenantConnection;
     use HasFactory;
 
     protected $fillable = ['name', 'category_id', 'temperature', 'capacity', 'map'];

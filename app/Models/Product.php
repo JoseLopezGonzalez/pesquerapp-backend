@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\UsesTenantConnection;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +13,7 @@ use App\Models\CaptureZone;
 
 class Product extends Model
 {
+    use UsesTenantConnection;
     use HasFactory;
 
     //protected $table = 'products';
