@@ -89,9 +89,13 @@ No distribuir sin autorización.
 
 ---
 &nbsp;
+
 &nbsp;
+
 &nbsp;
+
 &nbsp;
+
 &nbsp;
 
 ## 🛠️ Instalación local del proyecto en VS Code
